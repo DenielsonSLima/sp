@@ -3,3 +3,4 @@
 .card{box-shadow:0 3px 16px #17263c03}.button,.nav-item,.quick-link{transition:background .16s,color .16s,border-color .16s}.skip-link{position:fixed;top:-60px;left:18px;z-index:30;background:white;color:var(--red);padding:13px;border:2px solid var(--red);border-radius:7px}.skip-link:focus{top:12px}::selection{background:#ffe36b;color:#402b16}@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 /* Touch-friendly controls across phone and desktop. */
 input:not([type=checkbox]):not([type=range]),select{min-height:44px}.button{min-height:44px}
+.mobile-table-hint{display:none}@media(max-width:760px){input:not([type=checkbox]):not([type=range]),select,textarea{font-size:16px!important}.mobile-table-hint{display:block;font-size:10px;color:#8c949e;line-height:1.7}}
