@@ -1,0 +1,2 @@
+export const normalizeSearch=value=>String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR').trim();
+export function filterRecords(records,{query='',category='',categoryKey='category',searchKeys=['name']}={}){const q=normalizeSearch(query);return records.filter(item=>(!category||normalizeSearch(item[categoryKey])===normalizeSearch(category))&&(!q||searchKeys.some(key=>normalizeSearch(item[key]).includes(q))));}

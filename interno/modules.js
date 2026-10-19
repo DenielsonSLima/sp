@@ -1,6 +1,6 @@
 export const modules={
  inicio:{label:'Início',load:()=>import('./inicio/index.js')},
- cadastros:{label:'Cadastros',children:{parceiros:{label:'Parceiros',load:()=>import('./cadastros/parceiros/index.js')},produtos:{label:'Produtos',load:()=>import('./cadastros/produtos/index.js')}},load:()=>import('./cadastros/produtos/index.js')},
+ cadastros:{label:'Cadastros',children:{parceiros:{label:'Parceiros',load:()=>import('./cadastros/parceiros/index.js')},produtos:{label:'Produtos',load:()=>import('./cadastros/produtos/index.js')},unidades:{label:'Unidades de medida',load:()=>import('./cadastros/unidades/index.js')}},load:()=>import('./cadastros/produtos/index.js')},
  cotacao:{label:'Cotação',load:()=>import('./cotacao/index.js')},
  hortifruti:{label:'Hortifruti',load:()=>import('./hortifruti/index.js')},
  acougue:{label:'Açougue',isNew:true,load:()=>import('./acougue/index.js')},

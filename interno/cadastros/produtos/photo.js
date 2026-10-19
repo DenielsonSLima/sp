@@ -1,0 +1,4 @@
+export const MAX_PHOTO_BYTES=3*1024*1024;
+export function validatePhoto(file){if(!file||!['image/jpeg','image/png','image/webp'].includes(file.type))throw new Error('Escolha uma foto JPEG, PNG ou WebP.');if(!file.size||file.size>MAX_PHOTO_BYTES)throw new Error('A foto deve ter até 3 MB.');return true;}
+export const isPhotoData=value=>!value||/^data:image\/(jpeg|png|webp);base64,[a-zA-Z0-9+/=]+$/.test(value);
+export function readPhoto(file){validatePhoto(file);return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=()=>reject(new Error('Não foi possível ler a foto.'));reader.onload=()=>{const data=String(reader.result);const img=new Image();img.onload=()=>resolve(data);img.onerror=()=>reject(new Error('O arquivo não contém uma imagem válida.'));img.src=data;};reader.readAsDataURL(file);});}

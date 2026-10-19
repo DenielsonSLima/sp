@@ -17,7 +17,7 @@ O acesso "Entrar na demonstração" não autentica. Não use dados pessoais, sen
 - `login/`: interface e lógica de entrada demonstrativa.
 - `interno/shell.js` e `shell.css`: navegação e estrutura da área interna.
 - `interno/inicio/`: painel inicial.
-- `interno/cadastros/`: grupo expansível no menu, sem tela própria. `parceiros/` e `produtos/` têm arquivos e rotas independentes, com busca e inclusão fictícia.
+- `interno/cadastros/`: grupo expansível no menu, sem tela própria. `parceiros/`, `produtos/` e `unidades/` têm arquivos e rotas independentes. Parceiros e produtos têm busca combinada com categoria e cards em grade 4/2/1. Produtos aceitam fotos locais (JPEG/PNG/WebP até 3 MB) em memória. Unidades têm cadastro/edição central e são consumidas pelos produtos, sem conversões automáticas.
 - `interno/cotacao/`: módulo reservado, regras ainda a definir.
 - `interno/hortifruti/`: fluxo preliminar de compra da feira, pesagem/preço e conferência de custo. Nenhuma fórmula definida sem confirmar unidades e regras.
 - `interno/acougue/`: módulo inicial reservado, sem regras comerciais presumidas.
