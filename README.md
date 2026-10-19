@@ -18,7 +18,7 @@ O acesso "Entrar na demonstração" não autentica. Não use dados pessoais, sen
 - `interno/shell.js` e `shell.css`: navegação e estrutura da área interna.
 - `interno/inicio/`: painel inicial.
 - `interno/cadastros/`: grupo expansível no menu, sem tela própria. `parceiros/`, `produtos/` e `unidades/` têm arquivos e rotas independentes. Parceiros e produtos têm busca combinada com categoria e cards em grade 4/2/1. Produtos aceitam fotos locais (JPEG/PNG/WebP até 3 MB) em memória. Unidades têm cadastro/edição central e são consumidas pelos produtos, sem conversões automáticas.
-- `interno/cotacao/`: módulo reservado, regras ainda a definir.
+- `interno/cotacao/`: filtros combinados (busca, categoria dos produtos e período), abas Em andamento/Finalizados, cards, criação em etapas, preços, escolhas manuais por produto, total comparável somente para propostas completas e finalização local. Sem frete/descontos/quantidades parciais ou geração de pedidos. Fluxo adaptado da interface Agrisul inspecionada: https://github.com/DenielsonSLima/Agrisul/tree/main/modules/cotacao. Não reutiliza dados, credenciais ou integrações do sistema original.
 - `interno/hortifruti/`: fluxo preliminar de compra da feira, pesagem/preço e conferência de custo. Nenhuma fórmula definida sem confirmar unidades e regras.
 - `interno/acougue/`: módulo inicial reservado, sem regras comerciais presumidas.
 - `interno/encartes/`: estado inicial e ilustração de layout, sem geração/exportação/publicação.
@@ -33,4 +33,4 @@ Sem dependências de execução, chamadas de banco, chaves, APIs externas ou ras
 
 ## Próximas definições
 
-Confirmar unidades de compra do Hortifruti e método de custo antes de implementar entrada/cálculo. Definir regras da Cotação e cadastros adicionais. Integrar banco de dados e autenticação somente na etapa posterior.
+Confirmar unidades de compra do Hortifruti e método de custo antes de implementar entrada/cálculo. Validar regras comerciais adicionais da Cotação (frete, desconto, quantidades parciais) antes de implementá-las. Integrar banco de dados e autenticação somente na etapa posterior.
