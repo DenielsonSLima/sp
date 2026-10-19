@@ -20,3 +20,4 @@ test('custom select contract provides focus, form and lifecycle behavior', () =>
   assert.match(styles, /min-height:44px/);
   assert.match(styles, /@media\(max-width:600px\)/);
 });
+test('select popups stay within a modal dialog to avoid inert ancestors',async()=>{const src=await readFile(new URL('../shared/components/custom-select/index.js',import.meta.url),'utf8');assert.match(src,/select\.closest\('dialog'\) \|\| document\.body/);});
