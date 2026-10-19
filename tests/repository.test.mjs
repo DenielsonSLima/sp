@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createDemoRepository} from '../shared/repository.js';import {escapeHtml} from '../shared/ui.js';
+test('isolated fictitious data and immutable reads',async()=>{const repo=createDemoRepository();const rows=await repo.listProducts();assert.equal(rows.length,3);rows[0].name='changed';assert.notEqual((await repo.listProducts())[0].name,'changed');assert.equal((await createDemoRepository().summary()).products,3);});
+test('create and validate local example',async()=>{const repo=createDemoRepository();await assert.rejects(()=>repo.createProduct({name:'   '}));const row=await repo.createProduct({name:' Teste ',unit:'KG'});assert.equal(row.name,'Teste');assert.equal(row.unit,'KG');assert.equal((await repo.summary()).products,4);});
+test('HTML escaped before rendering user input',()=>{assert.equal(escapeHtml('<script>"&'), '&lt;script&gt;&quot;&amp;');});
