@@ -20,6 +20,9 @@ O acesso "Entrar na demonstração" não autentica. Não use dados pessoais, sen
 - `interno/cadastros/`: listagem, busca e inclusão de produtos fictícios.
 - `interno/cotacao/`: módulo reservado, regras ainda a definir.
 - `interno/hortifruti/`: fluxo preliminar de compra da feira, pesagem/preço e conferência de custo. Nenhuma fórmula definida sem confirmar unidades e regras.
+- `interno/encartes/`: estado inicial e ilustração de layout, sem geração/exportação/publicação.
+- `interno/promocoes/`: estado inicial de promoções, sem alteração de preços nem regras comerciais presumidas.
+- `interno/modules.js`: registro central e resolução segura das sete rotas.
 - `interno/configuracoes/`: situação das integrações.
 - `shared/repository.js`: contrato assíncrono e adaptador em memória. Futuro adaptador Supabase deve respeitar o contrato, implementar autenticação/autorização/RLS e validar regras antes de dados reais.
 - `assets/`: logomarca original fornecida, sem alteração do arquivo.
