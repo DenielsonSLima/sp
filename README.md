@@ -17,13 +17,14 @@ O acesso "Entrar na demonstração" não autentica. Não use dados pessoais, sen
 - `login/`: interface e lógica de entrada demonstrativa.
 - `interno/shell.js` e `shell.css`: navegação e estrutura da área interna.
 - `interno/inicio/`: painel inicial.
-- `interno/cadastros/`: listagem, busca e inclusão de produtos fictícios.
+- `interno/cadastros/`: grupo expansível no menu, sem tela própria. `parceiros/` e `produtos/` têm arquivos e rotas independentes, com busca e inclusão fictícia.
 - `interno/cotacao/`: módulo reservado, regras ainda a definir.
 - `interno/hortifruti/`: fluxo preliminar de compra da feira, pesagem/preço e conferência de custo. Nenhuma fórmula definida sem confirmar unidades e regras.
+- `interno/acougue/`: módulo inicial reservado, sem regras comerciais presumidas.
 - `interno/encartes/`: estado inicial e ilustração de layout, sem geração/exportação/publicação.
 - `interno/promocoes/`: estado inicial de promoções, sem alteração de preços nem regras comerciais presumidas.
-- `interno/modules.js`: registro central e resolução segura das sete rotas.
-- `interno/configuracoes/`: situação das integrações.
+- `interno/modules.js`: registro central e resolução segura das rotas e grupo de cadastros.
+- `interno/configuracoes/`: cards e rotas próprias de Empresa, Usuários, Perfis, Marca d’água e Cabeçalho. Cada submódulo tem pasta própria com interface, estilo e lógica. Formulários usam somente memória; perfis não aplicam segurança, usuários não criam contas, marca d’água e cabeçalho são apenas prévias sem exportação. Imagem de marca d’água é lida localmente, sem upload.
 - `shared/repository.js`: contrato assíncrono e adaptador em memória. Futuro adaptador Supabase deve respeitar o contrato, implementar autenticação/autorização/RLS e validar regras antes de dados reais.
 - `assets/`: logomarca original fornecida, sem alteração do arquivo.
 - `tests/`: testes unitários e roteiro de QA no navegador.

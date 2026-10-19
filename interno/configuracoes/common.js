@@ -1,0 +1,8 @@
+import {heading,escapeHtml} from '../../shared/ui.js';import {icon} from '../../shared/icons.js';
+export const submodules={empresa:{title:'Empresa',description:'Identidade e dados de contato da loja.',icon:'empresa'},usuarios:{title:'Usuários',description:'Organize quem fará parte da equipe.',icon:'usuarios'},perfis:{title:'Perfis',description:'Desenhe os perfis de acesso do sistema.',icon:'perfis'},'marca-dagua':{title:'Marca d’água',description:'Personalize a identificação dos materiais.',icon:'marca'},cabecalho:{title:'Cabeçalho',description:'Defina a apresentação dos documentos.',icon:'encartes'}};
+export const frame=(key,body)=>`<link rel="stylesheet" href="./interno/configuracoes/styles.css"><link rel="stylesheet" href="./interno/configuracoes/${key}/styles.css"><a class="settings-back" href="#configuracoes">← Todas as configurações</a>${heading('CONFIGURAÇÕES',submodules[key].title,submodules[key].description)}<div class="settings-demo">Somente demonstração. Use dados fictícios; alterações ficam na memória e somem ao recarregar.</div>${body}<p class="settings-feedback" role="status" aria-live="polite"></p>`;
+export const field=(label,name,value='',type='text',placeholder='')=>`<label>${label}<input name="${name}" type="${type}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" maxlength="160"></label>`;
+export const feedback=(root,text)=>root.querySelector('.settings-feedback').textContent=text;
+export const saveButton='<button class="button primary" type="submit">Aplicar na demonstração</button>';
+export const emptyLines=()=>'<div class="paper-lines"><i></i><i></i><i></i><i></i><i></i></div>';
+export {escapeHtml,icon};
