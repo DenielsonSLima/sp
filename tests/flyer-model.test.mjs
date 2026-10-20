@@ -23,7 +23,7 @@ test('image validation permits local raster and logo only', () => {
     assert.throws(() => validateDesign({...d,elements:[{...product,image:src}]}));
   }
   assert.equal(validateDesign({...d,elements:[{...product,image:'./assets/logo-original.jpg'}]}).elements[0].image,'./assets/logo-original.jpg');
-  assert.throws(() => validateDesign({...d,elements:[{...product,image:'data:image/png;base64,' + 'a'.repeat(4 * 1024 * 1024 + 4)}]}));
+  assert.throws(() => validateDesign({...d,elements:[{...product,image:'data:image/png;base64,' + 'a'.repeat(12 * 1024 * 1024)}]}));
 });
 test('history snapshots are independent, branch correctly and cap at 50', () => {
   const d = createDesign(), h = createHistory(d); d.title = 'mutated'; assert.equal(h.current().title,'Nova arte');

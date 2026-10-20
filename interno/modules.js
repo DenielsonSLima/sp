@@ -1,6 +1,6 @@
 export const modules={
  inicio:{label:'Início',load:()=>import('./inicio/index.js')},
- cadastros:{label:'Cadastros',children:{parceiros:{label:'Parceiros',load:()=>import('./cadastros/parceiros/index.js')},produtos:{label:'Produtos',load:()=>import('./cadastros/produtos/index.js')},unidades:{label:'Unidades de medida',load:()=>import('./cadastros/unidades/index.js')}},load:()=>import('./cadastros/produtos/index.js')},
+ cadastros:{label:'Cadastros',children:{parceiros:{label:'Parceiros',load:()=>import('./cadastros/parceiros/index.js')},produtos:{label:'Produtos',load:()=>import('./cadastros/produtos/index.js')},unidades:{label:'Unidades de medida',load:()=>import('./cadastros/unidades/index.js')},'biblioteca-marca':{label:'Biblioteca da marca',load:()=>import('./cadastros/biblioteca-marca/index.js')}},load:()=>import('./cadastros/produtos/index.js')},
  devolucoes:{label:'Devoluções',isNew:true,load:()=>import('./devolucoes-fornecedores/index.js')},
  cotacao:{label:'Cotação',load:()=>import('./cotacao/index.js')},
  hortifruti:{label:'Hortifruti',load:()=>import('./hortifruti/index.js')},

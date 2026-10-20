@@ -1,6 +1,7 @@
 import {createProductElement, newId, validateDesign} from './model.js';
 export const templates = [
   {id:'offer-1',name:'Oferta destaque',productCount:1,description:'Um produto em destaque, com cabeçalho vermelho e preço marcante.'},
+  {id:'offers-3',name:'Trio de ofertas',productCount:3,description:'Três produtos com espaço para fotos, nomes e preços.'},
   {id:'offers-4',name:'Seleção de 4',productCount:4,description:'Quatro ofertas em uma grade organizada.'},
   {id:'offers-6',name:'Ofertas da semana',productCount:6,description:'Seis produtos com identidade vermelha e amarela.'},
   {id:'offers-9',name:'Festival de ofertas',productCount:9,description:'Nove ofertas para um encarte completo.'}

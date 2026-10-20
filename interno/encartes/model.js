@@ -1,7 +1,7 @@
 /** Local-only flyer document model. All imported values cross validateDesign. */
 export const FONTS = ['Arial', 'Helvetica', 'Verdana', 'Georgia', 'Trebuchet MS', 'Impact', 'sans-serif', 'serif'];
 export const FONT_FAMILIES = FONTS;
-export const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
+export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 export const MAX_JSON_BYTES = 25 * 1024 * 1024;
 const clone = value => JSON.parse(JSON.stringify(value));
 export function newId() { return globalThis.crypto?.randomUUID?.() || `flyer-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`; }
@@ -16,7 +16,7 @@ function imageSource(v) {
   if (v === './assets/logo-original.jpg') return v;
   if (typeof v !== 'string' || !/^data:image\/(?:png|jpeg|webp|gif);base64,[A-Za-z0-9+/]*={0,2}$/.test(v)) throw new Error('Imagem inválida. Use PNG, JPEG, WebP ou GIF local.');
   const payload = v.slice(v.indexOf(',') + 1);
-  if (!payload.length || payload.length % 4 !== 0 || payload.length * 3 / 4 - (payload.endsWith('==') ? 2 : payload.endsWith('=') ? 1 : 0) > MAX_IMAGE_BYTES) throw new Error('Cada imagem deve ter no máximo 3 MB e dados válidos.');
+  if (!payload.length || payload.length % 4 !== 0 || payload.length * 3 / 4 - (payload.endsWith('==') ? 2 : payload.endsWith('=') ? 1 : 0) > MAX_IMAGE_BYTES) throw new Error('Cada imagem deve ter no máximo 8 MB e dados válidos.');
   return v;
 }
 export function createDesign({width = 1080, height = 1080, title = 'Nova arte'} = {}) {
