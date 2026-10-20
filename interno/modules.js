@@ -7,6 +7,7 @@ export const modules={
  acougue:{label:'Açougue',isNew:true,load:()=>import('./acougue/index.js')},
  encartes:{label:'Encartes',isNew:true,load:()=>import('./encartes/index.js')},
  promocoes:{label:'Promoções',isNew:true,load:()=>import('./promocoes/index.js')},
+ calendario:{label:'Calendário',load:()=>import('./calendario/index.js')},
  configuracoes:{label:'Configurações',load:()=>import('./configuracoes/index.js')}
 };
 export const resolveRoute=(hash)=>{const route=hash.slice(1).split('/')[0];return Object.hasOwn(modules,route)?route:'inicio';};
