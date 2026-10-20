@@ -1,0 +1,8 @@
+/* Strong tab affordances, independent of the quotation content layout. */
+.quote-status-tabs[role="tablist"]{display:flex;flex-wrap:nowrap;gap:6px;padding:6px;margin-bottom:24px;border:1px solid #c8cdd4;border-radius:12px;background:#edf0f3;overflow-x:auto;scroll-padding:8px;max-width:100%;box-sizing:border-box}
+.quote-status-tabs[role="tablist"] button{position:relative;flex:1 0 auto;min-height:46px;padding:12px 18px;border:1px solid #c8cdd4;border-radius:8px;background:#fff;color:#343c46;font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 1px 2px #18202b0a;cursor:pointer}
+.quote-status-tabs[role="tablist"] button:hover{border-color:#a71322;background:#fff4f4;color:#8e101d}
+.quote-status-tabs[role="tablist"] button[aria-selected="true"]{border-color:#92101c;background:#b31625;color:#fff;box-shadow:0 2px 5px #7c101e26}
+.quote-status-tabs[role="tablist"] button[aria-selected="true"]::after{content:"";position:absolute;left:18px;right:18px;bottom:5px;height:3px;border-radius:3px;background:#ffdc55}
+.quote-status-tabs[role="tablist"] button:focus-visible{outline:3px solid #202a39;outline-offset:2px;z-index:1}
+@media(max-width:600px){.quote-status-tabs[role="tablist"] button{flex:0 0 auto;padding:12px 16px}.quote-status-tabs[role="tablist"]{border-radius:10px;scrollbar-width:thin}}
