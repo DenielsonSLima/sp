@@ -10,10 +10,11 @@ const fileSlug=text=>String(text||'campanha').normalize('NFD').replace(/[\u0300-
 /** A deterministic physical-page plan, also usable by campaign previews. */
 export function planCampaignPdfs(campaign){
  if(!campaign||!Array.isArray(campaign.items)||!campaign.items.length)throw Error('Adicione produtos à campanha antes de exportar.');
- if(!validDate(campaign.start)||!validDate(campaign.end)||campaign.end<campaign.start)throw Error('Informe a validade da campanha.');
+ const undated=campaign.omitValidity===true&&campaign.start===''&&campaign.end==='';
+ if(campaign.omitValidity===true&&!undated||!undated&&(!validDate(campaign.start)||!validDate(campaign.end)||campaign.end<campaign.start))throw Error('Informe a validade da campanha.');
  const groups=new Map();let copies=0;
  for(const item of campaign.items){
-  const template=normalizeTemplate(item.templateSnapshot);
+  const template=normalizeTemplate(item.templateSnapshot);if(undated)template.layout.validity.hidden=true;
   if(typeof item.name!=='string'||!item.name.trim()||item.name.length>300||!Number.isInteger(item.cents)||item.cents<1||item.cents>999999||!['kg','unid'].includes(item.unit))throw Error('Produto ou preço inválido na campanha.');
   if(item.displayName!==undefined&&(typeof item.displayName!=='string'||item.displayName.length>300))throw Error('Texto do cartaz inválido. Use até 300 caracteres.');
   if(!Number.isInteger(item.quantity)||item.quantity<1||item.quantity>500)throw Error('Use uma quantidade inteira de 1 a 500 cartazes.');

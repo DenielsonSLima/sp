@@ -1,4 +1,10 @@
-export const CATEGORIES = Object.freeze(['Logos','Mascotes','Selos','Molduras','Fundos','Outros']);
+export const UNCATEGORIZED = 'Sem categoria';
+export const CATEGORIES = Object.freeze(['Supermercado do Povo','Cabeçalho','Marca d’água','Formas','Logos','Mascotes','Selos','Molduras','Fundos','Outros',UNCATEGORIZED]);
+export function validateCategory(value) {
+  if (typeof value !== 'string' || !value.trim() || value.trim().length > 80 || /[\u0000-\u001f\u007f]/.test(value)) throw new Error('Informe uma categoria de até 80 caracteres.');
+  return value.trim();
+}
+export const categoryKey = value => validateCategory(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR');
 export const MAX_FILE_BYTES = 8 * 1024 * 1024;
 export const MAX_PIXELS = 20000000;
 export function validateAsset(value) {
@@ -6,10 +12,10 @@ export function validateAsset(value) {
   const {id, name, category, dataURL, width, height} = value;
   if (typeof id !== 'string' || !/^[\w-]{1,100}$/.test(id)) throw new Error('Identificador inválido.');
   if (typeof name !== 'string' || !name.trim() || name.trim().length > 100) throw new Error('Informe um nome de até 100 caracteres.');
-  if (!CATEGORIES.includes(category)) throw new Error('Escolha uma categoria válida.');
+  validateCategory(category);
   if (typeof dataURL !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(dataURL) || dataURL.length > Math.ceil(MAX_FILE_BYTES / 3) * 4 + 30) throw new Error('Use uma imagem PNG de até 8 MB.');
   if (![width,height].every(n => Number.isInteger(n) && n > 0 && n <= 10000) || width * height > MAX_PIXELS) throw new Error('Imagem muito grande: limite de 20 megapixels e 10.000 pixels por lado.');
-  return {id,name:name.trim(),category,dataURL,width,height};
+  return {id,name:name.trim(),category:category.trim(),dataURL,width,height};
 }
 export function snapshotAsset(asset) { return {...validateAsset(asset)}; }
 export function filterAssets(assets, query = '', category = '') {
@@ -24,7 +30,7 @@ export function inspectPng(bytes) {
   if (!width || !height || width > 10000 || height > 10000 || width * height > MAX_PIXELS) throw new Error('PNG excede o limite de dimensões permitido.');
   return {width,height};
 }
-export async function assetFromFile(file, category = 'Outros') {
+export async function assetFromFile(file, category = UNCATEGORIZED) {
   if (!file || file.size > MAX_FILE_BYTES || !file.size) throw new Error('Cada PNG deve ter até 8 MB.');
   const bytes = new Uint8Array(await file.arrayBuffer());
   const dimensions = inspectPng(bytes);

@@ -4,7 +4,7 @@ import {escapeHtml,heading} from '../../shared/ui.js';import {icon} from '../../
 import {createDesign,createTextElement,createProductElement,duplicateElement,validateDesign,FONT_FAMILIES,newId} from './model.js';import {templates,applyTemplate} from './templates.js';import {saveDesign,listDesigns,deleteDesign,exportDesignJson,parseDesignJson} from './storage.js';import {renderDesign} from './renderer.js';import {createPngBlob,downloadBlob} from './export.js';import {editorState as S,openDesign,commitDesign} from './editor-state.js';
 const clone=value=>JSON.parse(JSON.stringify(value));let saveTimer,saveQueue=Promise.resolve(),revision=0,renderVersion=0;let activeRoot;
 const formats=[['square','Post quadrado',1080,1080],['portrait','Post retrato',1080,1350],['story','Story',1080,1920],['a4','A4 · 150 dpi',1240,1754]];
-const tools=[['products','Produtos'],['templates','Modelos'],['brand','Elementos da marca'],['text','Texto e logo'],['properties','Propriedades'],['layers','Camadas']];
+const tools=[['products','Produtos'],['templates','Modelos'],['brand','Biblioteca'],['text','Texto e logo'],['properties','Propriedades'],['layers','Camadas']];
 const selected=()=>S.design.elements.find(e=>e.id===S.selection);
 const safeName=value=>(value||'encarte').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').slice(0,80);
 function status(text){S.saveMessage=text;if(activeRoot?.isConnected)activeRoot.querySelector('.flyer-save-state')?.replaceChildren(document.createTextNode(text));}
