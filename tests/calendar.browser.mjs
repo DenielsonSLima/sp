@@ -62,6 +62,15 @@ test('calendar desktop/mobile CRUD, keyboard, filters, campaign links, live date
     assert.equal(await page.locator('.calendar-agenda-day').count(), 2); await page.getByRole('button', {name: 'Novo registro', exact: true}).click(); await choose('Tipo', 'Anotação'); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true); await page.getByRole('button', {name: 'Cancelar', exact: true}).click(); await page.getByRole('button', {name: 'Descartar', exact: true}).click();
     await page.getByRole('button', {name: 'Mês', exact: true}).click(); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await page.setViewportSize({width: 320, height: 750}); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    // Commercial dates are read-only; Christmas/New Year share their holiday records.
+    await choose('Tipo de registro', 'Data comercial'); await month('2026-11'); await page.getByRole('button', {name: 'Agenda', exact: true}).click();
+    assert.equal(await page.locator('.calendar-board .calendar-entry').count(), 1); assert.match(await page.locator('.calendar-board').innerText(), /Black Friday/);
+    assert.equal(await page.locator('.calendar-board [data-action=edit],.calendar-board [data-action=delete]').count(), 0);
+    await month('2026-12'); assert.equal(await page.locator('.calendar-board .calendar-entry').count(), 1); assert.match(await page.locator('.calendar-board').innerText(), /Natal/);
+    await month('2027-01'); assert.equal(await page.locator('.calendar-board .calendar-entry').count(), 1); assert.match(await page.locator('.calendar-board').innerText(), /Ano Novo/);
+    await month('2026-12'); await choose('Tipo de registro', 'Todos os tipos'); assert.equal(await page.locator('.calendar-seasonal .calendar-entry').count(), 2);
+    await choose('Tipo de registro', 'Sugestão sazonal'); assert.equal(await page.locator('.calendar-board .calendar-entry').count(), 2); assert.equal(await page.locator('.calendar-board .calendar-agenda-day').count(), 2);
+    assert.equal(await page.locator('.calendar-board [data-action=edit],.calendar-board [data-action=delete]').count(), 0); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     // A fresh mobile entry uses Agenda by default and contains no horizontal overflow.
     const mobile = await browser.newPage({viewport: {width: 390, height: 844}}); await mobile.goto(`http://127.0.0.1:${server.address().port}/#calendario`); await mobile.locator('.calendar-agenda').waitFor(); assert.equal(await mobile.getByRole('button', {name: 'Agenda', exact: true}).getAttribute('aria-pressed'), 'true'); await mobile.close();
     assert.deepEqual(errors, []);

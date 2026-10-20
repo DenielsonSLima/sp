@@ -7,3 +7,7 @@
 .calendar-color-holiday{--entry-ink:#865209;--entry-bg:#fff3dc}.calendar-sources{font-size:11px;color:#727983;line-height:1.8;margin:18px 0 0}.calendar-sources a{color:#85520c;text-decoration:underline;text-underline-offset:2px;display:inline-block;padding:5px 0}
 
 .calendar-holiday-coverage:empty{display:none}.calendar-holiday-coverage{font-size:11px;color:#727983;line-height:1.8;margin:18px 0 0}
+
+.calendar-color-commercial{--entry-ink:#12686d;--entry-bg:#e4f5f5}.calendar-color-season{--entry-ink:#6c489a;--entry-bg:#f1ebf9}.calendar-color-season.calendar-entry{border-style:dashed}.calendar-seasonal:empty{display:none}.calendar-seasonal-panel{padding:20px;margin-bottom:20px}.calendar-seasonal-heading h3{font-size:15px;margin:0 0 6px}.calendar-seasonal-heading p{font-size:12px;color:#727983;line-height:1.6;margin:0 0 16px}.calendar-seasonal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.calendar-seasonal .calendar-entry-actions:empty{display:none}.calendar-seasonal .calendar-entry-notes{max-height:none}.calendar-seasonal .calendar-entry-time{font-size:10px}@media(max-width:1200px){.calendar-seasonal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.calendar-seasonal-grid{grid-template-columns:1fr}.calendar-seasonal-panel{padding:16px}}
+
+.calendar-module .calendar-entry-actions:empty{display:none}

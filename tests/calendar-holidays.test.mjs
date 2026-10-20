@@ -60,6 +60,6 @@ test('calendar wires enhanced month select, current-month reset and read-only so
   const source = await readFile(new URL('../interno/calendario/index.js', import.meta.url), 'utf8');
   assert.match(source, /Mês\/ano<select name="calendar-month" data-searchable="true">/); assert(!source.includes('type="month"'));
   assert.match(source, /export async function render\(root\) \{\s*dispose\?\.\(\);\s*Object.assign\(state, calendarOpeningPeriod\(\)\)/);
-  assert.match(source, /flatMap\(nationalHolidays\)/); assert.match(source, /holiday: 'Feriado nacional'/); assert.match(source, /holiday \? `<a class="button secondary"/);
+  assert.match(source, /flatMap\(retailHolidays\)/); assert.match(source, /holiday: 'Feriado nacional'/); assert.match(source, /holiday \? `<a class="button secondary"/);
   assert.match(source, /Fonte oficial/); assert.match(source, /calendar-holiday-coverage/); assert(!source.includes('calendar-storage-note'));
 });

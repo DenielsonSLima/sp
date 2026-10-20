@@ -118,7 +118,7 @@ export function calendarItems(entries, campaigns = []) {
 export function filterCalendarItems(items, {start = '', end = '', type = '', query = ''} = {}) {
   if (start && !validDate(start) || end && !validDate(end) || start && end && start > end) throw Error('Informe um período válido.');
   const needle = fold(query).trim();
-  return items.filter(item => (!start || item.end >= start) && (!end || item.start <= end) && (!type || item.type === type) && (!needle || fold(`${item.title} ${item.notes}`).includes(needle)))
+  return items.filter(item => (!start || item.end >= start) && (!end || item.start <= end) && (!type || item.type === type || Array.isArray(item.categories) && item.categories.includes(type)) && (!needle || fold(`${item.title} ${item.notes}`).includes(needle)))
     .sort((a, b) => a.start.localeCompare(b.start) || a.time.localeCompare(b.time) || a.title.localeCompare(b.title, 'pt-BR') || a.id.localeCompare(b.id));
 }
 export const entriesOnDate = (items, date) => filterCalendarItems(items, {start: date, end: date});
