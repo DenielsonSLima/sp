@@ -7,6 +7,7 @@ export const modules={
  acougue:{label:'Açougue',isNew:true,load:()=>import('./acougue/index.js')},
  encartes:{label:'Encartes',isNew:true,load:()=>import('./encartes/index.js')},
  promocoes:{label:'Promoções',isNew:true,load:()=>import('./promocoes/index.js')},
+ 'tabela-precos':{label:'Tab. de Preços',load:()=>import('./tabela-precos/index.js')},
  calendario:{label:'Calendário',load:()=>import('./calendario/index.js')},
  configuracoes:{label:'Configurações',load:()=>import('./configuracoes/index.js')}
 };
