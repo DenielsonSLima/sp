@@ -11,11 +11,11 @@ function trapFocus(dialog,event){
 }
 export function confirmTemplateDeletion({host,template}){
  return new Promise(resolve=>{
-  const previousFocus=document.activeElement,previousOverflow=document.body.style.overflow;
+  const previousFocus=document.activeElement,previousOverflow=document.body.style.overflow,parentDialog=host.querySelector('.poster-editor-dialog');
   const modal=document.createElement('dialog');modal.className='poster-discard-dialog';modal.setAttribute('aria-labelledby','poster-delete-title');modal.setAttribute('aria-describedby','poster-delete-description');
   modal.innerHTML=`<h2 id="poster-delete-title">Excluir este modelo?</h2><p id="poster-delete-description">O modelo “${esc(template.name)}” será removido deste navegador. Campanhas já salvas mantêm sua própria cópia.</p><p class="poster-delete-status" role="status"></p><div><button type="button" class="button secondary" data-delete-cancel autofocus>Cancelar</button><button type="button" class="button primary" data-delete-confirm>Excluir modelo</button></div>`;
   host.append(modal);let settled=false;
-  const finish=result=>{if(settled)return;settled=true;observer.disconnect();if(modal.open)modal.close();modal.remove();document.body.style.overflow=previousOverflow;if(previousFocus?.isConnected)previousFocus.focus();resolve(result);};
+  const finish=result=>{if(settled)return;settled=true;observer.disconnect();if(modal.open)modal.close();modal.remove();if(!parentDialog||parentDialog.isConnected)document.body.style.overflow=previousOverflow;if(previousFocus?.isConnected)previousFocus.focus();resolve(result);};
   modal.querySelector('[data-delete-cancel]').onclick=()=>finish(null);
   modal.querySelector('[data-delete-confirm]').onclick=()=>{try{finish(deleteTemplate(template.id));}catch(error){modal.querySelector('[role=status]').textContent=error.message;}};
   modal.addEventListener('cancel',event=>{event.preventDefault();event.stopPropagation();finish(null);});modal.addEventListener('keydown',event=>trapFocus(modal,event));
