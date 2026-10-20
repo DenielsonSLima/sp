@@ -19,10 +19,11 @@ test('calendar desktop/mobile CRUD, keyboard, filters, campaign links, live date
   try {
     browser = await chromium.launch({headless: true, executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox']});
     const page = await browser.newPage({viewport: {width: 1500, height: 1000}, timezoneId: 'America/Sao_Paulo'});
+    await page.clock.install({time: new Date('2026-10-20T12:00:00-03:00')});
     const errors = []; page.on('pageerror', error => errors.push(error.message));
     await page.goto(`http://127.0.0.1:${server.address().port}/#calendario`);
-    await page.locator('.calendar-month-grid').waitFor();
-    const month = value => page.locator('[name=calendar-month]').fill(value);
+    await page.locator('.calendar-month-grid').waitFor(); assert.equal(await page.locator('[name=calendar-month]').inputValue(), '2026-10'); assert.equal(await page.getByRole('combobox', {name: 'Mês/ano', exact: true}).textContent(), 'Outubro 2026⌄');
+    const month = async value => {const label = await page.locator(`[name=calendar-month] option[value="${value}"]`).textContent(); await choose('Mês/ano', label);};
     const choose = async (name, label) => {await page.getByRole('combobox', {name, exact: true}).click(); await page.getByRole('option', {name: label, exact: true}).click();};
     await month('2026-10'); await page.locator('[data-day="2026-10-20"]').click();
     const campaignId = await page.evaluate(() => window.campaignStore.create({name: 'Campanha da virada', start: '2026-10-30', end: '2026-11-02', notes: 'Ofertas especiais'}).id);
@@ -54,9 +55,9 @@ test('calendar desktop/mobile CRUD, keyboard, filters, campaign links, live date
     await page.keyboard.press('Home'); assert.equal(await page.locator('[data-day="2026-10-26"]').evaluate(node => node === document.activeElement), true);
     await month('2026-11'); await page.locator('[data-day="2026-11-02"]').click(); assert.match(await page.locator('.calendar-day-details').innerText(), /Campanha da virada/);
     await page.evaluate(id => window.campaignStore.update(id, {name: 'Campanha revisada', start: '2026-11-03', end: '2026-11-04', notes: 'Nova data'}), campaignId);
-    assert.equal(await page.locator('.calendar-day-details .calendar-entry').count(), 0); await page.locator('[data-day="2026-11-03"]').click();
+    assert.equal(await page.locator('.calendar-day-details .calendar-entry[data-entry^="promotion:"]').count(), 0); await page.locator('[data-day="2026-11-03"]').click();
     const open = page.getByRole('link', {name: 'Abrir campanha →', exact: true}); assert.equal(await open.getAttribute('href'), `#promocoes/${campaignId}`); await open.click(); await page.locator('.campaign-title').waitFor(); assert.equal(await page.locator('.campaign-title').textContent(), 'Campanha revisada');
-    await page.goBack(); await page.locator('.calendar-module').waitFor(); assert.equal(await page.locator('dialog').count(), 0); assert.equal(await page.locator('.custom-select-popup').count(), 1);
+    await page.goBack(); await page.locator('.calendar-module').waitFor(); assert.equal(await page.locator('dialog').count(), 0); assert.equal(await page.locator('.custom-select-popup').count(), 2); await month('2026-11'); await choose('Tipo de registro', 'Promoção');
     await page.getByRole('button', {name: 'Agenda', exact: true}).click(); await page.setViewportSize({width: 390, height: 844}); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     assert.equal(await page.locator('.calendar-agenda-day').count(), 2); await page.getByRole('button', {name: 'Novo registro', exact: true}).click(); await choose('Tipo', 'Anotação'); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true); await page.getByRole('button', {name: 'Cancelar', exact: true}).click(); await page.getByRole('button', {name: 'Descartar', exact: true}).click();
     await page.getByRole('button', {name: 'Mês', exact: true}).click(); assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);

@@ -35,6 +35,21 @@ export function monthBounds(value) {
   const [year, month] = value.split('-').map(Number);
   return {start: `${value.slice(0, 7)}-01`, end: `${value.slice(0, 7)}-${pad(daysInMonth(year, month))}`};
 }
+export function calendarOpeningPeriod(date = new Date()) {
+  const selected = localToday(date); return {month: monthBounds(selected).start, selected};
+}
+export function monthOptionLabel(value) {
+  const month = localDate(value).toLocaleDateString('pt-BR', {month: 'long'});
+  return `${month[0].toLocaleUpperCase('pt-BR')}${month.slice(1)} ${Number(value.slice(0, 4))}`;
+}
+/** Upcoming months first; include the selected period when arrows leave that window. */
+export function monthOptions(selected, current = localToday()) {
+  const currentMonth = monthBounds(current).start, selectedMonth = monthBounds(selected).start, values = new Set();
+  for (const base of [currentMonth, selectedMonth]) {
+    for (let offset = 0; offset < 24; offset++) { try { values.add(shiftMonth(base, offset)); } catch { break; } }
+  }
+  return [...values].sort().map(date => ({value: date.slice(0, 7), label: monthOptionLabel(date)}));
+}
 export function monthGrid(value) {
   const {start, end} = monthBounds(value), offset = (localDate(start).getDay() + 6) % 7;
   const length = Math.ceil((offset + Number(end.slice(-2))) / 7) * 7;

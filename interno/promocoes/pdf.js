@@ -1,4 +1,4 @@
-import {normalizeTemplate,validDate,resolveProductText} from '../cadastros/modelos-cartaz/model.js';
+import {normalizeTemplate,validDate,resolveProductText,validityFrame} from '../cadastros/modelos-cartaz/model.js';
 
 export const PDF_DPI=300;
 export const MAX_PDF_PAGES=200;
@@ -110,7 +110,13 @@ export async function renderPosterJpeg(offer){
   if(key==='price')drawPrice(ctx,offer,e,box,size);
   else if(key==='product')drawText(ctx,productText.toUpperCase(),e,box,size*(productText.length>65?.60:productText.length>35?.78:1));
   else if(key==='headline')drawText(ctx,t.headline,e,box,size,{lineHeight:1.1,spacing:size*.1});
-  else drawText(ctx,`Válido de ${offer.start.split('-').reverse().join('/')} até ${offer.end.split('-').reverse().join('/')}`,e,box,size,{weight:700,lineHeight:1.4});
+  else {
+   const frame=validityFrame(t),stroke=frame.widthMm*ratio,inset=(frame.widthMm+frame.paddingMm)*ratio;
+   ctx.strokeStyle=t.color;ctx.lineWidth=stroke;
+   ctx.strokeRect(box.x+stroke/2,box.y+stroke/2,box.w-stroke,box.h-stroke);
+   const content={x:box.x+inset,y:box.y+inset,w:Math.max(0,box.w-2*inset),h:Math.max(0,box.h-2*inset)};
+   if(content.w>0&&content.h>0){ctx.beginPath();ctx.rect(content.x,content.y,content.w,content.h);ctx.clip();drawText(ctx,`Válido de ${offer.start.split('-').reverse().join('/')} até ${offer.end.split('-').reverse().join('/')}`,e,content,size,{weight:700,lineHeight:1.4});}
+  }
   ctx.restore();
  }
  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.96));

@@ -3,6 +3,11 @@ import {escapeHtml as esc} from '../../../shared/ui.js';
 export const SIZES=Object.freeze({small:{label:'Pequeno',paper:'A6',widthMm:105,heightMm:148,count:1},medium:{label:'Médio',paper:'A5',widthMm:148,heightMm:210,count:1},large:{label:'Grande',paper:'A4',widthMm:210,heightMm:297,count:1}});
 export const FONTS=Object.freeze(['Arial','Verdana','Georgia','Impact','Trebuchet MS']);
 export const ELEMENTS=Object.freeze({headline:'Chamada',product:'Produto',price:'Preço',validity:'Validade'});
+export const VALIDITY_FRAME=Object.freeze({widthMm:.35,paddingMm:1});
+export function validityFrame(template){
+ const box=template.layout.validity,width=(template.widthMm-10)*box.w,height=(template.heightMm-10)*box.h;
+ return {widthMm:VALIDITY_FRAME.widthMm,paddingMm:Math.max(0,Math.min(VALIDITY_FRAME.paddingMm,(width-2*VALIDITY_FRAME.widthMm)/4,(height-2*VALIDITY_FRAME.widthMm)/4))};
+}
 export const STORAGE_KEY='supermercado-poster-templates-v1';
 const clone=value=>JSON.parse(JSON.stringify(value));
 const own=(object,key)=>Object.hasOwn(object,key);
@@ -123,10 +128,11 @@ export function resolveProductText(offer,template){
 export function posterMarkup(offer,template){
  const t=template?normalizeTemplate(template):offerTemplate(offer);
  if(!Number.isInteger(offer.cents)||offer.cents<1||offer.cents>999999||typeof offer.name!=='string'||!['kg','unid'].includes(offer.unit)||!validDate(offer.start)||!validDate(offer.end))throw Error('Cartaz inválido.');
+ const frame=validityFrame(t),unitMm=(t.widthMm-10)/100;
  const productText=resolveProductText(offer,t),amount=(offer.cents/100).toFixed(2).split('.'),nameScale=productText.length>65?.60:productText.length>35?.78:1;
  const attrs=key=>`data-poster-element="${key}" style="${esc(elementStyle(t.layout[key]))}"`;
  const visible=(key,markup)=>t.layout[key].hidden?'':markup;
- return `<article class="price-poster poster-${esc(t.id)}" style="--poster-ink:${esc(t.color)};--poster-paper:${esc(t.background)};--poster-font:${esc(t.font)};--poster-scale:${t.scale};--name-scale:${nameScale};--amount-scale:${offer.cents>=100000?.70:offer.cents>=10000?.85:1}">${visible('headline',`<div class="poster-element poster-kicker" ${attrs('headline')}>${esc(t.headline)}</div>`)}${visible('product',`<h2 class="poster-element poster-product" ${attrs('product')}>${esc(productText)}</h2>`)}${visible('price',`<div class="poster-element poster-price-area" ${attrs('price')}><div class="poster-price" role="img" aria-label="${esc(`R$ ${amount.join(',')} por ${offer.unit}`)}"><span class="poster-currency" aria-hidden="true">R$</span><strong class="poster-integer" aria-hidden="true">${amount[0]}</strong><div class="poster-price-side" aria-hidden="true"><span class="poster-cents">,${amount[1]}</span><span class="poster-unit">${offer.unit==='kg'?'KG':'UN'}</span></div></div></div>`)}${visible('validity',`<p class="poster-element poster-validity" ${attrs('validity')}>Válido de ${esc(dateLabel(offer.start))} até ${esc(dateLabel(offer.end))}</p>`)}</article>`;
+ return `<article class="price-poster poster-${esc(t.id)}" style="--poster-ink:${esc(t.color)};--poster-paper:${esc(t.background)};--poster-font:${esc(t.font)};--poster-scale:${t.scale};--validity-border-width:${frame.widthMm/unitMm};--validity-padding:${frame.paddingMm/unitMm};--name-scale:${nameScale};--amount-scale:${offer.cents>=100000?.70:offer.cents>=10000?.85:1}">${visible('headline',`<div class="poster-element poster-kicker" ${attrs('headline')}>${esc(t.headline)}</div>`)}${visible('product',`<h2 class="poster-element poster-product" ${attrs('product')}>${esc(productText)}</h2>`)}${visible('price',`<div class="poster-element poster-price-area" ${attrs('price')}><div class="poster-price" role="img" aria-label="${esc(`R$ ${amount.join(',')} por ${offer.unit}`)}"><span class="poster-currency" aria-hidden="true">R$</span><strong class="poster-integer" aria-hidden="true">${amount[0]}</strong><div class="poster-price-side" aria-hidden="true"><span class="poster-cents">,${amount[1]}</span><span class="poster-unit">${offer.unit==='kg'?'KG':'UN'}</span></div></div></div>`)}${visible('validity',`<p class="poster-element poster-validity" ${attrs('validity')}>Válido de ${esc(dateLabel(offer.start))} até ${esc(dateLabel(offer.end))}</p>`)}</article>`;
 }
 export const paperStyle=t=>`--paper-ratio:${t.widthMm}/${t.heightMm};--inset-x:${(500/t.widthMm).toFixed(5)}%;--inset-y:${(500/t.heightMm).toFixed(5)}%`;
 export function miniMarkup(template){const t=normalizeTemplate(template);return `<div class="poster-mini-paper" style="${paperStyle(t)};--mini-width:${(226*t.widthMm/t.heightMm).toFixed(2)}px"><div class="poster-mini-content">${posterMarkup(sampleOffer(t.id),t)}</div></div>`;}

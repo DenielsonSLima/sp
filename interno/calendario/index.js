@@ -1,12 +1,12 @@
 import {heading, escapeHtml as esc} from '../../shared/ui.js';
 import {icon} from '../../shared/icons.js';
 import {createEditorCloseGuard} from './editor-guard.js';
+import {nationalHolidays, holidaySources, HOLIDAY_MIN_YEAR} from './holidays.js';
 import {readCampaigns, subscribeCampaigns, campaignStore} from '../promocoes/state.js';
-import {calendarStore as store, STORAGE_KEY, entryTypes, entryColors, localToday, localDate, validDate, addDays, shiftMonth, monthBounds, monthGrid, calendarItems, filterCalendarItems, entriesOnDate, agendaGroups} from './state.js';
+import {calendarStore as store, STORAGE_KEY, entryTypes, entryColors, localToday, localDate, validDate, addDays, shiftMonth, monthBounds, monthGrid, calendarOpeningPeriod, monthOptions, calendarItems, filterCalendarItems, entriesOnDate, agendaGroups} from './state.js';
 
-const today = localToday();
-const state = {month: monthBounds(today).start, selected: today, view: null, type: '', query: ''};
-const typeNames = {promotion: 'Promoção', ...entryTypes};
+const state = {...calendarOpeningPeriod(), view: null, type: '', query: ''};
+const typeNames = {promotion: 'Promoção', holiday: 'Feriado nacional', ...entryTypes};
 const shortDate = value => value.split('-').reverse().join('/');
 const dateLabel = value => localDate(value).toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'});
 const monthLabel = value => localDate(value).toLocaleDateString('pt-BR', {month: 'long', year: 'numeric'});
@@ -15,29 +15,33 @@ let dispose;
 
 export async function render(root) {
   dispose?.();
+  Object.assign(state, calendarOpeningPeriod());
   state.view ||= window.matchMedia('(max-width:760px)').matches ? 'agenda' : 'month';
   store.reload();
   root.innerHTML = `<link rel="stylesheet" href="./interno/calendario/styles.css"><section class="calendar-module">
-    ${heading('PLANEJAMENTO DA LOJA', 'Calendário', 'Promoções, eventos e anotações para acompanhar os próximos dias.')}
+    ${heading('PLANEJAMENTO DA LOJA', 'Calendário', 'Promoções, feriados, eventos e anotações para acompanhar os próximos dias.')}
     <div class="calendar-toolbar"><div class="calendar-period-nav"><button class="button secondary calendar-arrow" type="button" data-action="previous" aria-label="Mês anterior">‹</button><h2 class="calendar-period" aria-live="polite"></h2><button class="button secondary calendar-arrow" type="button" data-action="next" aria-label="Próximo mês">›</button><button class="button secondary" type="button" data-action="today">Hoje</button></div><button class="button primary" type="button" data-action="new">${icon('plus')} Novo registro</button></div>
-    <section class="card calendar-filters" aria-label="Filtros do calendário"><label class="calendar-search">Buscar no calendário<input name="calendar-query" type="search" maxlength="200" placeholder="Título, campanha ou detalhes…" value="${esc(state.query)}"></label><label>Tipo de registro<select name="calendar-type">${option('', 'Todos os tipos', state.type)}${Object.entries(typeNames).map(([key, label]) => option(key, label, state.type)).join('')}</select></label><label>Ir para o mês<input name="calendar-month" type="month" min="0001-01" max="9999-12" value="${state.month.slice(0, 7)}"></label><button class="button secondary calendar-clear" data-action="clear" type="button">Limpar filtros</button></section>
+    <section class="card calendar-filters" aria-label="Filtros do calendário"><label class="calendar-search">Buscar no calendário<input name="calendar-query" type="search" maxlength="200" placeholder="Título, campanha ou detalhes…" value="${esc(state.query)}"></label><label>Tipo de registro<select name="calendar-type">${option('', 'Todos os tipos', state.type)}${Object.entries(typeNames).map(([key, label]) => option(key, label, state.type)).join('')}</select></label><label>Mês/ano<select name="calendar-month" data-searchable="true">${monthOptions(state.month).map(item => option(item.value, item.label, state.month.slice(0, 7))).join('')}</select></label><button class="button secondary calendar-clear" data-action="clear" type="button">Limpar filtros</button></section>
     <div class="calendar-view-bar"><p class="calendar-count" aria-live="polite"></p><div class="calendar-view-switch" role="group" aria-label="Visualização do calendário"><button type="button" data-action="view" data-view="month">Mês</button><button type="button" data-action="view" data-view="agenda">Agenda</button></div></div>
     <p class="calendar-warning" role="alert"></p><p class="calendar-feedback" role="status" aria-live="polite"></p><div class="calendar-board"></div>
-    
+    <p class="calendar-holiday-coverage" role="status"></p><p class="calendar-sources">Fontes oficiais dos feriados: ${holidaySources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p>
   </section>`;
   const section = root.querySelector('.calendar-module');
   const signalController = new AbortController();
   const signal = signalController.signal;
   let removed = false;
   const connected = () => !removed && section.isConnected;
-  const readItems = () => calendarItems(store.list(), readCampaigns());
+  const readItems = () => {
+    const year = Number(state.month.slice(0, 4));
+    return [...calendarItems(store.list(), readCampaigns()), ...[year - 1, year, year + 1].flatMap(nationalHolidays)];
+  };
   const filtered = () => filterCalendarItems(readItems(), {query: state.query, type: state.type});
   const feedback = text => { if (connected()) section.querySelector('.calendar-feedback').textContent = text; };
   const focusDay = () => section.querySelector(`[data-day="${state.selected}"]`)?.focus({preventScroll: true});
 
   function itemMarkup(item) {
-    const promotion = item.type === 'promotion';
-    return `<article class="calendar-entry calendar-color-${esc(item.color)}" data-entry="${esc(item.id)}"><div class="calendar-entry-heading"><span class="calendar-type">${esc(typeNames[item.type])}</span><span class="calendar-entry-time">${promotion ? `${shortDate(item.start)} a ${shortDate(item.end)}` : item.time || 'Dia inteiro'}</span></div><h4>${esc(item.title)}</h4>${item.notes ? `<p class="calendar-entry-notes">${esc(item.notes)}</p>` : ''}<div class="calendar-entry-actions">${promotion ? `<a class="button secondary" href="${esc(item.href)}">Abrir campanha →</a>` : `<button class="button secondary" type="button" data-action="edit" data-id="${esc(item.sourceId)}" aria-label="Editar ${esc(item.title)}">Editar</button><button class="button calendar-delete" type="button" data-action="delete" data-id="${esc(item.sourceId)}" aria-label="Excluir ${esc(item.title)}">Excluir</button>`}</div></article>`;
+    const promotion = item.type === 'promotion', holiday = item.type === 'holiday';
+    return `<article class="calendar-entry calendar-color-${esc(item.color)}" data-entry="${esc(item.id)}"><div class="calendar-entry-heading"><span class="calendar-type">${esc(typeNames[item.type])}</span><span class="calendar-entry-time">${promotion ? `${shortDate(item.start)} a ${shortDate(item.end)}` : item.time || 'Dia inteiro'}</span></div><h4>${esc(item.title)}</h4>${item.notes ? `<p class="calendar-entry-notes">${esc(item.notes)}</p>` : ''}<div class="calendar-entry-actions">${promotion ? `<a class="button secondary" href="${esc(item.href)}">Abrir campanha →</a>` : holiday ? `<a class="button secondary" href="${esc(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte oficial ↗</a>` : `<button class="button secondary" type="button" data-action="edit" data-id="${esc(item.sourceId)}" aria-label="Editar ${esc(item.title)}">Editar</button><button class="button calendar-delete" type="button" data-action="delete" data-id="${esc(item.sourceId)}" aria-label="Excluir ${esc(item.title)}">Excluir</button>`}</div></article>`;
   }
   function dayDetails(items) {
     const entries = entriesOnDate(items, state.selected);
@@ -59,12 +63,15 @@ export async function render(root) {
     if (!connected()) return;
     const items = filtered(), monthItems = filterCalendarItems(items, monthBounds(state.month));
     section.querySelector('.calendar-period').textContent = monthLabel(state.month);
-    section.querySelector('[name=calendar-month]').value = state.month.slice(0, 7);
+    const monthSelect = section.querySelector('[name=calendar-month]'), options = monthOptions(state.month);
+    if ([...monthSelect.options].map(item => item.value).join(',') !== options.map(item => item.value).join(',')) monthSelect.innerHTML = options.map(item => option(item.value, item.label, state.month.slice(0, 7))).join('');
+    monthSelect.value = state.month.slice(0, 7);
     section.querySelector('[data-action=previous]').disabled = state.month === '0001-01-01';
     section.querySelector('[data-action=next]').disabled = state.month === '9999-12-01';
     section.querySelectorAll('[data-action=view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === state.view)));
     const count = type => monthItems.filter(item => item.type === type).length;
-    section.querySelector('.calendar-count').textContent = `${monthItems.length} registro(s) no mês · ${count('promotion')} promoção(ões), ${count('event')} evento(s), ${count('note')} anotação(ões)`;
+    section.querySelector('.calendar-count').textContent = `${monthItems.length} registro(s) no mês · ${count('promotion')} promoção(ões), ${count('event')} evento(s), ${count('note')} anotação(ões), ${count('holiday')} feriado(s)`;
+    section.querySelector('.calendar-holiday-coverage').textContent = Number(state.month.slice(0, 4)) < HOLIDAY_MIN_YEAR ? `A referência de feriados nacionais está disponível a partir de ${HOLIDAY_MIN_YEAR}.` : '';
     section.querySelector('.calendar-warning').textContent = [store.warning, campaignStore.warning].filter(Boolean).join(' ');
     section.querySelector('.calendar-board').innerHTML = state.view === 'month' ? monthMarkup(items) : agendaMarkup(items);
   }

@@ -47,7 +47,7 @@ test('physical snapshot settings are copied rather than mutated',()=>{
 });
 test('browser raster export loads chosen fonts, caps pixels, returns real PDF blobs',async()=>{
  const old=globalThis.document,fonts=[],draws=[],canvases=[];
- const context={fillRect(){},save(){},beginPath(){},rect(){},clip(){},restore(){},measureText(text){return{width:text.length*10}},fillText(text){draws.push([text,this.font])}};
+ const context={fillRect(){},strokeRect(){},save(){},beginPath(){},rect(){},clip(){},restore(){},measureText(text){return{width:text.length*10}},fillText(text){draws.push([text,this.font])}};
  globalThis.document={fonts:{ready:Promise.resolve(),load:async font=>{fonts.push(font)}},createElement:()=>{const c={width:0,height:0,getContext:()=>context,toBlob(callback){canvases.push([this.width,this.height]);callback(new Blob([jpeg.bytes],{type:'image/jpeg'}));}};return c;}};
  try{
   const offer=item();offer.templateSnapshot.layout.product.fontFamily='Georgia';
@@ -86,7 +86,7 @@ test('letter spacing participates in wrapping and fallback glyph placement',asyn
 
 test('PDF raster honors hidden groups, product patterns, Enter, per-group spacing and line heights',async()=>{
  const original=globalThis.document,seen=[],rects=[];
- const context={letterSpacing:'0px',fillRect(...r){rects.push(r)},save(){},beginPath(){},rect(){},clip(){},restore(){},measureText(t){return{width:t.length*(10+parseFloat(this.letterSpacing))}},fillText(t,x,y){seen.push({t,x,y,font:this.font,tracking:parseFloat(this.letterSpacing)})}};
+ const context={letterSpacing:'0px',fillRect(...r){rects.push(r)},strokeRect(){},save(){},beginPath(){},rect(){},clip(){},restore(){},measureText(t){return{width:t.length*(10+parseFloat(this.letterSpacing))}},fillText(t,x,y){seen.push({t,x,y,font:this.font,tracking:parseFloat(this.letterSpacing)})}};
  globalThis.document={createElement(){return{getContext:()=>context,toBlob:cb=>cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}};
  try{
   const offer={...item(),displayName:'Arroz\nPremium',start:'2026-10-20',end:'2026-10-27'};
@@ -111,7 +111,7 @@ test('optional raster previews reuse exact embedded JPEGs and physical slots, cl
  const {renderPdfPreviewPage}=await import('../interno/promocoes/pdf.js');
  const original=globalThis.document,oldBitmap=globalThis.createImageBitmap,draws=[],decoded=[],dimensions=[];let closed=0;
  globalThis.createImageBitmap=async blob=>{decoded.push(new Uint8Array(await blob.arrayBuffer()));return{close(){closed++}}};
- globalThis.document={createElement(){return{getContext:()=>({fillRect(){},drawImage(...args){draws.push(args.slice(1))}}),toBlob(cb){dimensions.push([this.width,this.height]);cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}}};
+ globalThis.document={createElement(){return{getContext:()=>({fillRect(){},strokeRect(){},drawImage(...args){draws.push(args.slice(1))}}),toBlob(cb){dimensions.push([this.width,this.height]);cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}}};
  try{
   const group=planCampaignPdfs(campaign([item(1,3,'two-a4')]))[0],images=new Map(group.pages.flat().map(p=>[p.offer,jpeg]));
   const first=await renderPdfPreviewPage(group,group.pages[0],images);await renderPdfPreviewPage(group,group.pages[1],images);
@@ -120,4 +120,21 @@ test('optional raster previews reuse exact embedded JPEGs and physical slots, cl
   assert.deepEqual(draws[0],[.25*1200/297,0,148*1200/297,848]);
   assert.deepEqual(draws[1],[148.75*1200/297,0,148*1200/297,848]);assert.deepEqual(draws[2],draws[0]);
  }finally{globalThis.document=original;globalThis.createImageBitmap=oldBitmap;}
+});
+
+test('visible validity has an inset physical border and padded text; hidden validity has neither',async()=>{
+ const {validityFrame}=await import('../interno/cadastros/modelos-cartaz/model.js');
+ const original=globalThis.document,strokes=[],clips=[],draws=[];
+ const ctx={letterSpacing:'0px',fillRect(){},strokeRect(...rect){strokes.push({rect,width:this.lineWidth,color:this.strokeStyle})},save(){},beginPath(){},rect(...rect){clips.push(rect)},clip(){},restore(){},measureText:t=>({width:t.length*10}),fillText(...args){draws.push(args)}};
+ globalThis.document={createElement(){return{getContext:()=>ctx,toBlob:cb=>cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}};
+ try{
+  const offer={...item(),start:'2026-10-20',end:'2026-10-27'};await renderPosterJpeg(offer);
+  const t=offer.templateSnapshot,e=t.layout.validity,r=300/25.4,frame=validityFrame(t),stroke=frame.widthMm*r,inset=(frame.widthMm+frame.paddingMm)*r;
+  const box={x:5*r+e.x*138*r,y:5*r+e.y*200*r,w:e.w*138*r,h:e.h*200*r};
+  assert.equal(strokes.length,1);assert.equal(strokes[0].color,t.color);assert.equal(strokes[0].width,.35*r);
+  const expected=[box.x+stroke/2,box.y+stroke/2,box.w-stroke,box.h-stroke];expected.forEach((v,i)=>assert.ok(Math.abs(strokes[0].rect[i]-v)<.00001));
+  const inner=clips.at(-1);[box.x+inset,box.y+inset,box.w-2*inset,box.h-2*inset].forEach((v,i)=>assert.ok(Math.abs(inner[i]-v)<.00001));
+  const text=draws.find(d=>d[0].startsWith('Válido'));assert.ok(text);assert.ok(text[2]>inner[1]&&text[2]<inner[1]+inner[3]);
+  strokes.length=0;draws.length=0;e.hidden=true;await renderPosterJpeg(offer);assert.equal(strokes.length,0);assert.ok(!draws.some(d=>d[0].startsWith('Válido')));
+ }finally{globalThis.document=original;}
 });
