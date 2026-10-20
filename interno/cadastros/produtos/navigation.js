@@ -1,0 +1,2 @@
+export function productRoute(hash){const [path,query='']=hash.replace(/^#/,'').split('?');const params=new URLSearchParams(query);let id='';try{id=decodeURIComponent(path.split('/')[2]||'');}catch{}return {id,query:params.get('q')||'',category:params.get('category')||''};}
+export function productHref(id='',filters={}){const params=new URLSearchParams();if(filters.query)params.set('q',filters.query);if(filters.category)params.set('category',filters.category);return `#cadastros/produtos${id?'/'+encodeURIComponent(id):''}${params.size?'?'+params:''}`;}
