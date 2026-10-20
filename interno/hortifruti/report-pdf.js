@@ -9,6 +9,10 @@ export function reportDecimal(value,places=6,minPlaces=0){
  let fraction=digits.slice(-places);while(fraction.length>minPlaces&&fraction.endsWith('0'))fraction=fraction.slice(0,-1);
  return whole+(fraction?','+fraction:'');
 }
+export function reportWeight(value){
+ if(value==null)return '';safeNumber(value,'Peso');
+ return reportDecimal(Number((BigInt(value)+5000n)/10000n),2,2);
+}
 export const reportMoney=value=>value==null?'':`R$ ${reportDecimal(value,2,2)}`;
 export function normalizeReportOrder(order){
  if(!order||(order.date!==''&&!validDate(order.date))||!order.partner||typeof order.partner.name!=='string')throw Error('Informe data e parceiro válidos para o relatório.');
@@ -62,7 +66,7 @@ export async function generateOrderReportPdfs(input){
   for(const item of order.items){
    font(ctx,21);const names=wrap(ctx,item.name,columns[1]-columns[0]-24);
    const pending=item.boxesIncomplete?'Pesagem das caixas incompleta':null;if(pending)names.push(pending);
-   const values=[item.reportQuantity==null?'':String(item.reportQuantity),reportDecimal(item.quantityMicros),item.unitMicros==null?'':`R$ ${reportDecimal(item.unitMicros,6,2)}`,reportMoney(item.totalCents)];
+   const values=[item.reportQuantity==null?'':String(item.reportQuantity),reportWeight(item.quantityMicros),item.unitMicros==null?'':`R$ ${reportDecimal(item.unitMicros,6,2)}`,reportMoney(item.totalCents)];
    font(ctx,19);const cells=values.map((v,i)=>wrap(ctx,v,columns[i+2]-columns[i+1]-20));
    const lines=Math.max(names.length,...cells.map(c=>c.length)),height=lines*29+22;
    await need(height);

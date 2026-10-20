@@ -4,13 +4,23 @@ import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {reportMoney,reportDecimal,normalizeReportOrder,generateOrderReportPdfs} from '../interno/hortifruti/report-pdf.js';
+import {reportMoney,reportDecimal,reportWeight,normalizeReportOrder,generateOrderReportPdfs} from '../interno/hortifruti/report-pdf.js';
 const item=()=>({productId:'p',name:'Tomate italiano',unitSymbol:'KG',unitCount:4,quantityMicros:12500000,unitMicros:3333333,totalCents:4167});
 const order=()=>({id:'compra-1',date:'2026-10-20',partner:{name:'Horta São José'},status:'pending',notes:'Entregar pela manhã.\nConferir as caixas.',items:[item()]});
 test('report exact monetary precision, nullable costs and local calendar date',()=>{
  assert.equal(reportMoney(4167),'R$ 41,67');assert.equal(reportMoney(null),'');assert.equal(reportDecimal(null),'');assert.equal(reportDecimal(3333333,6,2),'3,333333');assert.equal(reportDecimal(12500000),'12,5');assert.equal(reportMoney(123456789),'R$ 1.234.567,89');
  const o=order();o.items.push({...item(),quantityMicros:null,unitMicros:null,totalCents:null});const normalized=normalizeReportOrder(o);assert.equal(normalized.totalCents,4167);assert.equal(normalized.incomplete,1);assert.equal(normalized.date,'2026-10-20');
  o.items=[{...item(),quantityMicros:null,unitMicros:null,totalCents:null}];assert.equal(normalizeReportOrder(o).totalCents,null);
+});
+test('report kg weights always show two decimals without changing stored micros or unit cost precision',()=>{
+ assert.equal(reportWeight(12500000),'12,50');assert.equal(reportWeight(100000000),'100,00');
+ assert.equal(reportWeight(12345000),'12,35');assert.equal(reportWeight(12344999),'12,34');
+ assert.equal(reportWeight(999999),'1,00');assert.equal(reportWeight(0),'0,00');
+ assert.equal(reportWeight(null),'');assert.equal(reportWeight(undefined),'');assert.equal(reportWeight(1234567890),'1.234,57');
+ assert.throws(()=>reportWeight(-1),/Peso/);
+ const o=order();o.items[0].quantityMicros=12345678;const normalized=normalizeReportOrder(o);
+ assert.equal(normalized.items[0].quantityMicros,12345678);assert.equal(o.items[0].quantityMicros,12345678);
+ assert.equal(reportDecimal(normalized.items[0].unitMicros,6,2),'3,333333');
 });
 test('report quantity uses actual box count or manual units and keeps missing snapshot values blank',()=>{
  const o=order();o.items=[
@@ -57,7 +67,7 @@ test('all unknown values and subtotal render blank, while known subtotal is labe
   const [blankHeader]=await generateOrderReportPdfs(o);assert.equal(blankHeader.name,'hortifruti-compra-1.pdf');assert.ok(texts.includes('Parceiro: '));assert.ok(texts.includes('Data:   ·  Pendente'));
   const start=texts.indexOf('Tomate italiano');assert.deepEqual(texts.slice(start+1,start+5),['','','','']);
   assert.equal(texts[texts.indexOf('SUBTOTAL PARCIAL')+1],'');assert.ok(!texts.some(t=>t.includes('R$')));
-  texts.length=0;await generateOrderReportPdfs(order());assert.ok(texts.includes('SUBTOTAL'));assert.ok(!texts.includes('SUBTOTAL PARCIAL'));
+  texts.length=0;await generateOrderReportPdfs(order());assert.ok(texts.includes('SUBTOTAL'));assert.ok(!texts.includes('SUBTOTAL PARCIAL'));assert.ok(texts.includes('12,50'));assert.ok(texts.includes('R$ 3,333333'));
  }finally{globalThis.document=original;globalThis.createImageBitmap=oldBitmap;}
 });
 test('real Horti report JPEG PDF parses and renders with readable pending report',{skip:!process.env.CANVAS_MODULE_PATH},async()=>{
