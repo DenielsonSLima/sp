@@ -61,3 +61,63 @@ test('browser raster export loads chosen fonts, caps pixels, returns real PDF bl
   assert.ok(canvases.at(-1)[0]/420*25.4>=150);
  }finally{globalThis.document=old;}
 });
+
+test('campaign displayName preserves Enter and snapshot export survives an empty gallery',async()=>{
+ const {wrapPosterText}=await import('../interno/promocoes/pdf.js');
+ const {templates}=await import('../interno/cadastros/modelos-cartaz/model.js');
+ const saved=[...templates],input=item();input.displayName='Arroz\n\nPremium 1 kg';
+ try{templates.splice(0);const g=planCampaignPdfs(campaign([input]))[0];assert.equal(g.pages[0][0].offer.displayName,input.displayName);assert.equal(g.widthMm,148);}finally{templates.splice(0,templates.length,...saved);}
+ const ctx={measureText:t=>({width:t.length*10})};
+ assert.deepEqual(wrapPosterText(ctx,'ARROZ\n\nPREMIUM 1 KG',200),['ARROZ','','PREMIUM 1 KG']);
+ assert.deepEqual(wrapPosterText(ctx,'ARROZ\r\nBRANCO',200),['ARROZ','BRANCO']);
+ assert.deepEqual(wrapPosterText(ctx,'ARROZ PREMIUM\n1 KG',70),['ARROZ','PREMIUM','1 KG']);
+ assert.throws(()=>planCampaignPdfs(campaign([{...item(),displayName:123}])),/Texto/);
+});
+
+test('letter spacing participates in wrapping and fallback glyph placement',async()=>{
+ const {measureTrackedText,drawTrackedText,wrapPosterText}=await import('../interno/promocoes/pdf.js');
+ const calls=[],ctx={textAlign:'center',measureText:t=>({width:t.length*10}),fillText:(...args)=>calls.push(args)};
+ assert.equal(measureTrackedText(ctx,'ABCD',2),48);
+ assert.deepEqual(wrapPosterText(ctx,'ABCD',25,2),['AB','CD']);
+ drawTrackedText(ctx,'AB',100,50,2);assert.deepEqual(calls,[['A',88,50],['B',100,50]]);assert.equal(ctx.textAlign,'center');
+ const native={letterSpacing:'0px',measureText(t){return{width:t.length*(10+parseFloat(this.letterSpacing))}},fillText(){assert.equal(this.letterSpacing,'-1px')}};
+ assert.equal(measureTrackedText(native,'9999',-1),36);drawTrackedText(native,',99',0,0,-1);assert.equal(native.letterSpacing,'0px');
+});
+
+test('PDF raster honors hidden groups, product patterns, Enter, per-group spacing and line heights',async()=>{
+ const original=globalThis.document,seen=[],rects=[];
+ const context={letterSpacing:'0px',fillRect(...r){rects.push(r)},save(){},beginPath(){},rect(){},clip(){},restore(){},measureText(t){return{width:t.length*(10+parseFloat(this.letterSpacing))}},fillText(t,x,y){seen.push({t,x,y,font:this.font,tracking:parseFloat(this.letterSpacing)})}};
+ globalThis.document={createElement(){return{getContext:()=>context,toBlob:cb=>cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}};
+ try{
+  const offer={...item(),displayName:'Arroz\nPremium',start:'2026-10-20',end:'2026-10-27'};
+  offer.templateSnapshot.productText='{{produto}}\n1 KG';
+  offer.templateSnapshot.layout.headline.hidden=true;offer.templateSnapshot.layout.validity.hidden=true;
+  Object.assign(offer.templateSnapshot.layout.product,{lineHeight:2,letterSpacing:.2});
+  Object.assign(offer.templateSnapshot.layout.price,{lineHeight:1.5,letterSpacing:-.05});
+  await renderPosterJpeg(offer);
+  assert.ok(!seen.some(v=>v.t==='OFERTA'||v.t.startsWith('Válido')));
+  const lines=['ARROZ','PREMIUM','1 KG'].map(t=>seen.find(v=>v.t===t));assert.ok(lines.every(Boolean));
+  const productSize=138*300/25.4*.085;
+  assert.ok(Math.abs(lines[1].y-lines[0].y-productSize*2)<.00001);assert.ok(Math.abs(lines[0].tracking-productSize*.2)<.00001);
+  const priceSize=138*300/25.4*.29,integer=seen.find(v=>v.t==='4'),cents=seen.find(v=>v.t===',99'),unit=seen.find(v=>v.t==='KG');
+  assert.ok(Math.abs(integer.tracking+priceSize*.05)<.00001);assert.ok(Math.abs(cents.tracking+priceSize*.5*.05)<.00001);
+  assert.ok(Math.abs(cents.y-integer.y-priceSize*.025)<.00001);assert.ok(Math.abs(unit.y-integer.y-priceSize*(.1167+.525*1.5))<.00001);
+  assert.ok(Math.abs(rects.at(-1)[1]-integer.y-priceSize*(.065+.525*1.5))<.00001);
+  seen.length=0;Object.values(offer.templateSnapshot.layout).forEach(e=>e.hidden=true);await renderPosterJpeg(offer);assert.equal(seen.length,0);
+ }finally{globalThis.document=original;}
+});
+
+test('optional raster previews reuse exact embedded JPEGs and physical slots, close bitmaps',async()=>{
+ const {renderPdfPreviewPage}=await import('../interno/promocoes/pdf.js');
+ const original=globalThis.document,oldBitmap=globalThis.createImageBitmap,draws=[],decoded=[],dimensions=[];let closed=0;
+ globalThis.createImageBitmap=async blob=>{decoded.push(new Uint8Array(await blob.arrayBuffer()));return{close(){closed++}}};
+ globalThis.document={createElement(){return{getContext:()=>({fillRect(){},drawImage(...args){draws.push(args.slice(1))}}),toBlob(cb){dimensions.push([this.width,this.height]);cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}}};
+ try{
+  const group=planCampaignPdfs(campaign([item(1,3,'two-a4')]))[0],images=new Map(group.pages.flat().map(p=>[p.offer,jpeg]));
+  const first=await renderPdfPreviewPage(group,group.pages[0],images);await renderPdfPreviewPage(group,group.pages[1],images);
+  assert.equal(first.type,'image/jpeg');assert.deepEqual(dimensions,[[1200,848],[1200,848]]);assert.equal(closed,3);
+  assert.ok(decoded.every(b=>b.every((v,i)=>v===jpeg.bytes[i])));
+  assert.deepEqual(draws[0],[.25*1200/297,0,148*1200/297,848]);
+  assert.deepEqual(draws[1],[148.75*1200/297,0,148*1200/297,848]);assert.deepEqual(draws[2],draws[0]);
+ }finally{globalThis.document=original;globalThis.createImageBitmap=oldBitmap;}
+});

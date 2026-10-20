@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {templates,defaultTemplates,defaultLayout,normalizeTemplate,validateElement,constrainElement,createTemplate,saveTemplate,validateOffer,offerTemplate,parseTemplates,serializeTemplates,loadTemplates,STORAGE_KEY,posterMarkup,miniMarkup,sheetsMarkup,sampleOffer,paperStyle} from '../interno/cadastros/modelos-cartaz/model.js';
+import {templates,defaultTemplates,defaultLayout,normalizeTemplate,validateElement,constrainElement,createTemplate,saveTemplate,deleteTemplate,resolveProductText,validateOffer,offerTemplate,parseTemplates,serializeTemplates,loadTemplates,STORAGE_KEY,posterMarkup,miniMarkup,sheetsMarkup,sampleOffer,paperStyle} from '../interno/cadastros/modelos-cartaz/model.js';
 const clone=value=>JSON.parse(JSON.stringify(value));
 const storage=()=>{const values=new Map();return {getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};};
 const input=id=>({productId:'rice',price:'14,99',unit:'kg',start:'2026-10-20',end:'2026-10-27',templateId:id});
@@ -52,9 +52,9 @@ test('valid storage round-trips custom styles and strips unknown properties',()=
 });
 test('malformed persisted state never replaces available models',()=>{
  reset();const previous=serializeTemplates(templates),valid=defaultTemplates();
- const values=['{','null','[]',JSON.stringify({version:99,templates:valid}),JSON.stringify({version:1,templates:[]}),JSON.stringify({version:1,templates:[valid[0],valid[0]]}),JSON.stringify({version:1,templates:[{...valid[0],id:'__proto__'}]}),JSON.stringify({version:1,templates:[{...valid[0],widthMm:9999}]}),JSON.stringify({version:1,templates:[{...valid[0],layout:{}}]}),JSON.stringify({version:1,templates:[{...valid[0],color:'red;display:none'}]}),'x'.repeat(300001)];
+ const values=['{','null','[]',JSON.stringify({version:99,templates:valid}),JSON.stringify({version:1,templates:[valid[0],valid[0]]}),JSON.stringify({version:1,templates:[{...valid[0],id:'__proto__'}]}),JSON.stringify({version:1,templates:[{...valid[0],widthMm:9999}]}),JSON.stringify({version:1,templates:[{...valid[0],layout:{}}]}),JSON.stringify({version:1,templates:[{...valid[0],color:'red;display:none'}]}),'x'.repeat(300001)];
  for(const value of values){assert.throws(()=>parseTemplates(value));const db=storage();db.setItem(STORAGE_KEY,value);const result=loadTemplates(db);assert.equal(result.loaded,false);assert.ok(result.warning);assert.equal(serializeTemplates(templates),previous);}
- assert.throws(()=>serializeTemplates([]));assert.throws(()=>serializeTemplates([valid[0],valid[0]]));
+ assert.deepEqual(parseTemplates(serializeTemplates([])),[]);assert.throws(()=>serializeTemplates([valid[0],valid[0]]));
 });
 test('failed storage writes preserve both existing templates and the editor draft',()=>{
  reset();const before=serializeTemplates(templates),draft=clone(templates[0]);draft.name='Alteração pendente';draft.layout.price.fontFamily='Georgia';
@@ -88,4 +88,47 @@ test('drag percentages and persisted fractional font sizes do not trigger native
  const template=defaultTemplates()[0];template.layout.product={...template.layout.product,x:.1234,w:.7654,fontSize:8.55};
  const clean=normalizeTemplate(template);assert.equal(clean.layout.product.x*100,12.34);assert.equal(clean.layout.product.fontSize,8.55);
  for(const name of ['x','y','w','h','fontSize'])assert.ok(source.includes(`field('${name}'`));
+});
+
+test('legacy snapshots migrate independent spacing and visibility defaults without losing layout',()=>{
+ const legacy=defaultTemplates()[0];delete legacy.productText;
+ for(const element of Object.values(legacy.layout)){delete element.hidden;delete element.letterSpacing;delete element.lineHeight;}
+ const clean=normalizeTemplate(legacy);assert.equal(clean.productText,'{{produto}}');assert.equal(clean.layout.headline.letterSpacing,.1);assert.equal(clean.layout.headline.lineHeight,1.1);assert.equal(clean.layout.product.lineHeight,1.08);assert.equal(clean.layout.price.lineHeight,1);assert.equal(clean.layout.validity.lineHeight,1.4);
+ for(const element of Object.values(clean.layout))assert.equal(element.hidden,false);
+ assert.equal(clean.layout.product.x,.04);
+});
+test('independent letter spacing and line height are bounded and persist per group',()=>{
+ reset();const db=storage(),draft=defaultTemplates()[0];
+ draft.layout.product.letterSpacing=.12;draft.layout.product.lineHeight=1.65;draft.layout.price.letterSpacing=-.04;draft.layout.price.lineHeight=1.2;
+ const saved=saveTemplate('small',draft,db),loaded=parseTemplates(db.getItem(STORAGE_KEY))[0];assert.deepEqual(loaded.layout,saved.layout);assert.equal(saved.layout.headline.letterSpacing,.1);assert.equal(saved.layout.validity.lineHeight,1.4);
+ for(const change of [{letterSpacing:-.11},{letterSpacing:.51},{letterSpacing:Infinity},{letterSpacing:''},{lineHeight:.69},{lineHeight:3.01},{lineHeight:NaN},{hidden:'true'}])assert.throws(()=>validateElement({...draft.layout.product,...change}));
+ const markup=posterMarkup(sampleOffer('small'),saved);assert.match(markup,/--element-letter-spacing:0.12;--element-line-height:1.65/);reset();
+});
+test('removing and restoring a group preserves all its properties and previous campaign snapshots',()=>{
+ reset();const db=storage(),offer=validateOffer(input('small'),products),draft=clone(templates[0]),geometry=clone(draft.layout.product);
+ draft.layout.product.hidden=true;const removed=saveTemplate('small',draft,db);assert.ok(!posterMarkup(sampleOffer('small'),removed).includes('data-poster-element="product"'));assert.ok(posterMarkup(offer).includes('data-poster-element="product"'));assert.equal(parseTemplates(db.getItem(STORAGE_KEY))[0].layout.product.hidden,true);
+ removed.layout.product.hidden=false;const restored=saveTemplate('small',removed,db);assert.deepEqual(restored.layout.product,geometry);assert.ok(posterMarkup(sampleOffer('small'),restored).includes('data-poster-element="product"'));reset();
+});
+test('deleting models is atomic and deleting the last one persists a valid empty gallery',()=>{
+ reset();const db=storage(),offer=validateOffer(input('small'),products),before=serializeTemplates(templates);
+ assert.throws(()=>deleteTemplate('small',{setItem:()=>{throw Error('blocked');}}));assert.equal(serializeTemplates(templates),before);
+ assert.throws(()=>deleteTemplate('unknown',db));
+ for(const template of [...templates])deleteTemplate(template.id,db);
+ assert.equal(templates.length,0);assert.deepEqual(parseTemplates(db.getItem(STORAGE_KEY)),[]);assert.match(sheetsMarkup([offer]),/size:105mm 148mm/);
+ reset();assert.equal(loadTemplates(db).loaded,true);assert.equal(templates.length,0);
+ const created=createTemplate({name:'Primeiro novo modelo'},db);assert.equal(templates.length,1);assert.equal(templates[0].id,created.id);reset();
+});
+test('multiline template content preserves the live product variable and optional campaign display name',()=>{
+ const template=normalizeTemplate({...defaultTemplates()[0],headline:'OFERTA\nESPECIAL',productText:'SELEÇÃO\n{{produto}}\nDA SEMANA'});
+ const offer={...sampleOffer(template.id),name:'Arroz branco 1 kg',displayName:'Arroz branco\n1 kg'};
+ assert.equal(resolveProductText(offer,template),'SELEÇÃO\nArroz branco\n1 kg\nDA SEMANA');assert.equal(offer.name,'Arroz branco 1 kg');
+ const other={...offer,name:'Feijão carioca 1 kg',displayName:''};assert.match(resolveProductText(other,template),/Feijão carioca 1 kg/);assert.ok(!resolveProductText(other,template).includes('Arroz'));
+ assert.throws(()=>normalizeTemplate({...template,productText:'Arroz fixo'}));assert.throws(()=>normalizeTemplate({...template,productText:'x'.repeat(301)+'{{produto}}'}));
+ const html=posterMarkup({...offer,displayName:'<script>\nproduto'},template);assert.match(html,/OFERTA\nESPECIAL/);assert.match(html,/&lt;script&gt;\nproduto/);assert.ok(!html.includes('<script>'));assert.equal(normalizeTemplate({...template,headline:'A\r\nB'}).headline,'A\nB');
+});
+test('editor offers reversible group removal, multiline fields, delete confirmation and empty-state recovery',async()=>{
+ const editor=await readFile(new URL('../interno/cadastros/modelos-cartaz/editor.js',import.meta.url),'utf8'),gallery=await readFile(new URL('../interno/cadastros/modelos-cartaz/index.js',import.meta.url),'utf8'),css=await readFile(new URL('../interno/cadastros/modelos-cartaz/styles.css',import.meta.url),'utf8');
+ for(const token of ['data-toggle-element','Restaurar elemento','Remover elemento',"['Delete','Backspace']",'confirmTemplateDeletion','data-delete-cancel','data-delete-confirm','textarea name="headline"','textarea name="productText"',"field('letterSpacing'","field('lineHeight'",'textarea:not(:disabled)','onDeleted?.(removed)'])assert.ok(editor.includes(token),token);
+ for(const token of ['onDeleted:deleted','data-delete-template','Nenhum modelo cadastrado','data-empty-create'])assert.ok(gallery.includes(token),token);
+ assert.match(css,/white-space:pre-wrap/);assert.match(css,/letter-spacing:calc\(var\(--element-letter-spacing\)\*1em\)/);assert.match(css,/line-height:var\(--element-line-height\)/);assert.match(css,/poster-editor-actions\{display:flex;flex-wrap:wrap/);assert.match(css,/poster-editor-properties textarea\{/);assert.match(css,/poster-object\[hidden\]\{display:none/);
 });

@@ -8,8 +8,10 @@ const clone=value=>JSON.parse(JSON.stringify(value));
 const own=(object,key)=>Object.hasOwn(object,key);
 const number=(value,label)=>{if(value===''||value===null||typeof value==='boolean'||!Number.isFinite(Number(value)))throw Error(`${label} inválido.`);return Number(value);};
 const validId=id=>typeof id==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(id)&&!['__proto__','constructor','prototype','toString'].includes(id);
+export const TEXT_DEFAULTS=Object.freeze({headline:{letterSpacing:.1,lineHeight:1.1},product:{letterSpacing:0,lineHeight:1.08},price:{letterSpacing:0,lineHeight:1},validity:{letterSpacing:0,lineHeight:1.4}});
 export function defaultLayout(font='Arial'){
- return {headline:{x:.05,y:.02,w:.9,h:.1,fontSize:4,fontFamily:font,align:'center'},product:{x:.04,y:.17,w:.92,h:.25,fontSize:8.5,fontFamily:font,align:'center'},price:{x:.04,y:.43,w:.92,h:.36,fontSize:29,fontFamily:font,align:'center'},validity:{x:.04,y:.86,w:.92,h:.1,fontSize:2.5,fontFamily:font,align:'center'}};
+ const layout={headline:{x:.05,y:.02,w:.9,h:.1,fontSize:4,fontFamily:font,align:'center'},product:{x:.04,y:.17,w:.92,h:.25,fontSize:8.5,fontFamily:font,align:'center'},price:{x:.04,y:.43,w:.92,h:.36,fontSize:29,fontFamily:font,align:'center'},validity:{x:.04,y:.86,w:.92,h:.1,fontSize:2.5,fontFamily:font,align:'center'}};
+ return Object.fromEntries(Object.entries(layout).map(([key,value])=>[key,{...value,hidden:false,...TEXT_DEFAULTS[key]}]));
 }
 export function validateElement(input){
  if(!input||typeof input!=='object'||Array.isArray(input))throw Error('Elemento inválido.');
@@ -17,7 +19,11 @@ export function validateElement(input){
  if(item.x<0||item.y<0||item.w<.08||item.h<.035||item.x+item.w>1.000001||item.y+item.h>1.000001)throw Error('Mantenha o elemento dentro da folha. Largura mínima: 8%; altura mínima: 3,5%.');
  if(item.fontSize<1.5||item.fontSize>55)throw Error('Use fonte entre 1,5 e 55% da largura útil.');
  if(!FONTS.includes(input.fontFamily)||!['left','center','right'].includes(input.align))throw Error('Fonte ou alinhamento inválido.');
- return {...item,fontFamily:input.fontFamily,align:input.align};
+ const hidden=input.hidden===undefined?false:input.hidden;if(typeof hidden!=='boolean')throw Error('Visibilidade do elemento inválida.');
+ const letterSpacing=number(input.letterSpacing===undefined?0:input.letterSpacing,'Espaçamento entre letras'),lineHeight=number(input.lineHeight===undefined?1:input.lineHeight,'Espaçamento entre linhas');
+ if(letterSpacing<-.1||letterSpacing>.5)throw Error('Use espaçamento entre letras de -0,1 a 0,5 em.');
+ if(lineHeight<.7||lineHeight>3)throw Error('Use espaçamento entre linhas de 0,7 a 3.');
+ return {...item,fontFamily:input.fontFamily,align:input.align,hidden,letterSpacing,lineHeight};
 }
 export function constrainElement(input,change){
  const next={...input,...change};for(const key of ['x','y','w','h'])next[key]=number(next[key],'Posição ou tamanho');
@@ -36,26 +42,33 @@ export function templateSettings(input){
  if(heightMm<=widthMm)throw Error('O cartaz deve ficar em retrato: a altura precisa ser maior que a largura.');
  const source=input.layout===undefined?defaultLayout(input.font):input.layout;
  if(!source||typeof source!=='object'||Array.isArray(source))throw Error('Layout inválido.');
- const layout={};for(const key of Object.keys(ELEMENTS)){if(!own(source,key))throw Error('O modelo precisa dos quatro elementos.');layout[key]=validateElement(source[key]);}
+ const layout={};for(const key of Object.keys(ELEMENTS)){if(!own(source,key))throw Error('O modelo precisa dos quatro elementos.');layout[key]=validateElement({...TEXT_DEFAULTS[key],...source[key]});}
  return {color:input.color,background:input.background,font:input.font,scale,widthMm,heightMm,layout};
+}
+function multilineText(value,max,label){
+ if(typeof value!=='string')throw Error(`Texto de ${label} inválido.`);
+ const text=value.replace(/\r\n?/g,'\n').replace(/\t/g,' ');
+ if(!text.trim()||text.length>max||/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(text))throw Error(`Informe ${label} com até ${max} caracteres.`);
+ return text;
 }
 export function normalizeTemplate(input){
  if(!input||!validId(input.id))throw Error('Identificador do modelo inválido.');
  const name=typeof input.name==='string'?input.name.trim():'';
  if(!name||name.length>60||/[\u0000-\u001f]/.test(name))throw Error('Informe um nome de até 60 caracteres.');
- const headline=input.headline===undefined?'OFERTA':String(input.headline).trim();
- if(!headline||headline.length>40)throw Error('Informe uma chamada de até 40 caracteres.');
- return {id:input.id,name,headline,...templateSettings(input)};
+ const headline=multilineText(input.headline===undefined?'OFERTA':input.headline,120,'chamada');
+ const productText=multilineText(input.productText===undefined?'{{produto}}':input.productText,300,'texto do produto');
+ if(!productText.includes('{{produto}}'))throw Error('Mantenha {{produto}} no texto para usar o nome real de cada produto.');
+ return {id:input.id,name,headline,productText,...templateSettings(input)};
 }
 export function defaultTemplates(){return Object.entries(SIZES).map(([id,s])=>normalizeTemplate({id,name:s.label,headline:'OFERTA',widthMm:s.widthMm,heightMm:s.heightMm,color:id==='large'?'#151515':'#c51d2b',background:id==='small'?'#fff9dd':id==='medium'?'#ffffff':'#fff159',font:'Arial',scale:1}));}
 export function parseTemplates(serialized){
  if(typeof serialized!=='string'||serialized.length>300000)throw Error('Arquivo de modelos inválido.');
  const data=JSON.parse(serialized);
- if(!data||data.version!==1||!Array.isArray(data.templates)||!data.templates.length||data.templates.length>100)throw Error('Arquivo de modelos inválido.');
+ if(!data||data.version!==1||!Array.isArray(data.templates)||data.templates.length>100)throw Error('Arquivo de modelos inválido.');
  const result=data.templates.map(normalizeTemplate);if(new Set(result.map(t=>t.id)).size!==result.length)throw Error('Modelos duplicados.');return result;
 }
 export function serializeTemplates(items){
- if(!Array.isArray(items)||!items.length||items.length>100)throw Error('Lista de modelos inválida.');
+ if(!Array.isArray(items)||items.length>100)throw Error('Lista de modelos inválida.');
  const clean=items.map(normalizeTemplate);if(new Set(clean.map(t=>t.id)).size!==clean.length)throw Error('Modelos duplicados.');
  return JSON.stringify({version:1,templates:clean});
 }
@@ -78,6 +91,10 @@ export function saveTemplate(id,input,storage){
  const index=templates.findIndex(t=>t.id===id);if(index<0)throw Error('Modelo inválido.');
  const saved=normalizeTemplate({...templates[index],...input,id});const next=templates.map((t,i)=>i===index?saved:t);commitTemplates(next,storage);return clone(saved);
 }
+export function deleteTemplate(id,storage){
+ const existing=templates.find(t=>t.id===id);if(!existing)throw Error('Modelo inválido.');
+ commitTemplates(templates.filter(t=>t.id!==id),storage);return clone(existing);
+}
 export function createTemplate(input,storage){
  if(templates.length>=100)throw Error('Limite de 100 modelos neste navegador.');
  const id=`poster-${globalThis.crypto?.randomUUID?.()??`${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`}`;
@@ -97,13 +114,19 @@ export function validateOffer(input,products){
 export function paginate(offers,size){if(!templates.some(t=>t.id===size))throw Error('Tamanho inválido.');return offers.map(offer=>[offer]);}
 const dateLabel=value=>value.split('-').reverse().join('/');
 const percent=value=>Number((value*100).toFixed(4));
-export function elementStyle(element){const e=validateElement(element);return `left:${percent(e.x)}%;top:${percent(e.y)}%;width:${percent(e.w)}%;height:${percent(e.h)}%;--element-size:${e.fontSize};--element-font:${e.fontFamily};--element-justify:${{left:'flex-start',center:'center',right:'flex-end'}[e.align]};text-align:${e.align}`;}
+export function elementStyle(element){const e=validateElement(element);return `left:${percent(e.x)}%;top:${percent(e.y)}%;width:${percent(e.w)}%;height:${percent(e.h)}%;--element-size:${e.fontSize};--element-font:${e.fontFamily};--element-letter-spacing:${e.letterSpacing};--element-line-height:${e.lineHeight};--element-justify:${{left:'flex-start',center:'center',right:'flex-end'}[e.align]};text-align:${e.align}`;}
+export function resolveProductText(offer,template){
+ const name=typeof offer.displayName==='string'&&offer.displayName.trim()?offer.displayName:offer.name;
+ if(typeof name!=='string')throw Error('Nome do produto inválido.');
+ return (template.productText??'{{produto}}').replaceAll('{{produto}}',name);
+}
 export function posterMarkup(offer,template){
  const t=template?normalizeTemplate(template):offerTemplate(offer);
  if(!Number.isInteger(offer.cents)||offer.cents<1||offer.cents>999999||typeof offer.name!=='string'||!['kg','unid'].includes(offer.unit)||!validDate(offer.start)||!validDate(offer.end))throw Error('Cartaz inválido.');
- const amount=(offer.cents/100).toFixed(2).split('.'),nameScale=offer.name.length>65?.60:offer.name.length>35?.78:1;
+ const productText=resolveProductText(offer,t),amount=(offer.cents/100).toFixed(2).split('.'),nameScale=productText.length>65?.60:productText.length>35?.78:1;
  const attrs=key=>`data-poster-element="${key}" style="${esc(elementStyle(t.layout[key]))}"`;
- return `<article class="price-poster poster-${esc(t.id)}" style="--poster-ink:${esc(t.color)};--poster-paper:${esc(t.background)};--poster-font:${esc(t.font)};--poster-scale:${t.scale};--name-scale:${nameScale};--amount-scale:${offer.cents>=100000?.70:offer.cents>=10000?.85:1}"><div class="poster-element poster-kicker" ${attrs('headline')}>${esc(t.headline)}</div><h2 class="poster-element poster-product" ${attrs('product')}>${esc(offer.name)}</h2><div class="poster-element poster-price-area" ${attrs('price')}><div class="poster-price" role="img" aria-label="${esc(`R$ ${amount.join(',')} por ${offer.unit}`)}"><span class="poster-currency" aria-hidden="true">R$</span><strong class="poster-integer" aria-hidden="true">${amount[0]}</strong><div class="poster-price-side" aria-hidden="true"><span class="poster-cents">,${amount[1]}</span><span class="poster-unit">${offer.unit==='kg'?'KG':'UN'}</span></div></div></div><p class="poster-element poster-validity" ${attrs('validity')}>Válido de ${esc(dateLabel(offer.start))} até ${esc(dateLabel(offer.end))}</p></article>`;
+ const visible=(key,markup)=>t.layout[key].hidden?'':markup;
+ return `<article class="price-poster poster-${esc(t.id)}" style="--poster-ink:${esc(t.color)};--poster-paper:${esc(t.background)};--poster-font:${esc(t.font)};--poster-scale:${t.scale};--name-scale:${nameScale};--amount-scale:${offer.cents>=100000?.70:offer.cents>=10000?.85:1}">${visible('headline',`<div class="poster-element poster-kicker" ${attrs('headline')}>${esc(t.headline)}</div>`)}${visible('product',`<h2 class="poster-element poster-product" ${attrs('product')}>${esc(productText)}</h2>`)}${visible('price',`<div class="poster-element poster-price-area" ${attrs('price')}><div class="poster-price" role="img" aria-label="${esc(`R$ ${amount.join(',')} por ${offer.unit}`)}"><span class="poster-currency" aria-hidden="true">R$</span><strong class="poster-integer" aria-hidden="true">${amount[0]}</strong><div class="poster-price-side" aria-hidden="true"><span class="poster-cents">,${amount[1]}</span><span class="poster-unit">${offer.unit==='kg'?'KG':'UN'}</span></div></div></div>`)}${visible('validity',`<p class="poster-element poster-validity" ${attrs('validity')}>Válido de ${esc(dateLabel(offer.start))} até ${esc(dateLabel(offer.end))}</p>`)}</article>`;
 }
 export const paperStyle=t=>`--paper-ratio:${t.widthMm}/${t.heightMm};--inset-x:${(500/t.widthMm).toFixed(5)}%;--inset-y:${(500/t.heightMm).toFixed(5)}%`;
 export function miniMarkup(template){const t=normalizeTemplate(template);return `<div class="poster-mini-paper" style="${paperStyle(t)};--mini-width:${(226*t.widthMm/t.heightMm).toFixed(2)}px"><div class="poster-mini-content">${posterMarkup(sampleOffer(t.id),t)}</div></div>`;}
