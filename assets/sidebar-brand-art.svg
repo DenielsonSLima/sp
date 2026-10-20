@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="1080" viewBox="0 0 320 1080" preserveAspectRatio="none">
+<defs>
+ <linearGradient id="base" x1="0%" y1="0%" x2="80%" y2="100%"><stop stop-color="#c52331"/><stop offset=".38" stop-color="#991220"/><stop offset="1" stop-color="#580c19"/></linearGradient>
+ <linearGradient id="ribbon" x1="0%" y1="0%" x2="100%" y2="100%"><stop stop-color="#ff5a53" stop-opacity=".75"/><stop offset=".45" stop-color="#dc3340" stop-opacity=".45"/><stop offset="1" stop-color="#87071b" stop-opacity=".05"/></linearGradient>
+ <linearGradient id="edge" x2="100%" y2="50%"><stop stop-color="#ffb399" stop-opacity=".5"/><stop offset=".6" stop-color="#ff645f" stop-opacity=".2"/><stop offset="1" stop-color="#ff645f" stop-opacity="0"/></linearGradient>
+ <linearGradient id="gold" x2="100%" y2="100%"><stop stop-color="#fff8a0"/><stop offset=".35" stop-color="#ffe355"/><stop offset="1" stop-color="#c38418"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#f43e38" stop-opacity=".32"/><stop offset="1" stop-color="#a41424" stop-opacity="0"/></radialGradient>
+ <pattern id="grain" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".45" fill="#ffffff" opacity=".045"/></pattern>
+ <pattern id="groceries" width="96" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(-16)"><g fill="none" stroke="#ffb29b" stroke-width="1.1" opacity=".075"><path d="M8 23h5l4 16h20l4-12H15m4 17h.1m15 0h.1"/><path d="M64 82c-10-15 11-22 17-19 1 12-2 23-17 19m0 0 10-13"/><path d="m20 78 11-6 9 15-11 6zM31 77h.1"/></g></pattern>
+</defs>
+<path fill="url(#base)" d="M0 0h320v1080H0z"/>
+
+<path fill="url(#groceries)" d="M0 0h320v1080H0z"/>
+<!-- Sculpted folds are concentrated outside the navigation's reading area. -->
+<path d="M-100-10C110-25 250 26 377-70L371 40C217 143 116 65-33 135Z" fill="#510b1d" opacity=".24"/>
+<path d="M-100-38C108-43 227 15 355-65L353 15C200 115 98 45-38 113Z" fill="url(#ribbon)"/>
+<path d="M-35 112C100 45 204 114 353 15" fill="none" stroke="url(#edge)" stroke-width="2"/>
+<path d="M-43 260C44 175 34 100 158 52" fill="none" stroke="#ff7e6b" stroke-opacity=".12" stroke-width="20"/>
+<path d="M-28 258C48 170 35 103 163 49" fill="none" stroke="url(#edge)" stroke-width="1.2"/>
+<path d="M345 180C291 270 349 385 313 481S309 666 342 720" fill="none" stroke="#f75b51" stroke-opacity=".13" stroke-width="28"/>
+<path d="M331 187C286 283 339 384 307 481S300 659 331 717" fill="none" stroke="#ffad86" stroke-opacity=".15" stroke-width="1"/>
+<!-- Bottom sweep: translucent red layers, soft shadow and a warm edge. -->
+<path d="M-45 1140C0 880 225 1028 370 790L389 1090Z" fill="#310917" opacity=".4"/>
+<path d="M-51 1110C12 876 206 1001 369 783L374 861C243 1047 94 934 31 1121Z" fill="url(#ribbon)"/>
+<path d="M-50 1110C13 876 206 1001 369 783" fill="none" stroke="url(#edge)" stroke-width="2"/>
+<path d="M-28 1076C38 925 221 1066 363 906" fill="none" stroke="#e74646" stroke-opacity=".22" stroke-width="40"/>
+<path d="M-18 1071C55 943 218 1079 364 920" fill="none" stroke="#ffae80" stroke-opacity=".18" stroke-width="1.4"/>
+<g fill="url(#gold)"><circle cx="294" cy="142" r="7" opacity=".82"/><circle cx="305" cy="161" r="2.8" opacity=".55"/><circle cx="280" cy="157" r="2" opacity=".4"/><circle cx="23" cy="922" r="5.5" opacity=".7"/><circle cx="15" cy="939" r="2.3" opacity=".45"/></g>
+<circle cx="294" cy="142" r="12" fill="none" stroke="#ffdb56" opacity=".13"/>
+<path fill="url(#grain)" d="M0 0h320v1080H0z"/>
+</svg>

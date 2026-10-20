@@ -40,5 +40,8 @@
 @media(max-width:760px){.workspace{display:block}.sidebar{width:282px;top:72px;padding:26px 18px 20px;box-shadow:10px 0 35px #37030b33}.sidebar>.brand-logo{margin-top:25px;margin-bottom:12px}.sidebar-brandline{margin-bottom:25px}.sidebar .nav-item{min-height:48px;font-size:13px}.sidebar .nav-child{min-height:46px;font-size:12px}.topbar{height:72px;padding:0 16px;gap:12px}.topbar:before{height:3px}.breadcrumb{gap:10px}.breadcrumb strong{font-size:12px}.account{border:0;padding:0}.avatar{width:36px;height:36px;border-radius:10px;font-size:11px}.drawer-close{top:8px;right:10px}.nav-backdrop:not([hidden]){background:#27131b88;backdrop-filter:blur(3px)}.workspace-footer{font-size:9px}}
 @media(max-height:760px) and (min-width:761px){.sidebar{padding-top:18px}.sidebar>.brand-logo{margin-bottom:8px}.sidebar-brandline{margin-bottom:18px}.sidebar .nav-item{min-height:44px;margin:3px 0;padding-top:10px;padding-bottom:10px}.sidebar-bottom{padding-top:12px}}
 @media(prefers-reduced-motion:reduce){.sidebar,.sidebar .nav-item{transition:none}}
-/* Preserve the dark red navigation; decoration stays behind all controls. */
-.sidebar{background:radial-gradient(circle at 91% 24%,#ffd74360 0 3px,transparent 4px),radial-gradient(circle at 86% 26%,#ffd74330 0 2px,transparent 3px),radial-gradient(circle at 9% 85%,#ffd74345 0 3px,transparent 4px),linear-gradient(148deg,transparent 0 12%,#ffffff0a 12% 14%,transparent 14% 18%,#ffffff06 18% 20%,transparent 20% 72%,#ffd7430a 72% 73%,transparent 73% 79%,#ffffff08 79% 81%,transparent 81%),radial-gradient(ellipse at 12% 0%,#d52b32 0,transparent 46%),linear-gradient(165deg,#a6111d 0%,#890e19 55%,#630d17 100%)}
+/* Original layered artwork is a background, never a control or overlay. */
+.sidebar{background-color:#890e19;background-image:url('../assets/sidebar-brand-art.svg');background-size:100% 100%;background-repeat:no-repeat}
+
+.sidebar>.brand-logo img{transform:scale(.9);transform-origin:50% 130px}
+.sidebar>.brand-logo{margin-bottom:25px}
