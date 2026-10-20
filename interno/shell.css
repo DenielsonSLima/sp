@@ -45,3 +45,7 @@
 
 .sidebar>.brand-logo img{transform:scale(.9);transform-origin:50% 130px}
 .sidebar>.brand-logo{margin-bottom:25px}
+/* Slightly denser module rhythm; preserve readable labels and touch targets. */
+.sidebar .nav-item{min-height:44px;padding-top:10.8px;padding-bottom:10.8px;margin-top:4.5px;margin-bottom:4.5px}
+.sidebar .nav-child{padding-top:10.8px;padding-bottom:10.8px;min-height:44px}
+@media(max-height:760px) and (min-width:761px){.sidebar .nav-item{padding-top:9px;padding-bottom:9px;margin-top:2.7px;margin-bottom:2.7px}}
