@@ -40,18 +40,5 @@
 @media(max-width:760px){.workspace{display:block}.sidebar{width:282px;top:72px;padding:26px 18px 20px;box-shadow:10px 0 35px #37030b33}.sidebar>.brand-logo{margin-top:25px;margin-bottom:12px}.sidebar-brandline{margin-bottom:25px}.sidebar .nav-item{min-height:48px;font-size:13px}.sidebar .nav-child{min-height:46px;font-size:12px}.topbar{height:72px;padding:0 16px;gap:12px}.topbar:before{height:3px}.breadcrumb{gap:10px}.breadcrumb strong{font-size:12px}.account{border:0;padding:0}.avatar{width:36px;height:36px;border-radius:10px;font-size:11px}.drawer-close{top:8px;right:10px}.nav-backdrop:not([hidden]){background:#27131b88;backdrop-filter:blur(3px)}.workspace-footer{font-size:9px}}
 @media(max-height:760px) and (min-width:761px){.sidebar{padding-top:18px}.sidebar>.brand-logo{margin-bottom:8px}.sidebar-brandline{margin-bottom:18px}.sidebar .nav-item{min-height:44px;margin:3px 0;padding-top:10px;padding-bottom:10px}.sidebar-bottom{padding-top:12px}}
 @media(prefers-reduced-motion:reduce){.sidebar,.sidebar .nav-item{transition:none}}
-/* Light navigation card and layered brand bands soften the red frame. */
-.sidebar{background:linear-gradient(148deg,transparent 0 13%,#ffffff18 13% 16%,transparent 16% 22%,#ffe96b24 22% 23%,transparent 23% 72%,#ffffff10 72% 77%,transparent 77%),linear-gradient(170deg,#b92230,#951a28 60%,#751824)}
-.sidebar nav{background:#fffaf6;padding:9px;border:1px solid #ffffff70;border-radius:15px;box-shadow:0 7px 24px #500a1717}
-.sidebar .nav-item{color:#64545a;margin:3px 0;min-height:45px;font-size:12px;border-radius:8px}
-.sidebar .nav-item:hover{background:#f4eae6;color:#9a1b2b}
-.sidebar .nav-item.active{background:#fff0cf;color:#8c1726;box-shadow:inset 3px 0 #bd2230;font-weight:800}
-.sidebar .nav-item.active svg{color:#a71c2b}
-.sidebar .nav-child{color:#756168;border-left-color:#dbc9c7;font-size:11px}
-.sidebar .nav-child:hover{color:#9a1b2b;background:#f5eae6}
-.sidebar .nav-child.active{color:#981c2b;background:#f8e9df;border-left-color:#c52b35}
-.sidebar nav :is(a,button):focus-visible{outline-color:#941a28}
-.sidebar nav .nav-item.active:focus-visible{outline-color:#941a28}
-.sidebar-brandline{margin-bottom:20px}
-.sidebar-bottom{padding-top:10px}
-@media(max-width:760px){.sidebar .nav-item{min-height:48px;font-size:13px}.sidebar .nav-child{min-height:46px;font-size:12px}.sidebar-brandline{margin-bottom:20px}}
+/* Preserve the dark red navigation; decoration stays behind all controls. */
+.sidebar{background:radial-gradient(circle at 91% 24%,#ffd74360 0 3px,transparent 4px),radial-gradient(circle at 86% 26%,#ffd74330 0 2px,transparent 3px),radial-gradient(circle at 9% 85%,#ffd74345 0 3px,transparent 4px),linear-gradient(148deg,transparent 0 12%,#ffffff0a 12% 14%,transparent 14% 18%,#ffffff06 18% 20%,transparent 20% 72%,#ffd7430a 72% 73%,transparent 73% 79%,#ffffff08 79% 81%,transparent 81%),radial-gradient(ellipse at 12% 0%,#d52b32 0,transparent 46%),linear-gradient(165deg,#a6111d 0%,#890e19 55%,#630d17 100%)}
