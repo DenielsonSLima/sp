@@ -1,0 +1,134 @@
+[
+  {
+    "slug": "leite-integral-piracanjuba-1l",
+    "name": "Leite Integral Piracanjuba 1L",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/leite-integral-piracanjuba-1l.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/leite-integral-piracanjuba-1l",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/leite-integral-piracanjuba-1l-frente876x890px-1.webp"
+  },
+  {
+    "slug": "leite-semidesnatado-piracanjuba-1l",
+    "name": "Leite Semidesnatado Piracanjuba 1L",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/leite-semidesnatado-piracanjuba-1l.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/leite-semidesnatado-piracanjuba-1l",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/leite-semidesnatado-piracanjuba-1l-frente876x890px-43.webp"
+  },
+  {
+    "slug": "creme-de-leite-leve-piracanjuba-200g",
+    "name": "Creme de Leite Leve Piracanjuba 200g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/creme-de-leite-leve-piracanjuba-200g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/creme-de-leite-200-g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/creme-de-leite-leve-piracanjuba-200g-frente-876x890px-45.webp"
+  },
+  {
+    "slug": "creme-de-leite-piracanjuba-zero-lactose-200g",
+    "name": "Creme de Leite Piracanjuba Zero Lactose 200g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/creme-de-leite-piracanjuba-zero-lactose-200g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/creme-de-leite-zero-lactose-200-g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/creme-de-leite-zl-876x8901-49.webp"
+  },
+  {
+    "slug": "leite-condensado-semidesnatado-piracanjuba-395g",
+    "name": "Leite Condensado Semidesnatado Piracanjuba 395g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/leite-condensado-semidesnatado-piracanjuba-395g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/leite-condensado-semidesnatado-piracanjuba-395g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/leite-condensado-piracanjuba-semidesdatado-395g-frontal-876x890px-51.webp"
+  },
+  {
+    "slug": "leite-condensado-piracanjuba-zero-lactose-395g",
+    "name": "Leite Condensado Piracanjuba Zero Lactose 395g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/leite-condensado-piracanjuba-zero-lactose-395g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/leite-condensado-zero-lactose-395-g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/leite-condensado-zero-lactose-piracanjuba-395g-frontal-876x890px-54.webp"
+  },
+  {
+    "slug": "manteiga-com-sal-piracanjuba-200g",
+    "name": "Manteiga com Sal Piracanjuba 200g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/manteiga-com-sal-piracanjuba-200g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/manteiga-com-sal-piracanjuba-200g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/manteiga200-frente-57.webp"
+  },
+  {
+    "slug": "manteiga-sem-sal-piracanjuba-200g",
+    "name": "Manteiga sem Sal Piracanjuba 200g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/manteiga-sem-sal-piracanjuba-200g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/manteiga-sem-sal-piracanjuba-200g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/manteiga200-sem-sal-frente-59.webp"
+  },
+  {
+    "slug": "leite-em-po-integral-piracanjuba-200g",
+    "name": "Leite em Pó Integral Piracanjuba 200g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/leite-em-po-integral-piracanjuba-200g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/leite-em-po-integral-piracanjuba-200g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/lpi_200g_frente-101.webp"
+  },
+  {
+    "slug": "leite-em-po-integral-instantaneo-piracanjuba-200g",
+    "name": "Leite em Pó Integral Instantâneo Piracanjuba 200g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/leite-em-po-integral-instantaneo-piracanjuba-200g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/leite-em-po-integral-instantaneo-piracanjuba-200g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/lpi-insta_200g_frente-97.webp"
+  },
+  {
+    "slug": "queijo-de-coalho-piracanjuba-700g",
+    "name": "Queijo de Coalho Piracanjuba 700g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/queijo-de-coalho-piracanjuba-700g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/queijo-de-coalho-700-g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/queijo-coalho-piracanjuba-700g-876x890px-112.webp"
+  },
+  {
+    "slug": "manteiga-com-sal-piracanjuba-500g",
+    "name": "Manteiga com Sal Piracanjuba 500g",
+    "category": "Laticínios",
+    "unit": "UN",
+    "brand": "Piracanjuba",
+    "manufacturer": "Grupo Piracanjuba",
+    "asset": "./assets/catalogo/piracanjuba/manteiga-com-sal-piracanjuba-500g.webp",
+    "sourceUrl": "https://www.piracanjuba.com.br/produto/manteiga-com-sal-piracanjuba-500g",
+    "imageSourceUrl": "https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/products/thumb/manteiga500-frente-58.webp"
+  }
+]

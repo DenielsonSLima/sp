@@ -16,7 +16,7 @@ export function validateCanvasSize(width, height) {
 function safeImageSource(src) {
   if (typeof src !== 'string') throw new Error('Imagem inválida.');
   if (/^data:image\/(?:png|jpeg|jpg|webp|gif|avif);base64,[a-z\d+/=\s]+$/i.test(src)) return src;
-  if (src === './assets/logo-original.jpg') return src;
+  if (src === './assets/logo-original.jpg' || /^\.\/assets\/encartes\/camadas\/[a-z0-9-]+\.png$/.test(src)) return src;
   throw new Error('Use uma imagem enviada do computador ou o logotipo original da loja.');
 }
 
@@ -82,7 +82,10 @@ export function wrapText(ctx, value, width) {
 }
 
 function textBlock(ctx, text, x, y, width, height, opts = {}) {
-  const size = Math.max(1, Number(opts.size) || 24);
+  let size = Math.max(1, Number(opts.size) || 24);
+  if(opts.autoFit){
+    for(;size>8;size--){ctx.font=font(size,opts.family,opts.weight);if(wrapText(ctx,text,width).length*size*1.2<=height)break;}
+  }
   const lineHeight = size * 1.2;
   ctx.font = font(size, opts.family, opts.weight);
   ctx.fillStyle = opts.color || '#171717';
@@ -93,10 +96,12 @@ function textBlock(ctx, text, x, y, width, height, opts = {}) {
   const visible = lines.slice(0, maxLines);
   if (lines.length > maxLines && visible.length) visible[visible.length - 1] = fitLine(ctx, `${visible.at(-1)}…`, width);
   const tx = x + (ctx.textAlign === 'center' ? width / 2 : ctx.textAlign === 'right' ? width : 0);
+  if(opts.shadow){ctx.shadowColor='#00000066';ctx.shadowBlur=size*.08;ctx.shadowOffsetY=size*.06;}
+  if(opts.strokeWidth){ctx.strokeStyle=opts.strokeColor||'#fff';ctx.lineWidth=opts.strokeWidth;ctx.lineJoin='round';visible.forEach((line,i)=>ctx.strokeText(line,tx,y+i*lineHeight));}
   visible.forEach((line, i) => ctx.fillText(line, tx, y + i * lineHeight));
 }
 
-function containedImage(ctx, img, x, y, width, height, cropLogo = false) {
+function containedImage(ctx, img, x, y, width, height, cropLogo = false, cover = false) {
   if (width <= 0 || height <= 0) return;
   const iw = img.naturalWidth || img.width;
   const ih = img.naturalHeight || img.height;
@@ -107,14 +112,15 @@ function containedImage(ctx, img, x, y, width, height, cropLogo = false) {
     ctx.drawImage(img, sx, sy, sw, sh, x + (width - sw * ratio) / 2, y + (height - sh * ratio) / 2, sw * ratio, sh * ratio);
     return;
   }
-  const ratio = Math.min(width / iw, height / ih);
+  const ratio = cover?Math.max(width / iw, height / ih):Math.min(width / iw, height / ih);
   ctx.drawImage(img, x + (width - iw * ratio) / 2, y + (height - ih * ratio) / 2, iw * ratio, ih * ratio);
 }
 
 function product(ctx, element, img) {
   const {width: w, height: h} = element;
+  if(element.layout==='photo'){if(img)containedImage(ctx,img,0,0,w,h);return;}
   ctx.fillStyle = element.background || '#ffffff';
-  ctx.fillRect(0, 0, w, h);
+  if(!element.transparent)ctx.fillRect(0, 0, w, h);
   const pad = Math.max(4, Math.min(w, h) * .055);
   const innerWidth = Math.max(1, w - pad * 2);
   const nameSize = Math.max(8, Math.min(28, w * .09, h * .085));
@@ -137,7 +143,7 @@ function product(ctx, element, img) {
   if (element.unit) textBlock(ctx, element.unit, pad, h - pad - unitHeight, innerWidth, unitHeight + 1, {size: unitSize, family: element.fontFamily, color: element.textColor, align: 'center'});
 }
 
-export async function renderDesign(canvas, design, {scale = 1} = {}) {
+export async function renderDesign(canvas, design, {scale = 1, transparent=false} = {}) {
   if (!design || !Array.isArray(design.elements)) throw new Error('Encarte inválido.');
   validateCanvasSize(design.width, design.height);
   if (!Number.isFinite(scale) || scale <= 0) throw new Error('Escala de visualização inválida.');
@@ -164,16 +170,19 @@ export async function renderDesign(canvas, design, {scale = 1} = {}) {
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = design.bgColor || '#ffffff';
-  ctx.fillRect(0, 0, design.width, design.height);
+  if(!transparent)ctx.fillRect(0, 0, design.width, design.height);
   design.elements.forEach((element, index) => {
+    if(element.hidden)return;
     ctx.save();
-    ctx.translate(element.x, element.y);
+    ctx.globalAlpha=element.opacity??1;
+    if(element.rotation||element.flipX||element.flipY){ctx.translate(element.x+element.width/2,element.y+element.height/2);ctx.rotate((element.rotation||0)*Math.PI/180);ctx.scale(element.flipX?-1:1,element.flipY?-1:1);ctx.translate(-element.width/2,-element.height/2);}
+    else ctx.translate(element.x, element.y);
     ctx.beginPath();
     ctx.rect(0, 0, element.width, element.height);
     ctx.clip();
-    if (element.type === 'shape') { ctx.fillStyle = element.fill || '#e31b23'; ctx.fillRect(0, 0, element.width, element.height); }
-    if (element.type === 'image') containedImage(ctx, loaded[index], 0, 0, element.width, element.height, element.src === './assets/logo-original.jpg');
-    if (element.type === 'text') textBlock(ctx, element.text, 0, 0, element.width, element.height, {size: element.fontSize, family: element.fontFamily, weight: element.fontWeight, color: element.color, align: element.align});
+    if (element.type === 'shape') { ctx.fillStyle=element.fill||'#e31b23'; if(element.shapeKind==='ellipse'){ctx.beginPath();ctx.ellipse(element.width/2,element.height/2,element.width/2,element.height/2,0,0,Math.PI*2);ctx.fill();}else if(element.shapeKind==='rounded'&&ctx.roundRect){ctx.beginPath();ctx.roundRect(0,0,element.width,element.height,Math.min(element.radius??24,element.width/2,element.height/2));ctx.fill();}else ctx.fillRect(0,0,element.width,element.height); }
+    if (element.type === 'image') containedImage(ctx, loaded[index], 0, 0, element.width, element.height, element.src === './assets/logo-original.jpg',element.fit==='cover');
+    if (element.type === 'text') textBlock(ctx, element.text, 0, 0, element.width, element.height, {size: element.fontSize, family: element.fontFamily, weight: element.fontWeight, color: element.color, align: element.align, strokeColor:element.strokeColor,strokeWidth:element.strokeWidth,shadow:element.shadow,autoFit:element.autoFit});
     if (element.type === 'product') product(ctx, element, loaded[index]);
     ctx.restore();
   });

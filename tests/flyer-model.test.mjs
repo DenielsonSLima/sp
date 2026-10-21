@@ -86,4 +86,4 @@ test('save waits for transaction completion, and rejects a later transaction abo
     activeTransaction.onabort(); await assert.rejects(failing,/Espaço local insuficiente/);
   } finally { db.onversionchange?.(); if(previous===undefined) delete globalThis.indexedDB; else globalThis.indexedDB=previous; }
 });
-test('template switching preserves custom shapes without accumulating template bands',()=>{const d=createDesign();d.elements.push({id:'custom',type:'shape',x:10,y:10,width:50,height:50,fill:'#123456'});const first=applyTemplate(d,'offers-4');const next=applyTemplate(first,'offers-6');assert(next.elements.some(e=>e.id==='custom'));assert.equal(next.elements.filter(e=>e.templatePart).length,3);});
+test('template switching preserves custom shapes without accumulating template bands',()=>{const d=createDesign();d.elements.push({id:'custom',type:'shape',x:10,y:10,width:50,height:50,fill:'#123456'});const first=applyTemplate(d,'offers-4');const next=applyTemplate(first,'offers-6');assert(next.elements.some(e=>e.id==='custom'));assert.equal(next.elements.filter(e=>e.type==='shape'&&e.templatePart).length,3);});

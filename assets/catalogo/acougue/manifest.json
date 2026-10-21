@@ -1,0 +1,112 @@
+[
+  {
+    "slug": "acem",
+    "name": "Acém bovino Friboi Reserva",
+    "category": "Açougue",
+    "unit": "KG",
+    "asset": "assets/catalogo/acougue/acem.webp",
+    "sourceUrl": "https://www.friboi.com.br/friboi-mais/",
+    "imageSourceUrl": "https://painel-friboi-production.s3.us-east-1.amazonaws.com/Reserva_Acem_Principal_5682e749d9.png",
+    "brand": "Friboi Reserva"
+  },
+  {
+    "slug": "alcatra",
+    "name": "Alcatra com maminha Friboi Reserva",
+    "category": "Açougue",
+    "unit": "KG",
+    "asset": "assets/catalogo/acougue/alcatra.webp",
+    "sourceUrl": "https://www.friboi.com.br/friboi-mais/",
+    "imageSourceUrl": "https://painel-friboi-production.s3.us-east-1.amazonaws.com/Reserva_Alcatra_8d7e7e6b6b.png",
+    "brand": "Friboi Reserva"
+  },
+  {
+    "slug": "contrafile",
+    "name": "Contrafilé bovino Friboi Reserva",
+    "category": "Açougue",
+    "unit": "KG",
+    "asset": "assets/catalogo/acougue/contrafile.webp",
+    "sourceUrl": "https://www.friboi.com.br/friboi-mais/",
+    "imageSourceUrl": "https://painel-friboi-production.s3.us-east-1.amazonaws.com/Reserva_Contra_file_16aef1922a.png",
+    "brand": "Friboi Reserva"
+  },
+  {
+    "slug": "patinho",
+    "name": "Patinho bovino Friboi Reserva",
+    "category": "Açougue",
+    "unit": "KG",
+    "asset": "assets/catalogo/acougue/patinho.webp",
+    "sourceUrl": "https://www.friboi.com.br/friboi-mais/",
+    "imageSourceUrl": "https://painel-friboi-production.s3.us-east-1.amazonaws.com/Reserva_Patinho_3703268256.png",
+    "brand": "Friboi Reserva"
+  },
+  {
+    "slug": "picanha",
+    "name": "Picanha bovina Friboi Reserva",
+    "category": "Açougue",
+    "unit": "KG",
+    "asset": "assets/catalogo/acougue/picanha.webp",
+    "sourceUrl": "https://www.friboi.com.br/friboi-mais/",
+    "imageSourceUrl": "https://painel-friboi-production.s3.us-east-1.amazonaws.com/Reserva_Picanha_0b7dcda413.png",
+    "brand": "Friboi Reserva"
+  },
+  {
+    "slug": "costela",
+    "name": "Costela bovina Fribev",
+    "category": "Açougue",
+    "unit": "KG",
+    "asset": "assets/catalogo/acougue/costela.webp",
+    "sourceUrl": "https://fribev.com.br/nossos-produtos/costela-do-dianteiro/",
+    "imageSourceUrl": "https://fribev.com.br/wp-content/uploads/2024/07/CHUCK-RIBS-COSTELA-DO-DIANTEIRO.png",
+    "brand": "Fribev"
+  },
+  {
+    "slug": "coxa-frango",
+    "name": "Coxa de frango congelada Sadia 1 kg",
+    "category": "Açougue",
+    "unit": "KG",
+    "brand": "Sadia",
+    "asset": "assets/catalogo/acougue/coxa-frango.webp",
+    "sourceUrl": "https://www.sadia.com.br/produtos/aves/linha-dia-a-dia/coxas/",
+    "imageSourceUrl": "https://www.sadia.com.br/assets/images/_/products/bbaddf37f252603363f27b4ba40d0ae5e188b9cc.webp"
+  },
+  {
+    "slug": "peito-frango",
+    "name": "Filé de peito de frango congelado Sadia 1 kg",
+    "category": "Açougue",
+    "unit": "KG",
+    "brand": "Sadia",
+    "asset": "assets/catalogo/acougue/peito-frango.webp",
+    "sourceUrl": "https://www.sadia.com.br/produtos/aves/linha-dia-a-dia/file-de-peito-congelado/",
+    "imageSourceUrl": "https://www.sadia.com.br/assets/images/_/products/c5bdad5435df92a85812d01ef1fb03c5d99ce625.webp"
+  },
+  {
+    "slug": "frango-inteiro-congelado",
+    "name": "Frango inteiro congelado sem miúdos Sadia",
+    "category": "Açougue",
+    "unit": "KG",
+    "brand": "Sadia",
+    "asset": "assets/catalogo/acougue/frango-inteiro-congelado.webp",
+    "sourceUrl": "https://www.sadia.com.br/produtos/aves/linha-dia-a-dia/frango-inteiro-sem-miudos/",
+    "imageSourceUrl": "https://www.sadia.com.br/assets/images/_/products/5608b56fb8e1f0c514afd6e3e67b49409ff962bc.webp"
+  },
+  {
+    "slug": "asa-frango",
+    "name": "Meio da asa de frango congelado Sadia 1 kg",
+    "category": "Açougue",
+    "unit": "KG",
+    "brand": "Sadia",
+    "asset": "assets/catalogo/acougue/asa-frango.webp",
+    "sourceUrl": "https://www.sadia.com.br/produtos/aves/linha-dia-a-dia/meio-das-asas-tulipa/",
+    "imageSourceUrl": "https://www.sadia.com.br/assets/images/_/products/cb6566488d8d7258118fb15c8a3e4447de23a170.webp"
+  },
+  {
+    "slug": "sobrecoxa-frango",
+    "name": "Sobrecoxa de frango congelada Sadia 1 kg",
+    "category": "Açougue",
+    "unit": "KG",
+    "brand": "Sadia",
+    "asset": "assets/catalogo/acougue/sobrecoxa-frango.webp",
+    "sourceUrl": "https://www.sadia.com.br/produtos/aves/linha-dia-a-dia/sobrecoxas/",
+    "imageSourceUrl": "https://www.sadia.com.br/assets/images/_/products/dd3c0c87f97dd9b278a112d3c0aa94e45669a1df.webp"
+  }
+]

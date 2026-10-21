@@ -1,0 +1,95 @@
+[
+  {
+    "slug": "suco-goiaba-500ml",
+    "name": "Suco Concentrado de Goiaba Pindorama 500ml",
+    "category": "Bebidas",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://www.supermercadosolucao.com.br/solucao/produto/m/suco-pindorama-goiaba-500ml-88203",
+    "imageSourceUrl": "https://phygital-files.mercafacil.com/supermercado-solucao/uploads/produto/suco_concentrado_pindorama_goiaba_500ml_1597acd1-494b-46f8-89d3-6fe27a73416a.png",
+    "asset": "./assets/catalogo/pindorama/suco-goiaba-500ml.png",
+    "imageProcessing": "Fundo removido com imagegen a partir da fotografia real"
+  },
+  {
+    "slug": "suco-maracuja-500ml",
+    "name": "Suco Concentrado de Maracujá Pindorama 500ml",
+    "category": "Bebidas",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://www.supermercadosolucao.com.br/solucao/produto/m/suco-pindorama-maracuja-500ml-76277",
+    "imageSourceUrl": "https://phygital-files.mercafacil.com/catalogo/uploads/produto/suco_concentrado_pindorama_maracuja_500ml_5c14844b-5d8e-4be2-afaf-9c9df421b9fd.PNG",
+    "asset": "./assets/catalogo/pindorama/suco-maracuja-500ml.png",
+    "imageProcessing": "Fundo removido com imagegen a partir da fotografia real"
+  },
+  {
+    "slug": "suco-caju-500ml",
+    "name": "Suco Concentrado de Caju Pindorama 500ml",
+    "category": "Bebidas",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://www.supermercadosolucao.com.br/solucao/produto/m/suco-pindorama-caju-500ml-65782",
+    "imageSourceUrl": "https://phygital-files.mercafacil.com/catalogo/uploads/produto/suco_concentrado_pindorama_caju_500ml_20953445-d6f0-4ee2-a6c6-4e6c51fdccbd.png",
+    "asset": "./assets/catalogo/pindorama/suco-caju-500ml.png",
+    "imageProcessing": "Fundo removido com imagegen a partir da fotografia real"
+  },
+  {
+    "slug": "suco-uva-500ml",
+    "name": "Suco Concentrado de Uva Pindorama 500ml",
+    "category": "Bebidas",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://www.supermercadosolucao.com.br/solucao/produto/m/suco-pindorama-uva-500ml-113875",
+    "imageSourceUrl": "https://phygital-files.mercafacil.com/supermercado-solucao/uploads/produto/suco_pindorama_uva_500ml_b02abcab-074c-4f5d-b46c-b8d75242bb95.jpg",
+    "asset": "./assets/catalogo/pindorama/suco-uva-500ml.png",
+    "imageProcessing": "Fundo removido com imagegen a partir da fotografia real"
+  },
+  {
+    "slug": "leite-coco-cocao-200ml",
+    "name": "Leite de Coco Cocão Pindorama 200ml",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://www.supermercadovitoriaba.com.br/1/produto/m/leite-coco-pindorama-cocao-200ml-10973",
+    "imageSourceUrl": "https://phygital-files.mercafacil.com/catalogo/uploads/produto/leite_de_coco_coc_o_200ml_4b464d4b-244c-44ef-9612-c3d51e2bf409.jpg",
+    "asset": "./assets/catalogo/pindorama/leite-coco-cocao-200ml.png",
+    "imageProcessing": "Fundo removido com imagegen a partir da fotografia real"
+  },
+  {
+    "slug": "acucar-cristal-1kg",
+    "name": "Açúcar Cristal Pindorama 1kg",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://sertaoatacadista.pedidook.com.br/produto/18480025",
+    "imageSourceUrl": "https://pedidook.s3-sa-east-1.amazonaws.com/10188/produto/foto_18480025.png",
+    "asset": "./assets/catalogo/pindorama/acucar-cristal-1kg.png"
+  },
+  {
+    "slug": "acucar-demerara-1kg",
+    "name": "Açúcar Demerara Pindorama 1kg",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://sertaoatacadista.pedidook.com.br/produto/25027034",
+    "imageSourceUrl": "https://pedidook.s3-sa-east-1.amazonaws.com/10188/produto/foto_25027034.png",
+    "asset": "./assets/catalogo/pindorama/acucar-demerara-1kg.png"
+  },
+  {
+    "slug": "acucar-demerara-400g",
+    "name": "Açúcar Demerara Pindorama 400g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Pindorama",
+    "manufacturer": "Cooperativa Pindorama",
+    "sourceUrl": "https://sertaoatacadista.pedidook.com.br/produto/45193680",
+    "imageSourceUrl": "https://pedidook.s3-sa-east-1.amazonaws.com/10188/produto/foto_45193680.png",
+    "asset": "./assets/catalogo/pindorama/acucar-demerara-400g.png"
+  }
+]

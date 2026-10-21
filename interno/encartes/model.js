@@ -13,7 +13,7 @@ const font = v => FONTS.includes(v) ? v : 'Arial';
 const id = v => typeof v === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(v) ? v : newId();
 function imageSource(v) {
   if (v === '' || v == null) return '';
-  if (v === './assets/logo-original.jpg') return v;
+  if (v === './assets/logo-original.jpg' || typeof v==='string' && /^\.\/assets\/encartes\/camadas\/[a-z0-9-]+\.png$/.test(v)) return v;
   if (typeof v !== 'string' || !/^data:image\/(?:png|jpeg|webp|gif);base64,[A-Za-z0-9+/]*={0,2}$/.test(v)) throw new Error('Imagem inválida. Use PNG, JPEG, WebP ou GIF local.');
   const payload = v.slice(v.indexOf(',') + 1);
   if (!payload.length || payload.length % 4 !== 0 || payload.length * 3 / 4 - (payload.endsWith('==') ? 2 : payload.endsWith('=') ? 1 : 0) > MAX_IMAGE_BYTES) throw new Error('Cada imagem deve ter no máximo 8 MB e dados válidos.');
@@ -43,11 +43,11 @@ export function validateDesign(value) {
     let elementId = id(e.id); if (seen.has(elementId)) elementId = newId(); seen.add(elementId);
     const w = clamp(number(e.width, width * .3, 'Largura do elemento'), 1, width);
     const h = clamp(number(e.height, height * .2, 'Altura do elemento'), 1, height);
-    const base = {id:elementId, type:e.type, x:clamp(number(e.x, 0, 'Posição X'), 0, width - w), y:clamp(number(e.y, 0, 'Posição Y'), 0, height - h), width:w, height:h, locked:e.locked === true};
-    if (e.type === 'text') return {...base, text:string(e.text, '', 4000), fontFamily:font(e.fontFamily), fontSize:clamp(number(e.fontSize, 40, 'Tamanho da fonte'), 8, 600), fontWeight:[400,500,600,700,800,900,'normal','bold'].includes(e.fontWeight) ? e.fontWeight : 700, color:color(e.color, '#242424'), align:['left','center','right'].includes(e.align) ? e.align : 'left'};
-    if (e.type === 'product') return {...base, name:string(e.name, 'Nome do produto', 180), placeholder:e.placeholder === true, ...(Number.isSafeInteger(e.priceCents) && e.priceCents >= 0 ? {priceCents:e.priceCents} : {}), priceText:string(e.priceText, '', 40), unit:string(e.unit, 'un', 40), image:imageSource(e.image), background:color(e.background, '#ffffff'), textColor:color(e.textColor, '#242424'), priceColor:color(e.priceColor, '#c5161d'), fontFamily:font(e.fontFamily)};
-    if (e.type === 'image') return {...base, src:imageSource(e.src)};
-    return {...base, fill:color(e.fill, '#c5161d'), templatePart:e.templatePart===true};
+    const base = {id:elementId, type:e.type, x:clamp(number(e.x, 0, 'Posição X'), 0, width - w), y:clamp(number(e.y, 0, 'Posição Y'), 0, height - h), width:w, height:h, locked:e.locked === true, rotation:clamp(number(e.rotation,0,'Rotação'),-360,360), flipX:e.flipX===true, flipY:e.flipY===true, opacity:clamp(number(e.opacity,1,'Opacidade'),0,1), hidden:e.hidden===true, label:string(e.label,'',100), templatePart:e.templatePart===true};
+    if (e.type === 'text') return {...base, text:string(e.text, '', 4000), fontFamily:font(e.fontFamily), fontSize:clamp(number(e.fontSize, 40, 'Tamanho da fonte'), 8, 600), fontWeight:[400,500,600,700,800,900,'normal','bold'].includes(e.fontWeight) ? e.fontWeight : 700, color:color(e.color, '#242424'), align:['left','center','right'].includes(e.align) ? e.align : 'left', strokeColor:color(e.strokeColor,'#ffffff'), strokeWidth:clamp(number(e.strokeWidth,0,'Contorno'),0,20), shadow:e.shadow===true,autoFit:e.autoFit===true, ...(typeof e.linkedProductId==='string'&&['name','price','unit'].includes(e.linkedField)?{linkedProductId:id(e.linkedProductId),linkedField:e.linkedField}:{})};
+    if (e.type === 'product') return {...base, name:string(e.name, 'Nome do produto', 180), placeholder:e.placeholder === true, ...(Number.isSafeInteger(e.priceCents) && e.priceCents >= 0 ? {priceCents:e.priceCents} : {}), priceText:string(e.priceText, '', 40), unit:string(e.unit, 'un', 40), image:imageSource(e.image), background:color(e.background, '#ffffff'), textColor:color(e.textColor, '#242424'), priceColor:color(e.priceColor, '#c5161d'), fontFamily:font(e.fontFamily), layout:e.layout==='photo'?'photo':'card', transparent:e.transparent===true};
+    if (e.type === 'image') return {...base, src:imageSource(e.src),fit:e.fit==='cover'?'cover':'contain'};
+    return {...base, fill:color(e.fill, '#c5161d'), shapeKind:['ellipse','rounded'].includes(e.shapeKind)?e.shapeKind:'rectangle', radius:clamp(number(e.radius,24,'Arredondamento'),0,500)};
   });
   const result = {id:id(value.id), title:string(value.title, 'Nova arte', 160), status:value.status === 'created' ? 'created' : 'draft', width, height, bgColor:color(value.bgColor, '#fff5d6'), createdAt:date(value.createdAt), updatedAt:date(value.updatedAt), elements};
   if (new TextEncoder().encode(JSON.stringify(result)).length > MAX_JSON_BYTES) throw new Error('A arte excede o limite de 25 MB. Reduza as fotos.');

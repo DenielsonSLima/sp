@@ -1,0 +1,83 @@
+[
+  {
+    "id": "fundo-vermelho-dourado",
+    "label": "Festival vermelho e dourado",
+    "kind": "background",
+    "prompt": "Use case: ads-marketing. Asset type: PNG background layer for an editable Brazilian supermarket flyer. Create ONE original portrait 4:5 raster background with rich crimson red shading, subtle premium golden light rays in the upper quarter, and elegant deep red tonal texture. Empty broad center and lower area for future separately added product images and text. Smooth professional supermarket advertising art direction, bold but clean. Full bleed nontransparent background, no frame. Absolutely NO text, no letters, no numbers, no prices, no badges, no products, no food, no logos or watermarks.",
+    "src": "./assets/encartes/camadas/fundo-vermelho-dourado.png",
+    "width": 1122,
+    "height": 1402,
+    "transparent": false,
+    "alphaRange": null,
+    "bytes": 1509508
+  },
+  {
+    "id": "fundo-laranja-ondas",
+    "label": "Mercearia laranja",
+    "kind": "background",
+    "prompt": "Use case: ads-marketing. Asset type: PNG background layer for an editable Brazilian supermarket product promotion. Create ONE original portrait 4:5 background: vivid appetizing orange gradient with delicate flowing contour-line waves, very subtle golden warm light and elegant depth. Quiet center suitable for a separately placed product, ample empty upper area for separate typography. Clean professionally designed orange advertising background. Full bleed opaque image. NO text, no letters, no prices, no numbers, no products, no food, no badges, no logos, no watermarks.",
+    "src": "./assets/encartes/camadas/fundo-laranja.png",
+    "width": 1122,
+    "height": 1402,
+    "transparent": false,
+    "alphaRange": null,
+    "bytes": 1312156
+  },
+  {
+    "id": "fundo-azul-royal",
+    "label": "Ofertas azul royal",
+    "kind": "background",
+    "prompt": "Use case: ads-marketing. Asset type: PNG background layer for an editable supermarket promotion. Create ONE original portrait 4:5 full bleed deep royal blue background, sophisticated tone-on-tone oversized soft abstract rounded geometric motifs, subtle lighting and clean depth. Preserve ample quiet negative space in upper third and broad center for separately added title and product cutouts. Strong modern retail advertising aesthetic, not a complete poster. Opaque background. Absolutely NO text, no letters, no numbers, no product, no food, no prices, no logo, no watermark.",
+    "src": "./assets/encartes/camadas/fundo-azul.png",
+    "width": 1122,
+    "height": 1402,
+    "transparent": false,
+    "alphaRange": null,
+    "bytes": 1087762
+  },
+  {
+    "id": "raio-dourado-3d",
+    "label": "Raio dourado 3D",
+    "kind": "sticker",
+    "prompt": "Use case: product-mockup. Asset type: single transparent PNG decorative sticker for a supermarket flyer layer editor. One bold golden yellow lightning bolt, glossy tasteful 3D beveled rounded edges, slight three-quarter perspective, bright yellow front with warm orange side, high-quality studio render. Centered completely inside square with generous transparent margin. Isolated cutout, true alpha transparent background. No floor, no background color, no white rectangle, no text, no letters, no watermark. Single object only.",
+    "src": "./assets/encartes/camadas/raio-dourado.png",
+    "width": 1254,
+    "height": 1254,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 526477
+  },
+  {
+    "id": "balao-coracao-3d",
+    "label": "Balão com coração 3D",
+    "kind": "sticker",
+    "prompt": "Use case: product-mockup. Asset type: single transparent PNG decorative sticker for an editable supermarket post. One friendly orange glossy 3D speech bubble, softly rounded square silhouette with tiny lower speech tail, a white puffy heart centered embossed on its face. Tasteful dimensional render, slight three-quarter perspective, premium smooth material, warm yellow-orange rim. Centered inside square with transparent margins and true alpha. No white backdrop, no floor, no background, no lettering, no watermark, no other objects.",
+    "src": "./assets/encartes/camadas/balao-coracao.png",
+    "width": 1254,
+    "height": 1254,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 819534
+  },
+  {
+    "id": "selo-vermelho-dourado",
+    "label": "Selo vermelho e dourado",
+    "kind": "sticker",
+    "prompt": "Use case: product-mockup. Asset type: single transparent PNG badge layer for an editable supermarket flyer. One large circular blank glossy crimson red medallion with a tasteful thick beveled golden rim, slight oval perspective very close to frontal, subtle realistic highlights, premium retail promotional seal. Spacious smooth red empty interior for separately added editable headline. Center the complete medallion in square with transparent margins. True transparent alpha background, no white rectangle, no floor, no ribbons, no objects. Absolutely no text, no letters, no numbers, no logo, no watermark.",
+    "src": "./assets/encartes/camadas/selo-vermelho-dourado.png",
+    "width": 1254,
+    "height": 1254,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 1326785
+  }
+]

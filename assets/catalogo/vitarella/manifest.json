@@ -1,0 +1,287 @@
+[
+  {
+    "slug": "cream-cracker-tradicional-350g",
+    "name": "Biscoito Vitarella Cream Cracker Tradicional 350 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/cream-cracker-tradicional-350g.png",
+    "sourceUrl": "https://vitarella.com.br/cream-cracker-tradicional-350g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/vitarella-tradicional-adjusted.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 148452
+  },
+  {
+    "slug": "cream-cracker-integral-367-5g",
+    "name": "Biscoito Vitarella Cream Cracker Integral 367,5 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/cream-cracker-integral-367-5g.png",
+    "sourceUrl": "https://vitarella.com.br/cream-cracker-integral-367-5g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/vitarella-integral-adjusted.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 145762
+  },
+  {
+    "slug": "maizena-tradicional-350g",
+    "name": "Biscoito Vitarella Maizena Tradicional 350 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/maizena-tradicional-350g.png",
+    "sourceUrl": "https://vitarella.com.br/maizena-tradicional-350g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Maizena_tradicional-ajustada.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 120147
+  },
+  {
+    "slug": "maria-tradicional-350g",
+    "name": "Biscoito Vitarella Maria Tradicional 350 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/maria-tradicional-350g.png",
+    "sourceUrl": "https://vitarella.com.br/maria-tradicional-350g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Maria_Tradicional-ajustada.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 130701
+  },
+  {
+    "slug": "treloso-biscoito-recheado-sabor-chocolate-120g",
+    "name": "Biscoito Vitarella Treloso Recheado sabor Chocolate 120 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/treloso-biscoito-recheado-sabor-chocolate-120g.png",
+    "sourceUrl": "https://vitarella.com.br/treloso-biscoito-recheado-sabor-chocolate-120g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2021/02/treloso-chocolate-1.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 49802
+  },
+  {
+    "slug": "treloso-biscoito-recheado-sabor-morango-120g",
+    "name": "Biscoito Vitarella Treloso Recheado sabor Morango 120 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/treloso-biscoito-recheado-sabor-morango-120g.png",
+    "sourceUrl": "https://vitarella.com.br/treloso-biscoito-recheado-sabor-morango-120g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2021/02/treloso-morango-1.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 47058
+  },
+  {
+    "slug": "vitarella-wafer-chocolate-80g",
+    "name": "Wafer Vitarella Chocolate 80 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-wafer-chocolate-80g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-wafer-chocolate-80g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/WaferVita_Chocolate80g.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 339195
+  },
+  {
+    "slug": "vitarella-wafer-morango-80g",
+    "name": "Wafer Vitarella Morango 80 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-wafer-morango-80g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-wafer-morango-80g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Wafer_Morango.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 393054
+  },
+  {
+    "slug": "vitarella-espaguete-fino-400g",
+    "name": "Macarrão Vitarella Espaguete Fino 400 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-espaguete-fino-400g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-espaguete-fino-400g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Espaguete_Fino_400g-792x792-1-1.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 182492
+  },
+  {
+    "slug": "vitarella-espaguete-com-ovos-500g",
+    "name": "Macarrão Vitarella Espaguete com Ovos 500 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-espaguete-com-ovos-500g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-espaguete-com-ovos-500g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Vitarella-Espaghete-Ovos-500g.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 56962
+  },
+  {
+    "slug": "vitarella-parafuso-com-ovos-500g",
+    "name": "Macarrão Vitarella Parafuso com Ovos 500 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-parafuso-com-ovos-500g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-parafuso-com-ovos-500g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Vitarella-Parafuso-Ovos-500g.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 125571
+  },
+  {
+    "slug": "vitarella-penne-com-ovos-500g",
+    "name": "Macarrão Vitarella Penne com Ovos 500 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-penne-com-ovos-500g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-penne-com-ovos-500g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/Vitarella-Penne-Ovos-500.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 525921
+  },
+  {
+    "slug": "vitarella-lamen-galinha-743g",
+    "name": "Lámen Vitarella Galinha 74,3 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-lamen-galinha-743g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-lamen-galinha-743g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/mkp_Vitarella_Lamen_Galinha.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 389695
+  },
+  {
+    "slug": "vitarella-lamen-carne-743g",
+    "name": "Lámen Vitarella Carne 74,3 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/vitarella-lamen-carne-743g.png",
+    "sourceUrl": "https://vitarella.com.br/vitarella-lamen-carne-743g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/mkp_Vitarella_Lamen_Carne-1.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 407183
+  },
+  {
+    "slug": "torrada-tradicional-142g",
+    "name": "Torrada Vitarella Tradicional 142 g",
+    "category": "Mercearia",
+    "unit": "UN",
+    "brand": "Vitarella",
+    "manufacturer": "M. Dias Branco",
+    "asset": "./assets/catalogo/vitarella/torrada-tradicional-142g.png",
+    "sourceUrl": "https://vitarella.com.br/torrada-tradicional-142g/",
+    "imageSourceUrl": "https://vitarella.com.br/wp-content/uploads/2020/11/mkp_Torrada_trad_Vitarella_142g-copy.png",
+    "width": 792,
+    "height": 792,
+    "transparent": true,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "bytes": 273687
+  }
+]
