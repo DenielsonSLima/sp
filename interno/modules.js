@@ -11,6 +11,13 @@ export const modules={
  calendario:{label:'Calendário',load:()=>import('./calendario/index.js')},
  configuracoes:{label:'Configurações',load:()=>import('./configuracoes/index.js')}
 };
+// Sidebar follows the store workflow; module routes remain independent of display order.
+export const navigationSections=[
+ {id:'home',label:null,items:['inicio']},
+ {id:'operation',label:'Operação',items:['cotacao','hortifruti','acougue','devolucoes']},
+ {id:'offers',label:'Ofertas e divulgação',items:['calendario','promocoes','tabela-precos','encartes']},
+ {id:'administration',label:'Administração',items:['cadastros','configuracoes']}
+];
 export const resolveRoute=(hash)=>{const route=hash.slice(1).split('/')[0];return Object.hasOwn(modules,route)?route:'inicio';};
 
 export const resolveCadastro=(hash)=>Object.hasOwn(modules.cadastros.children,hash.split('/')[1])?hash.split('/')[1]:'produtos';

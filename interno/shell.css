@@ -45,6 +45,9 @@
 
 .sidebar>.brand-logo img{transform:scale(.9);transform-origin:50% 130px}
 .sidebar>.brand-logo{margin-bottom:25px}
+/* Keep related modules together without introducing extra collapsed menus. */
+.sidebar .nav-section{margin-top:9px;padding-top:8px;border-top:1px solid #ffffff26}
+.sidebar .nav-section-title{margin:0 0 3px;padding:0 14px;color:#f5c9cc;font-size:9px;line-height:1.5;font-weight:700;letter-spacing:1.1px;text-transform:uppercase}
 /* Slightly denser module rhythm; preserve readable labels and touch targets. */
 .sidebar .nav-item{min-height:44px;padding-top:9.72px;padding-bottom:9.72px;margin-top:4.05px;margin-bottom:4.05px}
 .sidebar .nav-child{padding-top:9.72px;padding-bottom:9.72px;min-height:44px}
