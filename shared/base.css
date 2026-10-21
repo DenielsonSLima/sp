@@ -4,3 +4,6 @@
 /* Touch-friendly controls across phone and desktop. */
 input:not([type=checkbox]):not([type=range]),select{min-height:44px}.button{min-height:44px}
 .mobile-table-hint{display:none}@media(max-width:760px){input:not([type=checkbox]):not([type=range]),select,textarea{font-size:16px!important}.mobile-table-hint{display:block;font-size:10px;color:#8c949e;line-height:1.7}}
+
+/* Keep module list actions beside the main heading. */
+.page-heading-actions{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}.page-heading-actions>div.page-heading{min-width:0;margin-bottom:0}.page-heading-actions>:last-child{flex-shrink:0;margin:0}@media(max-width:600px){.page-heading-actions{align-items:stretch;flex-direction:column;gap:16px}.page-heading-actions>.button{width:100%}}
