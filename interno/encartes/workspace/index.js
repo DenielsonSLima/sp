@@ -8,7 +8,6 @@ import { renderDesign } from '../renderer.js';
 import { renderEditor } from '../editor.js';
 import { createPngBlob, downloadBlob } from '../export.js';
 import { safeName } from '../editor/presentation.js';
-import { createFlyerPdf } from './pdf.js';
 import { campaignChoices, readCampaignWithPhotos, selectedPhotos } from './data.js';
 import { workspaceMarkup } from './view.js';
 import { readWorkspaceSelection, modelChoices, readWorkspaceModel, modelPublicationOptions } from './models.js';
@@ -38,7 +37,8 @@ export async function renderWorkspace(root) {
     const canvas = root.querySelector('.fw-canvas') || root.querySelector('.fw-model-canvas');
     const page = state.pages[state.pageIndex] || state.model;
     if (canvas && page) {
-      try { await renderDesign(canvas, page, { scale: Math.min(1, 720 / Math.max(page.width, page.height)) }); }
+      // Keep the artwork at its native resolution; CSS fits it into the preview.
+      try { await renderDesign(canvas, page); }
       catch (error) { if (current() && revision === version) feedback(error.message, true); }
     }
   }
@@ -194,13 +194,9 @@ export async function renderWorkspace(root) {
     }
     if (name === 'png') {
       const page = state.pages[state.pageIndex], blob = await createPngBlob(page);
-      ensure(); downloadBlob(blob, safeName(page.title) + '.png'); feedback('PNG pronto para download.');
-    }
-    if (name === 'pdf') {
-      const blob = await createFlyerPdf(state.pages, { isCurrent: current,
-        onProgress: (done, total) => feedback(`Preparando PDF: ${done} de ${total} páginas…`) });
-      ensure(); downloadBlob(blob, safeName(state.campaign?.name || state.pages[0].title) + '.pdf');
-      feedback('PDF pronto com todas as páginas do encarte.');
+      const title = state.campaign?.name || page.title.replace(/ · Página \d+ de \d+$/, '');
+      ensure(); downloadBlob(blob, `${safeName(title)}-pagina-${state.pageIndex + 1}.png`);
+      feedback(`PNG da página ${state.pageIndex + 1} pronto: ${page.width} × ${page.height} px.`);
     }
   }
   function bind() {

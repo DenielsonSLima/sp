@@ -44,7 +44,9 @@ const products = Array.from({ length: 14 }, (_, index) => ({
   name: `PRODUTO DE TESTE ${index + 1}`, category: 'Mercearia', unit: 'UN', photos, photoAssets: [], photoCount: 3,
 }));
 const campaign = {
-  id: campaignId, _version: 3, name: 'Ofertas da semana', start: '2026-11-03', end: '2026-11-10',
+  id: campaignId, _version: 3,
+  name: 'Ofertas especiais da semana com alimentos, bebidas, mercearia e produtos para toda a família',
+  start: '2026-11-03', end: '2026-11-10',
   notes: '', omitValidity: false,
   items: products.map((product, index) => ({
     id: `item-${index + 1}`, productId: product.id, name: product.name,
@@ -58,18 +60,47 @@ const legacy = {
   status: 'draft', width: 1080, height: 1920, bgColor: '#ffffff', elements: [], createdAt: date, updatedAt: date,
 };
 const saved = new Map([[legacy.id, legacy]]), calls = [], errors = [], unexpected = [], results = [];
+const previewMetrics = [];
 let failedSecondPage = false;
 const pageResult = (items) => ({ items, page: 1, pages: 1, total: items.length, allTotal: items.length, perPage: 50, from: items.length ? 1 : 0, to: items.length, counts: {}, facets: {} });
 const summary = (row) => Object.fromEntries(['id', 'title', 'status', 'width', 'height', 'createdAt', 'updatedAt', '_version'].map((key) => [key, row[key]]));
 
 try {
   await mkdir(artifactDir, { recursive: true });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2, acceptDownloads: true });
   const choose = async (selector, value) => {
     const control = page.locator(selector);
     const label = await control.locator(`option[value="${value}"]`).textContent();
     await control.locator('..').locator('.custom-select-trigger').click();
     await page.locator('.custom-select-popup:not([hidden])').getByRole('option', { name: label, exact: true }).click();
+  };
+  const assertSharpPreview = async (label) => {
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector('.fw-canvas');
+      if (!canvas) return false;
+      const bounds = canvas.getBoundingClientRect(), ratio = window.devicePixelRatio;
+      return bounds.width > 0 && bounds.height > 0 && canvas.width >= bounds.width * ratio - 2 &&
+        canvas.height >= bounds.height * ratio - 2;
+    });
+    previewMetrics.push(await page.locator('.fw-canvas').evaluate((canvas, label) => {
+      const bounds = canvas.getBoundingClientRect();
+      return { label, bitmap: [canvas.width, canvas.height], css: [bounds.width, bounds.height], dpr: devicePixelRatio };
+    }, label));
+  };
+  const downloadPng = async (filename, expectedSize) => {
+    assert.equal(await page.locator('[data-fw-action="png"]').count(), 1, 'one clear PNG action');
+    const button = page.locator('.fw-preview-heading [data-fw-action="png"]');
+    assert.match(await button.getAttribute('class'), /\bprimary\b/, 'PNG must be the primary action at the top');
+    assert.equal(await page.locator('[data-fw-action="pdf"]').count(), 0, 'PDF must not appear in the workspace');
+    const ready = page.waitForEvent('download');
+    await button.click();
+    const download = await ready;
+    assert.match(download.suggestedFilename(), /\.png$/i);
+    await download.saveAs(`${artifactDir}/${filename}`);
+    const png = await readFile(`${artifactDir}/${filename}`);
+    assert.deepEqual([...png.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+    assert.deepEqual([png.readUInt32BE(16), png.readUInt32BE(20)], expectedSize, 'download must retain native document resolution');
+    return { bytes: png, name: download.suggestedFilename() };
   };
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('response', (response) => {
@@ -132,12 +163,25 @@ try {
   await choose('#fw-campaign', campaignId);
   await page.locator('[data-fw-photo="0"] option[value="2"]').waitFor({ state: 'attached' });
   await choose('[data-fw-photo="0"]', '2');
+  await page.locator('.fw-generate').click();
+  await page.locator('.fw-page-controls').filter({ hasText: 'Página 1 de 2' }).waitFor();
+  await assertSharpPreview('Story page 1, desktop DPR 2');
+  const storyFirst = await downloadPng('story-page-1.png', [1080, 1920]);
+  await page.locator('[data-fw-action="next"]').click();
+  await page.locator('.fw-page-controls').filter({ hasText: 'Página 2 de 2' }).waitFor();
+  const storySecond = await downloadPng('story-page-2.png', [1080, 1920]);
+  assert.notEqual(storyFirst.name, storySecond.name, 'page filenames must remain distinguishable');
+  assert.match(storyFirst.name, /-pagina-1\.png$/);
+  assert.match(storySecond.name, /-pagina-2\.png$/);
+  assert.equal(storyFirst.bytes.equals(storySecond.bytes), false, 'PNG must represent the selected page');
+  results.push('top primary PNG action exports either Story page at native 1080 × 1920; no PDF action');
   await choose('#fw-template', 'grid-9');
   await choose('#fw-format', 'a4');
   await choose('#fw-model', 'preset:natal');
   await page.locator('.fw-generate').click();
   await page.waitForFunction(() => document.querySelector('.fw-canvas')?.width > 0);
   await page.locator('.fw-page-controls').filter({ hasText: 'Página 1 de 2' }).waitFor();
+  await assertSharpPreview('A4 page 1, desktop DPR 2');
   await page.evaluate(() => { window.scrollTo(0, 0); });
   await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   await page.screenshot({ path: `${artifactDir}/desktop.png`, fullPage: true });
@@ -172,23 +216,8 @@ try {
 
   await page.locator('[data-fw-action="next"]').click();
   await page.locator('.fw-page-controls').filter({ hasText: 'Página 2 de 2' }).waitFor();
-  const pngReady = page.waitForEvent('download');
-  await page.locator('[data-fw-action="png"]').click();
-  const pngDownload = await pngReady;
-  assert.match(pngDownload.suggestedFilename(), /\.png$/i);
-  await pngDownload.saveAs(`${artifactDir}/page-2.png`);
-  assert.deepEqual([...(await readFile(`${artifactDir}/page-2.png`)).subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-  const pdfReady = page.waitForEvent('download');
-  await page.locator('[data-fw-action="pdf"]').click();
-  const pdfDownload = await pdfReady;
-  assert.match(pdfDownload.suggestedFilename(), /\.pdf$/i);
-  await pdfDownload.saveAs(`${artifactDir}/encarte.pdf`);
-  const pdf = (await readFile(`${artifactDir}/encarte.pdf`)).toString('latin1');
-  assert.match(pdf, /^%PDF-1.4/);
-  assert.match(pdf, /\/Count 2/);
-  assert.equal((pdf.match(/\/Type \/Page\b/g) || []).length, 2);
-  assert.match(pdf, /\/MediaBox \[0 0 595\.27559 841\.88976\]/);
-  results.push('real browser PNG and two-page A4 PDF downloads');
+  await downloadPng('page-2.png', [1240, 1754]);
+  results.push('A4 page PNG download retains native 1240 × 1754 dimensions');
 
   await page.locator('[data-fw-tab="saved"]').click();
   await page.locator('[data-fw-open]').waitFor();
@@ -197,6 +226,7 @@ try {
   await page.locator('[data-fw-tab="saved"]').click();
   await page.locator('[data-fw-open]').click();
   await page.locator('.fw-page-controls').filter({ hasText: 'Página 1 de 2' }).waitFor();
+  await downloadPng('reopened-page-1.png', [1240, 1754]);
   await page.locator('[data-fw-action="edit"]').click();
   await page.locator('.flyer-workspace-back').waitFor();
   await page.locator('#flyer-title').fill('Página ajustada no editor');
@@ -221,13 +251,14 @@ try {
   await page.locator('[data-fw-tab="saved"]').click();
   await page.locator('[data-fw-open]').click();
   await page.setViewportSize({ width: 390, height: 844 });
+  await assertSharpPreview('A4 reopened page 1, mobile DPR 2');
   await page.screenshot({ path: `${artifactDir}/mobile.png`, fullPage: true });
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'mobile horizontal overflow');
   assert.deepEqual(errors, []);
   assert.deepEqual(unexpected, []);
-  results.push('existing gallery draft preserved; separate navigation; mobile fits viewport');
-  await writeFile(`${artifactDir}/result.json`, JSON.stringify({ results, calls: calls.map(({ name, params }) => ({ name, resource: params.p_resource })), errors, unexpected }, null, 2));
-  console.log(JSON.stringify({ results, savedPages: publicationPages.length, errors, unexpected }, null, 2));
+  results.push('existing gallery preserved; mobile fits viewport; previews cover CSS display pixels at DPR 2');
+  await writeFile(`${artifactDir}/result.json`, JSON.stringify({ results, previewMetrics, calls: calls.map(({ name, params }) => ({ name, resource: params.p_resource })), errors, unexpected }, null, 2));
+  console.log(JSON.stringify({ results, previewMetrics, savedPages: publicationPages.length, errors, unexpected }, null, 2));
 } catch (error) {
   console.error(JSON.stringify({ message: error.message, errors, unexpected, recentCalls: calls.slice(-8).map(({ name, params }) => ({ name, resource: params.p_resource })) }, null, 2));
   throw error;

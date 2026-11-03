@@ -2,6 +2,7 @@ import { escapeHtml } from '../../shared/ui.js';
 import { getDataContext } from '../../shared/data/api.js';
 import { listDesignSummaries, getDesign, deleteDesign } from './storage.js';
 import { renderDesign } from './renderer.js';
+import { previewRasterScale } from './preview-resolution.js';
 import { publicationFromId } from './publication.js';
 import { isFlyerModel } from './modelos/model.js';
 
@@ -123,7 +124,12 @@ export function renderDesignLibrary(
           const design = await read(entry.row.id, { preview: true, expectedVersion: version });
           if (!current() || !entry.node.isConnected || entry.row._version !== version) return;
           const scratch = document.createElement('canvas');
-          await renderDesign(scratch, design, { scale: 260 / Math.max(design.width, design.height) });
+          const box = entry.canvas.getBoundingClientRect();
+          await renderDesign(scratch, design, { scale: previewRasterScale(design, {
+            width: box.width || 260, height: box.height || 235,
+            pixelRatio: root.ownerDocument?.defaultView?.devicePixelRatio || 1,
+            minimumScale: 260 / Math.max(design.width, design.height),
+          }) });
           if (!current() || !entry.node.isConnected || entry.row._version !== version) return;
           entry.canvas.width = scratch.width;
           entry.canvas.height = scratch.height;

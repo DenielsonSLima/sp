@@ -1,6 +1,7 @@
 import { renderDesign } from '../renderer.js';
 import { createRulers } from './rulers.js';
 import { createGuides } from './guides.js';
+import { previewRasterScale } from '../preview-resolution.js';
 export function createCanvasRenderer({ root, state: S, getInteraction, isActive, message }) {
   let paintToken = 0,
     drawFrame = null,
@@ -41,7 +42,12 @@ export function createCanvasRenderer({ root, state: S, getInteraction, isActive,
     interaction?.sync(d, S.selection, scale);
     try {
       const scratch = document.createElement('canvas');
-      await renderDesign(scratch, d, { scale: Math.min(1, 1400 / Math.max(d.width, d.height)) });
+      const rasterScale = previewRasterScale(d, {
+        width: Math.round(d.width * scale), height: Math.round(d.height * scale),
+        pixelRatio: root.ownerDocument?.defaultView?.devicePixelRatio || 1,
+        minimumScale: Math.min(1, 1400 / Math.max(d.width, d.height)),
+      });
+      await renderDesign(scratch, d, { scale: rasterScale });
       if (token !== paintToken || !root.isConnected || !isActive() || !canvas.isConnected) return;
       canvas.width = scratch.width;
       canvas.height = scratch.height;

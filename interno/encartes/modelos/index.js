@@ -2,6 +2,7 @@ import { getDataContext, subscribeResource } from '../../../shared/data/api.js';
 import { watchResources } from '../../../shared/data/resource-watch.js';
 import { getDesign, listDesignSummaries, saveDesign } from '../storage.js';
 import { renderDesign } from '../renderer.js';
+import { previewRasterScale, previewContentWidth } from '../preview-resolution.js';
 import { renderEditor } from '../editor.js';
 import { MAX_JSON_BYTES, MAX_IMAGE_BYTES } from '../model.js';
 import {
@@ -69,7 +70,11 @@ export async function renderModels(root, { campaignId } = {}) {
       const design = ready ? presetDesigns.get(key.slice(7)) : await getDesign(key, { preview: true, expectedVersion: row?._version });
       if (!current() || version !== revision || !canvas.isConnected) return;
       validateFlyerModel(design);
-      await renderDesign(canvas, design, { scale: Math.min(1, 320 / design.width) });
+      await renderDesign(canvas, design, { scale: previewRasterScale(design, {
+        width: previewContentWidth(canvas.parentElement), height: 256,
+        pixelRatio: root.ownerDocument?.defaultView?.devicePixelRatio || 1,
+        minimumScale: Math.min(1, 320 / design.width),
+      }) });
       if (!current() || version !== revision || !canvas.isConnected) return;
       canvas.classList.add('is-ready');
       label.hidden = true;
