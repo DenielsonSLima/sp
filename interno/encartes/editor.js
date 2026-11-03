@@ -4,10 +4,12 @@ import { bindStudioViewport } from './editor/viewport-controls.js';
 import { bindEditorCanvas } from './editor/canvas-interaction.js';
 import { createPropertiesRenderer } from './editor/properties.js';
 import { renderInsertionPanel } from './editor/insertion.js';
-import { tools, safeName } from './editor/presentation.js';
+import { tools, safeName, isTemplateDesign } from './editor/presentation.js';
 import { runtime, sessionKey, status, message, persist, scheduleSave } from './editor/autosave.js';
 import { bindFinishButton } from './editor/finish.js';
 import { bindPublicationHeader } from './editor/publication-header.js';
+import { prepareEditorDesign } from './editor/open-design.js';
+import { bindTemplateExport } from './editor/template-export.js';
 import { createCatalogPhotoLoader } from './hooks/catalog-photos.js';
 export { createCatalogPhotoLoader } from './hooks/catalog-photos.js';
 import { createLayersPanel } from './layers-panel.js';
@@ -26,14 +28,12 @@ import { createPngBlob, downloadBlob } from './export.js';
 import { editorState as S, openDesign, commitDesign } from './editor-state.js';
 const clone = cloneDesignState;
 const selected = () => S.design.elements.find((element) => element.id === S.selection);
-export async function renderEditor(root, { initialDesign, onBack } = {}) {
-  if (initialDesign) {
-    clearTimeout(runtime.saveTimer);
-    if (S.saveMessage === 'Alterações pendentes' && !(await persist()))
-      throw Error('Salve a arte em edição antes de abrir outra página.');
-  }
+export async function renderEditor(root, { initialDesign, onBack, mode, backLabel } = {}) {
+  if (initialDesign) initialDesign = await prepareEditorDesign(root, initialDesign);
   S.cleanup?.();
   if (initialDesign) openDesign(initialDesign);
+  if (isTemplateDesign(S.design)) mode = 'template';
+  if (mode === 'template') S.selection = S.design.elements.find((element) => /^slot-\d+-foto$/.test(element.id))?.id || null;
   runtime.activeRoot = root;
   if (!tools.some(([key]) => key === S.tool)) S.tool = 'text';
   const catalog = [];
@@ -178,6 +178,7 @@ export async function renderEditor(root, { initialDesign, onBack } = {}) {
     isCurrent: () => !editorDisposed && root.isConnected,
     renderPanel: () => renderPanel(),
     catalog,
+    modelMode: mode === 'template',
   });
   const renderPanel = () => {
     renderLayers();
@@ -264,7 +265,7 @@ export async function renderEditor(root, { initialDesign, onBack } = {}) {
     interaction?.destroy();
     interaction = null;
     root.innerHTML = libraryMarkup(S);
-    bindPublicationHeader(root, { onBack, persist, runtime, message, cleanup });
+    bindPublicationHeader(root, { onBack, persist, runtime, message, cleanup, mode, backLabel });
     root.querySelectorAll('[data-library-tab]').forEach(
       (b) =>
         (b.onclick = async () => {
@@ -365,7 +366,8 @@ export async function renderEditor(root, { initialDesign, onBack } = {}) {
       return;
     }
     root.querySelector('.flyer-view').innerHTML = studioMarkup(S);
-    if (onBack) root.querySelector('.flyer-finish').hidden = true;
+    bindTemplateExport(root, { state: S, message });
+    if (onBack || mode === 'template') root.querySelector('.flyer-finish').hidden = true;
     fullscreenCleanup = bindStudioViewport(root, { renderer, state: S, mutate });
     root.querySelector('#flyer-title').onchange = (e) => mutate((d) => (d.title = e.target.value), { panel: false });
     root.querySelector('.flyer-undo').onclick = () => {

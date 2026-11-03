@@ -11,6 +11,8 @@ import { offerTextInput, readOfferText } from './offer-fields.js';
 import { bindOfferPriceInput } from './price-input.js';
 import { legacyBadgeParts, upgradePriceBadge } from '../price-badge.js';
 import { priceBadgeControls, applyPriceBadgeControls } from './price-badge-controls.js';
+import { quickAdjustment, quickAdjustmentsMarkup, modelSlotDescription } from './quick-adjustments.js';
+import { isAutomaticModelField } from './template-fields.js';
 export function createPropertiesRenderer({
   root,
   state: S,
@@ -24,6 +26,7 @@ export function createPropertiesRenderer({
   isCurrent,
   renderPanel,
   catalog,
+  modelMode = false,
 }) {
   let productDataReady = false;
   const applyProps = (form) => {
@@ -104,7 +107,8 @@ export function createPropertiesRenderer({
         (f) =>
           `<option ${value === f ? 'selected' : ''} style="font-family:${escapeHtml(f)}">${escapeHtml(f)}</option>`,
       ).join('');
-    pane.innerHTML = `<h2>${el.type === 'product' ? 'Oferta do produto' : el.type === 'text' ? (el.offerField === 'price' ? 'Preço da oferta' : el.offerField === 'name' ? 'Descrição do produto' : 'Texto selecionado') : el.type === 'shape' ? 'Faixa de cor' : 'Imagem selecionada'}</h2><p class="flyer-help">${el.locked ? 'Camada bloqueada. Use o cadeado em Camadas para editar.' : el.offerField ? 'Edite este campo da oferta. As alterações valem somente para esta arte.' : 'Arraste na arte para mover e redimensionar.'}</p>${legacyBadgeParts(S.design, el) ? '<button type="button" class="button secondary flyer-upgrade-price">Adaptar preço ao círculo</button><p class="flyer-help">Une o valor e o círculo para ajustar tamanho, cores e borda juntos.</p>' : ''}<form class="flyer-properties"><fieldset ${el.locked ? 'disabled' : ''}><label>Nome da camada<input name="label" maxlength="100" value="${escapeHtml(el.label || '')}" placeholder="Ex.: Título da oferta"></label>${
+    const automaticField = isAutomaticModelField(S.design, el);
+    pane.innerHTML = `<h2>${el.type === 'product' ? 'Oferta do produto' : el.type === 'text' ? (el.offerField === 'price' ? 'Preço da oferta' : el.offerField === 'name' ? 'Descrição do produto' : 'Texto selecionado') : el.type === 'shape' ? 'Faixa de cor' : 'Imagem selecionada'}</h2><p class="flyer-help">${el.locked ? 'Camada bloqueada. Use o cadeado em Camadas para editar.' : el.offerField ? 'Edite este campo da oferta. As alterações valem somente para esta arte.' : 'Arraste na arte para mover e redimensionar.'}</p>${legacyBadgeParts(S.design, el) ? '<button type="button" class="button secondary flyer-upgrade-price">Adaptar preço ao círculo</button><p class="flyer-help">Une o valor e o círculo para ajustar tamanho, cores e borda juntos.</p>' : ''}${quickAdjustmentsMarkup(el)}<form class="flyer-properties"><fieldset ${el.locked ? 'disabled' : ''}><label>Nome da camada<input name="label" maxlength="100" value="${escapeHtml(el.label || '')}" placeholder="Ex.: Título da oferta"></label>${
       el.priceBadge ? priceBadgeControls(el, fontOptions) : el.type === 'text'
         ? `${offerTextInput(el)}<label>Fonte<select name="fontFamily">${fontOptions(el.fontFamily)}</select></label><div class="flyer-two-fields"><label>Tamanho<input name="fontSize" type="number" min="8" max="600" value="${el.fontSize}"></label><label>Peso<select name="fontWeight">${[400, 600, 700, 900].map((n) => `<option value="${n}" ${Number(el.fontWeight) === n ? 'selected' : ''}>${n === 400 ? 'Normal' : n === 600 ? 'Seminegrito' : n === 700 ? 'Negrito' : 'Extra'}</option>`).join('')}</select></label></div><div class="flyer-two-fields"><label>Cor<input type="color" name="color" value="${el.color}"></label><label>Alinhamento<select name="align">${[
             ['left', 'Esquerda'],
@@ -128,7 +132,7 @@ export function createPropertiesRenderer({
               '',
             )}</select></label><label>Arredondamento<input type="number" name="radius" min="0" max="500" value="${el.radius ?? 24}"></label>`
         : ''
-    }${el.type === 'image' ? `<label>Encaixe da imagem<select name="fit"><option value="contain" ${el.fit !== 'cover' ? 'selected' : ''}>Mostrar inteira</option><option value="cover" ${el.fit === 'cover' ? 'selected' : ''}>Preencher a área</option></select></label><label>Trocar imagem<input type="file" class="flyer-replace-photo" accept="image/jpeg,image/png,image/webp"></label>` : ''}<details class="studio-properties-geometry"><summary>Posição e tamanho</summary><div class="flyer-two-fields">${[
+    }${el.type === 'image' ? `<label>Encaixe da imagem<select name="fit"><option value="contain" ${el.fit !== 'cover' ? 'selected' : ''}>Mostrar inteira</option><option value="cover" ${el.fit === 'cover' ? 'selected' : ''}>Preencher a área</option></select></label><label>Trocar imagem<input type="file" class="flyer-replace-photo" accept="image/jpeg,image/png,image/webp"></label>` : ''}<details class="studio-properties-geometry" ${['image', 'product'].includes(el.type) ? 'open' : ''}><summary>Posição e tamanho</summary><div class="flyer-two-fields">${[
       ['x', 'Posição X'],
       ['y', 'Posição Y'],
       ['width', 'Largura'],
@@ -140,7 +144,18 @@ export function createPropertiesRenderer({
       )
       .join(
         '',
-      )}</div><div class="flyer-two-fields"><label>Rotação (°)<input name="rotation" type="number" min="-360" max="360" value="${Math.round(el.rotation || 0)}"></label><label>Opacidade (%)<input name="opacity" type="number" min="0" max="100" value="${Math.round((el.opacity ?? 1) * 100)}"></label></div><p class="flyer-help">Medidas em pixels. Shift mantém a proporção ao redimensionar.</p></details></fieldset></form><div class="flyer-element-transforms"><button type="button" class="button secondary" data-flip="flipX" ${el.locked ? 'disabled' : ''}>Espelhar ↔</button><button type="button" class="button secondary" data-flip="flipY" ${el.locked ? 'disabled' : ''}>Espelhar ↕</button><button type="button" class="button secondary" data-order="front">Trazer à frente</button><button type="button" class="button secondary" data-order="back">Enviar ao fundo</button></div><div class="flyer-nudges" role="group" aria-label="Mover elemento 10 pixels"><button type="button" data-nudge="-10,0" aria-label="Mover para esquerda" ${el.locked ? 'disabled' : ''}>←</button><button type="button" data-nudge="0,-10" aria-label="Mover para cima" ${el.locked ? 'disabled' : ''}>↑</button><button type="button" data-nudge="0,10" aria-label="Mover para baixo" ${el.locked ? 'disabled' : ''}>↓</button><button type="button" data-nudge="10,0" aria-label="Mover para direita" ${el.locked ? 'disabled' : ''}>→</button></div><div class="flyer-element-actions"><button class="button secondary flyer-lock" type="button">${el.locked ? 'Desbloquear' : 'Bloquear'}</button><button class="button secondary flyer-duplicate-element" type="button">Duplicar</button><button class="button secondary flyer-delete-element" type="button">Remover</button><button class="button secondary flyer-hide-element" type="button">${el.hidden ? 'Mostrar' : 'Ocultar'}</button><button class="button secondary flyer-download-layer" type="button">Baixar camada PNG</button></div>`;
+      )}</div><div class="flyer-two-fields"><label>Rotação (°)<input name="rotation" type="number" min="-360" max="360" value="${Math.round(el.rotation || 0)}"></label><label>Opacidade (%)<input name="opacity" type="number" min="0" max="100" value="${Math.round((el.opacity ?? 1) * 100)}"></label></div><p class="flyer-help">Medidas em pixels. Shift mantém a proporção ao redimensionar.</p></details></fieldset></form><div class="flyer-element-transforms"><button type="button" class="button secondary" data-flip="flipX" ${el.locked ? 'disabled' : ''}>Espelhar ↔</button><button type="button" class="button secondary" data-flip="flipY" ${el.locked ? 'disabled' : ''}>Espelhar ↕</button><button type="button" class="button secondary" data-order="front">Trazer à frente</button><button type="button" class="button secondary" data-order="back">Enviar ao fundo</button></div><div class="flyer-nudges" role="group" aria-label="Mover elemento 10 pixels"><button type="button" data-nudge="-10,0" aria-label="Mover para esquerda" ${el.locked ? 'disabled' : ''}>←</button><button type="button" data-nudge="0,-10" aria-label="Mover para cima" ${el.locked ? 'disabled' : ''}>↑</button><button type="button" data-nudge="0,10" aria-label="Mover para baixo" ${el.locked ? 'disabled' : ''}>↓</button><button type="button" data-nudge="10,0" aria-label="Mover para direita" ${el.locked ? 'disabled' : ''}>→</button></div><div class="flyer-element-actions"><button class="button secondary flyer-lock" type="button">${el.locked ? 'Desbloquear' : 'Bloquear'}</button><button class="button secondary flyer-duplicate-element" type="button" ${automaticField ? 'disabled' : ''}>Duplicar</button><button class="button secondary flyer-delete-element" type="button" ${automaticField ? 'disabled' : ''}>Remover</button><button class="button secondary flyer-hide-element" type="button">${el.hidden ? 'Mostrar' : 'Ocultar'}</button><button class="button secondary flyer-download-layer" type="button">Baixar camada PNG</button></div>`;
+    if (modelMode && automaticField) {
+      const help = pane.querySelector('.flyer-help');
+      help.textContent = `${modelSlotDescription(el)} · Campo preenchido pela promoção. Ajuste o tamanho, a fonte e a posição para definir o modelo.`;
+    }
+    pane.querySelectorAll('[data-quick-adjust]').forEach((button) => {
+      button.onclick = () => mutate((design) => {
+        const item = design.elements.find((element) => element.id === el.id);
+        const patch = quickAdjustment(item, button.dataset.quickAdjust, design);
+        if (patch) Object.assign(item, patch);
+      });
+    });
     pane.querySelector('.flyer-upgrade-price')?.addEventListener('click', () =>
       mutate(d => upgradePriceBadge(d, el.id)),
     );
@@ -240,12 +255,14 @@ export function createPropertiesRenderer({
       });
     pane.querySelector('.flyer-duplicate-element').onclick = () =>
       mutate((d) => {
+        if (isAutomaticModelField(d, selected())) return;
         const item = duplicateElement(selected());
         d.elements.push(item);
         S.selection = item.id;
       });
     pane.querySelector('.flyer-delete-element').onclick = () =>
       mutate((d) => {
+        if (isAutomaticModelField(d, selected())) return;
         d.elements = d.elements.filter((e) => e.id !== S.selection);
         S.selection = null;
       });

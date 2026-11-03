@@ -1,6 +1,7 @@
 /** Presentation choices only; offer values always come from the saved campaign. */
 export const FLYER_TEMPLATES = Object.freeze([
   Object.freeze({ id: 'grid-6', name: '6 produtos por página', perPage: 6, columns: 2 }),
+  Object.freeze({ id: 'grid-8', name: '8 produtos por página', perPage: 8, columns: 2 }),
   Object.freeze({ id: 'grid-9', name: '9 produtos por página', perPage: 9, columns: 3 }),
   Object.freeze({ id: 'grid-12', name: '12 produtos por página', perPage: 12, columns: 3 }),
 ]);

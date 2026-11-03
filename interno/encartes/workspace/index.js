@@ -11,11 +11,15 @@ import { safeName } from '../editor/presentation.js';
 import { createFlyerPdf } from './pdf.js';
 import { campaignChoices, readCampaignWithPhotos, selectedPhotos } from './data.js';
 import { workspaceMarkup } from './view.js';
+import { readWorkspaceSelection, modelChoices, readWorkspaceModel, modelPublicationOptions } from './models.js';
+import { isFlyerModel } from '../modelos/model.js';
 
 export async function renderWorkspace(root) {
   const context = getDataContext(), scope = JSON.stringify([context?.companyId, context?.user?.id]);
+  const selection = readWorkspaceSelection(location.hash);
   const state = { tab: 'create', campaigns: [], campaign: null, products: new Map(), photoChoices: new Map(),
-    options: { templateId: 'grid-6', themeId: 'povo', formatId: 'portrait' }, pages: [], pageIndex: 0,
+    models: [], modelKey: selection.modelId || 'preset:povo', model: null,
+    options: { templateId: 'grid-8', themeId: 'povo', formatId: 'story' }, pages: [], pageIndex: 0,
     groups: [], saved: false, busy: false, message: '', error: false, sourceChanged: false, optionsChanged: false };
   let active = true, revision = 0, editing = false;
   const current = () => active && root.isConnected && scope === JSON.stringify([getDataContext()?.companyId, getDataContext()?.user?.id]);
@@ -31,7 +35,8 @@ export async function renderWorkspace(root) {
     root.classList.remove('flyer-editing');
     root.innerHTML = workspaceMarkup(state);
     bind();
-    const canvas = root.querySelector('.fw-canvas'), page = state.pages[state.pageIndex];
+    const canvas = root.querySelector('.fw-canvas') || root.querySelector('.fw-model-canvas');
+    const page = state.pages[state.pageIndex] || state.model;
     if (canvas && page) {
       try { await renderDesign(canvas, page, { scale: Math.min(1, 720 / Math.max(page.width, page.height)) }); }
       catch (error) { if (current() && revision === version) feedback(error.message, true); }
@@ -73,12 +78,15 @@ export async function renderWorkspace(root) {
     ensure();
     const photos = await selectedPhotos(loaded.products, state.photoChoices, current);
     ensure();
+    state.model = await readWorkspaceModel(state.modelKey, state.options, current);
+    ensure();
     const company = context.companies?.find(row => row.id === context.companyId);
-    const generated = generateFlyerPages(loaded.campaign, { ...state.options, photos, storeName: company?.name });
+    const publicationOptions = modelPublicationOptions(state);
+    const generated = generateFlyerPages(loaded.campaign, { model: state.model, photos, storeName: company?.name });
     const groupId = newId();
     state.pages = generated.map((page, pageIndex) => ({ ...page, id: publicationId(groupId, pageIndex), publication: {
       kind: 'campaign', groupId, campaignId: loaded.campaign.id, campaignVersion: loaded.campaign._version,
-      pageIndex, pageCount: generated.length, ...state.options,
+      pageIndex, pageCount: generated.length, ...publicationOptions,
     } }));
     state.campaign = loaded.campaign;
     state.products = loaded.products;
@@ -115,7 +123,7 @@ export async function renderWorkspace(root) {
     const pages = [];
     for (const row of group.pages) {
       ensure();
-      const page = await getDesign(row.id);
+      const page = await getDesign(row.id, { preview: true, fresh: true });
       ensure();
       if (page.publication?.kind !== 'campaign' || page.publication.groupId !== id ||
           page.id !== publicationId(id, page.publication.pageIndex)) throw Error('Uma página não pertence a este encarte.');
@@ -130,14 +138,18 @@ export async function renderWorkspace(root) {
     state.campaign = null;
     state.products.clear(); state.photoChoices.clear();
     const publication = pages[0].publication;
-    state.options = { templateId: publication.templateId, themeId: publication.themeId, formatId: publication.formatId };
+    state.options = isFlyerModel(publication.templateId)
+      ? { templateId: 'grid-8', themeId: 'povo', formatId: 'story' }
+      : { templateId: publication.templateId, themeId: publication.themeId, formatId: publication.formatId };
+    state.modelKey = isFlyerModel(publication.templateId) ? publication.templateId : 'preset:' + publication.themeId;
+    state.model = null;
     state.optionsChanged = false; state.sourceChanged = false; state.tab = 'create';
     feedback('Encarte salvo aberto. Você pode editar cada página ou baixar o conjunto.');
   }
   async function editPage() {
     await savePages();
     ensure();
-    const index = state.pageIndex, page = await getDesign(state.pages[index].id);
+    const index = state.pageIndex, page = await getDesign(state.pages[index].id, { preview: true, fresh: true });
     ensure();
     editing = true;
     root.innerHTML = '<div class="fw-editor-host"></div>';
@@ -149,6 +161,26 @@ export async function renderWorkspace(root) {
       editing = false;
       state.saved = true;
       await refreshGroups();
+      await paint();
+    } });
+  }
+  async function editModel() {
+    const source = await readWorkspaceModel(state.modelKey, state.options, current);
+    ensure();
+    const model = state.modelKey.startsWith('preset:') ? await saveDesign(source) : source;
+    ensure();
+    editing = true;
+    root.innerHTML = '<div class="fw-editor-host"></div>';
+    await renderEditor(root.firstElementChild, { initialDesign: model, mode: 'template', backLabel: '← Voltar ao encarte', onBack: async () => {
+      if (!current()) return;
+      const updated = await getDesign(model.id);
+      ensure();
+      state.modelKey = updated.id; state.model = updated;
+      state.models = await modelChoices(current);
+      ensure();
+      editing = false;
+      state.optionsChanged = state.pages.length > 0;
+      feedback('Modelo salvo. Gere o encarte para aplicar as alterações.');
       await paint();
     } });
   }
@@ -179,16 +211,25 @@ export async function renderWorkspace(root) {
     }); });
     const select = root.querySelector('#fw-campaign');
     if (select) select.onchange = () => run(() => selectCampaign(select.value));
-    const changed = () => { state.optionsChanged = state.pages.length > 0; feedback(''); void paint(); };
+    const changed = () => { state.optionsChanged = state.pages.length > 0; feedback(''); };
+    const modelControl = root.querySelector('#fw-model');
+    if (modelControl) modelControl.onchange = () => run(async () => {
+      const key = modelControl.value;
+      const model = await readWorkspaceModel(key, state.options, current);
+      ensure(); state.modelKey = key; state.model = model; changed();
+    });
+    const editModelButton = root.querySelector('.fw-edit-model');
+    if (editModelButton) editModelButton.onclick = () => run(editModel);
     for (const [selector, key] of [['#fw-template', 'templateId'], ['#fw-format', 'formatId']]) {
       const control = root.querySelector(selector);
-      if (control) control.onchange = () => { state.options[key] = control.value; changed(); };
+      if (control) control.onchange = () => run(async () => {
+        state.options[key] = control.value;
+        state.model = await readWorkspaceModel(state.modelKey, state.options, current);
+        ensure(); changed();
+      });
     }
-    root.querySelectorAll('[data-fw-theme]').forEach(button => { button.onclick = () => {
-      if (state.busy) return; state.options.themeId = button.dataset.fwTheme; changed();
-    }; });
     root.querySelectorAll('[data-fw-photo]').forEach(control => { control.onchange = () => {
-      state.photoChoices.set(state.campaign.items[Number(control.dataset.fwPhoto)].productId, Number(control.value)); changed();
+      state.photoChoices.set(state.campaign.items[Number(control.dataset.fwPhoto)].productId, Number(control.value)); changed(); void paint();
     }; });
     const form = root.querySelector('.fw-form');
     if (form) form.onsubmit = event => { event.preventDefault(); void run(generate); };
@@ -204,17 +245,27 @@ export async function renderWorkspace(root) {
     await paint();
   });
   const stopLibrary = watchResources(root, ['flyers'], async () => {
-    if (!current() || state.busy || editing || state.tab !== 'saved') return;
-    await refreshGroups(); await paint();
+    if (!current() || state.busy || editing) return;
+    state.models = await modelChoices(current);
+    if (state.tab === 'saved') await refreshGroups();
+    ensure(); await paint();
   });
   const stopSession = subscribeResource('flyers', () => {
     if (current()) return;
-    state.pages = []; state.products.clear(); state.campaign = null;
+    state.pages = []; state.products.clear(); state.campaign = null; state.models = []; state.model = null;
     if (root.isConnected) root.replaceChildren();
   });
   const observer = new MutationObserver(() => {
     if (!root.isConnected) { active = false; stopCampaigns(); stopLibrary(); stopSession(); observer.disconnect(); }
   });
   observer.observe(document.body, { childList: true, subtree: true });
-  await run(async () => { feedback('Carregando promoções…'); state.campaigns = await campaignChoices(current); ensure(); feedback(''); });
+  await run(async () => {
+    feedback('Carregando promoções e modelos…');
+    [state.campaigns, state.models] = await Promise.all([campaignChoices(current), modelChoices(current)]);
+    ensure();
+    state.model = await readWorkspaceModel(state.modelKey, state.options, current);
+    ensure();
+    if (selection.campaignId) await selectCampaign(selection.campaignId);
+    else feedback('');
+  });
 }

@@ -1,13 +1,13 @@
 /** Keep page editing inside its publication without exposing the artwork library. */
-export function bindPublicationHeader(root, { onBack, persist, runtime, message, cleanup }) {
+export function bindPublicationHeader(root, { onBack, persist, runtime, message, cleanup, mode, backLabel }) {
   if (!onBack) return;
-  root.querySelector('h1').textContent = 'Editar página do encarte';
+  root.querySelector('h1').textContent = mode === 'template' ? 'Editar modelo' : 'Editar página do encarte';
   root.querySelector('.flyer-tabs').remove();
   root.querySelector('.flyer-new').hidden = true;
   const back = document.createElement('button');
   back.type = 'button';
   back.className = 'button secondary flyer-workspace-back';
-  back.textContent = '← Voltar ao encarte';
+  back.textContent = backLabel || (mode === 'template' ? '← Voltar a Modelos' : '← Voltar ao encarte');
   root.querySelector('.flyer-library-actions').append(back);
   back.onclick = async () => {
     back.disabled = true;

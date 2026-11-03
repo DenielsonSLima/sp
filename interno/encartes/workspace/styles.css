@@ -18,6 +18,11 @@
 .fw-themes button[aria-pressed=true] { border-color: #bd1427; box-shadow: 0 0 0 1px #bd1427; background: #fff8f7; }
 .fw-themes button span { width: 24px; height: 24px; border: 5px solid; border-radius: 50%; flex-shrink: 0; }
 .fw-generate { width: 100%; }
+.fw-model-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; }
+.fw-model-actions a, .fw-edit-model { color: #a61628; font-weight: 700; }
+.fw-edit-model { background: none; border: 0; padding: 4px; cursor: pointer; text-decoration: underline; }
+.fw-model-info { margin: 0; color: #786c72; font-size: 13px; line-height: 1.6; }
+.fw-model-canvas { display: block; max-width: 100%; width: auto; height: auto; max-height: 560px; margin: 18px auto 0; box-shadow: 0 6px 20px #30252c20; }
 .fw-products { margin-top: 26px; border-top: 1px solid #ebe7e7; padding-top: 20px; }
 .fw-products summary { cursor: pointer; font-weight: 700; font-size: 14px; }
 .fw-products summary > span { color: #9b8f92; margin-left: 8px; }
@@ -66,7 +71,7 @@
   .fw-heading { flex-wrap: wrap; }
   .fw-setup { padding: 20px; }
   .fw-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .fw-form > label:first-child, .fw-campaign-info, .fw-themes, .fw-generate { grid-column: 1 / -1; }
+  .fw-form > label:first-child, .fw-campaign-info, .fw-model-actions, .fw-model-info, .fw-generate { grid-column: 1 / -1; }
   .fw-themes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .fw-themes button { flex-direction: column; text-align: center; padding: 10px 5px; font-size: 11px; }
   .fw-empty { min-height: 380px; }

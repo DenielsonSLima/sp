@@ -134,7 +134,7 @@ try {
   await choose('[data-fw-photo="0"]', '2');
   await choose('#fw-template', 'grid-9');
   await choose('#fw-format', 'a4');
-  await page.locator('[data-fw-theme="natal"]').click();
+  await choose('#fw-model', 'preset:natal');
   await page.locator('.fw-generate').click();
   await page.waitForFunction(() => document.querySelector('.fw-canvas')?.width > 0);
   await page.locator('.fw-page-controls').filter({ hasText: 'Página 1 de 2' }).waitFor();
@@ -163,10 +163,10 @@ try {
   results.push('partial save reports 1 of 2 pages; explicit retry completes the same IDs without rewriting page 1');
   assert.deepEqual(publicationPages.map((row) => row.publication.pageIndex), [0, 1]);
   assert.ok(publicationPages.every((row) => row.publication.pageCount === 2 && row.publication.formatId === 'a4' && row.publication.themeId === 'natal'));
-  const names = publicationPages.flatMap((row) => row.elements.filter((element) => /^produto-\d+-nome$/.test(element.id)).map((element) => element.text));
+  const names = publicationPages.flatMap((row) => row.elements.filter((element) => /^slot-\d+-nome$/.test(element.id)).map((element) => element.text));
   assert.deepEqual(names, campaign.items.map((item) => item.displayName || item.name), 'every campaign item must appear once, in saved order');
-  assert.equal(publicationPages[0].elements.find((element) => element.id === 'produto-1-foto').src, photos[2]);
-  const prices = publicationPages.flatMap((row) => row.elements.filter((element) => /^produto-\d+-preco$/.test(element.id)).map((element) => element.text));
+  assert.equal(publicationPages[0].elements.find((element) => element.id === 'slot-1-foto').src, photos[2]);
+  const prices = publicationPages.flatMap((row) => row.elements.filter((element) => /^slot-\d+-preco$/.test(element.id)).map((element) => element.text));
   assert.deepEqual(prices, campaign.items.map((item) => `R$ ${(item.cents / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`));
   results.push('14 products preserved without repetitions; selected photo, price, theme and page metadata saved');
 

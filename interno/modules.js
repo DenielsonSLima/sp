@@ -18,6 +18,7 @@ export const modules = {
   hortifruti: { label: 'Hortifruti', load: () => import('./hortifruti/index.js') },
   acougue: { label: 'Açougue', isNew: true, load: () => import('./acougue/index.js') },
   galeria: { label: 'Galeria de imagens', permission: 'encartes', load: () => import('./galeria/index.js') },
+  modelos: { label: 'Modelos', permission: 'encartes', load: () => import('./encartes/modelos/index.js') },
   encartes: { label: 'Encartes', isNew: true, load: () => import('./encartes/index.js') },
   promocoes: { label: 'Promoções', isNew: true, load: () => import('./promocoes/index.js') },
   'tabela-precos': { label: 'Tab. de Preços', load: () => import('./tabela-precos/index.js') },
@@ -28,7 +29,7 @@ export const modules = {
 export const navigationSections = [
   { id: 'home', label: null, items: ['inicio', 'cadastros'] },
   { id: 'operation', label: 'Operação', items: ['cotacao', 'hortifruti', 'acougue', 'devolucoes'] },
-  { id: 'offers', label: 'Ofertas e divulgação', items: ['calendario', 'promocoes', 'tabela-precos', 'galeria', 'encartes'] },
+  { id: 'offers', label: 'Ofertas e divulgação', items: ['calendario', 'promocoes', 'tabela-precos', 'galeria', 'modelos', 'encartes'] },
   { id: 'administration', label: 'Administração', items: ['configuracoes'] },
 ];
 // The gallery and flyer generator share the existing authorization domain.
@@ -38,7 +39,7 @@ export function isModuleAllowed(slug, allowed) {
   return Array.isArray(allowed) && allowed.includes(modules[slug].permission || slug);
 }
 export const resolveRoute = (hash) => {
-  const route = hash.slice(1).split('/')[0];
+  const route = hash.slice(1).split(/[/?]/)[0];
   return Object.hasOwn(modules, route) ? route : 'inicio';
 };
 

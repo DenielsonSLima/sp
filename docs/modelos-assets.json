@@ -1,0 +1,19 @@
+{
+  "createdAt": "2026-11-03",
+  "tool": "Built-in image_gen",
+  "usage": "Static decorative backgrounds prepared during development. The application does not call AI services. Product positions, prices and text remain editable canvas layers.",
+  "assets": [
+    {
+      "path": "assets/encartes/camadas/modelo-natal-cabecalho.png",
+      "prompt": "Create an original polished photographic Christmas background banner asset for a Brazilian supermarket flyer TEMPLATE. Wide aspect ratio 1080x480 (about 2.25:1). NOT a full flyer. Deep rich red velvet and burgundy background, subtle festive warm glow, tiny gold bokeh and few elegant pine branches at far right. A warm smiling realistic Santa Claus occupies the RIGHTMOST 38%, from chest up, looking welcoming, wearing a beautifully textured traditional red suit with white fur, lush white beard, tasteful warm lighting. Entire LEFT 58% must be calm uninterrupted dark burgundy negative space for editable headlines to be overlaid later in software. Santa stays entirely right, no hand crossing into left empty area. At bottom a very subtle festive gold glimmer. Premium Brazilian Christmas supermarket advertising aesthetic, crisp realistic detail, dramatic light, tasteful, not cartoon. No text, no letters, no numerals, no typography, no logo, no watermark, no products, no prices, no grid, no cards. This is an original decorative reusable top banner; do not reproduce a stock advertisement. Output image with opaque background."
+    },
+    {
+      "path": "assets/encartes/camadas/modelo-natal-presentes.png",
+      "prompt": "Create an original photographic decorative Christmas wide banner for a Brazilian supermarket flyer template, 1080x480 aspect 2.25:1. On the rightmost 38%, a kindly realistic Santa Claus seated in an elegant dark carved wooden armchair, red suit white fur, warmly smiling, a Christmas tree behind him with tasteful gold fairy lights, deep festive atmospheric photography. Keep entire left58% as uninterrupted dark burgundy red velvet shaded negative space for headlines that will be added later as editable text. Bottom edges fade into rich crimson. Premium commercial Christmas photography, warm rich tones, composed full bust of Santa in chair, not cropped face. No products, no text, no letters, no logo, no prices, no watermark, no flyer cards. Original decorative background asset only."
+    },
+    {
+      "path": "assets/encartes/camadas/modelo-natal-semana.png",
+      "prompt": "Create an original premium Christmas decorative wide banner asset for a Brazilian supermarket Stories flyer template, 1080x480 aspect 2.25:1. Large glossy RED Christmas ornament baubles with polished GOLD caps and small sculptural gold stars arranged in the RIGHTMOST38%, with subtle realistic pine branch tips. Dramatic luxury 3D product advertising photography, metallic reflections and beautiful studio lighting, cheerful striking Brazilian Christmas retail aesthetic. Entire LEFT58% calm uninterrupted dark crimson and burgundy negative space for big editable text that will be added later in software. No text, no lettering, no numbers, no logos, no products for sale, no prices, no cards, no watermark. Do not make a complete flyer. Output only original decorative background, opaque, high detail."
+    }
+  ]
+}

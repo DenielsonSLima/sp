@@ -4,10 +4,10 @@ test('isolated fictitious data and immutable reads',async()=>{const repo=createD
 test('create and validate local example',async()=>{const repo=createDemoRepository();await assert.rejects(()=>repo.createProduct({name:'   '}));const row=await repo.createProduct({name:' Teste ',unit:'KG'});assert.equal(row.name,'Teste');assert.equal(row.unit,'KG');assert.equal((await repo.summary()).products,4);});
 test('HTML escaped before rendering user input',()=>{assert.equal(escapeHtml('<script>"&'), '&lt;script&gt;&quot;&amp;');});
 import {modules,resolveRoute,isModuleAllowed} from '../interno/modules.js';
-test('all module routes load and have render functions',async()=>{assert.deepEqual(Object.keys(modules),['inicio','cadastros','devolucoes','cotacao','hortifruti','acougue','galeria','encartes','promocoes','tabela-precos','calendario','configuracoes']);for(const [route,module] of Object.entries(modules)){assert.equal(resolveRoute('#'+route),route);assert.equal(typeof(await module.load()).render,'function');}});
+test('all module routes load and have render functions',async()=>{assert.deepEqual(Object.keys(modules),['inicio','cadastros','devolucoes','cotacao','hortifruti','acougue','galeria','modelos','encartes','promocoes','tabela-precos','calendario','configuracoes']);for(const [route,module] of Object.entries(modules)){assert.equal(resolveRoute('#'+route),route);assert.equal(typeof(await module.load()).render,'function');}});
 test('unknown and inherited-property routes fall back safely',()=>{for(const hash of ['','#unknown','#toString','#__proto__','#constructor'])assert.equal(resolveRoute(hash),'inicio');});
 test('gallery inherits flyer permission and loses access when that permission is revoked',()=>{
-  for(const route of ['galeria','encartes']){
+  for(const route of ['galeria','modelos','encartes']){
     assert.equal(isModuleAllowed(route,['encartes']),true);
     assert.equal(isModuleAllowed(route,['inicio']),false);
     assert.equal(isModuleAllowed(route,[]),false);
@@ -17,6 +17,10 @@ test('gallery inherits flyer permission and loses access when that permission is
   assert.equal(isModuleAllowed('galeria'),true);
   assert.equal(isModuleAllowed('toString'),false);
   assert.equal(isModuleAllowed('__proto__',['__proto__']),false);
+});
+test('model and promotion selection remain on their requested module',()=>{
+  assert.equal(resolveRoute('#encartes?modelo=modelo_123&promocao=campaign-1'),'encartes');
+  assert.equal(resolveRoute('#modelos?promocao=campaign-1'),'modelos');
 });
 test('Promoções uses functional poster linkage and persistent module styles',async()=>{const source=await readDomainSource('interno/promocoes');const appCss=await readFile(new URL('../shared/app.css',import.meta.url),'utf8');assert.match(appCss,/@import\s+['"]\.\.\/interno\/promocoes\/styles\.css['"]/);assert.match(appCss,/@import\s+['"]\.\.\/interno\/cadastros\/modelos-cartaz\/styles\.css['"]/);assert.doesNotMatch(source,/<link\b[^>]*rel=["']stylesheet["']/);assert.match(source,/openCampaignPdfDialog/);assert.match(source,/planCampaignPdfs/);});
 import {readFile,stat} from 'node:fs/promises';

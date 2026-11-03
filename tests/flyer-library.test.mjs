@@ -144,6 +144,23 @@ test('library summaries omit full artwork and deletion sends the displayed versi
   await assert.rejects(store.saveDesign(design), /excluída/);
 });
 
+test('fresh model previews read the current record without adopting a newer edit revision', async () => {
+  const design = { ...createDesign(), _version: 2 };
+  let server = design, reads = 0;
+  const writes = [];
+  const store = createFlyerRepository({ context,
+    read: async () => { reads++; return server; },
+    save: async (record, options) => { writes.push(options.expectedVersion); return { ...record, _version: 3 }; },
+  });
+  await store.getDesign(design.id);
+  server = { ...design, title: 'Changed elsewhere', _version: 9 };
+  const preview = await store.getDesign(design.id, { preview: true, fresh: true });
+  assert.equal(preview.title, 'Changed elsewhere');
+  assert.equal(reads, 2);
+  await store.saveDesign(design);
+  assert.deepEqual(writes, [2], 'a generation preview must not authorize overwriting another editor');
+});
+
 test('flyer caches and deletion tombstones do not cross companies', async () => {
   let company = 'a';
   const design = { ...createDesign(), _version: 1 };

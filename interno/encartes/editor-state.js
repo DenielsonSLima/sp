@@ -1,4 +1,5 @@
 import { createDesign, createHistory, validateDesign } from './model.js';
+import { isTemplateDesign } from './editor/presentation.js';
 const initial = createDesign();
 initial.bgColor = '#ffffff';
 export const editorState = {
@@ -19,7 +20,7 @@ export function openDesign(design) {
   editorState.saveMessage = 'Arte salva';
 }
 export function commitDesign(design) {
-  const next = validateDesign({ ...design, status: design.publication ? design.status : 'draft', updatedAt: new Date().toISOString() });
+  const next = validateDesign({ ...design, status: isTemplateDesign(design) ? 'created' : design.publication ? design.status : 'draft', updatedAt: new Date().toISOString() });
   editorState.design = editorState.history.commit(next);
   return editorState.design;
 }

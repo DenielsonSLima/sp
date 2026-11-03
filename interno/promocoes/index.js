@@ -7,6 +7,7 @@ import { getDataContext } from "./services.js";
 let stopRealtime, productSaver;
 import { heading, escapeHtml as esc } from "../../shared/ui.js";
 import { campaignStore, localToday } from "./state.js";
+import { isModuleAllowed } from "../modules.js";
 const filters = { query: "", start: "", end: "", tab: "active", page: 1 };
 let createDraft = { name: "", start: localToday(), end: localToday(), notes: "" };
 let products = [],
@@ -108,6 +109,14 @@ async function renderDetail(root, campaignId, tab = "products") {
   const back = () => leave(() => renderList(root));
   root.querySelector(".campaign-back").onclick = back;
   root.querySelector(".campaign-back-button").onclick = back;
+  if (isModuleAllowed('encartes', getDataContext()?.company?.modules)) {
+    const chooseModel = document.createElement('button');
+    chooseModel.type = 'button';
+    chooseModel.className = 'button primary campaign-choose-model';
+    chooseModel.textContent = 'Criar encarte · Escolher modelo';
+    chooseModel.onclick = () => leave(() => { location.hash = '#modelos?promocao=' + encodeURIComponent(campaignId); });
+    root.querySelector('.campaign-toolbar').append(chooseModel);
+  }
   root
     .querySelectorAll("[data-detail-tab]")
     .forEach((b) => (b.onclick = () => leave(() => renderDetail(root, campaignId, b.dataset.detailTab))));

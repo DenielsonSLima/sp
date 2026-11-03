@@ -1,4 +1,5 @@
 import { FONT_FAMILIES } from './model.js';
+import { isEmptyModelPhoto, drawModelPhotoPlaceholder } from './editor/template-fields.js';
 import { drawPriceBadge } from './price-badge.js';
 
 /** Canvas-only artwork. Editor controls must remain in a separate overlay. */
@@ -108,20 +109,42 @@ export function wrapText(ctx, value, width) {
   return lines;
 }
 
-function textBlock(ctx, text, x, y, width, height, opts = {}) {
+export function fitTextLayout(ctx, text, width, height, opts = {}) {
   let size = Math.max(1, Number(opts.size) || 24);
+  const value = opts.singleLine ? String(text ?? '').replace(/\s+/g, ' ').trim() : text;
+  if (opts.singleLine) {
+    ctx.font = font(size, opts.family, opts.weight);
+    const measuredWidth = ctx.measureText(value).width;
+    size *= Math.min(1, width / Math.max(width, measuredWidth), height / (size * 1.2));
+    return { size, lineHeight: size * 1.2, lines: [value] };
+  }
   if (opts.autoFit) {
-    for (; size > 8; size--) {
-      ctx.font = font(size, opts.family, opts.weight);
-      if (wrapText(ctx, text, width).length * size * 1.2 <= height) break;
+    const fits = (candidate) => {
+      ctx.font = font(candidate, opts.family, opts.weight);
+      const lines = wrapText(ctx, value, width);
+      return lines.length * candidate * 1.2 <= height && lines.every(line => ctx.measureText(line).width <= width);
+    };
+    if (!fits(size)) {
+      let low = 1, high = size;
+      for (let step = 0; step < 12; step++) {
+        const middle = (low + high) / 2;
+        if (fits(middle)) low = middle;
+        else high = middle;
+      }
+      size = low;
     }
   }
   const lineHeight = size * 1.2;
   ctx.font = font(size, opts.family, opts.weight);
+  return { size, lineHeight, lines: wrapText(ctx, value, width) };
+}
+
+function textBlock(ctx, text, x, y, width, height, opts = {}) {
+  const { size, lineHeight, lines } = fitTextLayout(ctx, text, width, height, opts);
+  ctx.font = font(size, opts.family, opts.weight);
   ctx.fillStyle = opts.color || '#171717';
   ctx.textBaseline = 'top';
   ctx.textAlign = ['left', 'center', 'right'].includes(opts.align) ? opts.align : 'left';
-  const lines = wrapText(ctx, text, width);
   const maxLines = Math.max(1, Math.floor(height / lineHeight));
   const visible = lines.slice(0, maxLines);
   if (lines.length > maxLines && visible.length)
@@ -233,7 +256,8 @@ export async function renderDesign(canvas, design, { scale = 1, transparent = fa
     ) {
       throw new Error('Um elemento do encarte tem tipo ou dimensões inválidos.');
     }
-    if (element.type === 'image' && !element.src) throw new Error('Selecione uma imagem para o elemento de foto.');
+    if (element.type === 'image' && !element.src && !isEmptyModelPhoto(design, element))
+      throw new Error('Selecione uma imagem para o elemento de foto.');
   }
   if (globalThis.document?.fonts?.ready) await document.fonts.ready;
   const loaded = await Promise.all(
@@ -282,7 +306,8 @@ export async function renderDesign(canvas, design, { scale = 1, transparent = fa
         ctx.fill();
       } else ctx.fillRect(0, 0, element.width, element.height);
     }
-    if (element.type === 'image')
+    if (isEmptyModelPhoto(design, element)) drawModelPhotoPlaceholder(ctx, element);
+    else if (element.type === 'image')
       containedImage(
         ctx,
         loaded[index],
@@ -305,6 +330,7 @@ export async function renderDesign(canvas, design, { scale = 1, transparent = fa
         strokeWidth: element.strokeWidth,
         shadow: element.shadow,
         autoFit: element.autoFit,
+        singleLine: element.offerField === 'price' || /^slot-\d+-preco$/.test(element.id),
       });
     if (element.type === 'product') product(ctx, element, loaded[index]);
     ctx.restore();

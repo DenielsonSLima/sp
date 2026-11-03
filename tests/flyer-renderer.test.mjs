@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {writeFile} from 'node:fs/promises';
-import {renderDesign, wrapText, validateCanvasSize} from '../interno/encartes/renderer.js';
+import {renderDesign, wrapText, validateCanvasSize, fitTextLayout} from '../interno/encartes/renderer.js';
 import {createPngBlob} from '../interno/encartes/export.js';
 const require = createRequire(import.meta.url);
 let native;
@@ -21,6 +21,30 @@ test('word wrapping preserves explicit lines and splits long words', () => {
   const ctx = {measureText: text => ({width:Array.from(text).length * 10})};
   assert.deepEqual(wrapText(ctx,'Bom preço\nHoje',90), ['Bom preço','Hoje']);
   assert.deepEqual(wrapText(ctx,'abcdefgh',30), ['abc','def','gh']);
+});
+
+test('automatic text fitting keeps long product names inside the available card area', () => {
+  const ctx = { measureText(value) { return { width: Array.from(value).length * Number(this.font.match(/([\d.]+)px/)[1]) * 0.6 }; } };
+  const value = 'LEITE CONDENSADO SEMIDESNATADO PIRACANJUBA 395G E EMBALAGEM ECONÔMICA';
+  const result = fitTextLayout(ctx, value, 180, 36, { size: 44, autoFit: true });
+  assert.ok(result.size < 44);
+  assert.ok(result.lines.length * result.lineHeight <= 36);
+  assert.equal(result.lines.join(' '), value);
+  assert.ok(result.lines.every(line => ctx.measureText(line).width <= 180));
+  const longWord = 'SUPERCALIFRAGILISTICO'.repeat(4);
+  const split = fitTextLayout(ctx, longWord, 90, 45, { size: 28, autoFit: true });
+  assert.equal(split.lines.join(''), longWord);
+  assert.ok(split.lines.length * split.lineHeight <= 45);
+});
+
+test('price fitting keeps the currency, complete amount and decimals on a single line', () => {
+  const ctx = { measureText(value) { return { width: Array.from(value).length * Number(this.font.match(/([\d.]+)px/)[1]) * 0.6 }; } };
+  for (const value of ['R$ 1.299,99', 'R$ 99,90']) {
+    const result = fitTextLayout(ctx, value, 72, 16, { size: 50, singleLine: true });
+    assert.deepEqual(result.lines, [value]);
+    assert.ok(result.lineHeight <= 16);
+    assert.ok(value.length * result.size * 0.6 <= 72.00001);
+  }
 });
 
 test('renderer respects dimensions, background, stacking, clipping and scale', {skip:!native}, async () => {

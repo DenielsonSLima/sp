@@ -2,6 +2,7 @@ import { getDataContext, subscribeResource } from '../../shared/data/api.js';
 import { flyerService } from './services.js';
 import { readFlyerMetadata, readFlyerRecord } from './queries.js';
 import { validateDesign, newId, MAX_JSON_BYTES } from './model.js';
+import { isFlyerModel, validateFlyerModel, duplicateFlyerModel } from './modelos/model.js';
 
 // Preview reads never change the version of the document opened for editing.
 export function createFlyerRepository({
@@ -54,7 +55,7 @@ export function createFlyerRepository({
     async saveDesign(design) {
       const expected = current();
       if (deleted.has(design.id)) throw Error('Esta arte foi excluída. Crie uma nova arte para continuar.');
-      const saved = await save(validateDesign(design), {
+      const saved = await save(isFlyerModel(design) ? validateFlyerModel(design) : validateDesign(design), {
         expectedVersion: versions.get(design.id) ?? design._version ?? null,
         previous: documents.get(design.id),
       });
@@ -75,10 +76,10 @@ export function createFlyerRepository({
     async listDesignSummaries() {
       return summaries(await this.listDesigns());
     },
-    async getDesign(id, { preview = false, expectedVersion } = {}) {
+    async getDesign(id, { preview = false, fresh = false, expectedVersion } = {}) {
       const expected = current();
       if (deleted.has(id)) throw Error('Esta arte foi excluída.');
-      let record = preview && documents.get(id) ? structuredClone(documents.get(id)) : null;
+      let record = preview && !fresh && documents.get(id) ? structuredClone(documents.get(id)) : null;
       if (!record || (expectedVersion !== undefined && record._version !== expectedVersion)) record = await read(id);
       ensure(expected);
       if (!record) throw Error('Esta arte não está mais disponível.');
@@ -122,5 +123,6 @@ export function parseDesignJson(text) {
   }
   const design = validateDesign(value),
     now = new Date().toISOString();
+  if (isFlyerModel(design)) return duplicateFlyerModel(validateFlyerModel(design));
   return { ...design, id: newId(), status: 'draft', createdAt: now, updatedAt: now };
 }

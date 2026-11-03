@@ -1,4 +1,5 @@
 import { createCanvasInteraction } from '../interaction.js';
+import { isAutomaticModelField } from './template-fields.js';
 export async function bindEditorCanvas({
   root,
   state: S,
@@ -61,6 +62,10 @@ export async function bindEditorCanvas({
     if (!item || item.locked) return;
     if (event.key === 'Delete' || event.key === 'Backspace') {
       event.preventDefault();
+      if (isAutomaticModelField(S.design, item)) {
+        message('Este campo será preenchido pela promoção. Você pode movê-lo, redimensioná-lo ou ocultá-lo.');
+        return;
+      }
       mutate((d) => {
         d.elements = d.elements.filter((e) => e.id !== item.id);
         S.selection = null;

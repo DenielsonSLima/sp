@@ -4,6 +4,7 @@ import { validateDesign } from '../model.js';
 import { saveDesign } from '../storage.js';
 import { createSaveQueue } from './save-queue.js';
 import { saveErrorMessage } from './save-error.js';
+import { isTemplateDesign, saveStateLabel } from './presentation.js';
 const saves = createSaveQueue();
 let lastSaveError = '';
 export const runtime = {
@@ -21,12 +22,12 @@ export const sessionKey = () => {
 export function status(text) {
   S.saveMessage = text;
   if (runtime.activeRoot?.isConnected)
-    runtime.activeRoot.querySelector('.flyer-save-state')?.replaceChildren(document.createTextNode(text));
+    runtime.activeRoot.querySelector('.flyer-save-state')?.replaceChildren(document.createTextNode(saveStateLabel(text, S.design)));
   const node = runtime.activeRoot?.querySelector('.flyer-save-state');
   if (node)
     node.dataset.state = text === 'Não foi possível salvar' ? 'error' : text === 'Salvando…' ? 'saving' : 'saved';
   const retry = runtime.activeRoot?.querySelector('.flyer-save');
-  if (retry) retry.textContent = text === 'Não foi possível salvar' ? 'Tentar novamente' : 'Salvar';
+  if (retry) retry.textContent = text === 'Não foi possível salvar' ? 'Tentar novamente' : isTemplateDesign(S.design) ? 'Salvar modelo' : 'Salvar';
 }
 export function message(text, error = false) {
   if (!runtime.activeRoot?.isConnected) return;

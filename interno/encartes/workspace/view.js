@@ -1,24 +1,27 @@
 import { escapeHtml as esc } from '../../../shared/ui.js';
 import { formatBRLCents } from '../../../shared/components/currency-input/index.js';
-import { FLYER_FORMATS, FLYER_TEMPLATES, FLYER_THEMES, campaignValidityLabel } from '../generator/index.js';
+import { FLYER_FORMATS, FLYER_TEMPLATES, campaignValidityLabel } from '../generator/index.js';
+import { FLYER_MODEL_PRESETS, modelSlotCount } from '../modelos/model.js';
 import { productPhotos } from './data.js';
 
 const options = (entries, selected) => entries.map(row => `<option value="${esc(row.id)}" ${selected === row.id ? 'selected' : ''}>${esc(row.name)}</option>`).join('');
 export function workspaceMarkup(state) {
-  return `<section class="fw-workspace"><header class="page-heading fw-heading"><div><span class="eyebrow">OFERTAS E DIVULGAÇÃO</span><h1>Encartes</h1><p>Suas promoções, prontas para compartilhar.</p></div><a class="button secondary" href="#galeria">Galeria de imagens →</a></header>
+  return `<section class="fw-workspace"><header class="page-heading fw-heading"><div><span class="eyebrow">OFERTAS E DIVULGAÇÃO</span><h1>Encartes</h1><p>Escolha um modelo e preencha com sua promoção.</p></div><a class="button secondary" href="#modelos">Biblioteca de modelos →</a></header>
   <div class="module-tabs fw-tabs" role="tablist" aria-label="Encartes"><button role="tab" data-fw-tab="create" aria-selected="${state.tab === 'create'}">Criar encarte</button><button role="tab" data-fw-tab="saved" aria-selected="${state.tab === 'saved'}">Encartes salvos</button></div>
   <p class="fw-feedback ${state.error ? 'error' : ''}" role="status" aria-live="polite">${esc(state.message)}</p>
   <div class="fw-body">${state.tab === 'saved' ? savedMarkup(state) : createMarkup(state)}</div></section>`;
 }
 function createMarkup(state) {
   const campaign = state.campaign, disabled = state.busy ? 'disabled' : '';
+  const custom = !state.modelKey.startsWith('preset:');
+  const modelRows = [...FLYER_MODEL_PRESETS.map(row => ({ id: 'preset:' + row.id, name: row.name })), ...state.models.map(row => ({ id: row.id, name: row.title }))];
   return `<div class="fw-layout"><aside class="fw-setup card"><form class="fw-form">
     <label>Promoção<select id="fw-campaign" ${disabled}><option value="">Selecione uma promoção salva</option>${options(state.campaigns, campaign?.id)}</select></label>
     ${!state.campaigns.length && !state.busy ? '<p class="fw-muted">Cadastre uma promoção com produtos para começar.</p><a href="#promocoes">Abrir Promoções →</a>' : ''}
     ${campaign ? `<div class="fw-campaign-info"><strong>${campaign.items.length} produtos</strong><span>${esc(campaignValidityLabel(campaign) || 'Sem validade definida')}</span></div>` : ''}
-    <label>Modelo<select id="fw-template" ${disabled}>${options(FLYER_TEMPLATES, state.options.templateId)}</select></label>
-    <label>Formato<select id="fw-format" ${disabled}>${options(FLYER_FORMATS, state.options.formatId)}</select></label>
-    <fieldset class="fw-themes"><legend>Tema</legend>${FLYER_THEMES.map(theme => `<button type="button" data-fw-theme="${theme.id}" aria-pressed="${state.options.themeId === theme.id}" ${disabled}><span style="background:${theme.primary};border-color:${theme.accent}"></span>${esc(theme.name)}</button>`).join('')}</fieldset>
+    <label>Modelo do encarte<select id="fw-model" ${disabled}>${options(modelRows, state.modelKey)}</select></label>
+    <div class="fw-model-actions"><a href="#modelos${campaign ? '?promocao=' + encodeURIComponent(campaign.id) : ''}">Ver modelos</a><button class="fw-edit-model" type="button" ${disabled}>Editar modelo</button></div>
+    ${custom ? `<p class="fw-model-info">${state.model ? `${modelSlotCount(state.model)} produtos por página · ${state.model.width} × ${state.model.height} px` : 'Modelo personalizado salvo'}</p>` : `<label>Produtos por página<select id="fw-template" ${disabled}>${options(FLYER_TEMPLATES, state.options.templateId)}</select></label><label>Formato<select id="fw-format" ${disabled}>${options(FLYER_FORMATS, state.options.formatId)}</select></label>`}
     <button class="button primary fw-generate" type="submit" ${state.busy || !campaign?.items.length ? 'disabled' : ''}>${state.busy ? 'Preparando…' : state.pages.length ? 'Gerar nova versão' : 'Gerar encarte'}</button>
   </form>${campaign?.items.length ? `<details class="fw-products" ${state.pages.length ? '' : 'open'}><summary>Fotos dos produtos <span>${campaign.items.length}</span></summary><div>${campaign.items.map((item, index) => productMarkup(item, index, state)).join('')}</div></details>` : ''}</aside>
   <section class="fw-preview" aria-label="Prévia do encarte">${previewMarkup(state)}</section></div>`;
@@ -29,7 +32,7 @@ function productMarkup(item, index, state) {
   return `<article class="fw-product">${photos[choice] ? `<img src="${esc(photos[choice])}" alt="${esc(item.displayName || item.name)}" loading="lazy">` : '<span class="fw-missing-photo">Sem foto</span>'}<div><strong>${esc(item.displayName || item.name)}</strong><span>R$ ${formatBRLCents(item.cents)} · ${esc(item.unit)}</span>${photos.length > 1 ? `<label class="fw-photo-label">Foto<select data-fw-photo="${index}" ${state.busy ? 'disabled' : ''}>${photos.map((_, p) => `<option value="${p}" ${choice === p ? 'selected' : ''}>Foto ${p + 1}</option>`).join('')}</select></label>` : ''}</div></article>`;
 }
 export function previewMarkup(state) {
-  if (!state.pages.length) return `<div class="fw-empty"><span class="fw-empty-icon" aria-hidden="true">▦</span><h2>Uma promoção. Todas as ofertas.</h2><p>Escolha a promoção, o modelo e o tema para montar as páginas do seu encarte.</p><div class="fw-sample-grid" aria-hidden="true">${Array.from({ length: 6 }, () => '<i></i>').join('')}</div></div>`;
+  if (!state.pages.length) return `<div class="fw-empty"><span class="fw-empty-icon" aria-hidden="true">▦</span><h2>Seu modelo. Suas ofertas.</h2><p>Escolha a promoção e o modelo para montar as páginas. Depois, ajuste fotos, textos e tamanhos no editor.</p><canvas class="fw-model-canvas" aria-label="Prévia do modelo em branco"></canvas></div>`;
   const page = state.pages[state.pageIndex], disabled = state.busy ? 'disabled' : '';
   return `<header class="fw-preview-heading"><div><h2>${esc(state.campaign?.name || page.title.replace(/ · Página \d+ de \d+$/, ''))}</h2><p>${state.pages.length} página${state.pages.length > 1 ? 's' : ''} · ${state.saved ? 'Salvo' : 'Prévia'}</p></div><div class="fw-export-actions"><button class="button secondary" data-fw-action="pdf" ${disabled}>Baixar PDF</button><button class="button primary" data-fw-action="save" ${disabled}>${state.saved ? 'Salvar alterações' : 'Salvar encarte'}</button></div></header>
   ${state.sourceChanged ? '<p class="fw-notice">A promoção foi alterada. Gere uma nova versão para usar os dados atualizados.</p>' : ''}
