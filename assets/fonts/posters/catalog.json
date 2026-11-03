@@ -1,0 +1,358 @@
+[
+  {
+    "family": "Anton",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "anton-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/anton",
+    "source": "https://fonts.googleapis.com/css2?family=Anton:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "anton-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2",
+        "sha256": "23aab0b2692a0c89eb7997d3c7cf5bda41276d6cd4ab6cc0edc3edfcece32b09"
+      }
+    ]
+  },
+  {
+    "family": "Bebas Neue",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "bebas-neue-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/bebasneue",
+    "source": "https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "bebas-neue-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/bebasneue/v16/JTUSjIg69CK48gW7PXoo9WlhyyTh89Y.woff2",
+        "sha256": "441b026df205d28954f61b6989c7bbd228c0adff42f746a266c6a5d89134bc34"
+      }
+    ]
+  },
+  {
+    "family": "Oswald",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "oswald-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/oswald",
+    "source": "https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap",
+    "files": [
+      {
+        "filename": "oswald-200-700.woff2",
+        "weight": "200 700",
+        "source": "https://fonts.gstatic.com/s/oswald/v57/TK3iWkUHHAIjg752GT8Gl-1PKw.woff2",
+        "sha256": "c36937da4c39049704f1def587f7837a24ad52d3bfd2d27d3b6eb9f4220b2e3a"
+      }
+    ]
+  },
+  {
+    "family": "Barlow Condensed",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "barlow-condensed-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed",
+    "source": "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&display=swap",
+    "files": [
+      {
+        "filename": "barlow-condensed-700.woff2",
+        "weight": "700",
+        "source": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2z3bWuYMBYro.woff2",
+        "sha256": "e3e520cb7468f2efd60bc2ce96694567c3312f4ef414fffbe605e3ad146b24e6"
+      },
+      {
+        "filename": "barlow-condensed-900.woff2",
+        "weight": "900",
+        "source": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B45L0z3bWuYMBYro.woff2",
+        "sha256": "2036f7f4aacc7759dcf8c6be2bd5bbde873c25a860f24dca0530ad14d4937723"
+      }
+    ]
+  },
+  {
+    "family": "Roboto Condensed",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "roboto-condensed-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/robotocondensed",
+    "source": "https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&display=swap",
+    "files": [
+      {
+        "filename": "roboto-condensed-100-900.woff2",
+        "weight": "100 900",
+        "source": "https://fonts.gstatic.com/s/robotocondensed/v31/ieVl2ZhZI2eCN5jzbjEETS9weq8-19K7DQk6YvM.woff2",
+        "sha256": "718ced55c5d8e207d6d14b1765fe6cf5886882834f45cc0ad23283cd210f9a96"
+      }
+    ]
+  },
+  {
+    "family": "Archivo Black",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "archivo-black-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/archivoblack",
+    "source": "https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "archivo-black-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/archivoblack/v23/HTxqL289NzCGg4MzN6KJ7eW6CYyF_jzx13E.woff2",
+        "sha256": "4eca2abdbbc1998c3a286e2e83a2256be5263ccb801aa93b00c64fea891efd3a"
+      }
+    ]
+  },
+  {
+    "family": "Alfa Slab One",
+    "group": "Chamadas especiais",
+    "license": "OFL-1.1",
+    "licenseFile": "alfa-slab-one-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/alfaslabone",
+    "source": "https://fonts.googleapis.com/css2?family=Alfa+Slab+One:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "alfa-slab-one-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/alfaslabone/v21/6NUQ8FmMKwSEKjnm5-4v-4Jh2dJhe_escmA.woff2",
+        "sha256": "8835f53d4e16899bbe66799b5f9275ca07d897dcf9f4db4131449bde5eee6fbf"
+      }
+    ]
+  },
+  {
+    "family": "Bungee",
+    "group": "Chamadas especiais",
+    "license": "OFL-1.1",
+    "licenseFile": "bungee-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/bungee",
+    "source": "https://fonts.googleapis.com/css2?family=Bungee:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "bungee-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/bungee/v17/N0bU2SZBIuF2PU_0DXR1C9zfmQ.woff2",
+        "sha256": "12967d744bb0811af26a8bed1f6734238ba9bbca6e2e70dfdc677fcffa882905"
+      }
+    ]
+  },
+  {
+    "family": "Lilita One",
+    "group": "Chamadas especiais",
+    "license": "OFL-1.1",
+    "licenseFile": "lilita-one-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/lilitaone",
+    "source": "https://fonts.googleapis.com/css2?family=Lilita+One:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "lilita-one-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/lilitaone/v17/i7dPIFZ9Zz-WBtRtedDbYEF8RXi4EwQ.woff2",
+        "sha256": "8d6cd0f298738a92ca9bf6e13f54a9191afd06ce04ea00ebbf24499c017191b7"
+      }
+    ]
+  },
+  {
+    "family": "Paytone One",
+    "group": "Chamadas especiais",
+    "license": "OFL-1.1",
+    "licenseFile": "paytone-one-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/paytoneone",
+    "source": "https://fonts.googleapis.com/css2?family=Paytone+One:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "paytone-one-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/paytoneone/v25/0nksC9P7MfYHj2oFtYm2ChTtgPvfiwq-.woff2",
+        "sha256": "5e3f268d609db3663e88299cb77461b271f1d9051d47df1e253c12303520c699"
+      }
+    ]
+  },
+  {
+    "family": "Passion One",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "passion-one-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/passionone",
+    "source": "https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap",
+    "files": [
+      {
+        "filename": "passion-one-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/passionone/v20/PbynFmL8HhTPqbjUzux3JEuR9lvC6poU.woff2",
+        "sha256": "d55386bec0cc8d5dde65b4bae6a8b04cccbd3a4ebbe094bcb230cfb62d4b20b6"
+      },
+      {
+        "filename": "passion-one-700.woff2",
+        "weight": "700",
+        "source": "https://fonts.gstatic.com/s/passionone/v20/Pby6FmL8HhTPqbjUzux3JEMq007vyJc-u28z.woff2",
+        "sha256": "cc12e7e39588ff4177165d71035a6e62f616464dbe5f904d1efe3c30a3b925a1"
+      },
+      {
+        "filename": "passion-one-900.woff2",
+        "weight": "900",
+        "source": "https://fonts.gstatic.com/s/passionone/v20/Pby6FmL8HhTPqbjUzux3JEMS0U7vyJc-u28z.woff2",
+        "sha256": "67bb7bea99889cf5d483085a5c13d8bd91245ae58c23533d7eb0d0a3f3c8c695"
+      }
+    ]
+  },
+  {
+    "family": "Fugaz One",
+    "group": "Chamadas especiais",
+    "license": "OFL-1.1",
+    "licenseFile": "fugaz-one-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/fugazone",
+    "source": "https://fonts.googleapis.com/css2?family=Fugaz+One:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "fugaz-one-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/fugazone/v21/rax_HiWKp9EAITukFsl8AxhfsUjQ8Q.woff2",
+        "sha256": "e2178ae653e18f90a2afea0a3eafa3042c03ebaa9a167e2899287ef5f22cb354"
+      }
+    ]
+  },
+  {
+    "family": "Righteous",
+    "group": "Chamadas especiais",
+    "license": "OFL-1.1",
+    "licenseFile": "righteous-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/righteous",
+    "source": "https://fonts.googleapis.com/css2?family=Righteous:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "righteous-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/righteous/v18/1cXxaUPXBpj2rGoU7C9WiHGFq8Kk1Q.woff2",
+        "sha256": "17bb3e21ead29ad20cb4e9ffbfa6eac5dbed184836ae13e5c14cbd6e85ddcce6"
+      }
+    ]
+  },
+  {
+    "family": "Staatliches",
+    "group": "Ofertas e preços",
+    "license": "OFL-1.1",
+    "licenseFile": "staatliches-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/staatliches",
+    "source": "https://fonts.googleapis.com/css2?family=Staatliches:wght@400&display=swap",
+    "files": [
+      {
+        "filename": "staatliches-400.woff2",
+        "weight": "400",
+        "source": "https://fonts.gstatic.com/s/staatliches/v15/HI_OiY8KO6hCsQSoAPmtMYebvpCfOMPT.woff2",
+        "sha256": "51f65317ecb30dafbf214a555e6bdeb0c80090f93f2ca000ada469952a903359"
+      }
+    ]
+  },
+  {
+    "family": "Montserrat",
+    "group": "Produtos e informações",
+    "license": "OFL-1.1",
+    "licenseFile": "montserrat-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/montserrat",
+    "source": "https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap",
+    "files": [
+      {
+        "filename": "montserrat-100-900.woff2",
+        "weight": "100 900",
+        "source": "https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2",
+        "sha256": "6438d7b8ea9c7c3992d5e2fd2afdb1ff948570a3ef0bedae76247b51632960ba"
+      }
+    ]
+  },
+  {
+    "family": "Poppins",
+    "group": "Produtos e informações",
+    "license": "OFL-1.1",
+    "licenseFile": "poppins-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/poppins",
+    "source": "https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap",
+    "files": [
+      {
+        "filename": "poppins-700.woff2",
+        "weight": "700",
+        "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
+        "sha256": "197a3cbd7290c242c5c765268cdd69a9a39867fdc80cd13071f243a81c56fb76"
+      },
+      {
+        "filename": "poppins-900.woff2",
+        "weight": "900",
+        "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLBT5Z1xlFd2JQEk.woff2",
+        "sha256": "d1ebe21db0d30b4c6eff465086295804e94f0ae5ec05c47c45b0d602bf180f0f"
+      }
+    ]
+  },
+  {
+    "family": "Nunito Sans",
+    "group": "Produtos e informações",
+    "license": "OFL-1.1",
+    "licenseFile": "nunito-sans-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/nunitosans",
+    "source": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..900&display=swap",
+    "files": [
+      {
+        "filename": "nunito-sans-200-900.woff2",
+        "weight": "200 900",
+        "source": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-tQKr51.woff2",
+        "sha256": "39184f4d011106f5bfbe3813d3a8c3673663f04a45a9c9f55b1ed15f4d5b1cc9"
+      }
+    ]
+  },
+  {
+    "family": "Rubik",
+    "group": "Produtos e informações",
+    "license": "OFL-1.1",
+    "licenseFile": "rubik-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/rubik",
+    "source": "https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap",
+    "files": [
+      {
+        "filename": "rubik-300-900.woff2",
+        "weight": "300 900",
+        "source": "https://fonts.gstatic.com/s/rubik/v31/iJWKBXyIfDnIV7nBrXyw023e.woff2",
+        "sha256": "99ec7ccb40cf143f977c893649deece6cc2dcc7c0ff82ebf84b6584090f207ea"
+      }
+    ]
+  },
+  {
+    "family": "Lato",
+    "group": "Produtos e informações",
+    "license": "OFL-1.1",
+    "licenseFile": "lato-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/lato",
+    "source": "https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap",
+    "files": [
+      {
+        "filename": "lato-700.woff2",
+        "weight": "700",
+        "source": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ3q5d0.woff2",
+        "sha256": "7a7ce1a34f3e9944fe88fc61abbc93b6db383afa2b90815fd7ccea456fbce4e5"
+      },
+      {
+        "filename": "lato-900.woff2",
+        "weight": "900",
+        "source": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh50XSwiPGQ3q5d0.woff2",
+        "sha256": "bd9a6192274f8f2f3ce31cd3d2cae5ebe32e2fa86fc7c4f60a3c28556e496d56"
+      }
+    ]
+  },
+  {
+    "family": "Barlow",
+    "group": "Produtos e informações",
+    "license": "OFL-1.1",
+    "licenseFile": "barlow-OFL.txt",
+    "upstream": "https://github.com/google/fonts/tree/main/ofl/barlow",
+    "source": "https://fonts.googleapis.com/css2?family=Barlow:wght@700;900&display=swap",
+    "files": [
+      {
+        "filename": "barlow-700.woff2",
+        "weight": "700",
+        "source": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3t-4s51ostz0rdg.woff2",
+        "sha256": "98aa8b5c2582107d73a6f1254f08b152b0c037ae5626a902dd44af8c781e0e6d"
+      },
+      {
+        "filename": "barlow-900.woff2",
+        "weight": "900",
+        "source": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3j-ws51ostz0rdg.woff2",
+        "sha256": "6acec3ba2ea19cb590dd6bc28101f58551d367dfcc08532f3dd54825a8093b70"
+      }
+    ]
+  }
+]

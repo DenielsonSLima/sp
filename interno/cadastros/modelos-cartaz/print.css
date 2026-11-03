@@ -1,0 +1,211 @@
+@media print {
+  body.poster-printing {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+  }
+  body.poster-printing > * {
+    display: none !important;
+  }
+  body.poster-printing > .poster-print-root {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .poster-print-root .poster-sheet {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .poster-print-root .poster-sheet:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}
+
+.poster-object[hidden] {
+  display: none;
+}
+.poster-element-list button.is-removed {
+  color: #858b95;
+  border-style: dashed;
+}
+.poster-toggle-element {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.poster-element-visibility {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #777f8c;
+  margin: 0 0 14px;
+}
+.poster-element-visibility:empty {
+  display: none;
+}
+.poster-delete-model {
+  color: #b01523;
+}
+.poster-delete-status {
+  color: #b01523 !important;
+}
+.poster-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 18px;
+}
+.poster-card-actions .button {
+  font-size: 11px;
+}
+.poster-gallery-empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 40px 20px;
+}
+.poster-gallery-empty h2 {
+  font-size: 20px;
+}
+.poster-gallery-empty p {
+  font-size: 13px;
+  color: #777f8c;
+  line-height: 1.7;
+  margin: 16px 0 20px;
+}
+/* Editing aids live outside the printable artwork. */
+.poster-editor-ruler-frame {
+  padding: 26px 8px 0 28px;
+}
+.poster-ruler,
+.poster-ruler-corner {
+  position: absolute;
+  background: #f8f9fb;
+  color: #657080;
+  box-sizing: border-box;
+  pointer-events: none;
+  user-select: none;
+  font:
+    8px Arial,
+    sans-serif;
+}
+.poster-ruler-top {
+  left: 0;
+  top: -24px;
+  width: 100%;
+  height: 22px;
+  border-bottom: 1px solid #b4becb;
+}
+.poster-ruler-left {
+  left: -24px;
+  top: 0;
+  width: 22px;
+  height: 100%;
+  border-right: 1px solid #b4becb;
+}
+.poster-ruler-corner {
+  left: -24px;
+  top: -24px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+.poster-ruler-tick {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+.poster-ruler-top .poster-ruler-tick {
+  bottom: 0;
+  width: 0;
+  height: 5px;
+  border-left: 1px solid #b4becb;
+}
+.poster-ruler-top .poster-ruler-tick.is-major {
+  height: 11px;
+  border-color: #718096;
+}
+.poster-ruler-left .poster-ruler-tick {
+  right: 0;
+  height: 0;
+  width: 5px;
+  border-top: 1px solid #b4becb;
+}
+.poster-ruler-left .poster-ruler-tick.is-major {
+  width: 11px;
+  border-color: #718096;
+}
+.poster-ruler-tick b {
+  position: absolute;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.poster-ruler-top .poster-ruler-tick b {
+  left: 0;
+  top: -11px;
+  transform: translateX(-50%);
+}
+.poster-ruler-top .poster-ruler-tick.is-start b {
+  transform: none;
+}
+.poster-ruler-top .poster-ruler-tick.is-end b {
+  transform: translateX(-100%);
+}
+.poster-ruler-left .poster-ruler-tick b {
+  right: 4px;
+  top: 0;
+  transform: translateY(-50%);
+}
+.poster-ruler-left .poster-ruler-tick.is-start b {
+  transform: none;
+}
+.poster-ruler-left .poster-ruler-tick.is-end b {
+  transform: translateY(-100%);
+}
+.poster-alignment-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.poster-center-guide {
+  position: absolute;
+  pointer-events: none;
+}
+.poster-center-guide[hidden] {
+  display: none;
+}
+.poster-center-guide-vertical {
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 0;
+  border-left: 1px dashed #1682d4;
+}
+.poster-center-guide-horizontal {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-top: 1px dashed #1682d4;
+}
+.poster-center-controls {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+.poster-center-controls .button {
+  font-size: 11px;
+  min-height: 44px;
+}
+@media print {
+  .poster-ruler,
+  .poster-ruler-corner,
+  .poster-alignment-guides {
+    display: none !important;
+  }
+}

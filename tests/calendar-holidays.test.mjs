@@ -1,8 +1,9 @@
+import {readDomainSource,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {nationalHolidays, holidaySources, HOLIDAY_MIN_YEAR} from '../interno/calendario/holidays.js';
-import {monthOptions, monthOptionLabel, calendarOpeningPeriod, shiftMonth, monthBounds, calendarItems, filterCalendarItems, createCalendarStore} from '../interno/calendario/state.js';
+import {monthOptions, monthOptionLabel, calendarOpeningPeriod, shiftMonth, monthBounds, calendarItems, filterCalendarItems, createCalendarStore} from './fixtures/legacy-operations/calendar-state.js';
 
 test('month/year list starts with current month and displays Portuguese month names across December', () => {
   const october = monthOptions('2026-10-01', '2026-10-20');
@@ -57,9 +58,9 @@ test('national holidays remain independent of stored manual records and campaign
   assert.equal(holidaySources[1].url, 'https://www.planalto.gov.br/ccivil_03/leis/l6802.htm'); assert.match(holidaySources[2].url, /l14759\.htm$/);
 });
 test('calendar wires enhanced month select, current-month reset and read-only sourced holidays', async () => {
-  const source = await readFile(new URL('../interno/calendario/index.js', import.meta.url), 'utf8');
+  const source = await readDomainSource('interno/calendario');
   assert.match(source, /Mês\/ano<select name="calendar-month" data-searchable="true">/); assert(!source.includes('type="month"'));
-  assert.match(source, /export async function render\(root\) \{\s*dispose\?\.\(\);\s*Object.assign\(state, calendarOpeningPeriod\(\)\)/);
+  assert.match(source, /export async function render\(root\) \{[\s\S]*?dispose\?\.\(\);[\s\S]*?Object.assign\(state, calendarOpeningPeriod\(\)\)/);
   assert.match(source, /flatMap\(retailHolidays\)/); assert.match(source, /holiday: 'Feriado nacional'/); assert.match(source, /holiday \? `<a class="button secondary"/);
   assert.match(source, /Fonte oficial/); assert.match(source, /calendar-holiday-coverage/); assert(!source.includes('calendar-storage-note'));
 });

@@ -1,0 +1,266 @@
+/* Quote detail: compact header and actions available in every tab. */
+.quote-detail-page {
+  min-width: 0;
+}
+.quote-detail-page > .quote-back {
+  margin-bottom: 10px;
+}
+.quote-detail-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+.quote-detail-heading > .page-heading {
+  margin: 0;
+  min-width: 0;
+}
+.quote-detail-heading h1 {
+  overflow-wrap: anywhere;
+}
+.quote-detail-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.quote-detail-page .quote-detail-summary {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  gap: 16px;
+}
+.quote-detail-page .quote-detail-summary > strong {
+  font-size: 20px;
+}
+.quote-detail-page .quote-overview {
+  margin: 12px 0 20px;
+  gap: 10px;
+}
+.quote-detail-page .quote-overview > div {
+  padding: 12px;
+}
+.quote-detail-page .quote-overview dd {
+  margin-top: 6px;
+  font-size: 18px;
+}
+.quote-detail-page .quote-results {
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.quote-detail-page .quote-results h2 {
+  margin-bottom: 12px;
+}
+.quote-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.quote-panel-heading h2 {
+  margin: 0 !important;
+}
+.quote-panel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 20px;
+  text-align: center;
+  min-height: 180px;
+  background: #fafbfc;
+  border: 1px dashed #dce0e5;
+  border-radius: 10px;
+}
+.quote-panel-empty h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.quote-panel-empty p {
+  margin: 0 0 6px;
+  color: #707b87;
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 500px;
+}
+.quote-panel-empty-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.quote-simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+.quote-simple-table th,
+.quote-simple-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.quote-simple-table thead {
+  color: #707b87;
+  background: #f8f9fb;
+}
+.quote-price-matrix > caption.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.quote-provider-dialog form {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+}
+.quote-provider-existing,
+.quote-provider-create {
+  display: grid;
+  gap: 18px;
+}
+.quote-provider-create[hidden],
+.quote-provider-existing[hidden] {
+  display: none;
+}
+.quote-provider-dialog input {
+  width: 100%;
+}
+.quote-provider-options {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.quote-provider-picker {
+  display: grid;
+  gap: 9px;
+  max-height: 40dvh;
+  overflow: auto;
+}
+.quote-provider-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  cursor: pointer;
+}
+.quote-provider-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--red);
+  flex-shrink: 0;
+}
+.quote-provider-option:has(input:checked) {
+  background: #fff5f5;
+  border-color: var(--red);
+}
+.quote-provider-create h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.quote-detail-page .quote-result-row .quote-photo-slot {
+  display: contents;
+  margin: 0;
+}
+@media (max-width: 1000px) {
+  .quote-detail-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .quote-detail-actions {
+    width: 100%;
+  }
+  .quote-detail-actions > .button {
+    flex: 1;
+  }
+  .quote-panel-heading {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 600px) {
+  .quote-detail-page .quote-results {
+    padding: 16px;
+  }
+  .quote-detail-page .quote-detail-summary {
+    gap: 12px;
+    padding: 12px;
+  }
+  .quote-detail-page .quote-detail-summary > strong {
+    font-size: 18px;
+  }
+  .quote-panel-empty {
+    padding: 24px 14px;
+  }
+  .quote-panel-empty-actions {
+    width: 100%;
+  }
+  .quote-panel-empty-actions .button {
+    width: 100%;
+  }
+  .quote-provider-dialog form {
+    padding: 18px;
+  }
+  .quote-detail-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .quote-detail-page .quote-overview {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.quote-simple-table .quote-product-identity strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.quote-simple-table .quote-product-identity small {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #78828e;
+}
+.quote-simple-table td {
+  white-space: nowrap;
+}
+.quote-simple-table .quote-product-photo {
+  flex-shrink: 0;
+}
+
+.quote-provider-identity {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.quote-provider-identity strong {
+  font-size: 13px;
+}
+.quote-provider-identity small {
+  font-size: 12px;
+  font-weight: 400;
+  color: #687582;
+}
+.quote-matrix-product .quote-product-photo img {
+  padding: 3px;
+}
+@media (max-width: 600px) {
+  .quote-matrix-product .quote-product-photo {
+    width: 80px;
+    height: 80px;
+    flex-basis: 80px;
+  }
+}

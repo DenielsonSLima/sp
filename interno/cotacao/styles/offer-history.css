@@ -1,0 +1,53 @@
+.quote-price-matrix .quote-offer {
+  vertical-align: top;
+}
+.offer-history:empty {
+  display: none;
+}
+.offer-history {
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #687580;
+  font-variant-numeric: tabular-nums;
+}
+.offer-history-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  cursor: help;
+  border-radius: 3px;
+}
+.offer-history-arrow {
+  flex-shrink: 0;
+}
+.offer-history-arrow.is-up {
+  color: #bd2436;
+}
+.offer-history-arrow.is-down {
+  color: #26734d;
+}
+.offer-history-tooltip {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 5px);
+  width: max-content;
+  max-width: 150px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #28313a;
+  color: white;
+  font-size: 10px;
+  z-index: 6;
+  pointer-events: none;
+}
+.offer-history-value:hover .offer-history-tooltip,
+.offer-history-value:focus .offer-history-tooltip {
+  display: block;
+}
+.offer-history-value:focus-visible {
+  outline: 2px solid #d3a72d;
+  outline-offset: 2px;
+}

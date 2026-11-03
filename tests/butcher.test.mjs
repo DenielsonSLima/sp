@@ -1,7 +1,9 @@
+import {readDomainSource,readModuleSource} from './helpers/domain-source.mjs';
+import {readOperationalCss} from './helpers/operational-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {decimal,listModels,saveModel,toggleModel,setCurrent,currentModel,estimateReceipt,saveReceipt,listReceipts} from '../interno/cadastros/acougue/state.js';
+import {decimal,listModels,saveModel,toggleModel,setCurrent,currentModel,estimateReceipt,saveReceipt,listReceipts} from './fixtures/legacy-catalogs/acougue/state.js';
 const part=(name,percent,unit='KG',active=true)=>({name,percent,unit,active});
 test('no invented scientific yield defaults are inserted',()=>{assert.equal(listModels().length,0);assert.equal(currentModel('Boi'),null);});
 test('numeric inputs preserve exact basis points and grams',()=>{assert.equal(decimal('12,34','%',100),1234);assert.equal(decimal('0,001','Peso',100000,3),1);for(const value of ['-1','Infinity','NaN','1e2','1,0000',''])assert.throws(()=>decimal(value,'Peso',100000,3));});
@@ -11,6 +13,16 @@ test('receipt snapshots remain immutable after model version/current changes',()
 test('inactivating current requires explicit confirmation and does not choose fallback',()=>{const current=currentModel('Boi');assert.throws(()=>toggleModel(current.id));assert.equal(currentModel('Boi').id,current.id);toggleModel(current.id,{confirmCurrent:true});assert.equal(currentModel('Boi'),null);assert(currentModel('Porco'));assert.throws(()=>estimateReceipt({category:'Boi',weight:'100'}));toggleModel(current.id);assert.equal(currentModel('Boi'),null);setCurrent(current.id);});
 test('empty drafts may be saved but not used as current; invalid totals rejected',()=>{const draft=saveModel({name:'Rascunho',category:'Outra',parts:[]});assert.throws(()=>setCurrent(draft.id));assert.throws(()=>saveModel({name:'Excessivo',category:'Outra',parts:[part('A','60'),part('B','41')]}));assert.throws(()=>saveModel({name:'Duplicado',category:'Outra',parts:[part('A','20'),part('a','20')]}));assert.throws(()=>saveModel({name:'Zero',category:'Outra',parts:[part('A','0')]}));});
 test('rounded allocations preserve all grams and do not normalize percentages',()=>{const m=saveModel({name:'Terços',category:'Precisão',parts:[part('A','33,33'),part('B','33,33'),part('C','33,34')]});setCurrent(m.id);for(const weight of ['0,001','0,002','1,001','123,456']){const r=estimateReceipt({category:'Precisão',weight});assert.equal(r.rows.reduce((sum,p)=>sum+p.estimatedGrams,0)+r.unallocatedGrams,r.weightGrams);assert.equal(r.unallocatedGrams,0);}for(const weight of ['0','-1','100001','1,0001'])assert.throws(()=>estimateReceipt({category:'Precisão',weight}));const under=saveModel({name:'Parcial',category:'Precisão',parts:[part('A','20')]});setCurrent(under.id);const partial=estimateReceipt({category:'Precisão',weight:'10'});assert.equal(partial.rows[0].estimatedGrams,2000);assert.equal(partial.unallocatedGrams,8000);});
-test('editor keeps drafts across routes and current inactivation uses a custom confirmation dialog',async()=>{const src=await readFile(new URL('../interno/cadastros/acougue/index.js',import.meta.url),'utf8');assert.match(src,/let editorDraft=null/);assert.match(src,/dialog\.showModal\(\)/);assert.match(src,/confirmCurrent:true/);assert.match(src,/Refazer \/ nova versão/);assert.match(src,/esc\(m.name\)/);const op=await readFile(new URL('../interno/acougue/index.js',import.meta.url),'utf8');assert.match(op,/let draft=/);assert.match(op,/expectedModelId/);assert.match(op,/Quantidade de unidades não informada/);});
-
-test('switching unsaved editors requires confirmation and list actions restore focus',async()=>{const src=await readFile(new URL('../interno/cadastros/acougue/index.js',import.meta.url),'utf8');assert.match(src,/Descartar alterações e abrir outro modelo/);assert.match(src,/if\(editorDraft&&!form.hidden\)/);assert.match(src,/discard\.showModal\(\)/);assert.match(src,/focusAction\('toggle-model',id\)/);assert.match(src,/focusAction\('revise-model',m.id\)/);assert.match(src,/const saved=editorDraft/);});
+test('animal model editor preserves reviewed versions and separates composition from creation',async()=>{
+  const src=await readDomainSource('interno/cadastros/acougue');
+  assert.match(src,/expectedVersion/);
+  assert.match(src,/quantityPerAnimal/);
+  assert.match(src,/Salvar e adicionar produtos/);
+  assert.match(src,/useModelEditor/);
+  assert.match(src,/drafts.clear/);
+  assert.match(src,/confirmCurrent:true/);
+  const op=await readDomainSource('interno/acougue');
+  assert.match(op,/expectedModelVersion/);
+  assert.match(op,/expectedModelId/);
+  assert.match(op,/quantitySource/);
+});

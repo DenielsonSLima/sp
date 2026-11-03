@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createDesign,createTextElement,createProductElement,duplicateElement,validateDesign,createHistory} from '../interno/encartes/model.js';
-import {templates,applyTemplate} from '../interno/encartes/templates.js';
-import {exportDesignJson,parseDesignJson,saveDesign} from '../interno/encartes/storage.js';
+import {templates,applyTemplate} from './fixtures/legacy-operations/flyer-templates.js';
+import {exportDesignJson,parseDesignJson,saveDesign} from './fixtures/legacy-operations/flyer-storage.js';
 const raster = 'data:image/png;base64,aGVsbG8=';
 test('design defaults and dimension limits', () => {
   assert.equal(createDesign().width,1080);

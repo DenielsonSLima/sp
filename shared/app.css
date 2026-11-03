@@ -1,0 +1,8 @@
+@import './base.css';
+@import '../assets/fonts/posters/fonts.css';
+@import './components/tabs/styles.css';
+@import './components/pagination/styles.css';
+@import '../login/login.css';
+@import '../interno/shell.css';
+@import './components/logout-confirmation/styles.css';
+@import './components/custom-select/styles.css';

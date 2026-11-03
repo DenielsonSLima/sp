@@ -1,3 +1,4 @@
+import {readDomainSource,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -39,7 +40,7 @@ test('calendar successful save can dispose confirmation without discarding twice
   const env = environment(); env.values.title = 'New'; env.guard.requestClose(); env.guard.dispose(); env.guard.requestClose(); assert.equal(env.current.open, false); assert.equal(env.current.removed, true); assert.equal(env.closed, 0);
 });
 test('calendar close controls share the guard and removed notices stay absent', async () => {
-  const source = await readFile(new URL('../interno/calendario/index.js', import.meta.url), 'utf8');
+  const source = await readDomainSource('interno/calendario');
   assert.match(source, /\[data-cancel\].*guard.requestClose/); assert.match(source, /\[data-close\].*guard.requestClose/); assert.match(source, /event.stopPropagation\(\); guard.requestClose\(\)/);
   assert(!source.includes('calendar-storage-note')); assert(!source.includes('calendar-dialog-note')); assert(!source.includes('window.confirm'));
 });

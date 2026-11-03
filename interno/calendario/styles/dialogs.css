@@ -1,0 +1,88 @@
+.calendar-dialog {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 25px;
+  width: min(600px, calc(100% - 28px));
+  max-height: calc(100dvh - 32px);
+  color: var(--ink);
+  box-shadow: 0 24px 90px #17202f35;
+  overflow: auto;
+}
+.calendar-dialog::backdrop {
+  background: #18213375;
+}
+.calendar-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.calendar-dialog h2 {
+  font-size: 22px;
+  margin: 8px 0;
+}
+.calendar-close {
+  padding: 0;
+  width: 44px;
+  font-size: 24px;
+}
+.calendar-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.calendar-fields input,
+.calendar-fields textarea {
+  width: 100%;
+  min-width: 0;
+}
+.calendar-fields textarea {
+  border: 1px solid #dcdfe3;
+  border-radius: 8px;
+  padding: 12px;
+  font: inherit;
+  font-weight: 400;
+  line-height: 1.6;
+  resize: vertical;
+}
+.calendar-fields textarea:focus-visible {
+  outline: 3px solid #f0ba24;
+  outline-offset: 3px;
+}
+.calendar-wide {
+  grid-column: 1/-1;
+}
+.calendar-dialog-note {
+  font-size: 11px;
+  color: #777d85;
+  line-height: 1.6;
+  margin: 18px 0;
+}
+.calendar-form-error {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #b01d29;
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+}
+.calendar-form-error:empty {
+  display: none;
+}
+.calendar-dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+.calendar-confirm {
+  max-width: 470px;
+}
+.calendar-confirm > p {
+  font-size: 13px;
+  color: #6e747e;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}

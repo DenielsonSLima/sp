@@ -1,0 +1,118 @@
+{
+  "projectRef": "enhoierfwuwtzulznjxa",
+  "companyId": "89d1d8c9-b03d-46aa-a743-deac900f93b3",
+  "categories": [
+    "Logos",
+    "Natal"
+  ],
+  "assets": [
+    {
+      "id": "povo-logo-transparente-v1",
+      "name": "Supermercado do Povo · Logo transparente",
+      "category": "Logos",
+      "file": "assets/biblioteca/identidade-visual/logos/supermercado-do-povo.png",
+      "src": "./assets/biblioteca/identidade-visual/logos/supermercado-do-povo.png",
+      "width": 2146,
+      "height": 733,
+      "bytes": 884498,
+      "sha256": "164933cb31cb833ca93b11606ecc0c69aac5ce33deb592158ed5a7c8b9444a30",
+      "source": "generated"
+    },
+    {
+      "id": "povo-selo-ofertas-de-natal-v1",
+      "name": "Ofertas de Natal",
+      "category": "Natal",
+      "file": "assets/biblioteca/natal/selos/ofertas-de-natal.png",
+      "src": "./assets/biblioteca/natal/selos/ofertas-de-natal.png",
+      "width": 1663,
+      "height": 946,
+      "bytes": 1791873,
+      "sha256": "b4df46a3e24f84e7f2b1469c499a32e2e1ec7242fd31bf4dbd9a8fd83660ab8f",
+      "source": "generated"
+    },
+    {
+      "id": "povo-selo-natal-da-economia-v1",
+      "name": "Natal da Economia",
+      "category": "Natal",
+      "file": "assets/biblioteca/natal/selos/natal-da-economia.png",
+      "src": "./assets/biblioteca/natal/selos/natal-da-economia.png",
+      "width": 1663,
+      "height": 946,
+      "bytes": 1614436,
+      "sha256": "47c7009dca75180a16d106fb8967ae5f681b248b3c9a132bf270cce125e2e23c",
+      "source": "generated"
+    },
+    {
+      "id": "povo-selo-promocao-de-natal-v1",
+      "name": "Promoção de Natal",
+      "category": "Natal",
+      "file": "assets/biblioteca/natal/selos/promocao-de-natal.png",
+      "src": "./assets/biblioteca/natal/selos/promocao-de-natal.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2010477,
+      "sha256": "740ddfdd145a4d453e35b40779732f95acc1903411f47d5653dcd2964ac1eed8",
+      "source": "generated"
+    },
+    {
+      "id": "povo-selo-natal-premiado-v1",
+      "name": "Natal Premiado",
+      "category": "Natal",
+      "file": "assets/biblioteca/natal/selos/natal-premiado.png",
+      "src": "./assets/biblioteca/natal/selos/natal-premiado.png",
+      "width": 1663,
+      "height": 946,
+      "bytes": 1787489,
+      "sha256": "15daffcbe60927a9bfc88603b03a0a4eb448c90c2e08aa068dde7465870fc273",
+      "source": "generated"
+    },
+    {
+      "id": "povo-selo-natal-do-povo-v1",
+      "name": "Natal do Povo",
+      "category": "Natal",
+      "file": "assets/biblioteca/natal/selos/natal-do-povo.png",
+      "src": "./assets/biblioteca/natal/selos/natal-do-povo.png",
+      "width": 1663,
+      "height": 946,
+      "bytes": 1816753,
+      "sha256": "e6e0ded82d745a83003bde9cd850a0339cf375d20500069878a6cd37bf5e442e",
+      "source": "generated"
+    },
+    {
+      "id": "povo-selo-ceia-com-economia-v1",
+      "name": "Ceia com Economia",
+      "category": "Natal",
+      "file": "assets/biblioteca/natal/selos/ceia-com-economia.png",
+      "src": "./assets/biblioteca/natal/selos/ceia-com-economia.png",
+      "width": 1663,
+      "height": 946,
+      "bytes": 1784057,
+      "sha256": "32d0ae3ba885d80973ee68c05f9f80d65770f7fe9fbe9781a0958e6c336e7094",
+      "source": "generated"
+    },
+    {
+      "id": "povo-logo-contorno-branco-v1",
+      "name": "Supermercado do Povo · Contorno branco",
+      "category": "Logos",
+      "file": "assets/biblioteca/identidade-visual/logos/supermercado-do-povo-contorno-branco.png",
+      "src": "./assets/biblioteca/identidade-visual/logos/supermercado-do-povo-contorno-branco.png",
+      "width": 2146,
+      "height": 733,
+      "bytes": 1246677,
+      "sha256": "3811ab641ef95c4e5658a5b15f67b3feb8ed9dfff51ee807d91443a3d51179b8",
+      "source": "generated"
+    },
+    {
+      "id": "povo-logo-contorno-branco-4x-v1",
+      "name": "Supermercado do Povo · Contorno branco 4x",
+      "category": "Logos",
+      "file": "assets/biblioteca/identidade-visual/logos/supermercado-do-povo-contorno-branco-4x.png",
+      "src": "./assets/biblioteca/identidade-visual/logos/supermercado-do-povo-contorno-branco-4x.png",
+      "width": 1796,
+      "height": 876,
+      "bytes": 1060581,
+      "sha256": "3960cb35c68c9935b05f17f3d49fe72c7a6a0750fe8c837c16188a40d197508a",
+      "source": "generated"
+    }
+  ]
+}

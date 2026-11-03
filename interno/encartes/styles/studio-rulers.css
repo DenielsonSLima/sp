@@ -1,0 +1,42 @@
+.flyer-rulers {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.flyer-ruler-horizontal,
+.flyer-ruler-vertical {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.flyer-ruler-horizontal {
+  cursor: row-resize;
+}
+
+.flyer-ruler-vertical {
+  cursor: col-resize;
+}
+
+.flyer-ruler-unit {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  background: #edf0f4;
+  color: #46556a;
+  border-right: 1px solid #b8c1cd;
+  border-bottom: 1px solid #b8c1cd;
+  font:
+    10px system-ui,
+    sans-serif;
+  box-sizing: border-box;
+}

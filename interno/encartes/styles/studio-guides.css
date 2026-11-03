@@ -1,0 +1,87 @@
+.flyer-guides {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+.flyer-guide-plane {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+}
+.flyer-guide-line {
+  position: absolute;
+  pointer-events: auto;
+  touch-action: none;
+  --guide-color: #009fb8;
+}
+.flyer-guide-line::before {
+  content: "";
+  position: absolute;
+  background: var(--guide-color);
+}
+.flyer-guide-x {
+  width: 12px;
+  height: 100%;
+  top: 0;
+  transform: translateX(-6px);
+  cursor: col-resize;
+}
+.flyer-guide-x::before {
+  width: 1px;
+  height: 100%;
+  left: 6px;
+}
+.flyer-guide-y {
+  height: 12px;
+  width: 100%;
+  left: 0;
+  transform: translateY(-6px);
+  cursor: row-resize;
+}
+.flyer-guide-y::before {
+  height: 1px;
+  width: 100%;
+  top: 6px;
+}
+.flyer-guide-line::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: max-content;
+  padding: 2px 5px;
+  background: #fff;
+  color: #21566b;
+  border: 1px solid #b5e3ed;
+  border-radius: 3px;
+  font:
+    10px/1.4 system-ui,
+    sans-serif;
+  opacity: 0;
+}
+.flyer-guide-line:hover::after,
+.flyer-guide-line:focus-visible::after,
+.flyer-guide-line.is-dragging::after {
+  opacity: 1;
+}
+.flyer-guide-line:focus-visible {
+  outline: 1px dashed #007b91;
+}
+.flyer-guide-line.is-center,
+.flyer-guide-line.is-snap {
+  pointer-events: none;
+}
+.flyer-guide-line.is-center::after {
+  opacity: 1;
+}
+.flyer-guide-line.is-center::before {
+  background: repeating-linear-gradient(to bottom, #009fb894 0 5px, transparent 5px 9px);
+}
+.flyer-guide-y.is-center::before {
+  background: repeating-linear-gradient(to right, #009fb894 0 5px, transparent 5px 9px);
+}
+.flyer-guide-line.is-snap {
+  --guide-color: #c22eac;
+}

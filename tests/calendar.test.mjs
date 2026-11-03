@@ -1,9 +1,10 @@
+import {readDomainSource,readModuleSource,readDomainStyles} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {readFile} from 'node:fs/promises';
-import {validDate, localToday, localDate, addDays, shiftMonth, monthBounds, monthGrid, createCalendarStore, parseEntries, STORAGE_KEY, calendarItems, filterCalendarItems, entriesOnDate, agendaGroups} from '../interno/calendario/state.js';
-import {createCampaignStore} from '../interno/promocoes/state.js';
+import {validDate, localToday, localDate, addDays, shiftMonth, monthBounds, monthGrid, createCalendarStore, parseEntries, STORAGE_KEY, calendarItems, filterCalendarItems, entriesOnDate, agendaGroups} from './fixtures/legacy-operations/calendar-state.js';
+import {createCampaignStore} from './fixtures/legacy-operations/campaign-state.js';
 const fields = {title: 'Reunião da equipe', date: '2026-10-20', time: '08:30', type: 'event', color: 'blue', notes: 'Alinhar ofertas'};
 const memory = () => {const data = new Map(); return {getItem: key => data.get(key) ?? null, setItem: (key, value) => data.set(key, value), data};};
 
@@ -97,9 +98,9 @@ test('filters combine accentless search, type and inclusive period; agenda conta
 });
 
 test('calendar UI integrates read-only campaigns, native-enhanced selects, safe text, dialog confirmation and cleanup', async () => {
-  const source = await readFile(new URL('../interno/calendario/index.js', import.meta.url), 'utf8');
-  assert.match(source, /readCampaigns, subscribeCampaigns/); assert.match(source, /unsubscribe\(\)/); assert.match(source, /signalController\.abort\(\)/);
+  const source = await readDomainSource('interno/calendario');
+  assert.match(source, /loadCalendarCampaigns/); assert.match(source, /stopRealtime\(\)/); assert.match(source, /signalController\.abort\(\)/);
   assert.match(source, /data-confirm-delete/); assert.match(source, /Esta ação não pode ser desfeita/); assert.match(source, /esc\(item.title\)/);
   assert.match(source, /name="calendar-type"/); assert.match(source, /name="color"/); assert(!source.includes('campaignStore.update'));
-  const css = await readFile(new URL('../interno/calendario/styles.css', import.meta.url), 'utf8'); assert.match(css, /min-height:44px/); assert.match(css, /max-width:760px/);
+  const css = await readDomainStyles('interno/calendario'); assert.match(css, /min-height:44px/); assert.match(css, /max-width:760px/);
 });

@@ -1,0 +1,34 @@
+.flyer-topbar > .flyer-zoom {
+  justify-self: end;
+}
+
+.flyer-topbar > .flyer-zoom label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.flyer-zoom-select:focus-visible {
+  outline: 2px solid #d2bc84;
+  outline-offset: 3px;
+}
+
+.flyer-stage {
+  /* Auto margins center small art; large art starts at a reachable scroll origin. */
+  justify-content: flex-start;
+  overflow-anchor: none;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 600px) {
+  .flyer-topbar > .flyer-zoom label {
+    gap: 5px;
+  }
+  .flyer-topbar > .flyer-zoom select {
+    min-height: 40px;
+    width: 96px;
+    font-size: 12px;
+  }
+}

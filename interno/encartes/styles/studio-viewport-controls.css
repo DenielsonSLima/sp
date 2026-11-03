@@ -1,0 +1,47 @@
+.flyer-guides-control {
+  position: relative;
+}
+.flyer-guides-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 268px;
+  padding: 16px;
+  z-index: 20;
+  border: 1px solid #dce2ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #374352;
+  box-shadow: 0 10px 35px #14223524;
+}
+.flyer-guides-menu[hidden] {
+  display: none;
+}
+.flyer-guides-menu strong {
+  font-size: 12px;
+}
+.flyer-guides-menu p {
+  font-size: 10px;
+  line-height: 1.6;
+  color: #7f8996;
+  margin: 10px 0;
+}
+.flyer-guides-menu .button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 7px;
+  color: #374352;
+  background: #f7f9fb;
+}
+.flyer-guides-menu label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  margin: 16px 0;
+}
+.flyer-guides-menu input {
+  width: auto;
+  min-height: 0;
+}

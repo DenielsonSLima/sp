@@ -1,4 +1,9 @@
 dist/
+.dist-build-*/
 artifacts/
 node_modules/
 *.tar.gz
+.env
+.env.*
+!.env.example
+.supabase/

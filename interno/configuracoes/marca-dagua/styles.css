@@ -1,1 +1,39 @@
-.watermark-paper{min-height:380px}.paper-demo-label{font-size:8px;letter-spacing:1.5px;color:#b6bbc3}.watermark-layer{position:absolute;top:50%;left:50%;width:90%;text-align:center;font-weight:800;color:#c71925;pointer-events:none;overflow-wrap:anywhere}.watermark-layer img{display:block;max-width:100%;max-height:210px;margin:auto;object-fit:contain}.settings-stack output{font-size:10px;color:#939aa4;font-weight:400}.settings-stack input[type=file]{font-size:10px;max-width:100%;padding:10px}.settings-stack input[name=text]{width:100%}
+.watermark-paper {
+  min-height: 380px;
+}
+.paper-demo-label {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #b6bbc3;
+}
+.watermark-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  text-align: center;
+  font-weight: 800;
+  color: #c71925;
+  pointer-events: none;
+  overflow-wrap: anywhere;
+}
+.watermark-layer img {
+  display: block;
+  max-width: 100%;
+  max-height: 210px;
+  margin: auto;
+  object-fit: contain;
+}
+.settings-stack output {
+  font-size: 10px;
+  color: #939aa4;
+  font-weight: 400;
+}
+.settings-stack input[type="file"] {
+  font-size: 10px;
+  max-width: 100%;
+  padding: 10px;
+}
+.settings-stack input[name="text"] {
+  width: 100%;
+}

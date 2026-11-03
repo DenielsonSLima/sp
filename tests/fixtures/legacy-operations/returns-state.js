@@ -1,0 +1,30 @@
+// Explicit legacy fixtures for regression tests only. Never imported by the application.
+import {createOperationalStore} from '../../../interno/operational-store.js';
+const remote=createOperationalStore('supplier_returns');
+export const loadReturns=()=>false?remote.load():Promise.resolve([]);
+import {normalizeSearch} from '../../../shared/filters.js';
+export const settlementMethods={pix:'Pix',dinheiro:'Dinheiro',transferencia:'Transferência',credito:'Crédito com fornecedor',abatimento:'Abatimento em compra',outro:'Outro'};
+export const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+export const money=cents=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(cents/100);
+const validDate=v=>/^\d{4}-\d{2}-\d{2}$/.test(v)&&!Number.isNaN(Date.parse(v+'T12:00:00Z'))&&new Date(v+'T12:00:00Z').toISOString().slice(0,10)===v;
+export function parseMoney(value){const text=String(value).trim();if(!/^\d+(?:[,.]\d{1,2})?$/.test(text))throw new Error('Informe um valor positivo com até duas casas decimais, sem separador de milhares.');const [whole,fraction='']=text.replace(',','.').split('.');const cents=Number(whole)*100+Number(fraction.padEnd(2,'0'));if(!Number.isSafeInteger(cents)||cents<=0||cents>100000000)throw new Error('O valor deve estar entre R$ 0,01 e R$ 1.000.000,00.');return cents;}
+export function parseQuantity(value){const text=String(value).trim();if(!/^\d+(?:[,.]\d{1,3})?$/.test(text))throw new Error('Informe quantidade positiva com até três casas decimais.');const quantity=Number(text.replace(',','.'));if(quantity<=0||quantity>1000000)throw new Error('Quantidade deve ser maior que zero e até 1.000.000.');return quantity;}
+export const lineTotal=(quantity,unitCents)=>Number((BigInt(Math.round(quantity*1000))*BigInt(unitCents)+500n)/1000n);
+export const totals=record=>{if(false)return record.computed?.totals||{total:0,settled:0,pending:0,status:"Pendente"};const total=record.items.reduce((sum,item)=>sum+item.totalCents,0);const settled=record.settlements.reduce((sum,item)=>sum+item.amountCents,0);return {total,settled,pending:total-settled,status:settled===0?'Pendente':settled<total?'Parcial':'Resolvida'};};
+const clone=value=>structuredClone(value);
+export function createReturnRepository(){let records=[];return {
+ list({query='',status=''}={}){const needle=normalizeSearch(query);return records.filter(r=>(!status||totals(r).status===status)&&(!needle||normalizeSearch([r.number,r.originalInvoice,r.supplier.name,r.reason,...r.items.map(i=>i.name)].join(' ')).includes(needle))).map(clone);},
+ get(id){const record=records.find(r=>r.id===id);return record?clone(record):null;},
+ create(input,{partners,products}){const supplier=partners.find(p=>p.id===input.supplierId&&['Fornecedor','Ambos'].includes(p.type));if(!supplier)throw new Error('Selecione um fornecedor cadastrado.');const number=String(input.number||'').trim(),originalInvoice=String(input.originalInvoice||'').trim(),reason=String(input.reason||'').trim();if(!number||!originalInvoice||!reason)throw new Error('Preencha a nota de origem, o número da devolução e o motivo.');if(!validDate(input.date))throw new Error('Informe uma data válida.');if(records.some(r=>r.supplier.id===supplier.id&&normalizeSearch(r.number)===normalizeSearch(number)))throw new Error('Este número de devolução já existe para o fornecedor.');if(!Array.isArray(input.items)||!input.items.length)throw new Error('Adicione pelo menos um produto.');const seen=new Set();const items=input.items.map(item=>{const product=products.find(p=>p.id===item.productId);if(!product)throw new Error('Selecione um produto cadastrado.');if(seen.has(product.id))throw new Error('Produto repetido: ajuste a quantidade na mesma linha.');seen.add(product.id);const quantity=parseQuantity(item.quantity),unitCents=parseMoney(item.unitValue),totalCents=lineTotal(quantity,unitCents);if(totalCents<=0)throw new Error('O total de cada produto deve ser de pelo menos R$ 0,01.');return {productId:product.id,name:product.name,unit:product.unit,quantity,unitCents,totalCents};});const total=items.reduce((sum,item)=>sum+item.totalCents,0);if(!Number.isSafeInteger(total))throw new Error('Total acima do limite permitido.');const record={id:crypto.randomUUID(),supplier:{id:supplier.id,name:supplier.name},number,originalInvoice,date:input.date,reason,items,settlements:[]};records.unshift(record);return clone(record);},
+ settle(id,input){const record=records.find(r=>r.id===id);if(!record)throw new Error('Devolução não encontrada.');if(!Object.hasOwn(settlementMethods,input.method))throw new Error('Selecione a forma de acerto.');if(!validDate(input.date)||input.date<record.date)throw new Error('A data do acerto deve ser válida e não anterior à devolução.');const amountCents=parseMoney(input.amount);if(amountCents>totals(record).pending)throw new Error('O valor do acerto não pode superar o saldo pendente.');record.settlements.push({id:crypto.randomUUID(),method:input.method,amountCents,date:input.date,reference:String(input.reference||'').trim()});return clone(record);},
+ reset(){records=[];}
+};}
+const localReturns=createReturnRepository();
+const remoteReturns={
+ list({query='',status=''}={}){const needle=normalizeSearch(query);return remote.list().filter(r=>(!status||totals(r).status===status)&&(!needle||normalizeSearch([r.number,r.originalInvoice,r.supplier.name,r.reason,...r.items.map(i=>i.name)].join(' ')).includes(needle)));},
+ get(id){try{return remote.get(id);}catch{return null;}},
+ create:input=>remote.run('create',null,input),
+ settle:(id,input)=>remote.run('settle',id,input),
+ reset:()=>remote.reset()
+};
+export const returnRepository=new Proxy({}, {get:(_,key)=>(false?remoteReturns:localReturns)[key]});

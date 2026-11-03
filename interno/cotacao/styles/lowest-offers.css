@@ -1,0 +1,81 @@
+.quote-lowest-list {
+  display: grid;
+}
+.quote-lowest-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.3fr) minmax(160px, 1fr) minmax(145px, .75fr);
+  align-items: center;
+  gap: 16px 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.quote-lowest-row > .quote-product-identity {
+  min-width: 0;
+}
+.quote-lowest-row .quote-product-identity strong {
+  overflow-wrap: anywhere;
+}
+.quote-lowest-provider,
+.quote-lowest-price,
+.quote-lowest-state {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.quote-lowest-provider > .tag {
+  justify-self: start;
+}
+.quote-lowest-provider > strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.quote-lowest-provider > span:not(.tag),
+.quote-lowest-price > span,
+.quote-lowest-price > small,
+.quote-lowest-state > span {
+  color: #687482;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.quote-lowest-price {
+  text-align: right;
+}
+.quote-lowest-price > strong {
+  color: #26734d;
+  font-size: 24px;
+}
+.quote-lowest-state {
+  grid-column: 2 / -1;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #fff8e5;
+}
+.quote-lowest-state > strong,
+.quote-lowest-missing {
+  color: #806017;
+  font-size: 12px;
+}
+.quote-lowest-missing {
+  grid-column: 2 / -1;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 850px) {
+  .quote-lowest-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .quote-lowest-row > .quote-product-identity,
+  .quote-lowest-state,
+  .quote-lowest-missing {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 480px) {
+  .quote-lowest-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .quote-lowest-price {
+    text-align: left;
+  }
+}

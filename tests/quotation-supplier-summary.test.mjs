@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createQuote,setOffer,chooseProvider,updateItemQuantity,removeQuoteProvider,finalizeQuote,finalizeQuoteProvider,isProviderFinalized,isQuoteItemFinalized,selectedTotal} from '../interno/cotacao/state.js';
+import {createQuote,setOffer,chooseProvider,updateItemQuantity,removeQuoteProvider,finalizeQuote,finalizeQuoteProvider,isProviderFinalized,isQuoteItemFinalized,selectedTotal} from './fixtures/legacy-operations/quotation-state.js';
 import {supplierSummaryRows,supplierSummaryMarkup,matrixTotalsMarkup} from '../interno/cotacao/supplier-summary.js';
 import {approvedSupplierReport,generateSupplierQuotePdfs} from '../interno/cotacao/supplier-pdf.js';
 

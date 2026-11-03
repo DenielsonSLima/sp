@@ -1,9 +1,10 @@
+import {readDomainSource,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {nthWeekdayOfMonth, easterDate, blackFridayDate, commercialDates, suggestedPeriods, retailHolidays, retailAgendaGroups, commercialSources} from '../interno/calendario/commercial.js';
-import {localDate, validDate, monthBounds, filterCalendarItems, createCalendarStore, calendarItems} from '../interno/calendario/state.js';
+import {localDate, validDate, monthBounds, filterCalendarItems, createCalendarStore, calendarItems} from './fixtures/legacy-operations/calendar-state.js';
 
 test('Black Friday follows the fourth Thursday, including the fifth Friday in 2024', () => {
   for (const [year, expected] of [[2023, '2023-11-24'], [2024, '2024-11-29'], [2026, '2026-11-27'], [2027, '2027-11-26'], [2028, '2028-11-24']]) {
@@ -74,7 +75,7 @@ test('moving retail dates remain identical across UTC-offset and DST time zones'
   for (const TZ of ['America/Sao_Paulo', 'America/Los_Angeles', 'Pacific/Kiritimati']) assert.deepEqual(JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], {env: {...process.env, TZ}, encoding: 'utf8'})), ['2026-04-05', '2024-11-29', '2026-05-10']);
 });
 test('calendar separates commercial and seasonal filters and keeps default day cells uncluttered', async () => {
-  const source = await readFile(new URL('../interno/calendario/index.js', import.meta.url), 'utf8');
+  const source = await readDomainSource('interno/calendario');
   assert.match(source, /commercial: 'Data comercial', season: 'Sugestão sazonal'/); assert.match(source, /item.type !== 'season' \|\| state.type === 'season'/);
   assert.match(source, /calendar-seasonal-panel/); assert.match(source, /retailAgendaGroups\(items, state.month\)/); assert.match(source, /commercial \|\| season \?/);
   assert.match(source, /Fonte da data/); assert.match(source, /Sobre a data/);

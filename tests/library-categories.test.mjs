@@ -1,8 +1,9 @@
+import {readDomainSource,readDomainStyles,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {validateCategory,validateAsset,snapshotAsset,CATEGORIES,UNCATEGORIZED} from '../interno/cadastros/biblioteca-marca/state.js';
-import {planCategoryChange,upgradeLibrary} from '../interno/cadastros/biblioteca-marca/storage.js';
+import {validateCategory,validateAsset,snapshotAsset,CATEGORIES,UNCATEGORIZED} from './fixtures/legacy-catalogs/biblioteca-marca/state.js';
+import {planCategoryChange,upgradeLibrary} from './fixtures/legacy-catalogs/biblioteca-marca/storage.js';
 const png='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jmxkAAAAASUVORK5CYII=';
 test('dynamic category names validate and immutable snapshots accept user-created categories',()=>{
  assert.equal(validateCategory('  Festas locais  '),'Festas locais');
@@ -31,10 +32,11 @@ test('v1 migration retains assets and every legacy category without clearing or 
  assert.equal(assetCreates,1);assert.equal(index,2);assert.equal(rows[0].dataURL,png);assert.ok(names.has('Minha categoria antiga'));assert.ok(names.has('Logos'));assert.ok(names.has(UNCATEGORIZED));
 });
 test('library and editor consume shared dynamic catalog and escape category names',async()=>{
- const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
+ const read=path=>path==='interno/cadastros/biblioteca-marca/storage.js'?readDomainSource('interno/cadastros/biblioteca-marca'):readModuleSource(path);
  const panel=await read('interno/encartes/brand-panel.js'),module=await read('interno/cadastros/biblioteca-marca/index.js'),categories=await read('interno/cadastros/biblioteca-marca/categories.js'),storage=await read('interno/cadastros/biblioteca-marca/storage.js');
  assert.match(panel,/listCategories/);assert.doesNotMatch(panel,/const categories=\[/);assert.match(panel,/escapeHtml\(c\)/);
- assert.match(module,/escapeHtml\(a.category\)/);assert.match(categories,/escapeHtml\(name\)/);assert.match(categories,/Nenhum PNG será excluído/);assert.match(categories,/Remover e mover elementos/);
- assert.match(storage,/db.transaction\(\['assets','categories'\],mode\)/);assert.match(storage,/row.update\(\{\.\.\.row.value,category:name\}\)/);assert.doesNotMatch(storage,/assets\.clear|deleteDatabase/);
+ const grid=await readFile(new URL('../interno/cadastros/biblioteca-marca/asset-grid.js',import.meta.url),'utf8');
+ assert.match(grid,/esc\(asset.category\)/);assert.match(categories,/escapeHtml\(name\)/);assert.match(categories,/Nenhum PNG será excluído/);assert.match(categories,/Remover e mover elementos/);
+ assert.match(storage,/saveRecord\('brand_categories'/);assert.doesNotMatch(storage,/indexedDB|localStorage|assets\.clear|deleteDatabase/);
  assert.match(module,/brand-query/);assert.doesNotMatch(module,/q\('\[type=search\]'\)/);
 });

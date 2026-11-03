@@ -1,0 +1,13 @@
+import { openSettlement } from './settlement-dialog.js';
+import { returnRepository as store, totals, money, today, settlementMethods } from './state.js';
+import { esc, base, dateLabel, badge } from './common.js';
+export function renderDetail(root, id) {
+  const r = store.get(id);
+  if (!r) {
+    root.innerHTML = `<div class="card return-empty"><h2>Devolução não encontrada</h2><p><a class="button secondary" href="${base}">Voltar às devoluções</a></p></div>`;
+    return;
+  }
+  const t = totals(r);
+  root.innerHTML = `<a class="button secondary" href="${base}">← Voltar às devoluções</a><div class="return-toolbar"><div><h2>Devolução ${esc(r.number)}</h2><p>${esc(r.supplier.name)}</p></div>${badge(t.status)}</div><div class="return-summary"><div><span>Total devolvido</span><strong>${money(t.total)}</strong></div><div><span>Acertos registrados</span><strong>${money(t.settled)}</strong></div><div><span>Saldo pendente</span><strong>${money(t.pending)}</strong></div></div><section class="card return-detail"><h2>Referências da devolução</h2><dl><div><dt>Fornecedor</dt><dd>${esc(r.supplier.name)}</dd></div><div><dt>Data</dt><dd>${dateLabel(r.date)}</dd></div><div><dt>Nota de origem (referência manual)</dt><dd>${esc(r.originalInvoice)}</dd></div><div><dt>Número da devolução (referência manual)</dt><dd>${esc(r.number)}</dd></div><div class="return-wide"><dt>Motivo</dt><dd>${esc(r.reason)}</dd></div></dl></section><section class="card return-detail"><h2>Produtos devolvidos</h2>${r.items.map((i) => `<div class="return-product"><div><strong>${esc(i.name)}</strong><small>${i.quantity.toLocaleString('pt-BR')} ${esc(i.unit)} × ${money(i.unitCents)}</small></div><strong>${money(i.totalCents)}</strong></div>`).join('')}</section><section class="card return-detail"><div class="return-toolbar"><h2>Histórico de acertos</h2>${t.pending > 0 ? '<button class="button primary" data-settle type="button">Registrar acerto</button>' : '<span class="return-status resolved">Saldo totalmente acertado</span>'}</div><p class="subtext">Registre como o fornecedor ressarciu ou compensou a devolução. Acertos parciais mantêm o saldo em aberto.</p>${r.settlements.length ? r.settlements.map((s) => `<div class="return-settlement"><div><strong>${settlementMethods[s.method]}</strong><small>${dateLabel(s.date)}${s.reference ? ` · ${esc(s.reference)}` : ''}</small></div><strong>${money(s.amountCents)}</strong></div>`).join('') : '<p class="subtext">Nenhum acerto registrado. A devolução continua pendente.</p>'}</section>`;
+  root.querySelector('[data-settle]')?.addEventListener('click', () => openSettlement(root, r));
+}

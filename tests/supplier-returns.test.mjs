@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {webcrypto} from 'node:crypto';
-import {createReturnRepository,parseMoney,parseQuantity,lineTotal,totals} from '../interno/devolucoes-fornecedores/state.js';
+import {createReturnRepository,parseMoney,parseQuantity,lineTotal,totals} from './fixtures/legacy-operations/returns-state.js';
 globalThis.crypto??=webcrypto;
 const catalog={partners:[{id:'s1',name:'Fornecedor Ágil',type:'Fornecedor'},{id:'c1',name:'Cliente',type:'Cliente'}],products:[{id:'p1',name:'Arroz',unit:'KG'}]};
 const input=()=>({supplierId:'s1',number:'DEV-1',originalInvoice:'00123',reason:'Avaria',date:'2026-10-19',items:[{productId:'p1',quantity:'2,5',unitValue:'10,10'}]});

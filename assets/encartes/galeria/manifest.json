@@ -1,0 +1,3274 @@
+{
+  "createdAt": "2026-11-02",
+  "format": "Stories 1080x1920",
+  "source": "Built-in image_gen; researched product references; approved Christmas photography skill; no promotional overlays",
+  "coverage": {
+    "catalogProducts": 196,
+    "coveredProducts": 196,
+    "scenes": 118
+  },
+  "scenes": [
+    {
+      "id": "natal26-acougue-001",
+      "title": "Escolhas Friboi para a mesa da família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-acem",
+          "name": "ACÉM BOVINO FRIBOI RESERVA"
+        },
+        {
+          "key": "catalogo-acougue-alcatra",
+          "name": "ALCATRA COM MAMINHA FRIBOI RESERVA"
+        },
+        {
+          "key": "catalogo-acougue-patinho",
+          "name": "PATINHO BOVINO FRIBOI RESERVA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 444790,
+      "sha256": "5fb0d29428c347b8adb9a0d4bbbdb85ccf836674a3d40da4998e2c7fc65a1293",
+      "thumbnailBytes": 63888,
+      "thumbnailSha256": "7c48025da9a77722092f513632274e7acdedb1e12f0599ec262f153ac6ceebf2",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-002",
+      "title": "Friboi para o churrasco de Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-contrafile",
+          "name": "CONTRAFILÉ BOVINO FRIBOI RESERVA"
+        },
+        {
+          "key": "catalogo-acougue-picanha",
+          "name": "PICANHA BOVINA FRIBOI RESERVA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 381594,
+      "sha256": "5cc85cef385cdd0afdbf1ffdb9321f333da3fd39a10144dc2e7ddd1dbad8c4a6",
+      "thumbnailBytes": 57472,
+      "thumbnailSha256": "d06b7e2b88c861fc3b2b239e72a41452c1c8fbdde191a8558a44a8f3fd5eb617",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-003",
+      "title": "Costela Fribev para reunir a família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-costela",
+          "name": "COSTELA BOVINA FRIBEV"
+        }
+      ],
+      "source": "generated",
+      "bytes": 387690,
+      "sha256": "7330b968bd1701cc665279df333a41b584a0d89b54117c134017c5ea0d8fd6bd",
+      "thumbnailBytes": 60792,
+      "thumbnailSha256": "6d547412e5ffa65ebb9acc890c018138f0afc53cb3d8614aed2ebc6ca1599a27",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-004",
+      "title": "Cortes bovinos para cozinhar com carinho",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "a86151b2-63c8-4bcc-a4e8-f82c5770ac32",
+          "name": "CARNE BOV. ACÉM KG"
+        },
+        {
+          "key": "a76c5f36-3ccd-42af-929b-e332ea4518b5",
+          "name": "CARNE BOV. PALETA KG"
+        },
+        {
+          "key": "b30b9eb7-31a0-44e9-8ad0-31fdcc9cbcaf",
+          "name": "CARNE BOV. PESCOÇO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 442644,
+      "sha256": "dab4fc2e270ff8248e75830526b21667fea7ef364ea94bd436f55e5c48e5d262",
+      "thumbnailBytes": 63706,
+      "thumbnailSha256": "7e1be63ef4b9b7ab6077519136562c7b247c910e1129593ce86ba7cc028c6b95",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-005",
+      "title": "Coxão duro no preparo natalino",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-005.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-005-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "5b79eef3-ba9a-4ea5-a0a1-9910b8707721",
+          "name": "CARNE BOV. COXÃO DURO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 313556,
+      "sha256": "4c8cb0c56341bea52266baf65e40b5546edd35c55b1390b855e2f61549c348fa",
+      "thumbnailBytes": 50642,
+      "thumbnailSha256": "140d3efa700de3597ef22fa84290bcf52df0a260681f0c03831aa0442369934c",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-006",
+      "title": "Alcatra, maminha e contrafilé no preparo",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-006.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-006-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "eae12ecc-dd89-4eb0-88e3-bc5cfe10c0e4",
+          "name": "CARNE BOV. ALCATRA KG"
+        },
+        {
+          "key": "884df95f-74a7-42cd-9d0e-315e57c85e8b",
+          "name": "CARNE BOV. MAMINHA KG"
+        },
+        {
+          "key": "40964549-d809-42ba-978b-3f7869ecdcf8",
+          "name": "CARNE BOV. CONTRAFILÉ KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 427188,
+      "sha256": "a930e79656c0b3598de0a34cf33004b1c83a94ee657e15d227224283ba21918b",
+      "thumbnailBytes": 60148,
+      "thumbnailSha256": "8920a3b1fc7fd1e52cdcac2e26d1abc19304f8d36589192b91af23c02143eb0e",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-007",
+      "title": "Picanha para celebrar",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-007.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-007-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "90c55ea6-9699-40f0-a0d5-0dd52ef1d9ea",
+          "name": "CARNE BOV. PICANHA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 350720,
+      "sha256": "4381269f3dcc305e38195c206cbb7892aa491131ae05de6fb005ad2357573825",
+      "thumbnailBytes": 52318,
+      "thumbnailSha256": "4c97594cb198fc8af899019887778f4b03859636f6b4ff24d5a50a6691d2e02d",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-008",
+      "title": "Assados bovinos para compartilhar",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-008.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-008-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "41614a43-9c05-4423-9b08-f24b3a82f4c8",
+          "name": "CARNE BOV. CUPIM KG"
+        },
+        {
+          "key": "b71e58fa-3031-4cab-98c0-4a30828aa135",
+          "name": "CARNE BOV. PEITO KG"
+        },
+        {
+          "key": "a8099caf-1574-42e0-8531-c7bb3fa6546a",
+          "name": "CARNE BOV. FRALDINHA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 432934,
+      "sha256": "a30705235ed67fdfbd7e74ebdc3bba5fa55650feee16478724847baa1d2623e4",
+      "thumbnailBytes": 67462,
+      "thumbnailSha256": "52ce7135446c74d5a2d30d968ca36bec44103b5e0c9cdb34f4d02e2edebe0bc4",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-009",
+      "title": "Filé mignon e lagarto no preparo da ceia",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-009.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-009-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "298a0c42-7339-497d-b396-f0547a9684bb",
+          "name": "CARNE BOV. FILÉ MIGNON KG"
+        },
+        {
+          "key": "d5d632ce-3592-4b82-b490-1ccfeb2573a9",
+          "name": "CARNE BOV. LAGARTO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 401526,
+      "sha256": "56fd0b0f568861f4a6690cb5b6b0cd0ceb1b1b6b15ea3d756af7f02df253b6e5",
+      "thumbnailBytes": 59414,
+      "thumbnailSha256": "c91caba33ae4d8d843d6e355825f51ed12fd908dfd2fb8baf0fb10c23539937b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-010",
+      "title": "Bovinos para receitas da casa",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-010.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-010-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "d7292c54-ab36-40e2-849f-85ebcdb5672e",
+          "name": "CARNE BOV. MÚSCULO KG"
+        },
+        {
+          "key": "6da5b2c4-0fe4-455f-a874-26927a178033",
+          "name": "MÚSCULO BOVINO COM OSSO"
+        },
+        {
+          "key": "14bdd35c-2339-4d81-a813-f13607d2fb44",
+          "name": "CARNE BOVINA MOÍDA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 389280,
+      "sha256": "61b19710dae97a93c389c224f0a56f20148429ffc071f4dfdbbe35eaa9e5f07e",
+      "thumbnailBytes": 58292,
+      "thumbnailSha256": "3f7a9026706ea337b94dbbce7d19777db5b2e9d9e6d051e000514d89fccf4855",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-011",
+      "title": "Costela bovina para o almoço de Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-011.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-011-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "f9cca93a-43ff-4f47-8b14-b82a701258d2",
+          "name": "CARNE BOV. COSTELA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 368792,
+      "sha256": "f087671331707d765a92de87cafaf4d819712934d4d268f132f44fabd23ae525",
+      "thumbnailBytes": 59586,
+      "thumbnailSha256": "e7388fabac95e65ceaf19620f4198b59af91a481c7471700e675b8c257f06308",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-012",
+      "title": "Pernil e paleta caprinos para celebrar",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-012.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-012-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "7d06864f-56f3-4b39-b0dd-209c71bc0bc5",
+          "name": "CARNE CAPRINA PERNIL KG"
+        },
+        {
+          "key": "fd60ce86-e8dc-4ffb-bd19-d1455b9a1427",
+          "name": "CARNE CAPRINA PALETA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 415340,
+      "sha256": "f4b924fe66fdfffc1f12f36ca4c1a179c4703e687065975dfff28f0e857ffa62",
+      "thumbnailBytes": 64688,
+      "thumbnailSha256": "38de391db6eab0fe03f7b5aa57158c70c86d0f69df84b88e7d34e2e566354876",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-013",
+      "title": "Sabores caprinos da cozinha de Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-013.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-013-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "abbfc55e-755a-4fcb-b4b3-688b7cdf7239",
+          "name": "CARNE CAPRINA COSTELA KG"
+        },
+        {
+          "key": "c2c06822-3dfe-475d-ad8f-60a8ed1a62dd",
+          "name": "CARNE CAPRINA LOMBO KG"
+        },
+        {
+          "key": "85d8193d-a264-4e1e-bcf4-8440f59dd42c",
+          "name": "CARNE CAPRINA PESCOÇO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 388210,
+      "sha256": "81b23255862415a83bc4db286c0bd4888754481f8ffb03178ca0973c41645ffe",
+      "thumbnailBytes": 60744,
+      "thumbnailSha256": "4e29e364d7e04918ee28b4106c023db9677f1081cf178f2d3b6ee722a3ac131c",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-014",
+      "title": "Pernil e paleta ovinos na ceia",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-014.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-014-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "b7bc56dd-96b1-4ff3-ab81-eee37b8234f4",
+          "name": "CARNE OVINA PERNIL KG"
+        },
+        {
+          "key": "e5883799-0c0b-4ae9-a59b-277649249cbc",
+          "name": "CARNE OVINA PALETA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 376882,
+      "sha256": "954250e83c6e491b2f6767d5beec2a16aba44bde32f7d7453bcbe996e8f39b00",
+      "thumbnailBytes": 60686,
+      "thumbnailSha256": "2f34b97075f17ffaf84905c25197ea9b373396f44e618a3d1200517e9a8affee",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-015",
+      "title": "Cortes ovinos para a cozinha da família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-015.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-015-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "d078512f-4477-481a-a519-d1b797693de6",
+          "name": "CARNE OVINA COSTELA KG"
+        },
+        {
+          "key": "a09bab8f-5224-4395-8a66-bd791511c3ca",
+          "name": "CARNE OVINA LOMBO KG"
+        },
+        {
+          "key": "f9d120ab-dc27-4b29-858e-92fbb403b60c",
+          "name": "CARNE OVINA PESCOÇO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 422896,
+      "sha256": "37b7727e5808b2d552b44d95716e2f59f944b9d6be39d5ae1034588dddc895a8",
+      "thumbnailBytes": 64360,
+      "thumbnailSha256": "6b3a4026ce53cd0669592a2888a483301a771a6fe590a2d99c0ec785e5911940",
+      "nativeWidth": 940,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-016",
+      "title": "Pernil suíno para o Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-016.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-016-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "c25fc2a5-c0d0-444c-bbd7-90d4ba09dc88",
+          "name": "CARNE SUÍNA PERNIL KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 338038,
+      "sha256": "04d3daef1680694829e9bb03317cad6dde187b5d2159c906e5dfa23a3f86361a",
+      "thumbnailBytes": 53728,
+      "thumbnailSha256": "0c47689ec3dcede3b11551d47c2aa55dbe5583bed737fd965f6b5b074e40e282",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-017",
+      "title": "Lombo, copa e paleta suínos",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-017.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-017-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "26b46b69-89b4-4f03-97c0-6111b5d909e2",
+          "name": "CARNE SUÍNA LOMBO KG"
+        },
+        {
+          "key": "c051a845-41bf-493e-9ece-537eb6a466d9",
+          "name": "CARNE SUÍNA COPA LOMBO KG"
+        },
+        {
+          "key": "5467bf64-86ae-4c97-9a00-0a29be7c1f4e",
+          "name": "CARNE SUÍNA PALETA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 384448,
+      "sha256": "67bf54673e510fc44789adc1cb02747fc5514a9d4ca3d60d367737960c77dfe6",
+      "thumbnailBytes": 59264,
+      "thumbnailSha256": "6298c350966a8f1041b9107ce416d353ee8fbd22db72a41ac0d0b7af56322113",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-018",
+      "title": "Cortes suínos para receber bem",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-018.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-018-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "584845c9-878a-4222-bf40-962185d3a1f1",
+          "name": "CARNE SUÍNA BARRIGA KG"
+        },
+        {
+          "key": "9cb60700-7d0e-4d08-a04a-309be7fb61e4",
+          "name": "CARNE SUÍNA CARRÉ KG"
+        },
+        {
+          "key": "22293378-1748-4bf8-9ca2-d1c68dd3e4c9",
+          "name": "CARNE SUÍNA COSTELA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 398780,
+      "sha256": "ffff08063329e71fa5e13ae1a0f643d800836c38351eb80bcda4d4411c4e4b42",
+      "thumbnailBytes": 60242,
+      "thumbnailSha256": "c853fb6444f76dfb95b90ade8d331d42d6f7ea299968c272302a906d9f8f2f92",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-019",
+      "title": "Coxas e sobrecoxas Sadia para a família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-019.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-019-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-coxa-frango",
+          "name": "COXA DE FRANGO CONGELADA SADIA 1 KG"
+        },
+        {
+          "key": "catalogo-acougue-sobrecoxa-frango",
+          "name": "SOBRECOXA DE FRANGO CONGELADA SADIA 1 KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 336248,
+      "sha256": "377459e0b5fc748e38e575fd5fedb9101e53ba904bf070febd7b3afeb8b3a429",
+      "thumbnailBytes": 54480,
+      "thumbnailSha256": "0e8b39369962cfc0fe7dd70b8123103faffd066ee69b40f428e97333f12aee6e",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-020",
+      "title": "Filé de peito para receitas da ceia",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-020.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-020-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-peito-frango",
+          "name": "FILÉ DE PEITO DE FRANGO CONGELADO SADIA 1 KG"
+        },
+        {
+          "key": "f21519ed-462a-4eb3-bc83-3a85b0283cf7",
+          "name": "FILÉ DE PEITO DE FRANGO SUPERFRANGO 1 KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 368924,
+      "sha256": "e0e29c9570b3e7e7f616a38170401f5caa9c3e13888cb93721e6bf373fd04010",
+      "thumbnailBytes": 57468,
+      "thumbnailSha256": "9e008cb3b1a440f1d091e0178e4f8db82f7ee28410967676420c5fe4c4d3607a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-021",
+      "title": "Frango Sadia no centro da preparação",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-021.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-021-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-frango-inteiro-congelado",
+          "name": "FRANGO INTEIRO CONGELADO SEM MIÚDOS SADIA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 278970,
+      "sha256": "ab6d1fd71f010d7d9a0b72685d53f4b334085f57ae25afc07bbfc61f5578b542",
+      "thumbnailBytes": 47974,
+      "thumbnailSha256": "e99f94983e57bed00b9cdb852c5f68976d32b2e11bff11e57fb5bef453d8b7c6",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-022",
+      "title": "Galinha Somave para o almoço em família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-022.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-022-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "31a682a7-242d-4c2e-8ae8-92a85720ecd4",
+          "name": "GALINHA SOMAVE CONGELADA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 341992,
+      "sha256": "6c99b56b2e3840eb62359ad236b551b9f652224e1e70cd793ce39d7c29affac2",
+      "thumbnailBytes": 53544,
+      "thumbnailSha256": "3e374cb90d1557ba4435a4984cbb7524b8388356f2900e870972d9aa50b04964",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-023",
+      "title": "Asas e tulipas para o encontro de Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-023.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-023-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-asa-frango",
+          "name": "MEIO DA ASA DE FRANGO CONGELADO SADIA 1 KG"
+        },
+        {
+          "key": "f83594e7-88a1-4b02-ba90-92555db8e95a",
+          "name": "FRANGO ASA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 335986,
+      "sha256": "ea0bf22ccf053903b5dc5075e80df952d13583474ca0b0476f53d27be81f27d1",
+      "thumbnailBytes": 52056,
+      "thumbnailSha256": "fc7b90e817152e7518fa7794a68adf1c8e144abeb78ac046c6e4ccd32cf2d1f7",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-024",
+      "title": "Cortes de frango para assar",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-024.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-024-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "2fdf6705-d2f9-4a00-8222-d060db5d2624",
+          "name": "FRANGO COXA KG"
+        },
+        {
+          "key": "ca5e6695-ebd9-45f3-9051-61a6a39f37f1",
+          "name": "FRANGO SOBRECOXA KG"
+        },
+        {
+          "key": "fef9e36d-3427-48bd-a97d-ef7e58da5506",
+          "name": "COXA E SOBRECOXA DE FRANGO A GRANEL"
+        }
+      ],
+      "source": "generated",
+      "bytes": 344902,
+      "sha256": "6e155ce3dcd95882c4ae691940f587a4c5bc8b1426752130d7d617e069437c50",
+      "thumbnailBytes": 53644,
+      "thumbnailSha256": "a108188cba3f5688bff9ac8bb3e98a3e08ced5eeae4d282bd6b6bbb0be949f48",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-025",
+      "title": "Peito e dorso na cozinha da casa",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-025.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-025-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "3ea867e5-644b-4c38-9d34-9de46f877bf2",
+          "name": "FRANGO PEITO KG"
+        },
+        {
+          "key": "061478d2-21ea-4885-9022-43b939d16ae7",
+          "name": "FRANGO DORSO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 291710,
+      "sha256": "64f4fdea5ef5d2c648a979e4da5aac65b5986f6ec23a700946339d76285d3a7b",
+      "thumbnailBytes": 47990,
+      "thumbnailSha256": "db49c4391fb3ae04f6e7aa24fc1cb524fb799d51d2c2ff43ca54c8aa3c8a2eca",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-026",
+      "title": "Frango para os preparos da família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-026.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-026-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "212a10c3-fe99-4ed1-8d92-70aa75137794",
+          "name": "PEITO DE FRANGO A GRANEL"
+        },
+        {
+          "key": "4dde9d1c-5ecf-4734-b185-4651a8135f40",
+          "name": "FRANGO PESCOÇO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 333950,
+      "sha256": "4941ac3fb48913d482de0208a071fb2ed5ad6e4666ea91adbdc0d2aa4754e776",
+      "thumbnailBytes": 54832,
+      "thumbnailSha256": "c5c4cafb3cf72b2b83f28f612ee52f74882a0712a793ae3f0b953236264a1407",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-027",
+      "title": "Miúdos de frango para receitas de casa",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-027.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-027-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "8080a994-15dc-40ec-b0b3-0607bf1db250",
+          "name": "FRANGO CORAÇÃO KG"
+        },
+        {
+          "key": "233c691c-6410-4995-8ce4-9a28de1be781",
+          "name": "FRANGO FÍGADO KG"
+        },
+        {
+          "key": "506c5acd-cb5e-4d80-948a-6dd7e0c6b6d1",
+          "name": "FRANGO MOELA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 395034,
+      "sha256": "788a8839fced76a148c1652b6010264e8d08b4fbb773179f5a60dd5e7b4f3289",
+      "thumbnailBytes": 61334,
+      "thumbnailSha256": "825e7d1a8bba33d61674c8db43d6bfd957789b98592b1775e39a6f7f707dc888",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-028",
+      "title": "Bucho e mocotó nos preparos de Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-028.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-028-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "43240b3a-d127-432a-9a89-761617d7583c",
+          "name": "MIÚDO BOV. BUCHO KG"
+        },
+        {
+          "key": "44f3bafe-f9e2-41d4-8638-112bc16dc5d9",
+          "name": "MOCOTÓ BOV. UND"
+        }
+      ],
+      "source": "generated",
+      "bytes": 304426,
+      "sha256": "70b4bdc7748a3a01e4c25b2208c7cb73b8771b7a012962deb47211e444189b04",
+      "thumbnailBytes": 46672,
+      "thumbnailSha256": "c6f23741a88f7f55075837e27292d7ac7d24ce69eb391278e02af3e4a694fcaa",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-029",
+      "title": "Fígado e coração bovinos na cozinha",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-029.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-029-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "7e5e602b-c075-4239-b128-f64cea0b3703",
+          "name": "MIÚDO BOV. FÍGADO KG"
+        },
+        {
+          "key": "f19aefa5-3a2c-4f2c-8e47-3fa8545d3a30",
+          "name": "MIÚDO BOV. CORAÇÃO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 322632,
+      "sha256": "5aebecd0ed97a19338d92724e7fdf53cf205f676154e9407c137bc34f442e54d",
+      "thumbnailBytes": 50954,
+      "thumbnailSha256": "f93ef96fbb86bc2136a56d6ba7202856bc2bf58a6c343865397c836673529cd5",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-030",
+      "title": "Língua e rim bovinos para receitas tradicionais",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-030.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-030-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "8f9b66d2-18da-4509-8620-640a65ed5af5",
+          "name": "MIÚDO BOV. LÍNGUA KG"
+        },
+        {
+          "key": "9f10864d-4318-4e42-a126-249c49f79b13",
+          "name": "MIÚDO BOV. RIM KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 343878,
+      "sha256": "ffebc75dc5554cf00e6346f12e41cfae5d39a6a8f0b820b82dbad510be806ea3",
+      "thumbnailBytes": 50832,
+      "thumbnailSha256": "dcecf989475ed60aa6ccaf3d3bc3768eabf8f7802e02249526e80512e27cfbc6",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-031",
+      "title": "Frios para a mesa de Natal",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-031.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-031-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "10576dc6-eed0-4968-9056-1d36758c21da",
+          "name": "LANCHE FRIELLA"
+        },
+        {
+          "key": "reviewed-product-a95b2be197ccbfecb02f2c93",
+          "name": "PRESUNTO FATIADO"
+        }
+      ],
+      "source": "generated",
+      "bytes": 342088,
+      "sha256": "7e3dd2140405dcc608b8af825cf5f9d382e5b8abeeca755a6054ed1049ee530e",
+      "thumbnailBytes": 55276,
+      "thumbnailSha256": "5de0c30490938b92751f074562b8084361700e991415649588c4e08f1897f235",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-032",
+      "title": "Cachorro-quente para compartilhar",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-032.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-032-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-e07d3261441177e6e4174ecf",
+          "name": "SALSICHA HOT DOG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 348526,
+      "sha256": "fe850336a49568c73d01d6d0c0503d3c7a794470560a29a7d9325baeb10e95ce",
+      "thumbnailBytes": 53024,
+      "thumbnailSha256": "d37cc1de94fa3a50cf75454b579186164a2442eecaf094e94927922c6f4fbda2",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-033",
+      "title": "Perdigão no lanche da família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-033.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-033-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "3df90b3b-acc0-4b8b-b933-e57737d19b50",
+          "name": "SALSICHA HOT DOG PERDIGÃO"
+        }
+      ],
+      "source": "generated",
+      "bytes": 357428,
+      "sha256": "2e2343f3ff41a6aef2f8dceadc0dbf458f4e76f4621e7544dd8feacfbe7f44f4",
+      "thumbnailBytes": 57712,
+      "thumbnailSha256": "4cef24281b03ba050a316349f6754170278e8865b68bd6093837ecc7095a98bd",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-034",
+      "title": "Lanche com steak Sadia",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-034.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-034-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "989c6cca-27de-43cd-bebf-2f65fb60d261",
+          "name": "STEAK EMPANADO DE FRANGO SADIA 100 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 387262,
+      "sha256": "b7e10efea4534776ccc9496892b19e8a2cc83a2649b64f14d3c61ce4d003ac72",
+      "thumbnailBytes": 61608,
+      "thumbnailSha256": "4aca5262768757f7adb5d3dc89d867778fdb5d7fa2a48cbb23625eb026557a87",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-035",
+      "title": "Seleção Friboi para o encontro na varanda",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-035.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-035-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-acougue-picanha",
+          "name": "PICANHA BOVINA FRIBOI RESERVA"
+        },
+        {
+          "key": "catalogo-acougue-contrafile",
+          "name": "CONTRAFILÉ BOVINO FRIBOI RESERVA"
+        },
+        {
+          "key": "catalogo-acougue-alcatra",
+          "name": "ALCATRA COM MAMINHA FRIBOI RESERVA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 409004,
+      "sha256": "132de15501d4c1b897aece31f8cfa31c4819de5ff87bdaba85197ea661de3302",
+      "thumbnailBytes": 61262,
+      "thumbnailSha256": "2ea91b730574b82ee6191ba17135e61fe9d00537323099bc141ebf4f61880d4f",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-036",
+      "title": "Quatro escolhas suínas para a ceia",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-036.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-036-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "c25fc2a5-c0d0-444c-bbd7-90d4ba09dc88",
+          "name": "CARNE SUÍNA PERNIL KG"
+        },
+        {
+          "key": "26b46b69-89b4-4f03-97c0-6111b5d909e2",
+          "name": "CARNE SUÍNA LOMBO KG"
+        },
+        {
+          "key": "22293378-1748-4bf8-9ca2-d1c68dd3e4c9",
+          "name": "CARNE SUÍNA COSTELA KG"
+        },
+        {
+          "key": "584845c9-878a-4222-bf40-962185d3a1f1",
+          "name": "CARNE SUÍNA BARRIGA KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 436166,
+      "sha256": "dc9f04ba780351bf9ebe6f8d34de900eb1a9460c0c7b3f69a1182745d1528be7",
+      "thumbnailBytes": 65062,
+      "thumbnailSha256": "bf5e24fb9c979ab0a0db0187195d72f8ce4de905931c4c73a53bd776e92df092",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-037",
+      "title": "Coxão mole para receitas da família",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-037.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-037-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "bab262ff-a672-4c49-abf7-67083115db5e",
+          "name": "CARNE BOV. COXÃO MOLE KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 354454,
+      "sha256": "0db264e4b350fbeb83d1413dae9ab97087fb550a9ac1988ef98ef1ea39581400",
+      "thumbnailBytes": 54550,
+      "thumbnailSha256": "a30fe274d81117d532a95390bccb109d22a10a8d61833beb2274a39f3ce2c09b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-acougue-038",
+      "title": "Patinho no preparo da ceia",
+      "theme": "natal",
+      "collection": "acougue",
+      "src": "./assets/encartes/galeria/natal/acougue/natal26-acougue-038.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/acougue/natal26-acougue-038-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "118a7510-961a-4bf7-a67a-8abdf4749f5f",
+          "name": "CARNE BOV. PATINHO KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 381682,
+      "sha256": "1e55a8735b6d0f6552b9054160f4ba21a332c9903076d61ef2624b78786800a7",
+      "thumbnailBytes": 55798,
+      "thumbnailSha256": "6d244a9eed992dcb1ca426ff7e0ece8786ad95f107e58f6cbc90d4fc5b27a856",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-001",
+      "title": "Café com biscoito e manteiga",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "f09e48bf-cda0-498f-b231-3ecba280addd",
+          "name": "CAFÉ TORRADO E MOÍDO MARATÁ TRADICIONAL 250 G"
+        },
+        {
+          "key": "39cd1465-d02c-4870-b7ba-9a72f3043709",
+          "name": "BISCOITO CREAM CRACKER PILAR PREMIUM 350 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-manteiga-com-sal-piracanjuba-200g",
+          "name": "MANTEIGA COM SAL PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 426802,
+      "sha256": "b0a89ad560bfe4a34b3a6b2ec4bdc4841370c35d2df4616fd4f4b0fffe806d16",
+      "thumbnailBytes": 65536,
+      "thumbnailSha256": "dd819f00a472c78c5ec047ec561ba7d435be340d2662c968e75f4014402faf82",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-002",
+      "title": "Três jeitos de preparar o café",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "99190026-2ce0-4cdb-ab69-f40a185d0d89",
+          "name": "CAFÉ SOLÚVEL NESCAFÉ MATINAL SUAVE SACHÊ 40 G"
+        },
+        {
+          "key": "ec64c87d-793b-4c03-ab86-ba0d661b3203",
+          "name": "CAFÉ SOLÚVEL NESCAFÉ ORIGINAL EXTRA FORTE SACHÊ 40 G"
+        },
+        {
+          "key": "030d03ce-7ab9-4dca-8ec5-2f7c7fd1c090",
+          "name": "CAFÉ SOLÚVEL NESCAFÉ TRADIÇÃO FORTE SACHÊ 40 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 382658,
+      "sha256": "ae3da6d30f549fd061456f2080326f0de7d50973cf2b999ea766dedff051faba",
+      "thumbnailBytes": 57322,
+      "thumbnailSha256": "78977eac4ce1b4471ef39f3d17e2efdb8e76815c366a0e6a56935d3545907d2b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-003",
+      "title": "Café com leite na manhã de Natal",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "99190026-2ce0-4cdb-ab69-f40a185d0d89",
+          "name": "CAFÉ SOLÚVEL NESCAFÉ MATINAL SUAVE SACHÊ 40 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-semidesnatado-piracanjuba-1l",
+          "name": "LEITE SEMIDESNATADO PIRACANJUBA 1L"
+        },
+        {
+          "key": "catalogo-pindorama-acucar-demerara-400g",
+          "name": "AÇÚCAR DEMERARA PINDORAMA 400G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 340018,
+      "sha256": "49bef58cf582b72e1697648e33862db08aa273ad5ddef8cf38dda542f052d786",
+      "thumbnailBytes": 52982,
+      "thumbnailSha256": "6f2daf57ec5d5ffb845756389be8d38a1c5e7ae858aaccacf7da8ea67b93835d",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-004",
+      "title": "Cuscuz, manteiga e queijo de coalho",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "45c8e554-b31b-4c59-9de4-e13a1ba29873",
+          "name": "FLOCÃO DE MILHO PINDORAMA 400 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-queijo-de-coalho-piracanjuba-700g",
+          "name": "QUEIJO DE COALHO PIRACANJUBA 700G"
+        },
+        {
+          "key": "catalogo-piracanjuba-manteiga-com-sal-piracanjuba-500g",
+          "name": "MANTEIGA COM SAL PIRACANJUBA 500G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 427526,
+      "sha256": "91645a5ae3e874edbc9cbdfa3147b4f4fd73ea971cb04cae5ceeecdd2d0afd7a",
+      "thumbnailBytes": 62210,
+      "thumbnailSha256": "83133a26b928bdb3f39a3e073d6df4972b9408cdda940afa35defae8d9b021dd",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-005",
+      "title": "Cuscuz no café da família",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-005.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-005-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-65cfa42cebf73ce3d07e2954",
+          "name": "FLOCÃO DE MILHO MARATÁ 500 G"
+        },
+        {
+          "key": "reviewed-product-c3af1da6274a757edd8e3f1c",
+          "name": "LEITE UHT INTEGRAL BETÂNIA 1 L"
+        }
+      ],
+      "source": "generated",
+      "bytes": 413532,
+      "sha256": "c38a928787647df47cb32e68330505d8d26d2e30db017e13178d7c269dd1662b",
+      "thumbnailBytes": 63694,
+      "thumbnailSha256": "2f40e18acda89cac81dbea9f7da11190d8df64c332abe1eebb6e7b46b6ebe01a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-006",
+      "title": "Biscoito integral e leite quentinho",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-006.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-006-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-cream-cracker-integral-367-5g",
+          "name": "BISCOITO VITARELLA CREAM CRACKER INTEGRAL 367,5 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-em-po-integral-instantaneo-piracanjuba-200g",
+          "name": "LEITE EM PÓ INTEGRAL INSTANTÂNEO PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 406362,
+      "sha256": "673a3354fb8539ee7acbabfb7124705196910c6ce70219e28eafe53d94bdbe5a",
+      "thumbnailBytes": 60346,
+      "thumbnailSha256": "6f2cf1a1759301799da3d9453fb4660169f189752375f82d91ef64ed5b495b6f",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-007",
+      "title": "Café da manhã com cuidado",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-007.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-007-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-cream-cracker-tradicional-350g",
+          "name": "BISCOITO VITARELLA CREAM CRACKER TRADICIONAL 350 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-manteiga-sem-sal-piracanjuba-200g",
+          "name": "MANTEIGA SEM SAL PIRACANJUBA 200G"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-em-po-integral-piracanjuba-200g",
+          "name": "LEITE EM PÓ INTEGRAL PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 437154,
+      "sha256": "fef606bad2a577fba354ab39cec364dfdd78d2846d4fc8089bcd6e6c2ecb5fe4",
+      "thumbnailBytes": 62464,
+      "thumbnailSha256": "7ad2f8d3c4b34abd1175aa3c8a232b31a7a8dab1600d14e664bbb2b1a70acdfc",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-008",
+      "title": "Torradas e café recém-passado",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-008.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-008-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-torrada-tradicional-142g",
+          "name": "TORRADA VITARELLA TRADICIONAL 142 G"
+        },
+        {
+          "key": "f09e48bf-cda0-498f-b231-3ecba280addd",
+          "name": "CAFÉ TORRADO E MOÍDO MARATÁ TRADICIONAL 250 G"
+        },
+        {
+          "key": "catalogo-pindorama-acucar-demerara-1kg",
+          "name": "AÇÚCAR DEMERARA PINDORAMA 1KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 467582,
+      "sha256": "07c95c94e339c2aaed7e37abae0379bd80453820d30421e4f2ca880bfc9a9280",
+      "thumbnailBytes": 64998,
+      "thumbnailSha256": "0bff09557f8d56d03f65134c6dd88b67c8055b36a1665f94281fd4a2e3c293b0",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-009",
+      "title": "Bono para compartilhar",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-009.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-009-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "ff7bb79f-de99-49b4-8e25-5bff717f7502",
+          "name": "BISCOITO RECHEADO NESTLÉ BONO CHOCOLATE 90G"
+        },
+        {
+          "key": "afc266e8-dd94-45e2-8ce7-2e04a3cc16eb",
+          "name": "BISCOITO RECHEADO NESTLÉ BONO DOCE DE LEITE 90G"
+        },
+        {
+          "key": "0f3d3550-cbf4-44c7-a832-aaa9aa9122ed",
+          "name": "BISCOITO RECHEADO NESTLÉ BONO COCO 90G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 389706,
+      "sha256": "7b163f2aa4e9ff0d83500c567d9bd6b880710f3743823f59a9a1649755c4da08",
+      "thumbnailBytes": 63642,
+      "thumbnailSha256": "df0a8064b6893c9823a711b37a2a92f71138b5dc6d82e78a213e6a016b527835",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-010",
+      "title": "Bono com sabores diferentes",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-010.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-010-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "b2eefcde-9b4a-4745-88c4-e7a32a1695cb",
+          "name": "BISCOITO RECHEADO NESTLÉ BONO LIMÃO 90G"
+        },
+        {
+          "key": "c77326d3-8ef5-4a73-957d-ac93d10b8fcc",
+          "name": "BISCOITO RECHEADO NESTLÉ BONO MORANGO 90G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 345094,
+      "sha256": "fb47908c08f9c4cd4a3ec556fe961d560a8ca072ffbe52211e746f793204c3f6",
+      "thumbnailBytes": 57798,
+      "thumbnailSha256": "5591a948b3e951db908167c3a939c4f37e2fc22cc4dbf15f7da75d18f65d2634",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-011",
+      "title": "Negresco e leite gelado",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-011.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-011-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "94869dc4-3bfe-44ca-b450-f174e945fbf4",
+          "name": "BISCOITO RECHEADO NESTLÉ NEGRESCO ORIGINAL 90G"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-integral-piracanjuba-1l",
+          "name": "LEITE INTEGRAL PIRACANJUBA 1L"
+        }
+      ],
+      "source": "generated",
+      "bytes": 363854,
+      "sha256": "539e09f547659ac4280b7d34b36cdc06bc1cc37e9a877c792c505c42d0801302",
+      "thumbnailBytes": 57498,
+      "thumbnailSha256": "6b0eb081ea5c8b901d96f2e0c907e8c7d1ac2a415177c1ba86ae04e51f099461",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-012",
+      "title": "Treloso no lanche de Natal",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-012.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-012-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-treloso-biscoito-recheado-sabor-chocolate-120g",
+          "name": "BISCOITO VITARELLA TRELOSO RECHEADO SABOR CHOCOLATE 120 G"
+        },
+        {
+          "key": "catalogo-vitarella-treloso-biscoito-recheado-sabor-morango-120g",
+          "name": "BISCOITO VITARELLA TRELOSO RECHEADO SABOR MORANGO 120 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 424854,
+      "sha256": "819c73064b0605e30d40abbd2bda6942f76d8f25d3335d8fa9b2535aae421c16",
+      "thumbnailBytes": 61920,
+      "thumbnailSha256": "a580e3326deaffe06602348c08773b5c628af568d76e8b500fc94d33a0d49508",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-013",
+      "title": "Bolinhos com chocolate",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-013.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-013-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-115cbcea78d260bf50346e17",
+          "name": "BOLINHO BAUDUCCO BAUNILHA COM CHOCOLATE 40 G"
+        },
+        {
+          "key": "reviewed-product-7c8b860bf170fd0f6d41ff73",
+          "name": "BOLINHO BAUDUCCO CHOCOLATE COM BAUNILHA 40 G"
+        },
+        {
+          "key": "reviewed-product-3857362f14ea71a5add9d38b",
+          "name": "BOLINHO BAUDUCCO DUPLO CHOCOLATE 40 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 375542,
+      "sha256": "48a81ab40c112d2ec9c4ba44b8d8660b3408544d2bab51d83d0d4df628798fce",
+      "thumbnailBytes": 58848,
+      "thumbnailSha256": "dd8ec262e16f8d8dbdda11889729064807946f36371f08606091f10a9f2f38ec",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-014",
+      "title": "Bolinhos para a tarde em família",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-014.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-014-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-0a4b52f172b85dc076fddb43",
+          "name": "BOLINHO BAUDUCCO GOTAS DE CHOCOLATE 40 G"
+        },
+        {
+          "key": "reviewed-product-f139fbbfb064ea1e63e39789",
+          "name": "BOLINHO BAUDUCCO LARANJA 40 G"
+        },
+        {
+          "key": "reviewed-product-83253e405b30054ad131eca1",
+          "name": "BOLINHO BAUDUCCO MORANGO 40 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 402550,
+      "sha256": "a66479853dbcfae73a8c6bac41eb6cebcd39f2e56d3c2f4e2b865921f997d509",
+      "thumbnailBytes": 63896,
+      "thumbnailSha256": "f3ab6ddb2b4a015299b70fb1ed0f006587ff6f7e8cbb575de54e8f3d3d70d532",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-015",
+      "title": "Wafers na mesa de doces",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-015.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-015-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-vitarella-wafer-chocolate-80g",
+          "name": "WAFER VITARELLA CHOCOLATE 80 G"
+        },
+        {
+          "key": "catalogo-vitarella-vitarella-wafer-morango-80g",
+          "name": "WAFER VITARELLA MORANGO 80 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 428400,
+      "sha256": "2a09608335b17ff7b4bf57a97194ce84ac31c9079381806755f361f73176c0d9",
+      "thumbnailBytes": 62218,
+      "thumbnailSha256": "132372967fa8237543e60e1411bc9cff467470d1ba3c796baeb47ae6ca9cef81",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-016",
+      "title": "Bombons para celebrar juntos",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-016.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-016-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 333342,
+      "sha256": "f72c1875f28c0f323f80cc12d33e5132e42f9e005c366d57bde6c94a1445ebf6",
+      "thumbnailBytes": 53142,
+      "thumbnailSha256": "024653d13f7fe32d1acd9cecc44a58725af49a70d2c8275b4524b4555e8a0696",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-017",
+      "title": "Pavê na travessa da família",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-017.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-017-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-maizena-tradicional-350g",
+          "name": "BISCOITO VITARELLA MAIZENA TRADICIONAL 350 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-condensado-semidesnatado-piracanjuba-395g",
+          "name": "LEITE CONDENSADO SEMIDESNATADO PIRACANJUBA 395G"
+        },
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-leve-piracanjuba-200g",
+          "name": "CREME DE LEITE LEVE PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 434148,
+      "sha256": "ddfff0bb07e54870978e1f0971cc01064686140c9e9ca3b89a96092584422991",
+      "thumbnailBytes": 64726,
+      "thumbnailSha256": "30cf8d3c9b2f84490a9123a466c9948fa29573f3af9d781dbcffb41fd33832a6",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-018",
+      "title": "Sobremesa com biscoito Maria",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-018.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-018-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-maria-tradicional-350g",
+          "name": "BISCOITO VITARELLA MARIA TRADICIONAL 350 G"
+        },
+        {
+          "key": "reviewed-product-6bd56c67f5fae6bf02d934ad",
+          "name": "LEITE CONDENSADO SEMIDESNATADO ITALAC 395 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-leve-piracanjuba-200g",
+          "name": "CREME DE LEITE LEVE PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 384866,
+      "sha256": "b89d136c57be433bafb5f1b4bddce9589ed76436136ae79d3b58a7d5335da0b5",
+      "thumbnailBytes": 59502,
+      "thumbnailSha256": "0f5ebc037f3d0a416c0ceab04c199a13d9cbd58998cd9cfee563d285dcb507aa",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-019",
+      "title": "Ingredientes zero lactose para sobremesas",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-019.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-019-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-piracanjuba-zero-lactose-200g",
+          "name": "CREME DE LEITE PIRACANJUBA ZERO LACTOSE 200G"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-condensado-piracanjuba-zero-lactose-395g",
+          "name": "LEITE CONDENSADO PIRACANJUBA ZERO LACTOSE 395G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 301192,
+      "sha256": "934341254821afcdf225048e4bb4e159e5ba77b8ab464e9f4f205d9326701797",
+      "thumbnailBytes": 48542,
+      "thumbnailSha256": "e243b34165041648dcb25cdf609fe9cebcdf8571cb3a9bab4acd3a196b52ab45",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-020",
+      "title": "Creme e leite em pó na cozinha",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-020.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-020-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-leve-piracanjuba-200g",
+          "name": "CREME DE LEITE LEVE PIRACANJUBA 200G"
+        },
+        {
+          "key": "reviewed-product-4f4723ee74e497c87d9ac240",
+          "name": "LEITE EM PÓ INTEGRAL LA SERENISSIMA 200 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 339832,
+      "sha256": "764c014a461c2bc35503695a12f2c8d9c78e171b9f0095d96ae7137d526fdf3e",
+      "thumbnailBytes": 54444,
+      "thumbnailSha256": "467548c864db04d550c2d14226e142a1c330250c48024e12e723a49b50cc6c21",
+      "nativeWidth": 940,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-021",
+      "title": "Coco na sobremesa da ceia",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-021.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-021-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-pindorama-leite-coco-cocao-200ml",
+          "name": "LEITE DE COCO COCÃO PINDORAMA 200ML"
+        },
+        {
+          "key": "catalogo-piracanjuba-leite-condensado-semidesnatado-piracanjuba-395g",
+          "name": "LEITE CONDENSADO SEMIDESNATADO PIRACANJUBA 395G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 346836,
+      "sha256": "9a920110000e8983cf6416fe849709806e11fa269176aef029b9e7fcde2559c4",
+      "thumbnailBytes": 55568,
+      "thumbnailSha256": "28f316b6e820a7c2e318c2487fb570ad3428de9f1e94ca37ba30f46d9b5ae0ca",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-022",
+      "title": "Bolo feito para receber",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-022.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-022-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "defcf8a1-792c-488f-9e34-72ca1880bc8d",
+          "name": "AÇÚCAR CRISTAL NOTA 10 1 KG"
+        },
+        {
+          "key": "b92adc21-bfd1-4217-b32f-bae50ba25de2",
+          "name": "OVOS BRANCOS DE GRANJA — CARTELA COM 30 UNIDADES"
+        },
+        {
+          "key": "reviewed-product-7da355b82af10255d237b32d",
+          "name": "ÓLEO DE SOJA SOYA PET 900 ML"
+        },
+        {
+          "key": "catalogo-piracanjuba-manteiga-sem-sal-piracanjuba-200g",
+          "name": "MANTEIGA SEM SAL PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 377088,
+      "sha256": "6dbb2dd0e9b906c1bfe1156c692db45f7a34a551aed2c47434d8b1f3303ed2c6",
+      "thumbnailBytes": 60676,
+      "thumbnailSha256": "f828463e01a97fc2b9e9ec21b91b3129c8832287874744b3cb1c76760d77d89a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-023",
+      "title": "Arroz-doce na mesa de Natal",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-023.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-023-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-pindorama-acucar-cristal-1kg",
+          "name": "AÇÚCAR CRISTAL PINDORAMA 1KG"
+        },
+        {
+          "key": "reviewed-product-4f4723ee74e497c87d9ac240",
+          "name": "LEITE EM PÓ INTEGRAL LA SERENISSIMA 200 G"
+        },
+        {
+          "key": "reviewed-product-1eec1ccd95cdb15892462c45",
+          "name": "ARROZ BRANCO TIA GRAÇA 1 KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 443708,
+      "sha256": "78363e18dc31bae7ef58ef6ef08730ec643d856bce705aaa7c85c955820de009",
+      "thumbnailBytes": 64388,
+      "thumbnailSha256": "fb6a3857014077fce437b87a35fb3e400f6befa74ad8fff21fd69ab6d7886120",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-024",
+      "title": "Bolo simples, mesa caprichada",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-024.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-024-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-554776e6169e9658d1ce91f9",
+          "name": "AÇÚCAR CRISTAL TAQUARI 1KG"
+        },
+        {
+          "key": "reviewed-product-7da355b82af10255d237b32d",
+          "name": "ÓLEO DE SOJA SOYA PET 900 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 395522,
+      "sha256": "5c583c6755f2e8aa74ee2548ad152ef08673d702df8b29ac4704d48d7d3624af",
+      "thumbnailBytes": 60146,
+      "thumbnailSha256": "b48ce4b03000188e0d281b4e0a220063088417c700211cb0b284c78052e87f2a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-025",
+      "title": "Arroz e feijão para reunir",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-025.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-025-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-1eec1ccd95cdb15892462c45",
+          "name": "ARROZ BRANCO TIA GRAÇA 1 KG"
+        },
+        {
+          "key": "a3626fe5-4d43-4f0b-a1c4-8661defe8680",
+          "name": "FEIJÃO CARIOCA MEU FEIJÃO TIPO 2 1 KG"
+        },
+        {
+          "key": "reviewed-product-7da355b82af10255d237b32d",
+          "name": "ÓLEO DE SOJA SOYA PET 900 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 438314,
+      "sha256": "4157134734ccddd1c4a1649e823da8fb53b5c9c9739a7fa3bedfaa36dcffdbd1",
+      "thumbnailBytes": 66094,
+      "thumbnailSha256": "fea76f2aec7881ec9ccd559a04233bd8d43265bb3cd22167b0622ade74b8e6c7",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-026",
+      "title": "Arroz soltinho para a ceia",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-026.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-026-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "a7af4b86-39cd-4f2c-80d1-3c36c390c95f",
+          "name": "ARROZ PARBOILIZADO SEPÉ TIPO 1 1 KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 355444,
+      "sha256": "d3dda103f1f8ce1b2b7d8378e688292fc898187fa40006141a2e47a5fd31a35a",
+      "thumbnailBytes": 57408,
+      "thumbnailSha256": "4cbd8db2a8a0a9c93fcb31cf425e21f44172a8a48543d9f29589b0f7cdb9b84a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-027",
+      "title": "O almoço da família",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-027.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-027-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-dd8578bc814fa6957e9d1def",
+          "name": "FEIJÃO CARIOCA NOTA 10 ESPECIAL TIPO 1 1KG"
+        },
+        {
+          "key": "reviewed-product-1eec1ccd95cdb15892462c45",
+          "name": "ARROZ BRANCO TIA GRAÇA 1 KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 390792,
+      "sha256": "c7c5bf299e6874f5a449f33b206858440d1ee076b9a6cb438264f54a53b6dcce",
+      "thumbnailBytes": 60998,
+      "thumbnailSha256": "10f7e6507f27fb7758146a13f8bf75c5d879041a4a0ecb0a64a35e3843d7b952",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-028",
+      "title": "Fradinho e queijo na mesa",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-028.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-028-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-c31c079b013f9cc2a9360297",
+          "name": "FEIJÃO FRADINHO NOTA 10 TIPO 1 1KG"
+        },
+        {
+          "key": "catalogo-piracanjuba-queijo-de-coalho-piracanjuba-700g",
+          "name": "QUEIJO DE COALHO PIRACANJUBA 700G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 402192,
+      "sha256": "d607d45c8abac839a30f228951e92a6f0e08eaa24474cfb504134c5734403135",
+      "thumbnailBytes": 62788,
+      "thumbnailSha256": "1d709ffd652597bdb9b1d20eaa5374d1bfd396ebc8fdf2db7f17510063aa9fe0",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-029",
+      "title": "Lanche preparado em casa",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-029.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-029-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-5e6da8573e8b6ac6e23abafa",
+          "name": "KETCHUP TRADICIONAL PALMEIRON TETRA PAK 300 G"
+        },
+        {
+          "key": "reviewed-product-71ceb5bcc4e3da9ea06756f1",
+          "name": "MOLHO DE TOMATE TRADICIONAL MARATÁ 300 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 423308,
+      "sha256": "8062044ca3b95ad98885cb5a2b3da7b87ee0246c5d00b97212e2a2839a07873a",
+      "thumbnailBytes": 65144,
+      "thumbnailSha256": "6eb1a3df717a1070b02980a2e2fc00d04fb0ce14f5036eeab04569c8ebf11267",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-030",
+      "title": "Espaguete com molho da casa",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-030.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-030-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "eae36436-a700-4d2c-9917-13ff6aab12da",
+          "name": "MACARRÃO ESPAGUETE PETYAN 400 G"
+        },
+        {
+          "key": "reviewed-product-71ceb5bcc4e3da9ea06756f1",
+          "name": "MOLHO DE TOMATE TRADICIONAL MARATÁ 300 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 427136,
+      "sha256": "1215a6a60b4d3d779987a2d34ec20c73078e79b9e9189efc7650c8cd67fd2d05",
+      "thumbnailBytes": 65234,
+      "thumbnailSha256": "3af878fd3cb903ea4e4c65090f61c83f514be9ee2102e3a7fae688ae8fa0781e",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-031",
+      "title": "Espaguete cremoso para compartilhar",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-031.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-031-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-vitarella-espaguete-com-ovos-500g",
+          "name": "MACARRÃO VITARELLA ESPAGUETE COM OVOS 500 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-leve-piracanjuba-200g",
+          "name": "CREME DE LEITE LEVE PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 354282,
+      "sha256": "28abe97268de552bb9d77ee637e2c503d65b2276c29b6d40df81058d0657e054",
+      "thumbnailBytes": 58116,
+      "thumbnailSha256": "fc0021aec90f70d8dc39fe54a5d6f2c46441b0b8d50a157366fe211b65fca0de",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-032",
+      "title": "Massa fina com molho de tomate",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-032.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-032-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-vitarella-espaguete-fino-400g",
+          "name": "MACARRÃO VITARELLA ESPAGUETE FINO 400 G"
+        },
+        {
+          "key": "reviewed-product-71ceb5bcc4e3da9ea06756f1",
+          "name": "MOLHO DE TOMATE TRADICIONAL MARATÁ 300 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 365940,
+      "sha256": "6d42673e3ab92b7ff8ae6c06e27bd6a517408fbc24f63fe2d9e220029001cf23",
+      "thumbnailBytes": 60060,
+      "thumbnailSha256": "9a58e1e0f2e4a01e26f2b89872fb8f2ff97da60199b2a9c8e6ad7ccb9a40b9a3",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-033",
+      "title": "Parafuso na travessa",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-033.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-033-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-vitarella-parafuso-com-ovos-500g",
+          "name": "MACARRÃO VITARELLA PARAFUSO COM OVOS 500 G"
+        },
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-leve-piracanjuba-200g",
+          "name": "CREME DE LEITE LEVE PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 384294,
+      "sha256": "4e6a66311e4e28e2587fb397354093e95479167f28969df79b4a69d161250c53",
+      "thumbnailBytes": 61810,
+      "thumbnailSha256": "848713dde1b46a79806bcd905d015260672b8a3e191198572a52a59933840f2a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-034",
+      "title": "Penne no jantar em família",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-034.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-alimentos-034-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-vitarella-penne-com-ovos-500g",
+          "name": "MACARRÃO VITARELLA PENNE COM OVOS 500 G"
+        },
+        {
+          "key": "reviewed-product-71ceb5bcc4e3da9ea06756f1",
+          "name": "MOLHO DE TOMATE TRADICIONAL MARATÁ 300 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 384026,
+      "sha256": "756bcf65367ce342f7e32cf9870ddfbadcc90feb8bc7b6714333643d0a1162d2",
+      "thumbnailBytes": 61040,
+      "thumbnailSha256": "761503a5c4b8becd9a613544c795c83ce491cac2ebebd976a4fd053a303cc7c0",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-035",
+      "title": "Uma pausa rápida na cozinha",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-035.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-035-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-vitarella-vitarella-lamen-carne-743g",
+          "name": "LÁMEN VITARELLA CARNE 74,3 G"
+        },
+        {
+          "key": "catalogo-vitarella-vitarella-lamen-galinha-743g",
+          "name": "LÁMEN VITARELLA GALINHA 74,3 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 398390,
+      "sha256": "1ac8369d6ea1bb4ced8d43b3d45af0a9ce910097e4d66361c27c384c4901d65b",
+      "thumbnailBytes": 60148,
+      "thumbnailSha256": "2a43072d5136ee957acf1a9d2fd27f8ac74e1f97308f99db125773bc5e6c2135",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-036",
+      "title": "Lámen Maratá: carne e costela",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-036.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-036-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "83ed7154-a6c3-4580-bcd2-d3c421fe9dfa",
+          "name": "MACARRÃO INSTANTÂNEO MARATÁ LÁMEN COSTELA 74 G"
+        },
+        {
+          "key": "4a5b65ee-666c-4aaf-8bd5-d39bf7b07259",
+          "name": "MACARRÃO INSTANTÂNEO MARATÁ LÁMEN SABOR CARNE 74 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 365136,
+      "sha256": "8a06c43a9ff447b10cac7bc7c298fc9343fe8417c14c31961e7ae97202f8ca4d",
+      "thumbnailBytes": 56248,
+      "thumbnailSha256": "153bf43b6b435cf62e5acf2522aef9e1419dab74860e4bf1bc61e57c1e40df7a",
+      "nativeWidth": 940,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-037",
+      "title": "Lámen Maratá: galinha e caipira",
+      "theme": "natal",
+      "collection": "cozinha",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-037.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-alimentos-037-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "bba2a207-a570-4cf4-a1d0-ab782ab6a9fb",
+          "name": "MACARRÃO INSTANTÂNEO MARATÁ LÁMEN SABOR GALINHA 74 G"
+        },
+        {
+          "key": "30f399dc-7f3b-410a-8989-c6009b5baff0",
+          "name": "MACARRÃO INSTANTÂNEO MARATÁ LÁMEN SABOR GALINHA CAIPIRA 74 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 437616,
+      "sha256": "bcbdde3cff64876bdba91f74e728d5250c33b32d72b3e635e1e05836a24613e4",
+      "thumbnailBytes": 64266,
+      "thumbnailSha256": "c2b74a0a73250172e2af81634ff0ce891d6f4afbcc39a5ac126ada9c8e03d687",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-038",
+      "title": "Mucilon na despensa da família",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-038.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-038-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "208b693c-a3cc-4c47-9129-e22bff4826e7",
+          "name": "CEREAL INFANTIL NESTLÉ MUCILON ARROZ E AVEIA 180G"
+        },
+        {
+          "key": "98871870-24f1-4a20-a659-711ea7430596",
+          "name": "CEREAL INFANTIL NESTLÉ MUCILON MULTICEREAIS 180G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 391910,
+      "sha256": "ef489f3b745df6a2ba1359ff415c8b6bb850f6c74357c9bf5d8d315ba393d683",
+      "thumbnailBytes": 56642,
+      "thumbnailSha256": "da704f9b2e3f677a734644f6ed0f2bc7d20e0a0057d393f776a8704a01ed9944",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-039",
+      "title": "Docinhos para compartilhar",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-alimentos-039.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-alimentos-039-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-4f4723ee74e497c87d9ac240",
+          "name": "LEITE EM PÓ INTEGRAL LA SERENISSIMA 200 G"
+        },
+        {
+          "key": "reviewed-product-6bd56c67f5fae6bf02d934ad",
+          "name": "LEITE CONDENSADO SEMIDESNATADO ITALAC 395 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 329146,
+      "sha256": "a77c27b9b7a2fa494bc5a48cc7c437e072dbd3c39f37fc99ae02e04152a788ab",
+      "thumbnailBytes": 55322,
+      "thumbnailSha256": "b3cc327e70f05763bc907d048ca9e052bc4aaff03c7e1ee62cda332e61fb3d43",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-alimentos-040",
+      "title": "Café passado, pão e Natal",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-040.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-alimentos-040-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "f09e48bf-cda0-498f-b231-3ecba280addd",
+          "name": "CAFÉ TORRADO E MOÍDO MARATÁ TRADICIONAL 250 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 338778,
+      "sha256": "b6a5d1d893630c9383ec02c0eb52c7f957903f07752a4c7bdac27849418deab7",
+      "thumbnailBytes": 51272,
+      "thumbnailSha256": "351fe4473ec227e8d2ba4622519d38ae91eff20f9fd9b1d223e5d9faa91d7191",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bebidas-001",
+      "title": "Quatro opções para receber os amigos",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-f9c2403e8671b3d0835a86c9",
+          "name": "CERVEJA SKOL PILSEN LATA 350 ML"
+        },
+        {
+          "key": "reviewed-product-40f65b6c621763e4c66a9e66",
+          "name": "CERVEJA AMSTEL LAGER PURO MALTE LATA 350 ML"
+        },
+        {
+          "key": "reviewed-product-bef3519e4a5bba2771a8d759",
+          "name": "CERVEJA BRAHMA CHOPP LATA 350 ML"
+        },
+        {
+          "key": "reviewed-product-1a1f68cf9021852232992d99",
+          "name": "CERVEJA ITAIPAVA PILSEN LATA 350 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 373532,
+      "sha256": "698bfa6da0a720507a9dbb33b8efaaac9928a40bb2a38887d454e48e15bbde76",
+      "thumbnailBytes": 56336,
+      "thumbnailSha256": "310f058212be100fba723e2a9141eada4765434b3895f87a160f4e45a456b8ad",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bebidas-002",
+      "title": "Long necks para o encontro de Natal",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-154585ca7c448d40a801f8ce",
+          "name": "CERVEJA HEINEKEN LONG NECK 330 ML"
+        },
+        {
+          "key": "reviewed-product-ebfd875ed314028c43710718",
+          "name": "CERVEJA BUDWEISER LONG NECK 330 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 376496,
+      "sha256": "4e218caf16b109f2779e1278869349538d92beea641534d9594e047ab5fbd7dd",
+      "thumbnailBytes": 57790,
+      "thumbnailSha256": "264115a5db73bc928013917153d6cb861e8ec49a6ec8ad691bc4e9d317387d5e",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bebidas-003",
+      "title": "Vinhos e espumante para a ceia",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-02ef5185564a619efc0572d4",
+          "name": "VINHO TINTO SUAVE QUINTA DO MORGADO 750 ML"
+        },
+        {
+          "key": "reviewed-product-ca7b7919dde329d75d89cc84",
+          "name": "VINHO TINTO SUAVE PÉRGOLA 1 L"
+        },
+        {
+          "key": "reviewed-product-cc5e7fe59ed032dd8f548256",
+          "name": "ESPUMANTE SALTON MOSCATEL 750 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 314706,
+      "sha256": "d3d7f16bcbc4e5428ee166b745d42c27cffa4143540a0375c87e7566e9d00a47",
+      "thumbnailBytes": 50452,
+      "thumbnailSha256": "38472d0b290c53576f4d78ddbaa824b5365aa295182e6749cab5acdf50883f2e",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bebidas-004",
+      "title": "Dois sabores para o brinde de Natal",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-bebidas-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-3b9916c8a59ef3d65c1b20a8",
+          "name": "SIDRA CERESER MAÇÃ TRADICIONAL 660 ML"
+        },
+        {
+          "key": "reviewed-product-11db4a7dd940bb4f5d2ca492",
+          "name": "SIDRA CERESER MORANGO 660 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 365390,
+      "sha256": "c8a5f5de8c615096e69888f15c0abb60d6977e25e10d066efb9be9e515587076",
+      "thumbnailBytes": 59226,
+      "thumbnailSha256": "2c22899ede984b2ad2eddea56157514a26d1f423e814c5e15e7afcea3fa63498",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bombons-001",
+      "title": "Um carinho em forma de chocolate",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-bombons-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-bombons-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 359794,
+      "sha256": "6f8af3b1ca8b893ba5428c7bd28467c6a1d561eaa7ec2e73f34ecb6b93f6923a",
+      "thumbnailBytes": 54064,
+      "thumbnailSha256": "e5f213035ecebaf747294556598c03a5e917ec7bac6670ca6d8c89e4eb2d5bb5",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bombons-002",
+      "title": "Favoritos para compartilhar",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-bombons-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-bombons-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 320392,
+      "sha256": "9165cb2f2154043cf08c94a4c22b59c19b941c73a70be85de3bbea67a241fb24",
+      "thumbnailBytes": 52472,
+      "thumbnailSha256": "62bc59b6ce51deb82733f9ab4ff75578d4a6896192f0efad9f8279132b5d553f",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bombons-003",
+      "title": "Três jeitos de adoçar o Natal",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-bombons-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-bombons-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 381136,
+      "sha256": "7b19859d0225be80051697507b4e75d4398c7ca6191e822dca28e67276f77e3f",
+      "thumbnailBytes": 57796,
+      "thumbnailSha256": "1ba0f33af662dcadd92c9d860dcdd19e1efa01751e1e94ff89af43bdbe53f380",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-bombons-004",
+      "title": "Chocolate e um brinde para celebrar",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-bombons-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-bombons-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": "reviewed-product-3b9916c8a59ef3d65c1b20a8",
+          "name": "SIDRA CERESER MAÇÃ TRADICIONAL 660 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 379582,
+      "sha256": "2cbbc67c2694238355d7d239e09597b66541f2c64163c8d4086a3d81e9fdefea",
+      "thumbnailBytes": 59502,
+      "thumbnailSha256": "62ecf88b5f4af9f4ebe8536ccaf133ad6a0524dd5fa07d85e8c15c037c41e85d",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-001",
+      "title": "Banho perfumado, casa em festa",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-f08ec0ea8958f49ab91bd7f5",
+          "name": "SABONETE EM BARRA LUX BOTANICALS LAVANDA 85 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 265304,
+      "sha256": "5736931c217867fad576665c95b61c98b4eb93f42100f278f00d31824b15c6a2",
+      "thumbnailBytes": 43824,
+      "thumbnailSha256": "7febead08d4e2625e0590ff737f7a9ed8cf654dce72d42d731f45dfc5811320e",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-002",
+      "title": "Cuidado antes do encontro",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-b39dc723c2f19c000cd668ee",
+          "name": "DESODORANTE AEROSSOL DOVE ORIGINAL 150 ML"
+        },
+        {
+          "key": "reviewed-product-4d1baa2c895fcfb83362a464",
+          "name": "DESODORANTE AEROSSOL MONANGE HIDRATAÇÃO INTENSIVA 150 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 263442,
+      "sha256": "6af39e5ed194d8c26e84bb40e8c2f9885b4740e7b171fe27fd33ff7db149008a",
+      "thumbnailBytes": 40598,
+      "thumbnailSha256": "6dd0a6476470511acc1022a1692ac8425bad09c24c8d84ca55193b02f285fdfe",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-003",
+      "title": "Perfume para celebrar",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-b4e8002e222fd9eb9ef05656",
+          "name": "HIDRATANTE CORPORAL ORIGEM FRUTAS VERMELHAS 380 ML"
+        },
+        {
+          "key": "reviewed-product-89ac557ac74606ae1b6e3fc2",
+          "name": "BODY SPLASH SALON LINE XÊROSA BAUNILHA DOCE 200 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 302806,
+      "sha256": "cf48522e9465d104b47c550a0065a271ea2f920c3174a12bffacbdaa07d59ee9",
+      "thumbnailBytes": 50170,
+      "thumbnailSha256": "a03127ddd14d93b2e3a04fd6e5aada184fe1bedb64c518309d10356b92281bd3",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-004",
+      "title": "Seu cuidado de fim de ano",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-fa684997a2a03e78ba24401d",
+          "name": "KIT MONANGE HIDRATAÇÃO INTENSIVA SHAMPOO 300 ML + CONDICIONADOR 170 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 208004,
+      "sha256": "0a251b0dbebd0fbfed8f5379cbdb277c41f95a06581e93aba19f2b15766d6ff1",
+      "thumbnailBytes": 34524,
+      "thumbnailSha256": "065d405a3f7acb1c8ca98dac9fe2789368b4a4400838c33eba2cc0928fb3fda5",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-005",
+      "title": "Cabelos prontos para a festa",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-005.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-005-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-14cdef8847e5db4f460a6dc1",
+          "name": "KIT DABELLE MILAGRES DO MEL SHAMPOO 250 ML + CONDICIONADOR 200 ML"
+        },
+        {
+          "key": "reviewed-product-fe01079f646c477f4694a6e7",
+          "name": "ÓLEO CAPILAR DABELLE ÓLEO MÁGICO 45 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 249610,
+      "sha256": "7bbdd56de3c9236ca56c17c0d7dab3806459b70a19be0e3d62a48e2127064bb1",
+      "thumbnailBytes": 42498,
+      "thumbnailSha256": "5080379fa1b6d254ca3bd77df4c29db07729578fd26e4d654d4a6902fa4f0a57",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-006",
+      "title": "Rotina de cuidado para celebrar",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-006.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-006-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-de20866f4ad6d5532aa54756",
+          "name": "CREME PARA PENTEAR SALON LINE DEFINIÇÃO INTENSA 1 KG"
+        },
+        {
+          "key": "reviewed-product-a568847fef0a78594b6da613",
+          "name": "KIT SALON LINE HIDRA D-PANTENOL SHAMPOO 300 ML + CONDICIONADOR 300 ML"
+        },
+        {
+          "key": "reviewed-product-fe01079f646c477f4694a6e7",
+          "name": "ÓLEO CAPILAR DABELLE ÓLEO MÁGICO 45 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 317586,
+      "sha256": "6da609e409cbfd04974b883a0f713fa1f13f0bc358907c728a8354ba5b5673da",
+      "thumbnailBytes": 52800,
+      "thumbnailSha256": "c78c02feb754d3ca121b706d12765d7b02864ac50b0483a4cb09429b72af33c5",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-007",
+      "title": "Cuidado dos pequenos no Natal",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-007.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-007-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-f61d2f317ec5e894ef373df0",
+          "name": "KIT ACQUA KIDS LISOS E FINOS SHAMPOO 250 ML + CONDICIONADOR 250 ML"
+        },
+        {
+          "key": "reviewed-product-ff5a1f359c3e592116d48908",
+          "name": "CREME PARA PENTEAR ACQUA KIDS LISOS E FINOS 250 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 340924,
+      "sha256": "017b58d81b6e2745343e79aad81f5c3d470d2adc2eb0b31fa8e6bfd46f7407bd",
+      "thumbnailBytes": 52536,
+      "thumbnailSha256": "ba77cbeb140b5ebbf7d6d020f299aaf004fafe4abc63c0b868fa62664cd48d6a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-008",
+      "title": "Cuidado para acompanhar a família",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-008.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-008-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-3088717156165e74ddadc8e8",
+          "name": "FRALDA CREMER SHORTINHO HIPER G 44 UNIDADES"
+        },
+        {
+          "key": "reviewed-product-df201ac95c5512a45b65bd18",
+          "name": "FRALDA CREMER MAGIC CARE JUMBINHO XG 14 UNIDADES"
+        }
+      ],
+      "source": "generated",
+      "bytes": 272626,
+      "sha256": "440e999a36775518c1b65b77ede1237bcc460d681382d0516971a25ba52a65ac",
+      "thumbnailBytes": 44268,
+      "thumbnailSha256": "933288f1c4bd3c33c257f03f715da8f966da913e6899fe83f452e4120e2f1380",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-009",
+      "title": "Seu cuidado também nas festas",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-009.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-009-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-2d2a9737c21fdda438c30c18",
+          "name": "KIT SABONETE ÍNTIMO CIA DA NATUREZA NEUTRO 2 × 210 ML"
+        },
+        {
+          "key": "reviewed-product-2ddba773d3b0e64ce2b31783",
+          "name": "ABSORVENTE MILI NOTURNO SUAVE COM ABAS 16 UNIDADES"
+        }
+      ],
+      "source": "generated",
+      "bytes": 309926,
+      "sha256": "06f2f3e8dc3c101a2aaf3b61e8e08a7ad68495b085aa1a7e1bcbf016253aaedd",
+      "thumbnailBytes": 47660,
+      "thumbnailSha256": "3a5f8ef7b165dfde5ba90a6467a69b4d847b6a750192f8c17c7374cb1f669e45",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-010",
+      "title": "Conforto para receber",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-010.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-010-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-9441812b7aaddcb7cd60ef5e",
+          "name": "PAPEL HIGIÊNICO NOBLE FOLHA DUPLA 12 ROLOS DE 20 M"
+        }
+      ],
+      "source": "generated",
+      "bytes": 277164,
+      "sha256": "d6b0acea3734f4d26f13a1a2c3741262458e933a01e8115f54d711a182b1e2dc",
+      "thumbnailBytes": 44056,
+      "thumbnailSha256": "650bf3b296bf5adbaa5b56996faa56b477dd765107823055cafd857071b68a18",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-011",
+      "title": "Um carinho para o dia a dia",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-011.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-011-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ff77f358c370e10f13c8cd09",
+          "name": "SANDÁLIA HAVAIANAS COLOR ROSA BALLET (PAR)"
+        }
+      ],
+      "source": "generated",
+      "bytes": 339478,
+      "sha256": "fb1a03adf7553185449a314161fbcec0d52bc902d98d69358f9df8394b229e1f",
+      "thumbnailBytes": 47134,
+      "thumbnailSha256": "41db0a655fc7a2cc4747d5dde28f612c64e46c9b2159716125de412270e35420",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-012",
+      "title": "Pequenos cuidados, clima de Natal",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-012.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-012-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ff77f358c370e10f13c8cd09",
+          "name": "SANDÁLIA HAVAIANAS COLOR ROSA BALLET (PAR)"
+        },
+        {
+          "key": "reviewed-product-b4e8002e222fd9eb9ef05656",
+          "name": "HIDRATANTE CORPORAL ORIGEM FRUTAS VERMELHAS 380 ML"
+        },
+        {
+          "key": "reviewed-product-89ac557ac74606ae1b6e3fc2",
+          "name": "BODY SPLASH SALON LINE XÊROSA BAUNILHA DOCE 200 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 367324,
+      "sha256": "a4491cd63ba4f3fa132771172d79688004e6bc461d2dc189f5d86fd480d2aac9",
+      "thumbnailBytes": 54716,
+      "thumbnailSha256": "d128e6e0133489cef3c6253cbd5c3ad367acff42d5a5a832596edf14c732605f",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-013",
+      "title": "Necessaire para os encontros",
+      "theme": "natal",
+      "collection": "cuidados",
+      "src": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-013.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cuidados/natal26-cuidados-013-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-f08ec0ea8958f49ab91bd7f5",
+          "name": "SABONETE EM BARRA LUX BOTANICALS LAVANDA 85 G"
+        },
+        {
+          "key": "reviewed-product-b39dc723c2f19c000cd668ee",
+          "name": "DESODORANTE AEROSSOL DOVE ORIGINAL 150 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 314262,
+      "sha256": "b9aea855061d6aaa8ca7178cb22dd9ca7fca54325ea3efd10248be7101122400",
+      "thumbnailBytes": 47364,
+      "thumbnailSha256": "efaa62bcfbed0cb468e6c9a583647c8d53dfc8120ebf803a719c5b360ecc0c37",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-014",
+      "title": "Roupas prontas para receber",
+      "theme": "natal",
+      "collection": "casa",
+      "src": "./assets/encartes/galeria/natal/casa/natal26-cuidados-014.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/casa/natal26-cuidados-014-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-adcd92744c5d2d771dc9efbd",
+          "name": "LAVA-ROUPAS EM PÓ TIXAN YPÊ PRIMAVERA CAIXA 1,6 KG"
+        }
+      ],
+      "source": "generated",
+      "bytes": 273372,
+      "sha256": "3f114dafe45d73935c2250b4ceb08f6a6140a0a24d33adefadddad225e3e0d59",
+      "thumbnailBytes": 44268,
+      "thumbnailSha256": "f2d65519a1b86278a77c353150d8fc6343c4be87c625bfee5c8264c02ca7032a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-015",
+      "title": "Cuidado com as roupas da família",
+      "theme": "natal",
+      "collection": "casa",
+      "src": "./assets/encartes/galeria/natal/casa/natal26-cuidados-015.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/casa/natal26-cuidados-015-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-3e2aebbefaecc969cbaa9d69",
+          "name": "LAVA-ROUPAS EM PÓ AJU BRANCAS E COLORIDAS 400 G"
+        },
+        {
+          "key": "reviewed-product-476d3cc32f57de4830f19505",
+          "name": "LAVA-ROUPAS LÍQUIDO AJU BRANCAS E COLORIDAS 3 L"
+        }
+      ],
+      "source": "generated",
+      "bytes": 331428,
+      "sha256": "45bb6939ee761798e7922c9633549fad343bd091919c32d793647f141ea5f52b",
+      "thumbnailBytes": 52914,
+      "thumbnailSha256": "97596f6d48524339137870ab6f739a54cfab741ff604c695ca67c318a3399a3f",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-016",
+      "title": "Casa preparada para a celebração",
+      "theme": "natal",
+      "collection": "casa",
+      "src": "./assets/encartes/galeria/natal/casa/natal26-cuidados-016.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/casa/natal26-cuidados-016-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-8e447764825e7aa73990b541",
+          "name": "DETERGENTE AJU NEUTRO 500 ML"
+        },
+        {
+          "key": "reviewed-product-53dbffa620e26c81d01d5e3a",
+          "name": "LIMPADOR PERFUMADO CASA & PERFUME SENSAZIONE 500 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 314396,
+      "sha256": "c7d5dc5a71d9f716535050bc0305a522b182101cc0bb6d466e83b426c50b1431",
+      "thumbnailBytes": 51100,
+      "thumbnailSha256": "29f4cbac03c0707c929e0d7cb9443e3093868935b6dbe941f86c092e3487aee0",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-017",
+      "title": "Casa perfumada para os encontros",
+      "theme": "natal",
+      "collection": "casa",
+      "src": "./assets/encartes/galeria/natal/casa/natal26-cuidados-017.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/casa/natal26-cuidados-017-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-53dbffa620e26c81d01d5e3a",
+          "name": "LIMPADOR PERFUMADO CASA & PERFUME SENSAZIONE 500 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 249916,
+      "sha256": "55fe6dc4c50a030b52f648280a009aa0343607455dd59b2fe6e96408c0fed2f5",
+      "thumbnailBytes": 41450,
+      "thumbnailSha256": "ce5295ccc465ff5910216b4dd1ad44f822d4b580b9c4aeaca41f85609455fccd",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-018",
+      "title": "Sabores para a mesa de Natal",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-cuidados-018.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-cuidados-018-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-pindorama-suco-caju-500ml",
+          "name": "SUCO CONCENTRADO DE CAJU PINDORAMA 500ML"
+        },
+        {
+          "key": "catalogo-pindorama-suco-goiaba-500ml",
+          "name": "SUCO CONCENTRADO DE GOIABA PINDORAMA 500ML"
+        },
+        {
+          "key": "catalogo-pindorama-suco-maracuja-500ml",
+          "name": "SUCO CONCENTRADO DE MARACUJÁ PINDORAMA 500ML"
+        },
+        {
+          "key": "catalogo-pindorama-suco-uva-500ml",
+          "name": "SUCO CONCENTRADO DE UVA PINDORAMA 500ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 383120,
+      "sha256": "18c456cef8c431e6fd2f54db0acaa9dc7928a0344be9157af88b2752a09f52e9",
+      "thumbnailBytes": 58300,
+      "thumbnailSha256": "cece89c7abbe4ae2288cbdc7accd9ff1b59ec31f247d940beb7f6651b8fd028a",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-019",
+      "title": "Lanche em clima de Natal",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-cuidados-019.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-cuidados-019-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "e52d0edd-2e17-4e75-b847-39de2c608ee4",
+          "name": "BEBIDA LÁCTEA NESCAU PRONTINHO 180 ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 337382,
+      "sha256": "9d6424d8913d90b6325cab9df61265a82a43625f87b6ff857dca944d4ed035da",
+      "thumbnailBytes": 54870,
+      "thumbnailSha256": "55e8bd1bbb245c86ee9a4c8c8f2a48587d031df6cde226374037c74921030f8b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-020",
+      "title": "Refresco para compartilhar",
+      "theme": "natal",
+      "collection": "bebidas",
+      "src": "./assets/encartes/galeria/natal/bebidas/natal26-cuidados-020.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/bebidas/natal26-cuidados-020-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "catalogo-pindorama-suco-caju-500ml",
+          "name": "SUCO CONCENTRADO DE CAJU PINDORAMA 500ML"
+        },
+        {
+          "key": "catalogo-pindorama-suco-maracuja-500ml",
+          "name": "SUCO CONCENTRADO DE MARACUJÁ PINDORAMA 500ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 355594,
+      "sha256": "8136dff84b14d247b00517c696f364d633a6e48b7a33a3e37f3d131f0a93747a",
+      "thumbnailBytes": 55820,
+      "thumbnailSha256": "2114c7dae20680447960c5161e690ff4e72e0df604fc6aff48dd1667e4899bbe",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-021",
+      "title": "Ingredientes para a ceia em família",
+      "theme": "natal",
+      "collection": "hortifruti",
+      "src": "./assets/encartes/galeria/natal/hortifruti/natal26-cuidados-021.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/hortifruti/natal26-cuidados-021-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "horti-tomate",
+          "name": "TOMATE"
+        },
+        {
+          "key": "horti-cebola",
+          "name": "CEBOLA"
+        },
+        {
+          "key": "horti-batatinha",
+          "name": "BATATINHA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 315800,
+      "sha256": "fa4652ec0226740ba1410bdc53b46da79c7f273ca1481e2ff229d9e2f81e04a9",
+      "thumbnailBytes": 49014,
+      "thumbnailSha256": "4babf2e42c382d8c82c49ca88cacca44815fe69423d364a29f513523928745e7",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-022",
+      "title": "Frescor na mesa de fim de ano",
+      "theme": "natal",
+      "collection": "hortifruti",
+      "src": "./assets/encartes/galeria/natal/hortifruti/natal26-cuidados-022.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/hortifruti/natal26-cuidados-022-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "horti-melancia",
+          "name": "MELANCIA"
+        },
+        {
+          "key": "catalogo-pindorama-suco-goiaba-500ml",
+          "name": "SUCO CONCENTRADO DE GOIABA PINDORAMA 500ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 414870,
+      "sha256": "ac127d5ad08ae330cf624266731861520c214cbc34228f89bcf0964090636c75",
+      "thumbnailBytes": 59034,
+      "thumbnailSha256": "f3b93a663ec271576c0d9efe13b657414063248149c7c13d490cbf0b295e2e45",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-cuidados-023",
+      "title": "Fartura boa para celebrar",
+      "theme": "natal",
+      "collection": "hortifruti",
+      "src": "./assets/encartes/galeria/natal/hortifruti/natal26-cuidados-023.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/hortifruti/natal26-cuidados-023-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "horti-tomate",
+          "name": "TOMATE"
+        },
+        {
+          "key": "horti-cebola",
+          "name": "CEBOLA"
+        },
+        {
+          "key": "horti-batatinha",
+          "name": "BATATINHA"
+        },
+        {
+          "key": "horti-melancia",
+          "name": "MELANCIA"
+        }
+      ],
+      "source": "generated",
+      "bytes": 408440,
+      "sha256": "d7c03d796242ca58afcd15f5e53c8c318822588b11ea0686185198f758a45614",
+      "thumbnailBytes": 63224,
+      "thumbnailSha256": "103b0a1f42e106e510ea2ca53dd584dcc848e760fdfecf62fdf1cbf7ecfd66ff",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-alimentos-001",
+      "title": "Panettone para compartilhar",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-novos-alimentos-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-novos-alimentos-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-c452d7309990c909df9db861",
+          "name": "PANETTONE BAUDUCCO FRUTAS CRISTALIZADAS E UVAS-PASSAS 400G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 472034,
+      "sha256": "419e54ab472adaff3a13c849d4a3307f2eb12c23d86909dfcb78a17d68037008",
+      "thumbnailBytes": 66294,
+      "thumbnailSha256": "b153e5408e84b6fde095b8a1d3b5efe08b1bc0e2691acb14ee07c95c039528dd",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-alimentos-002",
+      "title": "Natal com gotas de chocolate",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-novos-alimentos-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-novos-alimentos-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-f2bb027942e706ee8a8e135b",
+          "name": "CHOCOTTONE BAUDUCCO GOTAS DE CHOCOLATE 400G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 440122,
+      "sha256": "7b4e3fb3f588433e86ef9568f12fb8fa5091889398e1d97160a7a741c018f098",
+      "thumbnailBytes": 65800,
+      "thumbnailSha256": "fbbd1da6adcfb0a7bff0335af01a46139a4404b234263f6d8941b0f05cfa37ee",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-alimentos-003",
+      "title": "Lanche de Natal com suco de uva",
+      "theme": "natal",
+      "collection": "cafe",
+      "src": "./assets/encartes/galeria/natal/cafe/natal26-novos-alimentos-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cafe/natal26-novos-alimentos-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-c452d7309990c909df9db861",
+          "name": "PANETTONE BAUDUCCO FRUTAS CRISTALIZADAS E UVAS-PASSAS 400G"
+        },
+        {
+          "key": "reviewed-product-6465f8c20b2a2c523e756ce2",
+          "name": "SUCO DE UVA TINTO INTEGRAL QUINTA DO MORGADO 500ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 422580,
+      "sha256": "025816c221da1d508ce3176d0e651b486707f370319f860357534a3690d0a7fb",
+      "thumbnailBytes": 64224,
+      "thumbnailSha256": "089d2a709d3a2a607c0b9bfa1aac68ba49111fc3c587068fad74c25496d54b32",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-alimentos-004",
+      "title": "Dois sabores na mesa de Natal",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-novos-alimentos-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-novos-alimentos-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-c452d7309990c909df9db861",
+          "name": "PANETTONE BAUDUCCO FRUTAS CRISTALIZADAS E UVAS-PASSAS 400G"
+        },
+        {
+          "key": "reviewed-product-f2bb027942e706ee8a8e135b",
+          "name": "CHOCOTTONE BAUDUCCO GOTAS DE CHOCOLATE 400G"
+        },
+        {
+          "key": "reviewed-product-6465f8c20b2a2c523e756ce2",
+          "name": "SUCO DE UVA TINTO INTEGRAL QUINTA DO MORGADO 500ML"
+        }
+      ],
+      "source": "generated",
+      "bytes": 478542,
+      "sha256": "d51c88d6aa76d1e63bcbf8d815e1a4336cec9ed9893d10c8ffe27eeabc22fc43",
+      "thumbnailBytes": 69504,
+      "thumbnailSha256": "a5a0434d38ac9b621461572d08a2ac3728a5ae8622ba1fcd54f631e02b83c8d1",
+      "nativeWidth": 940,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-alimentos-005",
+      "title": "Lasanha de presunto e queijo",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-novos-alimentos-005.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-novos-alimentos-005-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-a26d6d27b180c48920c7e6f9",
+          "name": "MASSA DE SÊMOLA VITARELLA SPECIALE LASANHA 500G"
+        },
+        {
+          "key": "reviewed-product-929dcbc7447d3d25dd700c74",
+          "name": "QUEIJO MUSSARELA FATIADO TIROLEZ 150G"
+        },
+        {
+          "key": "reviewed-product-a95b2be197ccbfecb02f2c93",
+          "name": "PRESUNTO FATIADO"
+        },
+        {
+          "key": "reviewed-product-71ceb5bcc4e3da9ea06756f1",
+          "name": "MOLHO DE TOMATE TRADICIONAL MARATÁ 300 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 410424,
+      "sha256": "fe59634be7d8b75b22e859a18623cffd45287f6aa487ccfea6fce73bc8e1cc83",
+      "thumbnailBytes": 64142,
+      "thumbnailSha256": "6c496191fddd048387fc6b7a3da1de9486ad57b05e911013ce79d00df5586fbf",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-alimentos-006",
+      "title": "Lasanha cremosa para receber",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-novos-alimentos-006.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-novos-alimentos-006-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-a26d6d27b180c48920c7e6f9",
+          "name": "MASSA DE SÊMOLA VITARELLA SPECIALE LASANHA 500G"
+        },
+        {
+          "key": "reviewed-product-929dcbc7447d3d25dd700c74",
+          "name": "QUEIJO MUSSARELA FATIADO TIROLEZ 150G"
+        },
+        {
+          "key": "catalogo-piracanjuba-creme-de-leite-leve-piracanjuba-200g",
+          "name": "CREME DE LEITE LEVE PIRACANJUBA 200G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 384654,
+      "sha256": "fb5707e7818c4bd28c1aeb4a5c2998e0affc96ea24e39f8118ca0751bd8a9577",
+      "thumbnailBytes": 60596,
+      "thumbnailSha256": "851db950776bda3134f9e46308260bee9fad5067ef7d77f403149acb83f1ca07",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-ceia-001",
+      "title": "Azeitonas para receber na ceia",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-novos-ceia-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-novos-ceia-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-d67b11775f2fe6be8159fad2",
+          "name": "AZEITONA VERDE COM CAROÇO LA VIOLETERA 150G DRENADO"
+        },
+        {
+          "key": "reviewed-product-1f8a96dceb11aac065da6fa1",
+          "name": "AZEITONA VERDE SEM CAROÇO LA VIOLETERA 120G DRENADO"
+        }
+      ],
+      "source": "generated",
+      "bytes": 376096,
+      "sha256": "2b01a22606c2416686ad053cf75557b9adf9334d91f8fc17ca57c68b470ee48d",
+      "thumbnailBytes": 59240,
+      "thumbnailSha256": "c37304c35ca9e816b07b1e2fd69371d1bb649f17f989b83f693ef3c919184eca",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-ceia-002",
+      "title": "Uvas-passas no arroz da ceia",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-novos-ceia-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-novos-ceia-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-43f272c82f8e6c8d398559c9",
+          "name": "UVA-PASSA ESCURA SEM SEMENTES LA VIOLETERA 100G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 385192,
+      "sha256": "f7c30c3d5d9db490c86f5698a6b9d2b834bff13722c23a9e8c401afa93111e56",
+      "thumbnailBytes": 60222,
+      "thumbnailSha256": "d6854d505661165d3ee3f3ccf36b51dafb2b5c3e3bd169de09e6e999b9ac5b8f",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-novos-ceia-003",
+      "title": "Panettone e sidra para celebrar",
+      "theme": "natal",
+      "collection": "ceia",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-novos-ceia-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-novos-ceia-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-3b9916c8a59ef3d65c1b20a8",
+          "name": "SIDRA CERESER MAÇÃ TRADICIONAL 660 ML"
+        },
+        {
+          "key": "reviewed-product-c452d7309990c909df9db861",
+          "name": "PANETTONE BAUDUCCO FRUTAS CRISTALIZADAS E UVAS-PASSAS 400G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 376334,
+      "sha256": "03dbaa12f94dc6c13bff157133d70c69640e441e217a69ed87ab66d4c384efb2",
+      "thumbnailBytes": 57472,
+      "thumbnailSha256": "2306d0e38b880cd81a290a44582ddd955c3fa4d6b1d2e4a04cc14e1b836c6739",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    }
+  ]
+}

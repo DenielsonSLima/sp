@@ -1,7 +1,8 @@
+import {readDomainSource,readDomainStyles,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {templates,defaultTemplates,defaultLayout,normalizeTemplate,validateElement,constrainElement,createTemplate,saveTemplate,deleteTemplate,resolveProductText,validateOffer,offerTemplate,parseTemplates,serializeTemplates,loadTemplates,STORAGE_KEY,posterMarkup,miniMarkup,sheetsMarkup,sampleOffer,paperStyle} from '../interno/cadastros/modelos-cartaz/model.js';
+import {templates,defaultTemplates,defaultLayout,normalizeTemplate,validateElement,constrainElement,createTemplate,saveTemplate,deleteTemplate,resolveProductText,validateOffer,offerTemplate,parseTemplates,serializeTemplates,loadTemplates,STORAGE_KEY,posterMarkup,miniMarkup,sheetsMarkup,sampleOffer,paperStyle} from './fixtures/legacy-catalogs/modelos-cartaz/model.js';
 const clone=value=>JSON.parse(JSON.stringify(value));
 const storage=()=>{const values=new Map();return {getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};};
 const input=id=>({productId:'rice',price:'14,99',unit:'kg',start:'2026-10-20',end:'2026-10-27',templateId:id});
@@ -76,14 +77,14 @@ test('cards, editor samples and physical pages use identical positioned groups a
  assert.ok(sheetsMarkup([offer]).includes(shared));assert.ok(miniMarkup(template).includes(posterMarkup(sampleOffer(template.id),template)));assert.match(sheetsMarkup([offer]),/--poster-unit:0.9500mm/);
 });
 test('visual editor contract includes accessible drag, keyboard and numeric controls with guarded dismissal',async()=>{
- const source=await readFile(new URL('../interno/cadastros/modelos-cartaz/editor.js',import.meta.url),'utf8');
- for(const token of ['setPointerCapture','releasePointerCapture',"'pointercancel'","'lostpointercapture'",'ArrowLeft','event.shiftKey','trapFocus','event.key!==\'Tab\'','showModal()','requestClose','data-keep','data-discard','event.preventDefault()','aria-labelledby','aria-pressed',"field('x'","field('h'","field('fontSize'",'createTemplate(draft)','saveTemplate(draft.id,draft)','posterMarkup(sampleOffer(draft.id),draft)'])assert.ok(source.includes(token),token);
- const gallery=await readFile(new URL('../interno/cadastros/modelos-cartaz/index.js',import.meta.url),'utf8');assert.match(gallery,/Criar novo/);assert.match(gallery,/data-template-id/);assert.ok(!gallery.includes('<form'));
- const css=await readFile(new URL('../interno/cadastros/modelos-cartaz/styles.css',import.meta.url),'utf8');assert.match(css,/touch-action:none/);assert.match(css,/min-width:44px;min-height:44px/);assert.match(css,/grid-template-rows:auto minmax\(0,1fr\) auto/);assert.match(css,/overflow:auto;overscroll-behavior:contain/);assert.match(css,/@media\(max-width:760px\)/);
+ const source=await readDomainSource('interno/cadastros/modelos-cartaz');
+ for(const token of ['setPointerCapture','releasePointerCapture',"'pointercancel'","'lostpointercapture'",'ArrowLeft','event.shiftKey','trapFocus','event.key!==\'Tab\'','showModal()','requestClose','data-keep','data-discard','event.preventDefault()','aria-labelledby','aria-pressed',"field('x'","field('h'","field('fontSize'",'createTemplate(draft)','await saveTemplate(draft.id,{...draft,_version:template?._version}','posterMarkup(sampleOffer(draft.id),draft)'])assert.ok(source.includes(token),token);
+ const gallery=await readModuleSource('interno/cadastros/modelos-cartaz/index.js');assert.match(gallery,/Criar novo/);assert.match(gallery,/data-template-id/);assert.ok(!gallery.includes('<form'));
+ const css=await readDomainStyles('interno/cadastros/modelos-cartaz');assert.match(css,/touch-action:none/);assert.match(css,/min-width:44px;min-height:44px/);assert.match(css,/grid-template-rows:auto minmax\(0,1fr\) auto/);assert.match(css,/overflow:auto;overscroll-behavior:contain/);assert.match(css,/@media\(max-width:760px\)/);
 });
 
 test('drag percentages and persisted fractional font sizes do not trigger native stepMismatch',async()=>{
- const source=await readFile(new URL('../interno/cadastros/modelos-cartaz/editor.js',import.meta.url),'utf8');
+ const source=await readDomainSource('interno/cadastros/modelos-cartaz');
  assert.match(source,/const field=\(name,label,min,max,step='any'\)/);
  const template=defaultTemplates()[0];template.layout.product={...template.layout.product,x:.1234,w:.7654,fontSize:8.55};
  const clean=normalizeTemplate(template);assert.equal(clean.layout.product.x*100,12.34);assert.equal(clean.layout.product.fontSize,8.55);
@@ -127,8 +128,8 @@ test('multiline template content preserves the live product variable and optiona
  const html=posterMarkup({...offer,displayName:'<script>\nproduto'},template);assert.match(html,/OFERTA\nESPECIAL/);assert.match(html,/&lt;script&gt;\nproduto/);assert.ok(!html.includes('<script>'));assert.equal(normalizeTemplate({...template,headline:'A\r\nB'}).headline,'A\nB');
 });
 test('editor offers reversible group removal, multiline fields, delete confirmation and empty-state recovery',async()=>{
- const editor=await readFile(new URL('../interno/cadastros/modelos-cartaz/editor.js',import.meta.url),'utf8'),gallery=await readFile(new URL('../interno/cadastros/modelos-cartaz/index.js',import.meta.url),'utf8'),css=await readFile(new URL('../interno/cadastros/modelos-cartaz/styles.css',import.meta.url),'utf8');
+ const editor=await readDomainSource('interno/cadastros/modelos-cartaz'),gallery=await readModuleSource('interno/cadastros/modelos-cartaz/index.js'),css=await readDomainStyles('interno/cadastros/modelos-cartaz');
  for(const token of ['data-toggle-element','Restaurar elemento','Remover elemento',"['Delete','Backspace']",'confirmTemplateDeletion','data-delete-cancel','data-delete-confirm','textarea name="headline"','textarea name="productText"',"field('letterSpacing'","field('lineHeight'",'textarea:not(:disabled)','onDeleted?.(removed)','if(!parentDialog||parentDialog.isConnected)document.body.style.overflow=previousOverflow'])assert.ok(editor.includes(token),token);
  for(const token of ['onDeleted:deleted','data-delete-template','Nenhum modelo cadastrado','data-empty-create'])assert.ok(gallery.includes(token),token);
- assert.match(css,/white-space:pre-wrap/);assert.match(css,/letter-spacing:calc\(var\(--element-letter-spacing\)\*1em\)/);assert.match(css,/line-height:var\(--element-line-height\)/);assert.match(css,/poster-editor-actions\{display:flex;flex-wrap:wrap/);assert.match(css,/poster-editor-properties textarea\{/);assert.match(css,/poster-object\[hidden\]\{display:none/);
+ assert.match(css,/white-space:pre-wrap/);assert.match(css,/letter-spacing:calc\(var\(--element-letter-spacing\)\s*\*\s*1em\)/);assert.match(css,/line-height:var\(--element-line-height\)/);assert.match(css,/poster-editor-actions\{display:flex;flex-wrap:wrap/);assert.match(css,/poster-editor-properties textarea\{/);assert.match(css,/poster-object\[hidden\]\{display:none/);
 });

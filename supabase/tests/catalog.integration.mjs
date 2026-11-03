@@ -1,0 +1,46 @@
+import {PGlite} from '@electric-sql/pglite';
+import {readFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+const db=new PGlite();
+const owner='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+const outsider='bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+const rpc=async(name,args=[])=>{const result=await db.query(`select public.${name}(${args.map((_,i)=>`$${i+1}`).join(',')}) as result`,args);return result.rows[0].result;};
+try{
+ await db.exec(`create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key,email text);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated,anon;grant execute on function auth.uid() to authenticated,anon;create publication supabase_realtime;`);
+ await db.exec(readFileSync(new URL('../schema.sql',import.meta.url),'utf8'));
+ await db.query('insert into auth.users values($1,$2),($3,$4)',[owner,'denielsonlima201099@gmail.com',outsider,'outsider@example.com']);
+ const company=(await db.query("select sp_private.bootstrap_company('denielsonlima201099@gmail.com','Supermercado do Povo') as id")).rows[0].id;
+ const other=(await db.query("select sp_private.bootstrap_company('outsider@example.com','Outra empresa') as id")).rows[0].id;
+ await db.query("select set_config('request.jwt.claim.sub',$1,false)",[owner]);await db.exec('set role authenticated');
+ // A user-owned record with the original seed ID must never be replaced.
+ const product=await rpc('sp_save',[company,'products',{id:'horti-tomate',name:'Tomate cadastrado pelo usuário',category:'Hortifruti',unit:'KG',photos:[]},null]);
+ const changed=await rpc('sp_save',[company,'products',{...product,code:'USER-CODE'},product._version]);
+ const medium=await rpc('sp_get',[company,'poster_templates','medium']);
+ await rpc('sp_save',[company,'poster_templates',{...medium,name:'Meu modelo revisado'},medium._version]);
+ await db.exec('reset role');
+ const migration=readFileSync(new URL('../migrations/20261031030545_migrate_existing_catalog.sql',import.meta.url),'utf8');
+ await db.exec(migration);
+ const counts=(await db.query('select (select count(*)::int from public.products where company_id=$1) products,(select count(*)::int from public.product_categories where company_id=$1) categories,(select count(*)::int from public.flyer_templates where company_id=$1) templates,(select count(*)::int from public.flyer_assets where company_id=$1) assets',[company])).rows[0];
+ assert.deepEqual(counts,{products:50,categories:7,templates:8,assets:6});
+ const otherCounts=(await db.query('select count(*)::int n from public.products where company_id=$1',[other])).rows[0];assert.equal(otherCounts.n,0);
+ await db.exec('set role authenticated');
+ const preserved=await rpc('sp_get',[company,'products','horti-tomate']);assert.equal(preserved.name,'Tomate cadastrado pelo usuário');assert.equal(preserved.code,'USER-CODE');assert.equal(preserved._version,changed._version);assert.deepEqual(preserved.photos,[]);
+ const restored=await rpc('sp_get',[company,'poster_templates','small']);assert.equal(restored.background,'#fff9dd');assert.equal(restored._version,2);
+ const custom=await rpc('sp_get',[company,'poster_templates','medium']);assert.equal(custom.name,'Meu modelo revisado');assert.equal(custom._version,2);
+ const draft=await rpc('sp_calculate',[company,'poster_template_draft',{}]);assert.equal(draft.name,'Novo modelo');assert.equal(draft.layout.product.fontFamily,'Arial');
+ const seeded=await rpc('sp_get',[company,'products','horti-cebola']);assert.match(seeded.photo,/^data:image\/png;base64,/);assert.equal(seeded.photos[0],seeded.photo);assert.equal(seeded.unit,'KG');
+ const categories=await rpc('sp_list',[company,'product_categories']);const horti=categories.find(c=>c.name==='Hortifruti');
+ await assert.rejects(()=>rpc('sp_delete',[company,'product_categories',horti.id,horti._version]),/vinculada a produtos/);
+ const seededBeforeRename=await rpc('sp_get',[company,'products','horti-cebola']);const renamed=await rpc('sp_save',[company,'product_categories',{...horti,name:'Feira'},horti._version]);assert.equal(renamed.name,'Feira');assert.equal((await rpc('sp_get',[company,'products','horti-cebola'])).category,'Feira');await assert.rejects(()=>rpc('sp_save',[company,'products',{...seededBeforeRename,name:'Edição obsoleta'},seededBeforeRename._version]),/outra sessão/);
+ await assert.rejects(()=>rpc('sp_save',[company,'products',{name:'Categoria inválida',category:'Não cadastrada',unit:'KG',photos:[]},null]),/categoria cadastrada/);
+ await assert.rejects(()=>db.query("insert into public.flyer_assets(company_id,id,data) values($1,'illegal','{}')",[company]),/permission denied/);
+ await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[outsider]);await db.exec('set role authenticated');
+ await assert.rejects(()=>rpc('sp_list',[company,'flyer_templates']),/não autorizado/);
+ const visible=await db.query('select count(*)::int n from public.flyer_templates');assert.equal(visible.rows[0].n,0);
+ await db.exec('reset role');
+ const signal=(await db.query("select resource from public.resource_changes where company_id=$1 and resource in ('product_categories','flyer_templates','flyer_assets') order by resource",[company])).rows.map(r=>r.resource);assert.deepEqual(signal,['flyer_assets','flyer_templates','product_categories']);
+ const imported=(await db.query("select details from public.audit_log where company_id=$1 and resource='catalog_migration'",[company])).rows;assert.equal(imported.length,1);assert.equal(imported[0].details.productsInserted,49);assert.equal(imported[0].details.productsPreserved,1);
+ await db.exec(migration.slice(migration.indexOf('-- Migrates only original catalog')));
+ const afterRepeat=(await db.query('select count(*)::int n from public.products where company_id=$1',[company])).rows[0];assert.equal(afterRepeat.n,50);assert.equal((await db.query("select count(*)::int n from public.audit_log where company_id=$1 and resource='catalog_migration'",[company])).rows[0].n,1);
+ console.log('PASS: incremental migration, 50 real products, 7 categories, 8 flyer templates, 6 assets, source images, preserved edits, exact bootstrap restoration, category linkage, RLS and Realtime signals.');
+}catch(error){console.error(error.message,error.where||'',error.code||'');process.exitCode=1;}finally{await db.close();}

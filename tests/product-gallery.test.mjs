@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createProductRepository} from '../interno/cadastros/produtos/state.js';
+import {createProductRepository} from './fixtures/legacy-catalogs/produtos/state.js';
 import {readPhotoBatch,movePhoto,validateGallery,validateDimensions,MAX_PHOTO_BYTES} from '../interno/cadastros/produtos/photo.js';
 import {productRoute,productHref} from '../interno/cadastros/produtos/navigation.js';
 const a='data:image/png;base64,AAAA',b='data:image/webp;base64,BBBB';

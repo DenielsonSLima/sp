@@ -6,7 +6,7 @@ import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {defaultTemplates} from '../interno/cadastros/modelos-cartaz/model.js';
+import {defaultTemplates} from './fixtures/legacy-catalogs/modelos-cartaz/model.js';
 import {generateCampaignPdfs} from '../interno/promocoes/pdf.js';
 test('real Canvas JPEG PDFs parse and rasterize with A4 landscape and portrait MediaBoxes',{skip:!process.env.CANVAS_MODULE_PATH},async()=>{
  const {createCanvas,loadImage}=await import(process.env.CANVAS_MODULE_PATH),original=globalThis.document,oldBitmap=globalThis.createImageBitmap,dir=await mkdtemp(join(tmpdir(),'promotion-pdf-'));

@@ -1,0 +1,30 @@
+import {PGlite} from '@electric-sql/pglite';import{readFileSync}from'node:fs';import assert from'node:assert/strict';
+const db=new PGlite(),owner='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+const rpc=async(name,args=[])=>{const result=await db.query(`select public.${name}(${args.map((_,i)=>`$${i+1}`).join(',')}) result`,args);return result.rows[0].result;};
+try{
+ await db.exec(`create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key,email text);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated,anon;grant execute on function auth.uid() to authenticated,anon;create publication supabase_realtime;create schema storage;create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text,metadata jsonb);alter table storage.objects enable row level security;grant usage on schema storage to authenticated,anon;grant select,insert,update,delete on storage.objects to authenticated;`);
+ for(const file of ['schema.sql','catalog-schema.sql','migrations/20261031031813_optimize_product_media_rpc.sql','migrations/20261031032723_product_photo_storage.sql','migrations/20261031043008_product_server_pagination.sql','migrations/20261031050550_quote_header_creation.sql','migrations/20261031054608_partner_company_details.sql'])await db.exec(readFileSync(new URL('../'+file,import.meta.url),'utf8'));
+ await db.query('insert into auth.users values($1,$2)',[owner,'header@example.com']);
+ const company=(await db.query("select sp_private.bootstrap_company('header@example.com','Loja') id")).rows[0].id;
+ await db.query("select set_config('request.jwt.claim.sub',$1,false)",[owner]);await db.exec('set role authenticated');
+ const draft={id:'company-partner',name:'Apelido comercial',type:'Fornecedor',cnpj:'00.000.000/0001-91',legalName:'Razão social completa',tradeName:'Nome fantasia',email:'contato@example.com',phone:'79999999999',street:'Rua Central',number:'120',complement:'Sala 3',district:'Centro',city:'Aracaju',state:'se',postalCode:'49000-001'};
+ const saved=await rpc('sp_save',[company,'partners',draft,null]);
+ for(const key of ['name','legalName','tradeName','email','phone','street','number','complement','district','city'])assert.equal(saved[key],draft[key]);
+ assert.equal(saved.cnpj,'00000000000191');assert.equal(saved.state,'SE');assert.equal(saved.postalCode,'49000001');
+ const loaded=await rpc('sp_get',[company,'partners',saved.id]);assert.equal(loaded.legalName,draft.legalName);assert.equal(loaded.number,'120');
+ assert.equal(await rpc('sp_partner_cnpj',[company,'00.000.000/0001-91']),'00000000000191');
+ assert.equal(await rpc('sp_partner_cnpj',[company,'12.ABC.345/01DE-35']),'12ABC34501DE35');
+ assert.equal(await rpc('sp_partner_cnpj',[company,'00.000.000/E08G-12']),'00000000E08G12');
+ for(const cnpj of ['','00000000000000','00000000000190','AA?00000000191','12345'])await assert.rejects(()=>rpc('sp_partner_cnpj',[company,cnpj]),/CNPJ/);
+ await assert.rejects(()=>rpc('sp_save',[company,'partners',{...draft,id:'duplicate'},null]),/Já existe/);
+ await assert.rejects(()=>rpc('sp_save',[company,'partners',{...draft,id:'bad',cnpj:'',state:'ZZ'},null]),/UF/);
+ await assert.rejects(()=>rpc('sp_save',[company,'partners',{...draft,id:'bad',cnpj:'',postalCode:'abc'},null]),/CEP/);
+ const updated=await rpc('sp_save',[company,'partners',{id:saved.id,name:'Nome revisado',type:saved.type,number:'121'},saved._version]);assert.equal(updated.legalName,draft.legalName);assert.equal(updated.street,draft.street);assert.equal(updated.cnpj,saved.cnpj);assert.equal(updated.number,'121');
+ await assert.rejects(()=>rpc('sp_save',[company,'partners',{...saved,name:'Concorrente'},saved._version]),/outra sessão/);
+ const minimal=await rpc('sp_save',[company,'partners',{name:'Pessoa sem CNPJ',type:'Cliente'},null]);assert.equal(minimal.cnpj,'');assert.equal(minimal.city,'');
+ await assert.rejects(()=>rpc('sp_partner_cnpj',['cccccccc-cccc-4ccc-8ccc-cccccccccccc',draft.cnpj]),/não autorizado/);
+ await assert.rejects(()=>db.query("insert into public.partners(company_id,id,data) values($1,'direct','{}')",[company]),/permission denied/);
+ assert.ok((await db.query("select revision from public.resource_changes where company_id=$1 and resource='partners'",[company])).rows[0].revision>=3);
+ await db.exec('reset role;set role anon');await assert.rejects(()=>rpc('sp_partner_cnpj',[company,draft.cnpj]),/permission denied/);
+ console.log('PASS: full partner identity/contact/address persistence, numeric/alphanumeric CNPJ validation, duplicate blocking, partial update preservation, optimistic concurrency, RLS and Realtime.');
+}catch(error){console.error(error.message,error.where||'',error.code||'');process.exitCode=1;}finally{await db.close();}

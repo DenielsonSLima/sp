@@ -1,4 +1,289 @@
-.login-layout{min-height:100vh;display:grid;grid-template-columns:1.08fr 1fr}.login-story{background:#c71925;color:white;padding:55px 60px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}.story-tag{font-size:13px;font-weight:800;letter-spacing:2px}.login-story h1{font-size:clamp(38px,4.4vw,65px);line-height:1.08;letter-spacing:-2px;position:relative;z-index:1;margin:22px 0}.login-story p{color:#ffe4e5;font-size:17px}.login-story .eyebrow{color:#fff176;font-size:11px}.login-story footer{font-size:13px;display:flex;align-items:center;gap:12px}.story-dot{width:9px;height:9px;background:#ffe600;border-radius:50%}.decor-ring{position:absolute;width:480px;height:480px;border:80px solid #ffffff09;border-radius:50%;right:-250px;bottom:-50px}.login-panel{background:white;display:flex;justify-content:center;align-items:center;position:relative;padding:45px 35px}.login-box{width:100%;max-width:380px}.login-box .brand-logo{width:285px;height:120px;margin-bottom:42px}.login-box .brand-logo img{width:360px;top:-123px;left:-38px}.login-box h2{font-size:29px;letter-spacing:-1px;margin:18px 0 10px}.login-box>p{line-height:1.7;color:var(--muted);font-size:14px}.demo-note{margin:28px 0 22px;border:1px solid #e8e3d1;background:#fffcef;border-radius:12px;padding:17px;font-size:12px;line-height:1.6}.demo-note strong{display:block;color:#685218;margin-bottom:5px}.demo-note span{color:#796e4b}.enter{width:100%;justify-content:space-between!important}.login-footnote{font-size:11px!important;text-align:center;margin-top:20px}.login-bottom{position:absolute;bottom:25px;font-size:9px;letter-spacing:2px;color:#989799}@media(max-width:760px){.login-layout{grid-template-columns:1fr}.login-story{display:none}.login-panel{min-height:100vh;padding:35px 25px}.login-box .brand-logo{margin-bottom:30px}}
+.login-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+}
+.login-story {
+  background: #c71925;
+  color: white;
+  padding: 55px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.story-tag {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.login-story h1 {
+  font-size: clamp(38px, 4.4vw, 65px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  position: relative;
+  z-index: 1;
+  margin: 22px 0;
+}
+.login-story p {
+  color: #ffe4e5;
+  font-size: 17px;
+}
+.login-story .eyebrow {
+  color: #fff176;
+  font-size: 11px;
+}
+.login-story footer {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.story-dot {
+  width: 9px;
+  height: 9px;
+  background: #ffe600;
+  border-radius: 50%;
+}
+.decor-ring {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border: 80px solid #ffffff09;
+  border-radius: 50%;
+  right: -250px;
+  bottom: -50px;
+}
+.login-panel {
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 45px 35px;
+}
+.login-box {
+  width: 100%;
+  max-width: 380px;
+}
+.login-box .brand-logo {
+  width: 285px;
+  height: 120px;
+  margin-bottom: 42px;
+}
+.login-box .brand-logo img {
+  width: 360px;
+  top: -123px;
+  left: -38px;
+}
+.login-box h2 {
+  font-size: 29px;
+  letter-spacing: -1px;
+  margin: 18px 0 10px;
+}
+.login-box > p {
+  line-height: 1.7;
+  color: var(--muted);
+  font-size: 14px;
+}
+.demo-note {
+  margin: 28px 0 22px;
+  border: 1px solid #e8e3d1;
+  background: #fffcef;
+  border-radius: 12px;
+  padding: 17px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.demo-note strong {
+  display: block;
+  color: #685218;
+  margin-bottom: 5px;
+}
+.demo-note span {
+  color: #796e4b;
+}
+.enter {
+  width: 100%;
+  justify-content: space-between !important;
+}
+.login-footnote {
+  font-size: 11px !important;
+  text-align: center;
+  margin-top: 20px;
+}
+.login-bottom {
+  position: absolute;
+  bottom: 25px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #989799;
+}
+@media (max-width: 760px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+  }
+  .login-story {
+    display: none;
+  }
+  .login-panel {
+    min-height: 100vh;
+    padding: 35px 25px;
+  }
+  .login-box .brand-logo {
+    margin-bottom: 30px;
+  }
+}
 /* Immersive produce-department photograph with translucent brand-red edges. */
-.login-story{isolation:isolate;background-color:#ab1321;background-image:linear-gradient(90deg,rgba(149,10,26,.9) 0%,rgba(161,12,27,.54) 22%,rgba(129,9,24,.25) 58%,rgba(190,22,35,.8) 100%),linear-gradient(180deg,rgba(174,16,30,.87) 0%,rgba(75,5,16,.12) 25%,rgba(74,4,14,.24) 43%,rgba(108,5,20,.79) 74%,rgba(179,15,30,.95) 100%),url('../assets/hortifruti-photo.jpg');background-size:cover;background-position:center;background-repeat:no-repeat}.login-story:after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 100px 22px #ac10294d;pointer-events:none;z-index:-1}.login-story>div:not(.decor-ring),.login-story>footer,.login-story>.story-tag{position:relative;z-index:1}.login-story h1{text-shadow:0 2px 30px #30010c55}.login-story p{color:#fff0ec;text-shadow:0 1px 10px #30010c66}.login-story footer,.story-tag{text-shadow:0 1px 10px #30010c66}.login-story .decor-ring{display:none}
-@media(max-width:760px){.login-story{display:flex;min-height:245px;padding:28px 26px;background-position:center 53%;gap:20px}.login-story h1{font-size:28px;line-height:1.08;letter-spacing:-.7px;margin:10px 0}.login-story h1 br:last-child{display:none}.login-story .eyebrow{font-size:8px;letter-spacing:1.5px}.login-story p:not(.eyebrow),.login-story footer{display:none}.story-tag{font-size:10px;letter-spacing:1.4px}.login-panel{min-height:auto;padding:25px 25px 65px}.login-box .brand-logo{height:100px;margin:0 auto 22px}.login-box h2{font-size:26px}.login-box>.badge{margin-top:0}.demo-note{margin-top:20px}.login-bottom{bottom:22px}}
+.login-story {
+  isolation: isolate;
+  background-color: #ab1321;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(149, 10, 26, 0.9) 0%,
+      rgba(161, 12, 27, 0.54) 22%,
+      rgba(129, 9, 24, 0.25) 58%,
+      rgba(190, 22, 35, 0.8) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(174, 16, 30, 0.87) 0%,
+      rgba(75, 5, 16, 0.12) 25%,
+      rgba(74, 4, 14, 0.24) 43%,
+      rgba(108, 5, 20, 0.79) 74%,
+      rgba(179, 15, 30, 0.95) 100%
+    ),
+    url('../assets/hortifruti-photo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.login-story:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 100px 22px #ac10294d;
+  pointer-events: none;
+  z-index: -1;
+}
+.login-story > div:not(.decor-ring),
+.login-story > footer,
+.login-story > .story-tag {
+  position: relative;
+  z-index: 1;
+}
+.login-story h1 {
+  text-shadow: 0 2px 30px #30010c55;
+}
+.login-story p {
+  color: #fff0ec;
+  text-shadow: 0 1px 10px #30010c66;
+}
+.login-story footer,
+.story-tag {
+  text-shadow: 0 1px 10px #30010c66;
+}
+.login-story .decor-ring {
+  display: none;
+}
+@media (max-width: 760px) {
+  .login-story {
+    display: flex;
+    min-height: 245px;
+    padding: 28px 26px;
+    background-position: center 53%;
+    gap: 20px;
+  }
+  .login-story h1 {
+    font-size: 28px;
+    line-height: 1.08;
+    letter-spacing: -0.7px;
+    margin: 10px 0;
+  }
+  .login-story h1 br:last-child {
+    display: none;
+  }
+  .login-story .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+  .login-story p:not(.eyebrow),
+  .login-story footer {
+    display: none;
+  }
+  .story-tag {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+  .login-panel {
+    min-height: auto;
+    padding: 25px 25px 65px;
+  }
+  .login-box .brand-logo {
+    height: 100px;
+    margin: 0 auto 22px;
+  }
+  .login-box h2 {
+    font-size: 26px;
+  }
+  .login-box > .badge {
+    margin-top: 0;
+  }
+  .demo-note {
+    margin-top: 20px;
+  }
+  .login-bottom {
+    bottom: 22px;
+  }
+}
+
+.auth-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 26px;
+}
+.auth-form label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #472b2e;
+}
+.auth-form input {
+  width: 100%;
+  border: 1px solid #d9d4d4;
+  border-radius: 10px;
+  padding: 13px 14px;
+  font: inherit;
+  min-height: 46px;
+  background: #fff;
+  color: #252025;
+}
+.auth-form input:focus {
+  outline: 3px solid #ffe75b;
+  outline-offset: 2px;
+  border-color: #b8182b;
+}
+.auth-form .auth-error {
+  font-size: 13px;
+  color: #a31223;
+  line-height: 1.5;
+  margin: 0;
+}
+.auth-form .auth-error:empty {
+  display: none;
+}
+.auth-form button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.auth-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #a31223;
+  font-weight: 700;
+}

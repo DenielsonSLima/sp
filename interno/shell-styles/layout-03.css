@@ -1,0 +1,6 @@
+@media (max-width: 760px) {
+  .sidebar .nav-item,
+  .sidebar .nav-child {
+    min-height: 44px;
+  }
+}

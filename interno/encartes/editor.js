@@ -1,54 +1,484 @@
-import {createCanvasInteraction} from './interaction.js';
-import {layerAssets} from './layer-assets.js';
-import {syncProductTexts,updateLinkedProductText} from './layered-templates.js';
-import {renderBrandPanel} from './brand-panel.js';
-import {renderTemplateGallery} from './template-gallery.js';
-import {escapeHtml,heading} from '../../shared/ui.js';import {icon} from '../../shared/icons.js';import {repository} from '../../shared/repository.js';import {filterRecords} from '../../shared/filters.js';import {units} from '../cadastros/unidades/state.js';import {readPhoto} from '../cadastros/produtos/photo.js';
-import {createDesign,createTextElement,createProductElement,duplicateElement,validateDesign,FONT_FAMILIES,newId} from './model.js';import {templates,applyTemplate} from './templates.js';import {saveDesign,listDesigns,deleteDesign,exportDesignJson,parseDesignJson} from './storage.js';import {renderDesign} from './renderer.js';import {createPngBlob,createLayerPngBlob,embedDesignAssets,downloadBlob} from './export.js';import {editorState as S,openDesign,commitDesign} from './editor-state.js';
-const clone=value=>JSON.parse(JSON.stringify(value));let saveTimer,saveQueue=Promise.resolve(),revision=0,renderVersion=0;let activeRoot;
-const formats=[['square','Post quadrado',1080,1080],['portrait','Post retrato',1080,1350],['story','Story',1080,1920],['a4','A4 · 150 dpi',1240,1754]];
-const tools=[['products','Produtos'],['templates','Modelos'],['elements','Fundos e selos'],['brand','Biblioteca'],['text','Texto e logo'],['properties','Propriedades'],['layers','Camadas']];
-const selected=()=>S.design.elements.find(e=>e.id===S.selection);
-const safeName=value=>(value||'encarte').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').slice(0,80);
-function status(text){S.saveMessage=text;if(activeRoot?.isConnected)activeRoot.querySelector('.flyer-save-state')?.replaceChildren(document.createTextNode(text));}
-function message(text,error=false){if(!activeRoot?.isConnected)return;const node=activeRoot.querySelector('.flyer-message');if(node){node.textContent=text;node.classList.toggle('error',error);}}
-async function persist(design=S.design){const snapshot=validateDesign(clone(design)),version=revision;status('Salvando…');saveQueue=saveQueue.catch(()=>{}).then(()=>saveDesign(snapshot));try{await saveQueue;if(version===revision&&snapshot.id===S.design.id)status('Salvo neste dispositivo');return true;}catch(error){if(snapshot.id===S.design.id)status('Não foi possível salvar');message(error.message,true);return false;}}
-function scheduleSave(){revision++;status('Alterações pendentes');clearTimeout(saveTimer);saveTimer=setTimeout(()=>persist(),700);}
-export async function renderEditor(root){S.cleanup?.();activeRoot=root;let catalog=await repository.listProducts();if(!root.isConnected)return;let resizeObserver,interaction,drawFrame,paintToken=0;const observer=new MutationObserver(()=>{if(!root.isConnected)cleanup();});const cleanup=()=>{resizeObserver?.disconnect();if(drawFrame)cancelAnimationFrame(drawFrame);interaction?.destroy();interaction=null;observer.disconnect();};observer.observe(document.body,{childList:true,subtree:true});S.cleanup=cleanup;
- const update=(next,{panel=true}={})=>{try{commitDesign(next);scheduleSave();refreshToolbar();draw();if(panel)renderPanel();}catch(error){message(error.message,true);}};
- const mutate=(fn,options)=>{try{const next=clone(S.design);fn(next);update(next,options);}catch(error){message(error.message,true);}};
- const refreshToolbar=()=>{if(!root.isConnected)return;const undo=root.querySelector('.flyer-undo'),redo=root.querySelector('.flyer-redo');if(undo)undo.disabled=!S.history.canUndo();if(redo)redo.disabled=!S.history.canRedo();const output=root.querySelector('.flyer-output-size');if(output)output.textContent=`${S.design.width} × ${S.design.height} px`;};
- const overlay=()=>interaction?.select(S.selection);
- const draw=async()=>{const canvas=root.querySelector('.flyer-canvas'),stage=root.querySelector('.flyer-stage'),board=root.querySelector('.flyer-artboard');if(!canvas||!root.isConnected)return;const d={...S.design,elements:S.design.elements.map(element=>({...element}))},token=++paintToken;const availableWidth=Math.max(200,stage.clientWidth-48),availableHeight=Math.max(260,stage.clientHeight-48);const scale=S.zoom==='fit'?Math.min(availableWidth/d.width,availableHeight/d.height,1):Number(S.zoom)/100;board.style.width=`${Math.round(d.width*scale)}px`;board.style.height=`${Math.round(d.height*scale)}px`;overlay();interaction?.sync(d,S.selection,scale);try{const scratch=document.createElement('canvas');await renderDesign(scratch,d,{scale:Math.min(1,1400/Math.max(d.width,d.height))});if(token!==paintToken||!root.isConnected||!canvas.isConnected)return;canvas.width=scratch.width;canvas.height=scratch.height;canvas.getContext('2d').drawImage(scratch,0,0);}catch(error){if(token===paintToken&&canvas.isConnected)message('Não foi possível renderizar a arte: '+error.message,true);}};
- const requestDraw=()=>{if(!drawFrame)drawFrame=requestAnimationFrame(()=>{drawFrame=null;draw();});};
- const select=id=>{S.selection=id;if(id)S.tool='properties';root.querySelectorAll('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tool===S.tool)));overlay();renderPanel();};
- const addProducts=ids=>{if(!ids.length){message('Selecione pelo menos um produto.');return;}const next=clone(S.design);let last;for(const id of ids){const product=catalog.find(p=>p.id===id);if(!product)continue;const entry=createProductElement({...product,unit:units.find(u=>u.id===product.unit)?.symbol||product.unit},next);entry.priceText='';delete entry.priceCents;const placeholder=next.elements.find(e=>e.type==='product'&&e.placeholder);if(placeholder){Object.assign(entry,{id:placeholder.id,x:placeholder.x,y:placeholder.y,width:placeholder.width,height:placeholder.height,layout:placeholder.layout,transparent:placeholder.transparent,rotation:placeholder.rotation,flipX:placeholder.flipX,flipY:placeholder.flipY,label:`Foto: ${product.name}`});next.elements.splice(next.elements.indexOf(placeholder),1,entry);}else{const products=next.elements.filter(e=>e.type==='product');if(!products.length){entry.x=next.width*.16;entry.y=next.height*.2;entry.width=next.width*.68;entry.height=next.height*.65;}else{entry.x=Math.min(next.width-entry.width,products.at(-1).x+35);entry.y=Math.min(next.height-entry.height,products.at(-1).y+35);}next.elements.push(entry);}syncProductTexts(next,entry);last=entry.id;}S.selectedProducts.clear();S.selection=last;update(next);message('Produtos adicionados. Ajuste os preços em Propriedades ou aplique um modelo para organizar.');};
- const applyProps=form=>{const el=selected();if(!el||el.locked)return;const data=Object.fromEntries(new FormData(form));mutate(d=>{const item=d.elements.find(e=>e.id===el.id);for(const key of ['x','y','width','height','rotation'])if(data[key]!==undefined)item[key]=Number(data[key]);item.opacity=Number(data.opacity)/100;item.label=data.label;if(item.type==='text'){item.strokeColor=data.strokeColor;item.strokeWidth=Number(data.strokeWidth);item.shadow=form.elements.shadow.checked;item.autoFit=form.elements.autoFit.checked;item.text=String(data.text);item.fontFamily=data.fontFamily;item.fontSize=Number(data.fontSize);item.fontWeight=Number(data.fontWeight);item.align=data.align;item.color=data.color;updateLinkedProductText(d,item);}if(item.type==='product'){item.placeholder=false;item.name=data.name;item.unit=data.unit;item.fontFamily=data.fontFamily;item.background=data.background;item.textColor=data.textColor;item.priceColor=data.priceColor;item.layout=data.layout;item.transparent=form.elements.transparent.checked;const raw=String(data.price||'').trim();if(raw){if(!/^\d+(?:[,.]\d{1,2})?$/.test(raw))throw new Error('Use um preço como 9,99.');item.priceCents=Math.round(Number(raw.replace(',','.'))*100);if(!Number.isSafeInteger(item.priceCents)||item.priceCents>100000000)throw new Error('Preço fora do limite.');item.priceText=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(item.priceCents/100);}else{item.priceText='';delete item.priceCents;}}if(item.type==='image')item.fit=data.fit;if(item.type==='product')syncProductTexts(d,item);if(item.type==='shape'){item.fill=data.fill;item.shapeKind=data.shapeKind;item.radius=Number(data.radius);}},{panel:false});};
- const renderPanel=()=>{const pane=root.querySelector('.flyer-panel');if(!pane)return;pane.innerHTML='';root.querySelectorAll('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tool===S.tool)));
- if(S.tool==='products'){const categories=[...new Set(catalog.map(p=>p.category))];pane.innerHTML=`<h2>Produtos da loja</h2><p class="flyer-help">Adicione um ou vários. Nome, preço e unidade ficam editáveis na arte.</p><label>Buscar produto<input type="search" class="flyer-product-search" value="${escapeHtml(S.query)}" placeholder="Nome do produto..."></label><label>Categoria<select class="flyer-product-category"><option value="">Todas</option>${categories.map(c=>`<option ${S.category===c?'selected':''}>${escapeHtml(c)}</option>`).join('')}</select></label><div class="flyer-product-results"></div><button class="button primary flyer-add-products" type="button">Adicionar selecionados</button><a class="flyer-panel-link" href="#cadastros/produtos">Abrir cadastro de produtos →</a>`;const list=()=>{const rows=filterRecords(catalog,{query:S.query,category:S.category});pane.querySelector('.flyer-product-results').innerHTML=rows.length?rows.map(p=>`<label class="flyer-product-pick"><input type="checkbox" data-product="${p.id}" ${S.selectedProducts.has(p.id)?'checked':''}>${p.photo?`<img src="${escapeHtml(p.photo)}" alt="">`:'<span class="product-thumb-empty">▦</span>'}<span><strong>${escapeHtml(p.name)}</strong><small>${escapeHtml(p.category)}</small></span></label>`).join(''):'<p class="flyer-help">Nenhum produto encontrado.</p>';pane.querySelectorAll('[data-product]').forEach(input=>input.onchange=()=>{if(input.checked)S.selectedProducts.add(input.dataset.product);else S.selectedProducts.delete(input.dataset.product);});};pane.querySelector('.flyer-product-search').oninput=e=>{S.query=e.target.value;list();};pane.querySelector('.flyer-product-category').onchange=e=>{S.category=e.target.value;list();};pane.querySelector('.flyer-add-products').onclick=()=>addProducts([...S.selectedProducts]);list();}
- if(S.tool==='brand'){renderBrandPanel(pane,{isActive:()=>S.tool==='brand',onInsert:asset=>{const maxW=S.design.width*.6,maxH=S.design.height*.6,scale=Math.min(maxW/asset.width,maxH/asset.height);const element={id:newId(),type:'image',src:asset.dataURL,width:asset.width*scale,height:asset.height*scale,x:(S.design.width-asset.width*scale)/2,y:(S.design.height-asset.height*scale)/2,locked:false};S.selection=element.id;S.tool='properties';mutate(d=>d.elements.push(element));}});}
- if(S.tool==='templates'){pane.innerHTML=`<h2>Modelos prontos</h2><p class="flyer-help">Layouts originais. Seus produtos e textos são mantidos; desfazer recupera a versão anterior.</p><label>Buscar modelo<input type="search" class="flyer-template-search" value="${escapeHtml(S.templateQuery)}" placeholder="Um produto, 4, 6, 9..."></label><div class="flyer-template-results"></div>`;const list=async()=>{const rows=templates.filter(t=>(t.name+' '+t.productCount).toLocaleLowerCase('pt-BR').includes(S.templateQuery.toLocaleLowerCase('pt-BR')));const grid=pane.querySelector('.flyer-template-results');grid.innerHTML=rows.map(t=>`<button class="flyer-template" data-template="${t.id}" type="button"><canvas aria-hidden="true"></canvas><strong>${t.name}</strong><span>${t.productCount} produto(s)</span></button>`).join('');grid.querySelectorAll('[data-template]').forEach(button=>{button.onclick=()=>{try{S.templateScroll=pane.scrollTop;update(applyTemplate(S.design,button.dataset.template));message('Modelo aplicado. Você pode desfazer esta alteração.');}catch(error){message(error.message,true);}};const preview=applyTemplate(createDesign({width:S.design.width,height:S.design.height}),button.dataset.template);renderDesign(button.querySelector('canvas'),preview,{scale:160/preview.width}).catch(()=>{});});pane.scrollTop=S.templateScroll;};pane.querySelector('.flyer-template-search').oninput=e=>{S.templateQuery=e.target.value;list();};pane.onscroll=()=>S.templateScroll=pane.scrollTop;list();}
- if(S.tool==='elements'){pane.innerHTML=`<h2>Fundos e selos</h2><p class="flyer-help">PNGs separados. Insira, mova, gire ou coloque atrás das outras camadas.</p><div class="flyer-layer-assets">${layerAssets.map(asset=>`<article><button type="button" data-insert-asset="${asset.id}" aria-label="Inserir ${escapeHtml(asset.label)}"><img src="${asset.src}" alt=""><span>${escapeHtml(asset.label)}</span></button><a href="${asset.src}" download="${asset.id}.png">Baixar PNG</a></article>`).join('')}</div><a class="flyer-panel-link" href="./assets/encartes/camadas/pngs-separados.zip" download>Baixar todos os PNGs separados ↓</a>`;pane.querySelectorAll('[data-insert-asset]').forEach(button=>button.onclick=()=>{const asset=layerAssets.find(a=>a.id===button.dataset.insertAsset);const background=asset.kind==='background',width=background?S.design.width:Math.min(S.design.width*.3,S.design.height*.4),height=background?S.design.height:width*asset.height/asset.width;const element={id:newId(),type:'image',label:asset.label,src:asset.src,fit:background?'cover':'contain',x:background?0:(S.design.width-width)/2,y:background?0:(S.design.height-height)/2,width,height,locked:false};S.selection=element.id;S.tool='properties';mutate(d=>background?d.elements.unshift(element):d.elements.push(element));});}
- if(S.tool==='text'){pane.innerHTML=`<h2>Texto e identidade</h2><p class="flyer-help">Crie títulos, validade e condições da oferta como elementos independentes.</p><button class="button primary flyer-add-text" type="button">＋ Adicionar texto</button><button class="button secondary flyer-add-logo" type="button">Adicionar logomarca</button><button class="button secondary flyer-add-shape" type="button">Adicionar faixa de cor</button><label class="flyer-photo-label">Inserir imagem local<input type="file" accept="image/png,image/jpeg,image/webp" class="flyer-image-file"></label><p class="flyer-help">PNG, JPEG ou WebP de até 3 MB.</p>`;pane.querySelector('.flyer-add-text').onclick=()=>{const element=createTextElement(S.design);S.selection=element.id;S.tool='properties';mutate(d=>d.elements.push(element));};pane.querySelector('.flyer-add-logo').onclick=()=>{const element={id:newId(),type:'image',src:'./assets/logo-original.jpg',x:S.design.width*.06,y:S.design.height*.04,width:S.design.width*.4,height:S.design.width*.16,locked:false};S.selection=element.id;S.tool='properties';mutate(d=>d.elements.push(element));};pane.querySelector('.flyer-add-shape').onclick=()=>{const element={id:newId(),type:'shape',fill:'#c71925',x:0,y:0,width:S.design.width,height:S.design.height*.14,locked:false};S.selection=element.id;S.tool='properties';mutate(d=>d.elements.push(element));};pane.querySelector('.flyer-image-file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;const src=await readPhoto(file);const element={id:newId(),type:'image',src,x:S.design.width*.15,y:S.design.height*.15,width:S.design.width*.7,height:S.design.height*.5,locked:false};S.selection=element.id;S.tool='properties';mutate(d=>d.elements.push(element));}catch(error){message(error.message,true);}};}
- if(S.tool==='properties'){const el=selected();if(!el){pane.innerHTML='<h2>Propriedades</h2><p class="flyer-help">Toque em um elemento da arte ou escolha uma camada para editar.</p>';return;}const fontOptions=(value)=>FONT_FAMILIES.map(f=>`<option ${value===f?'selected':''} style="font-family:${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');pane.innerHTML=`<h2>${el.type==='product'?'Oferta do produto':el.type==='text'?'Texto selecionado':el.type==='shape'?'Faixa de cor':'Imagem selecionada'}</h2><p class="flyer-help">Arraste para mover. Os pontos redimensionam; a alça superior gira o elemento.</p><form class="flyer-properties"><fieldset ${el.locked?'disabled':''}><label>Nome da camada<input name="label" maxlength="100" value="${escapeHtml(el.label||'')}" placeholder="Ex.: Título da oferta"></label>${el.type==='text'?`<label>Texto<textarea name="text" rows="3" maxlength="4000">${escapeHtml(el.text)}</textarea></label><label>Fonte<select name="fontFamily">${fontOptions(el.fontFamily)}</select></label><div class="flyer-two-fields"><label>Tamanho<input name="fontSize" type="number" min="8" max="600" value="${el.fontSize}"></label><label>Peso<select name="fontWeight">${[400,600,700,900].map(n=>`<option value="${n}" ${Number(el.fontWeight)===n?'selected':''}>${n===400?'Normal':n===600?'Seminegrito':n===700?'Negrito':'Extra'}</option>`).join('')}</select></label></div><div class="flyer-two-fields"><label>Cor<input type="color" name="color" value="${el.color}"></label><label>Alinhamento<select name="align">${[['left','Esquerda'],['center','Centro'],['right','Direita']].map(([v,l])=>`<option value="${v}" ${el.align===v?'selected':''}>${l}</option>`).join('')}</select></label></div><div class="flyer-two-fields"><label>Contorno<input name="strokeWidth" type="number" min="0" max="20" value="${el.strokeWidth||0}"></label><label>Cor do contorno<input name="strokeColor" type="color" value="${el.strokeColor||'#ffffff'}"></label></div><label class="flyer-check"><input name="shadow" type="checkbox" ${el.shadow?'checked':''}> Sombra do texto</label><label class="flyer-check"><input name="autoFit" type="checkbox" ${el.autoFit?'checked':''}> Ajustar texto à caixa</label>`:''}${el.type==='product'?`<label>Trocar produto<select class="flyer-replace-product"><option value="">Escolher no catálogo…</option>${catalog.map(p=>`<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join('')}</select></label><label>Apresentação<select name="layout"><option value="card" ${el.layout!=='photo'?'selected':''}>Oferta completa</option><option value="photo" ${el.layout==='photo'?'selected':''}>Somente a foto recortada</option></select></label><label class="flyer-check"><input name="transparent" type="checkbox" ${el.transparent?'checked':''}> Fundo transparente</label><label>Nome na arte<input name="name" maxlength="180" value="${escapeHtml(el.name)}"></label><div class="flyer-two-fields"><label>Preço (R$)<input name="price" inputmode="decimal" placeholder="9,99" value="${Number.isInteger(el.priceCents)?(el.priceCents/100).toFixed(2).replace('.',','):escapeHtml(el.priceText.replace(/^R\$\s*/,''))}"></label><label>Unidade<input name="unit" maxlength="40" value="${escapeHtml(el.unit)}"></label></div><label>Fonte<select name="fontFamily">${fontOptions(el.fontFamily)}</select></label><div class="flyer-three-colors"><label>Fundo<input type="color" name="background" value="${el.background}"></label><label>Texto<input type="color" name="textColor" value="${el.textColor}"></label><label>Preço<input type="color" name="priceColor" value="${el.priceColor}"></label></div><label>Trocar foto nesta arte<input type="file" class="flyer-replace-photo" accept="image/jpeg,image/png,image/webp"></label>`:''}${el.type==='shape'?`<label>Cor da forma<input name="fill" type="color" value="${el.fill}"></label><label>Formato<select name="shapeKind">${[['rectangle','Retângulo'],['rounded','Arredondado'],['ellipse','Elipse']].map(([v,l])=>`<option value="${v}" ${el.shapeKind===v?'selected':''}>${l}</option>`).join('')}</select></label><label>Arredondamento<input type="number" name="radius" min="0" max="500" value="${el.radius??24}"></label>`:''}${el.type==='image'?`<label>Encaixe da imagem<select name="fit"><option value="contain" ${el.fit!=='cover'?'selected':''}>Mostrar inteira</option><option value="cover" ${el.fit==='cover'?'selected':''}>Preencher a área</option></select></label><label>Trocar imagem<input type="file" class="flyer-replace-photo" accept="image/jpeg,image/png,image/webp"></label>`:''}<div class="flyer-two-fields">${[['x','Posição X'],['y','Posição Y'],['width','Largura'],['height','Altura']].map(([key,label])=>`<label>${label}<input name="${key}" type="number" min="${key==='width'||key==='height'?1:0}" max="4096" value="${Math.round(el[key])}"></label>`).join('')}</div><div class="flyer-two-fields"><label>Rotação (°)<input name="rotation" type="number" min="-360" max="360" value="${Math.round(el.rotation||0)}"></label><label>Opacidade (%)<input name="opacity" type="number" min="0" max="100" value="${Math.round((el.opacity??1)*100)}"></label></div><p class="flyer-help">Medidas em pixels. Use Shift ao redimensionar para manter a proporção.</p></fieldset></form><div class="flyer-element-transforms"><button type="button" class="button secondary" data-flip="flipX" ${el.locked?'disabled':''}>Espelhar ↔</button><button type="button" class="button secondary" data-flip="flipY" ${el.locked?'disabled':''}>Espelhar ↕</button><button type="button" class="button secondary" data-order="front">Trazer à frente</button><button type="button" class="button secondary" data-order="back">Enviar ao fundo</button></div><div class="flyer-nudges" role="group" aria-label="Mover elemento 10 pixels"><button type="button" data-nudge="-10,0" aria-label="Mover para esquerda" ${el.locked?'disabled':''}>←</button><button type="button" data-nudge="0,-10" aria-label="Mover para cima" ${el.locked?'disabled':''}>↑</button><button type="button" data-nudge="0,10" aria-label="Mover para baixo" ${el.locked?'disabled':''}>↓</button><button type="button" data-nudge="10,0" aria-label="Mover para direita" ${el.locked?'disabled':''}>→</button></div><div class="flyer-element-actions"><button class="button secondary flyer-lock" type="button">${el.locked?'Desbloquear':'Bloquear'}</button><button class="button secondary flyer-duplicate-element" type="button">Duplicar</button><button class="button secondary flyer-delete-element" type="button">Remover</button><button class="button secondary flyer-hide-element" type="button">${el.hidden?'Mostrar':'Ocultar'}</button><button class="button secondary flyer-download-layer" type="button">Baixar camada PNG</button></div>`;pane.querySelector('.flyer-replace-product')?.addEventListener('change',event=>{const product=catalog.find(p=>p.id===event.target.value);if(!product)return;mutate(d=>{const item=d.elements.find(e=>e.id===el.id);Object.assign(item,{name:product.name,image:product.photo||'',unit:product.unit==='KG'?'kg':'un',placeholder:false,label:`Foto: ${product.name}`});syncProductTexts(d,item);});});pane.querySelectorAll('[data-flip]').forEach(button=>button.onclick=()=>mutate(d=>{const item=d.elements.find(e=>e.id===el.id);item[button.dataset.flip]=!item[button.dataset.flip];}));pane.querySelectorAll('[data-order]').forEach(button=>button.onclick=()=>mutate(d=>{const index=d.elements.findIndex(e=>e.id===el.id),[item]=d.elements.splice(index,1);button.dataset.order==='front'?d.elements.push(item):d.elements.unshift(item);}));pane.querySelector('.flyer-hide-element').onclick=()=>mutate(d=>{const item=d.elements.find(e=>e.id===el.id);item.hidden=!item.hidden;});pane.querySelector('.flyer-download-layer').onclick=async()=>{try{downloadBlob(await createLayerPngBlob(selected()),safeName(el.label||el.name||el.text||'camada')+'.png');message('Camada exportada em PNG com fundo transparente.');}catch(error){message(error.message,true);}};const form=pane.querySelector('form');form.onsubmit=e=>e.preventDefault();form.querySelectorAll('input:not([type=file]),select,textarea').forEach(input=>input.onchange=()=>{if(!input.classList.contains('flyer-replace-product'))applyProps(form);});pane.querySelectorAll('[data-nudge]').forEach(button=>button.onclick=()=>{const [x,y]=button.dataset.nudge.split(',').map(Number);mutate(d=>{const item=d.elements.find(e=>e.id===S.selection);item.x+=x;item.y+=y;});});pane.querySelector('.flyer-lock').onclick=()=>mutate(d=>{const item=d.elements.find(e=>e.id===S.selection);item.locked=!item.locked;});pane.querySelector('.flyer-duplicate-element').onclick=()=>mutate(d=>{const item=duplicateElement(selected());d.elements.push(item);S.selection=item.id;});pane.querySelector('.flyer-delete-element').onclick=()=>mutate(d=>{d.elements=d.elements.filter(e=>e.id!==S.selection);S.selection=null;});pane.querySelector('.flyer-replace-photo')?.addEventListener('change',async e=>{const id=el.id;try{const file=e.target.files[0];if(!file)return;const image=await readPhoto(file);mutate(d=>{const item=d.elements.find(e=>e.id===id);if(item){if(item.type==='product'){item.image=image;item.placeholder=false;}else item.src=image;}});}catch(error){message(error.message,true);}});}
- if(S.tool==='layers'){pane.innerHTML=`<h2>Camadas</h2><p class="flyer-help">A primeira camada está na frente. Selecione para editar ou altere a ordem.</p><div class="flyer-layer-list">${[...S.design.elements].reverse().map(e=>`<div class="flyer-layer ${e.id===S.selection?'selected':''}"><button type="button" data-layer="${e.id}"><strong>${escapeHtml(e.label||(e.type==='text'?e.text.slice(0,30):e.type==='product'?e.name:e.type==='shape'?'Forma':'Imagem'))}</strong><small>${e.hidden?'Oculto':e.locked?'Bloqueado':({text:'Texto',product:'Produto',shape:'Forma',image:'PNG / imagem'}[e.type])}</small></button><button type="button" data-layer-move="${e.id}" data-direction="1" aria-label="Trazer camada para frente">↑</button><button type="button" data-layer-move="${e.id}" data-direction="-1" aria-label="Enviar camada para trás">↓</button></div>`).join('')||'<p class="flyer-help">Sua arte ainda está em branco.</p>'}</div>`;pane.querySelectorAll('[data-layer]').forEach(b=>b.onclick=()=>select(b.dataset.layer));pane.querySelectorAll('[data-layer-move]').forEach(b=>b.onclick=()=>mutate(d=>{const index=d.elements.findIndex(e=>e.id===b.dataset.layerMove),next=index+Number(b.dataset.direction);if(next<0||next>=d.elements.length)return;[d.elements[index],d.elements[next]]=[d.elements[next],d.elements[index]];}));}
- };
- const bindCanvas=async()=>{
-  const host=root.querySelector('.flyer-interaction');
-  try{interaction=await createCanvasInteraction({host,onSelect:select,onEdit:id=>{select(id);const field=root.querySelector('.flyer-properties textarea,.flyer-properties input[name=name]');field?.focus();},onChange:(id,patch,commit)=>{const item=S.design.elements.find(e=>e.id===id);if(!item||item.locked)return;Object.assign(item,patch);if(commit)update(clone(S.design));else requestDraw();}});}catch(error){message(error.message,true);}
-  root.querySelector('.flyer-stage').onkeydown=event=>{
-   if(event.target.matches('input,textarea,select'))return;
-   const item=selected();
-   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();root.querySelector(event.shiftKey?'.flyer-redo':'.flyer-undo').click();return;}
-   if(!item||item.locked)return;
-   if(event.key==='Delete'||event.key==='Backspace'){event.preventDefault();mutate(d=>{d.elements=d.elements.filter(e=>e.id!==item.id);S.selection=null;});}
-   const delta={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[event.key];
-   if(delta){event.preventDefault();mutate(d=>{const element=d.elements.find(e=>e.id===item.id),step=event.shiftKey?10:1;element.x+=delta[0]*step;element.y+=delta[1]*step;});}
+import { libraryMarkup, studioMarkup } from './views/studio.js';
+import { createCanvasRenderer } from './editor/canvas-renderer.js';
+import { bindStudioViewport } from './editor/viewport-controls.js';
+import { bindEditorCanvas } from './editor/canvas-interaction.js';
+import { createPropertiesRenderer } from './editor/properties.js';
+import { renderInsertionPanel } from './editor/insertion.js';
+import { tools, safeName } from './editor/presentation.js';
+import { runtime, sessionKey, status, message, persist, scheduleSave } from './editor/autosave.js';
+import { bindFinishButton } from './editor/finish.js';
+import { createCatalogPhotoLoader } from './hooks/catalog-photos.js';
+export { createCatalogPhotoLoader } from './hooks/catalog-photos.js';
+import { createLayersPanel } from './layers-panel.js';
+import { moveLayer } from './editor/layer-reorder.js';
+import { renderDesignLibrary } from './design-library.js';
+import { openDocumentSettings } from './document-settings.js';
+import { getDataContext } from '../../shared/data/api.js';
+import { watchFlyerLibrary, watchFlyerProducts, clearFlyersOnSessionChange } from './realtime.js';
+import { renderBrandPanel } from './brand-panel.js';
+import { renderSceneGallery } from './scene-gallery.js';
+import { escapeHtml } from '../../shared/ui.js';
+import { repository } from '../../shared/repository.js';
+import { createDesign, validateDesign, newId, cloneDesignState } from './model.js';
+import { getDesign } from './storage.js';
+import { createPngBlob, downloadBlob } from './export.js';
+import { editorState as S, openDesign, commitDesign } from './editor-state.js';
+const clone = cloneDesignState;
+const selected = () => S.design.elements.find((element) => element.id === S.selection);
+export async function renderEditor(root) {
+  S.cleanup?.();
+  runtime.activeRoot = root;
+  if (!tools.some(([key]) => key === S.tool)) S.tool = 'text';
+  const catalog = [];
+  if (!root.isConnected) return;
+  let brandFolder = '',
+    resizeObserver,
+    interaction,
+    galleryCleanup,
+    settingsCleanup,
+    fullscreenCleanup,
+    libraryController,
+    layersController,
+    catalogLoadVersion = 0,
+    editorDisposed = false;
+  const observer = new MutationObserver(() => {
+    if (!root.isConnected) cleanup();
+  });
+  const cleanup = () => {
+    editorDisposed = true;
+    layersController?.destroy();
+    settingsCleanup?.();
+    fullscreenCleanup?.();
+    libraryController?.dispose();
+    loadCatalogPhoto.clear();
+    galleryCleanup?.();
+    galleryCleanup = null;
+    resizeObserver?.disconnect();
+    renderer.cancel();
+    interaction?.destroy();
+    interaction = null;
+    observer.disconnect();
   };
- };
- const paint=async()=>{const viewVersion=++renderVersion;paintToken++;if(drawFrame){cancelAnimationFrame(drawFrame);drawFrame=null;}resizeObserver?.disconnect();interaction?.destroy();interaction=null;root.innerHTML=`<link rel="stylesheet" href="./interno/encartes/styles.css"><div class="flyer-heading"><div><span class="eyebrow">ESTÚDIO DE CRIAÇÃO</span><h1>Encartes</h1></div><div class="flyer-library-actions"><button type="button" class="button secondary flyer-import">Importar backup</button><button type="button" class="button primary flyer-new">＋ Nova arte</button><input type="file" class="flyer-import-file" accept="application/json,.json" hidden></div></div><div class="flyer-tabs module-tabs" role="group" aria-label="Biblioteca de artes">${[['models','Modelos'],['create','Editor'],['created','Criados'],['draft','Rascunhos']].map(([key,label])=>`<button type="button" data-library-tab="${key}" aria-pressed="${S.tab===key}">${label}</button>`).join('')}</div><div class="flyer-message" role="status" aria-live="polite"></div><div class="flyer-view"></div>`;root.querySelectorAll('[data-library-tab]').forEach(b=>b.onclick=async()=>{clearTimeout(saveTimer);if(!(await persist()))return;S.tab=b.dataset.libraryTab;await paint();});root.querySelector('.flyer-new').onclick=async()=>{clearTimeout(saveTimer);if(!(await persist()))return;const d=createDesign();d.bgColor='#ffffff';openDesign(d);S.saveMessage='Nova arte';S.tool='products';await paint();};root.querySelector('.flyer-import').onclick=()=>root.querySelector('.flyer-import-file').click();root.querySelector('.flyer-import-file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>25*1024*1024)throw new Error('O backup deve ter até 25 MB.');const design=parseDesignJson(await file.text());clearTimeout(saveTimer);if(!(await persist()))return;openDesign(design);scheduleSave();await paint();message('Backup importado como uma nova arte.');}catch(error){message(error.message,true);}};
- if(S.tab==='models'){let starting=false;const start=async design=>{if(starting)return;starting=true;try{clearTimeout(saveTimer);if(!(await persist()))return;openDesign(design);S.tool='products';scheduleSave();await paint();const title=root.querySelector('h1');title?.setAttribute('tabindex','-1');title?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'auto'});}finally{starting=false;}};renderTemplateGallery(root.querySelector('.flyer-view'),{catalog,onChoose:start,onBlank:design=>{design.bgColor='#ffffff';start(design);}});return;}
- if(S.tab!=='create'){const view=root.querySelector('.flyer-view');view.innerHTML='<p class="flyer-help">Carregando artes…</p>';try{const designs=(await listDesigns()).filter(d=>d.status===S.tab);if(!root.isConnected||viewVersion!==renderVersion)return;view.innerHTML=designs.length?`<div class="flyer-gallery">${designs.map(d=>`<article class="card flyer-gallery-card"><button type="button" class="flyer-open-design" data-id="${d.id}"><canvas aria-hidden="true"></canvas><strong>${escapeHtml(d.title)}</strong><span>${d.width} × ${d.height} px</span></button><div><button type="button" class="button secondary flyer-duplicate-design" data-id="${d.id}">Duplicar</button><button type="button" class="button secondary flyer-delete-design" data-id="${d.id}">Excluir</button></div></article>`).join('')}</div>`:'<section class="card flyer-empty-library"><h2>'+ (S.tab==='draft'?'Nenhum rascunho ainda.':'Suas artes concluídas aparecerão aqui.')+'</h2><p>Comece uma arte em branco ou escolha um modelo.</p></section>';view.querySelectorAll('.flyer-open-design').forEach(b=>{const d=designs.find(d=>d.id===b.dataset.id);renderDesign(b.querySelector('canvas'),d,{scale:260/Math.max(d.width,d.height)}).catch(()=>{});b.onclick=async()=>{clearTimeout(saveTimer);if(!(await persist()))return;openDesign(d);await paint();};});view.querySelectorAll('.flyer-duplicate-design').forEach(b=>b.onclick=async()=>{clearTimeout(saveTimer);if(!(await persist()))return;const d=clone(designs.find(d=>d.id===b.dataset.id));d.id=newId();d.title+=' · cópia';d.status='draft';d.createdAt=new Date().toISOString();openDesign(d);scheduleSave();await paint();});view.querySelectorAll('.flyer-delete-design').forEach(b=>b.onclick=async()=>{const d=designs.find(d=>d.id===b.dataset.id);const dialog=document.createElement('dialog');dialog.className='flyer-confirm';dialog.innerHTML=`<h2>Excluir esta arte?</h2><p>${escapeHtml(d.title)}</p><div><button class="button secondary" type="button" data-cancel>Cancelar</button><button class="button primary" type="button" data-delete>Excluir</button></div>`;document.body.append(dialog);dialog.querySelector('[data-cancel]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>dialog.remove());dialog.querySelector('[data-delete]').onclick=async()=>{try{clearTimeout(saveTimer);await saveQueue.catch(()=>{});await deleteDesign(d.id);dialog.close();if(d.id===S.design.id){const fresh=createDesign();fresh.bgColor='#fff';openDesign(fresh);S.tab='draft';}await paint();}catch(error){dialog.close();message(error.message,true);}};dialog.showModal();dialog.querySelector('[data-cancel]').focus();});}catch(error){view.innerHTML='<section class="card flyer-empty-library"><h2>Não foi possível abrir suas artes.</h2><p>'+escapeHtml(error.message)+'</p></section>';}return;}
- root.querySelector('.flyer-view').innerHTML=`<section class="flyer-studio"><header class="flyer-topbar"><div class="flyer-document-name"><label class="visually-hidden" for="flyer-title">Nome da arte</label><input id="flyer-title" maxlength="160" value="${escapeHtml(S.design.title)}"><span class="flyer-save-state">${escapeHtml(S.saveMessage)}</span></div><div class="flyer-save-actions"><button type="button" class="flyer-undo" aria-label="Desfazer">↶</button><button type="button" class="flyer-redo" aria-label="Refazer">↷</button><button type="button" class="button secondary flyer-save">Salvar</button><button type="button" class="button secondary flyer-backup">Backup</button><button type="button" class="button primary flyer-export">Baixar PNG</button></div></header><div class="flyer-formatbar"><label>Formato<select class="flyer-format"><option value="custom">Personalizado</option>${formats.map(([key,label,w,h])=>`<option value="${key}" ${S.design.width===w&&S.design.height===h?'selected':''}>${label}</option>`).join('')}</select></label><label>Largura<input class="flyer-width" type="number" min="320" max="4096" value="${S.design.width}"></label><span class="flyer-dimension-x">×</span><label>Altura<input class="flyer-height" type="number" min="320" max="4096" value="${S.design.height}"></label><button type="button" class="button secondary flyer-resize">Aplicar tamanho</button><label>Fundo<input type="color" class="flyer-background" value="${S.design.bgColor.length===4?'#ffffff':S.design.bgColor}"></label><div class="flyer-zoom"><label>Zoom<select class="flyer-zoom-select">${[['fit','Ajustar'],['25','25%'],['50','50%'],['75','75%'],['100','100%']].map(([value,label])=>`<option value="${value}" ${S.zoom===value?'selected':''}>${label}</option>`).join('')}</select></label></div></div><div class="flyer-tools module-tabs" role="group" aria-label="Ferramentas da arte">${tools.map(([key,label])=>`<button type="button" data-tool="${key}" aria-pressed="${S.tool===key}">${label}</button>`).join('')}</div><div class="flyer-workspace"><aside class="flyer-panel" aria-label="Painel de ferramentas"></aside><div class="flyer-stage" tabindex="0" aria-label="Área de criação"><div class="flyer-artboard"><canvas class="flyer-canvas" role="img" aria-label="Prévia da arte. Use Camadas para selecionar elementos pelo teclado."></canvas><div class="flyer-interaction" aria-hidden="true"></div></div></div></div><footer class="flyer-bottom-bar"><span class="flyer-output-size"></span><span>PNG exportado em resolução original</span><button type="button" class="button primary flyer-finish">Concluir arte</button></footer></section>`;
- root.querySelector('#flyer-title').onchange=e=>mutate(d=>d.title=e.target.value,{panel:false});root.querySelector('.flyer-background').onchange=e=>mutate(d=>d.bgColor=e.target.value,{panel:false});root.querySelector('.flyer-undo').onclick=()=>{S.design=S.history.undo();S.selection=null;scheduleSave();refreshToolbar();renderPanel();draw();};root.querySelector('.flyer-redo').onclick=()=>{S.design=S.history.redo();S.selection=null;scheduleSave();refreshToolbar();renderPanel();draw();};root.querySelector('.flyer-save').onclick=async()=>{clearTimeout(saveTimer);await persist();};root.querySelector('.flyer-backup').onclick=async()=>{try{downloadBlob(new Blob([exportDesignJson(await embedDesignAssets(S.design))],{type:'application/json'}),safeName(S.design.title)+'.json');message('Backup JSON exportado. Ele inclui as imagens da arte.');}catch(error){message(error.message,true);}};root.querySelector('.flyer-export').onclick=async e=>{const button=e.currentTarget;button.disabled=true;button.textContent='Exportando…';try{const blob=await createPngBlob(clone(S.design));downloadBlob(blob,safeName(S.design.title)+'.png');message(`PNG pronto: ${S.design.width} × ${S.design.height} pixels.`);}catch(error){message(error.message,true);}finally{if(button.isConnected){button.disabled=false;button.textContent='Baixar PNG';}}};root.querySelector('.flyer-finish').onclick=async()=>{if(!S.design.elements.length){message('Adicione texto, produtos ou imagens antes de concluir.',true);return;}clearTimeout(saveTimer);S.design=validateDesign({...S.design,status:'created',updatedAt:new Date().toISOString()});revision++;if(await persist()){S.tab='created';await paint();message('Arte concluída e salva neste dispositivo.');}};
- root.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{S.tool=b.dataset.tool;renderPanel();});root.querySelector('.flyer-format').onchange=e=>{const f=formats.find(f=>f[0]===e.target.value);if(f){root.querySelector('.flyer-width').value=f[2];root.querySelector('.flyer-height').value=f[3];}};root.querySelector('.flyer-resize').onclick=()=>{const width=Number(root.querySelector('.flyer-width').value),height=Number(root.querySelector('.flyer-height').value);try{validateDesign({...S.design,width,height});mutate(d=>{const sx=width/d.width,sy=height/d.height;d.elements=d.elements.map(el=>({...el,x:el.x*sx,y:el.y*sy,width:el.width*sx,height:el.height*sy,...(el.fontSize?{fontSize:el.fontSize*Math.min(sx,sy)}:{})}));d.width=width;d.height=height;});message('Tamanho aplicado. Confira os elementos antes de exportar.');}catch(error){message(error.message,true);}};root.querySelector('.flyer-zoom-select').onchange=e=>{S.zoom=e.target.value;draw();};renderPanel();refreshToolbar();await bindCanvas();if(!root.isConnected||viewVersion!==renderVersion)return;resizeObserver=new ResizeObserver(()=>{if(!root.isConnected){resizeObserver.disconnect();return;}draw();});resizeObserver.observe(root.querySelector('.flyer-stage'));await draw();};await paint();}
+  observer.observe(document.body, { childList: true, subtree: true });
+  S.cleanup = cleanup;
+  const editorScope = sessionKey();
+  let catalogReady = false,
+    catalogPromise = null;
+  const ensureCatalog = () => {
+    if (catalogReady) return Promise.resolve(catalog);
+    if (catalogPromise) return catalogPromise;
+    catalogPromise = repository
+      .listProductMetadata()
+      .then((rows) => {
+        if (editorDisposed || !root.isConnected || sessionKey() !== editorScope)
+          throw Error('A sessão mudou durante o carregamento do catálogo.');
+        catalog.splice(0, catalog.length, ...rows);
+        catalogReady = true;
+        return catalog;
+      })
+      .finally(() => {
+        catalogPromise = null;
+      });
+    return catalogPromise;
+  };
+  const loadCatalogPhoto = createCatalogPhotoLoader({
+    loadPreviews: (rows, options) => repository.loadProductPreviews(rows, options),
+    isCurrent: () => !editorDisposed && root.isConnected && sessionKey() === editorScope,
+  });
+  const update = (next, { panel = true } = {}) => {
+    try {
+      commitDesign(next);
+      scheduleSave();
+      refreshToolbar();
+      renderLayers();
+      draw();
+      if (panel) renderPanel();
+      return true;
+    } catch (error) {
+      message(error.message, true);
+      return false;
+    }
+  };
+  const mutate = (fn, options) => {
+    try {
+      const next = clone(S.design);
+      fn(next);
+      update(next, options);
+    } catch (error) {
+      message(error.message, true);
+    }
+  };
+  const refreshToolbar = () => {
+    if (!root.isConnected) return;
+    const undo = root.querySelector('.flyer-undo'),
+      redo = root.querySelector('.flyer-redo');
+    if (undo) undo.disabled = !S.history.canUndo();
+    if (redo) redo.disabled = !S.history.canRedo();
+    const output = root.querySelector('.flyer-output-size');
+    if (output) output.textContent = `${S.design.width} × ${S.design.height} px`;
+  };
+  const overlay = () => interaction?.select(S.selection);
+  const renderer = createCanvasRenderer({
+    root,
+    state: S,
+    getInteraction: () => interaction,
+    isActive: () => !editorDisposed,
+    message,
+  });
+  const { draw, requestDraw } = renderer;
+  const select = (id) => {
+    S.selection = id;
+    root
+      .querySelectorAll('[data-tool]')
+      .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tool === S.tool)));
+    overlay();
+    renderPanel();
+  };
+  const renderLayers = () => {
+    const pane = root.querySelector('.flyer-layers-panel');
+    if (!pane) return;
+    if (!layersController)
+      layersController = createLayersPanel(pane, {
+        onSelect: select,
+        onMove: (id, direction) =>
+          mutate((d) => {
+            moveLayer(d.elements, id, direction);
+          }),
+        onToggleVisibility: (id) =>
+          mutate((d) => {
+            const item = d.elements.find((element) => element.id === id);
+            item.hidden = !item.hidden;
+          }),
+        onToggleLock: (id) =>
+          mutate((d) => {
+            const item = d.elements.find((element) => element.id === id);
+            item.locked = !item.locked;
+          }),
+      });
+    layersController.update(S.design, S.selection);
+  };
+
+  const renderProperties = createPropertiesRenderer({
+    root,
+    state: S,
+    selected,
+    mutate,
+    update,
+    message,
+    ensureCatalog,
+    loadCatalogPhoto,
+    getRevision: () => runtime.revision,
+    isCurrent: () => !editorDisposed && root.isConnected,
+    renderPanel: () => renderPanel(),
+    catalog,
+  });
+  const renderPanel = () => {
+    renderLayers();
+    renderProperties();
+    const pane = root.querySelector('.flyer-tool-panel');
+    if (!pane) return;
+    if (pane.dataset.tool === S.tool && !brandFolder) return;
+    pane.dataset.tool = S.tool;
+    pane.innerHTML = '';
+    root
+      .querySelectorAll('[data-tool]')
+      .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tool === S.tool)));
+    if (S.tool === 'brand') {
+      const initialCategory = brandFolder;
+      brandFolder = '';
+      renderBrandPanel(pane, {
+        initialCategory,
+        isActive: () => S.tool === 'brand',
+        onInsert: (asset) => {
+          const maxW = S.design.width * 0.6,
+            maxH = S.design.height * 0.6,
+            scale = Math.min(maxW / asset.width, maxH / asset.height);
+          const element = {
+            id: newId(),
+            type: 'image',
+            label: asset.name || asset.label || 'Imagem da biblioteca',
+            src: asset.dataURL,
+            width: asset.width * scale,
+            height: asset.height * scale,
+            x: (S.design.width - asset.width * scale) / 2,
+            y: (S.design.height - asset.height * scale) / 2,
+            locked: false,
+          };
+          S.selection = element.id;
+          mutate((d) => d.elements.push(element));
+        },
+      });
+    }
+    if (S.tool === 'text')
+      renderInsertionPanel({
+        pane,
+        root,
+        state: S,
+        mutate,
+        message,
+        onLibrary: (category) => {
+          brandFolder = category;
+          S.tool = 'brand';
+          renderPanel();
+        },
+      });
+  };
+  const bindCanvas = async () => {
+    const viewVersion = runtime.renderVersion;
+    const created = await bindEditorCanvas({
+      root,
+      state: S,
+      selected,
+      select,
+      update,
+      requestDraw,
+      mutate,
+      message,
+      isCurrent: () => !editorDisposed && viewVersion === runtime.renderVersion,
+      getGuides: renderer.getGuidePositions,
+      onSnap: renderer.showSnaps,
+    });
+    if (created) interaction = created;
+  };
+  const paint = async () => {
+    layersController?.destroy();
+    layersController = null;
+    libraryController?.dispose();
+    libraryController = null;
+    settingsCleanup?.();
+    settingsCleanup = null;
+    galleryCleanup?.();
+    galleryCleanup = null;
+    const viewVersion = ++runtime.renderVersion;
+    fullscreenCleanup?.();
+    root.classList.toggle('flyer-editing', S.tab === 'create');
+    renderer.cancel();
+    resizeObserver?.disconnect();
+    interaction?.destroy();
+    interaction = null;
+    root.innerHTML = libraryMarkup(S);
+    root.querySelectorAll('[data-library-tab]').forEach(
+      (b) =>
+        (b.onclick = async () => {
+          clearTimeout(runtime.saveTimer);
+          if (S.tab === 'create' && !(await persist())) return;
+          S.tab = b.dataset.libraryTab;
+          await paint();
+        }),
+    );
+    root.querySelector('.flyer-new').onclick = async () => {
+      clearTimeout(runtime.saveTimer);
+      if (!(await persist())) return;
+      const d = createDesign();
+      d.bgColor = '#ffffff';
+      openDesign(d);
+      S.saveMessage = 'Nova arte';
+      S.tool = 'text';
+      await paint();
+    };
+    if (S.tab === 'gallery') {
+      await ensureCatalog();
+      if (editorDisposed || !root.isConnected || viewVersion !== runtime.renderVersion) return;
+      let starting = false;
+      galleryCleanup = renderSceneGallery(root.querySelector('.flyer-view'), {
+        catalog,
+        onChoose: async (design) => {
+          if (starting) return;
+          starting = true;
+          const scope = getDataContext(),
+            route = location.hash;
+          try {
+            clearTimeout(runtime.saveTimer);
+            if (S.saveMessage === 'Alterações pendentes' && !(await persist())) return;
+            if (
+              editorDisposed ||
+              !root.isConnected ||
+              viewVersion !== runtime.renderVersion ||
+              S.tab !== 'gallery' ||
+              route !== location.hash ||
+              scope?.companyId !== getDataContext()?.companyId ||
+              scope?.user?.id !== getDataContext()?.user?.id
+            )
+              return;
+            openDesign(design);
+            S.tool = 'text';
+            S.saveMessage = 'Alterações pendentes';
+            scheduleSave();
+            await paint();
+            message('Prévia pronta. Clique na descrição ou no preço para editar sua oferta.');
+          } finally {
+            starting = false;
+          }
+        },
+      });
+      return;
+    }
+    if (S.tab !== 'create') {
+      const libraryTab = S.tab;
+      libraryController = renderDesignLibrary(root.querySelector('.flyer-view'), {
+        status: libraryTab,
+        onError: (error) => message(error.message, true),
+        onOpen: async (row) => {
+          clearTimeout(runtime.saveTimer);
+          if (!(await persist())) return;
+          const design = await getDesign(row.id);
+          if (editorDisposed || !root.isConnected || viewVersion !== runtime.renderVersion) return;
+          openDesign(design);
+          await paint();
+        },
+        onDuplicate: async (row) => {
+          clearTimeout(runtime.saveTimer);
+          if (!(await persist())) return;
+          const original = await getDesign(row.id);
+          if (editorDisposed || !root.isConnected || viewVersion !== runtime.renderVersion) return;
+          const design = clone(original);
+          design.id = newId();
+          design.title += ' · cópia';
+          design.status = 'draft';
+          design.createdAt = new Date().toISOString();
+          openDesign(design);
+          scheduleSave();
+          await paint();
+        },
+        beforeDelete: async () => {
+          clearTimeout(runtime.saveTimer);
+          await runtime.saveQueue.catch(() => {});
+        },
+        onDeleted: (row) => {
+          if (row.id === S.design.id) {
+            const fresh = createDesign();
+            fresh.bgColor = '#ffffff';
+            openDesign(fresh);
+            S.tab = libraryTab;
+          }
+          message('Arte excluída.');
+        },
+      });
+      return;
+    }
+    root.querySelector('.flyer-view').innerHTML = studioMarkup(S);
+    fullscreenCleanup = bindStudioViewport(root, { renderer, state: S, mutate });
+    root.querySelector('#flyer-title').onchange = (e) => mutate((d) => (d.title = e.target.value), { panel: false });
+    root.querySelector('.flyer-undo').onclick = () => {
+      S.design = S.history.undo();
+      S.selection = null;
+      scheduleSave();
+      refreshToolbar();
+      renderPanel();
+      draw();
+    };
+    root.querySelector('.flyer-redo').onclick = () => {
+      S.design = S.history.redo();
+      S.selection = null;
+      scheduleSave();
+      refreshToolbar();
+      renderPanel();
+      draw();
+    };
+    root.querySelector('.flyer-save').onclick = async () => {
+      clearTimeout(runtime.saveTimer);
+      await persist(S.design, { force: true });
+    };
+    root.querySelector('.flyer-export').onclick = async (e) => {
+      const button = e.currentTarget;
+      button.disabled = true;
+      button.textContent = 'Exportando…';
+      try {
+        const blob = await createPngBlob(clone(S.design));
+        downloadBlob(blob, safeName(S.design.title) + '.png');
+        message(`PNG pronto: ${S.design.width} × ${S.design.height} pixels.`);
+      } catch (error) {
+        message(error.message, true);
+      } finally {
+        if (button.isConnected) {
+          button.disabled = false;
+          button.textContent = 'Baixar PNG';
+        }
+      }
+    };
+    bindFinishButton(root.querySelector('.flyer-finish'), {
+      state: S, runtime, persist, status, message, sessionKey, paint,
+      isCurrent: () => !editorDisposed && root.isConnected && viewVersion === runtime.renderVersion,
+    });
+    root.querySelectorAll('[data-tool]').forEach(
+      (b) =>
+        (b.onclick = () => {
+          S.tool = b.dataset.tool;
+          renderPanel();
+        }),
+    );
+    root.querySelector('.flyer-settings').onclick = () => {
+      settingsCleanup?.();
+      const designId = S.design.id;
+      settingsCleanup = openDocumentSettings({
+        design: clone(S.design),
+        onApply: (next) => {
+          if (editorDisposed || !root.isConnected || S.design.id !== designId || sessionKey() !== editorScope)
+            return false;
+          const applied = update(next);
+          if (applied) message('Configurações da arte atualizadas.');
+          return applied;
+        },
+      });
+    };
+    renderPanel();
+    refreshToolbar();
+    await bindCanvas();
+    if (!root.isConnected || viewVersion !== runtime.renderVersion) return;
+    resizeObserver = new ResizeObserver(() => {
+      if (!root.isConnected) {
+        resizeObserver.disconnect();
+        return;
+      }
+      draw();
+    });
+    resizeObserver.observe(root.querySelector('.flyer-stage'));
+    await draw();
+  };
+  watchFlyerProducts(root, async () => {
+    if (editorDisposed) return;
+    if (!catalogReady && S.tab !== 'gallery') return;
+    const token = ++catalogLoadVersion,
+      scope = getDataContext(),
+      fresh = await repository.listProductMetadata();
+    if (
+      editorDisposed ||
+      !root.isConnected ||
+      token !== catalogLoadVersion ||
+      scope?.companyId !== getDataContext()?.companyId ||
+      scope?.user?.id !== getDataContext()?.user?.id
+    )
+      return;
+    loadCatalogPhoto.clear();
+    catalog.splice(0, catalog.length, ...fresh);
+    if (S.tab === 'gallery') {
+      await paint();
+      return;
+    }
+    if (S.tab === 'create' && selected()?.type === 'product') {
+      const control = root.querySelector('.flyer-replace-product');
+      if (control && !control.disabled) {
+        const value = control.value;
+        control.innerHTML =
+          '<option value="">Escolher no catálogo…</option>' +
+          catalog
+            .map((product) => `<option value="${escapeHtml(product.id)}">${escapeHtml(product.name)}</option>`)
+            .join('');
+        control.value = catalog.some((product) => product.id === value) ? value : '';
+      }
+    }
+  });
+  watchFlyerLibrary(root, () => libraryController?.refresh());
+  await paint();
+}
+
+clearFlyersOnSessionChange(() => {
+  runtime.sessionRevision++;
+  clearTimeout(runtime.saveTimer);
+  S.cleanup?.();
+  const fresh = createDesign();
+  fresh.bgColor = '#ffffff';
+  openDesign(fresh);
+  S.tab = 'gallery';
+  S.tool = 'text';
+});

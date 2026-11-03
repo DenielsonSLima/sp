@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import {createDesign,validateDesign} from '../interno/encartes/model.js';
-import {applyTemplate} from '../interno/encartes/templates.js';
-import {fillTemplateProducts,syncProductTexts,updateLinkedProductText} from '../interno/encartes/layered-templates.js';
+import {applyTemplate} from './fixtures/legacy-operations/flyer-templates.js';
+import {fillTemplateProducts,syncProductTexts,updateLinkedProductText} from './fixtures/legacy-operations/flyer-layered-templates.js';
 import {transformedGeometry} from '../interno/encartes/interaction.js';
-import {exportDesignJson,parseDesignJson} from '../interno/encartes/storage.js';
+import {exportDesignJson,parseDesignJson} from './fixtures/legacy-operations/flyer-storage.js';
 import {renderDesign} from '../interno/encartes/renderer.js';
 import {createLayerPngBlob,embedDesignAssets} from '../interno/encartes/export.js';
 const require=createRequire(import.meta.url);let native;try{native=require('@napi-rs/canvas');}catch{}

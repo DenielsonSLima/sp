@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {createPriceTableStore,RETENTION_MS,STORAGE_KEY} from '../interno/tabela-precos/state.js';
-import {defaultTemplates} from '../interno/cadastros/modelos-cartaz/model.js';
+import {createPriceTableStore,RETENTION_MS,STORAGE_KEY} from './fixtures/legacy-operations/price-table-state.js';
+import {defaultTemplates} from './fixtures/legacy-catalogs/modelos-cartaz/model.js';
 function setup(){let value=null,clock='2026-01-01T12:00:00.000Z',counter=0;const storage={getItem:()=>value,setItem:(k,v)=>{value=v;}};return {storage,store:createPriceTableStore({storage,now:()=>clock,id:()=>`id-${++counter}`}),time:v=>clock=v,raw:()=>value};}
 const products=[{id:'p1',name:'Arroz branco',unit:'UN'}];
 const models=defaultTemplates();const input={productId:'p1',templateId:'small',priceRaw:'12,90',quantity:'2',start:'',end:'',printLayout:'individual'};

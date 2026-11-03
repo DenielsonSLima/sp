@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createProductRepository} from '../interno/cadastros/produtos/state.js';
+import {createProductRepository} from './fixtures/legacy-catalogs/produtos/state.js';
 const photo='data:image/png;base64,AAAA';
 const initial=[{id:'horti-edited',name:'Tomate italiano',category:'Hortifruti',unit:'KG',code:'123',photos:[photo]},{id:'old',name:'Arroz exemplo',category:'Mercearia',unit:'UN'}];
 const migration={id:'renewal-v1',keep:row=>row.category==='Hortifruti',seeds:[{id:'new',name:'Biscoito Vitarella 350 g',category:'Mercearia',unit:'UN',brand:'Vitarella',asset:'biscoito.png'}]};

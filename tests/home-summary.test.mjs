@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {dailySummary,createNoticeStore,NOTICE_KEY} from '../interno/inicio/state.js';
+import {dailySummary,createNoticeStore,NOTICE_KEY} from './fixtures/legacy-operations/home-state.js';
 
 test('daily summary includes only open work and active promotions ending in the next seven days',()=>{
  const summary=dailySummary({today:'2026-12-28',quotes:[{status:'open'},{status:'finished'}],purchases:[{status:'pending',entryConfirmed:false},{status:'pending',entryConfirmed:true},{status:'finished'}],campaigns:[{start:'2026-12-01',end:'2026-12-28'},{start:'2026-12-01',end:'2027-01-04'},{start:'2026-12-29',end:'2027-01-01'},{start:'2026-12-01',end:'2026-12-27'},{start:'2026-12-01',end:'2027-01-05'}],printRecords:[{status:'draft'},{status:'sent'},{status:'sent',archivedAt:'2026-12-28'},{status:'finalized'}]});

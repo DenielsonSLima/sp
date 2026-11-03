@@ -1,0 +1,13 @@
+-- Extend only the font allowlist. Existing geometry, authorization, RLS, grants,
+-- concurrency and resource_changes triggers remain unchanged. No row is updated.
+create or replace function sp_private.validate_template(input jsonb) returns jsonb language plpgsql immutable set search_path='' as $$ declare field text;el jsonb;required text;begin
+ if input is null or jsonb_typeof(input)<>'object' then raise exception 'Modelo inválido.';end if;
+ foreach required in array array['id','name','color','background','font','scale','widthMm','heightMm','layout'] loop if not input ? required or input->required='null'::jsonb then raise exception 'Campo obrigatório do modelo: %.',required;end if;end loop;
+ if length(trim(input->>'name')) not between 1 and 60 or input->>'color' !~ '^#[0-9a-fA-F]{6}$' or input->>'background' !~ '^#[0-9a-fA-F]{6}$' or not (input->>'font'=any(array['Arial','Verdana','Georgia','Impact','Trebuchet MS','Anton','Bebas Neue','Oswald','Barlow Condensed','Roboto Condensed','Archivo Black','Alfa Slab One','Bungee','Lilita One','Paytone One','Passion One','Fugaz One','Righteous','Staatliches','Montserrat','Poppins','Nunito Sans','Rubik','Lato','Barlow'])) then raise exception 'Nome, cores ou fonte do modelo inválidos.';end if;
+ if (input->>'scale')::numeric not between .8 and 1.15 or (input->>'widthMm')::numeric not between 60 and 420 or (input->>'heightMm')::numeric not between 80 and 594 or (input->>'heightMm')::numeric<=(input->>'widthMm')::numeric then raise exception 'Dimensões do cartaz inválidas.';end if;
+ foreach field in array array['headline','product','price','validity'] loop
+ el:=input#>array['layout',field];foreach required in array array['x','y','w','h','fontSize','fontFamily','align'] loop if el is null or not el ? required or el->required='null'::jsonb then raise exception 'Elemento do modelo incompleto: %.',field;end if;end loop;if el is null or (el->>'x')::numeric<0 or (el->>'y')::numeric<0 or (el->>'w')::numeric<.08 or (el->>'h')::numeric<.035 or (el->>'x')::numeric+(el->>'w')::numeric>1.000001 or (el->>'y')::numeric+(el->>'h')::numeric>1.000001 or (el->>'fontSize')::numeric not between 1.5 and 55 then raise exception 'Mantenha os elementos dentro da folha e confira as fontes.';end if;
+ if el->>'align' not in ('left','center','right') or el->>'fontFamily' not in ('Arial','Verdana','Georgia','Impact','Trebuchet MS','Anton','Bebas Neue','Oswald','Barlow Condensed','Roboto Condensed','Archivo Black','Alfa Slab One','Bungee','Lilita One','Paytone One','Passion One','Fugaz One','Righteous','Staatliches','Montserrat','Poppins','Nunito Sans','Rubik','Lato','Barlow') then raise exception 'Fonte ou alinhamento inválido.';end if;
+ end loop;
+ return input;
+end $$;

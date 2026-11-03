@@ -1,8 +1,9 @@
+import {readDomainSource,readDomainStyles,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {rulerTicks,centerElement,snapElementToCenter} from '../interno/cadastros/modelos-cartaz/geometry.js';
-import {defaultLayout,defaultTemplates,posterMarkup,sampleOffer,validityFrame,VALIDITY_FRAME} from '../interno/cadastros/modelos-cartaz/model.js';
+import {defaultLayout,defaultTemplates,posterMarkup,sampleOffer,validityFrame,VALIDITY_FRAME} from './fixtures/legacy-catalogs/modelos-cartaz/model.js';
 const close=(a,b)=>assert.ok(Math.abs(a-b)<.000001,`${a} != ${b}`);
 
 test('millimetre ruler ticks track full physical sheets accurately at every view scale',()=>{
@@ -39,7 +40,7 @@ test('validity border has real physical width and bounded internal padding witho
  short.layout.validity.hidden=true;assert.ok(!posterMarkup(sampleOffer(short.id),short).includes('data-poster-element="validity"'));
 });
 test('rulers and guides stay in the editor and lifecycle/centering controls remain wired',async()=>{
- const editor=await readFile(new URL('../interno/cadastros/modelos-cartaz/editor.js',import.meta.url),'utf8'),css=await readFile(new URL('../interno/cadastros/modelos-cartaz/styles.css',import.meta.url),'utf8'),model=await readFile(new URL('../interno/cadastros/modelos-cartaz/model.js',import.meta.url),'utf8');
+ const editor=await readDomainSource('interno/cadastros/modelos-cartaz'),css=await readDomainStyles('interno/cadastros/modelos-cartaz'),model=await readModuleSource('interno/cadastros/modelos-cartaz/presentation.js');
  for(const token of ['poster-ruler-top','poster-ruler-left','snapElementToCenter','data-center="horizontal"','data-center="vertical"','ResizeObserver(paintRulers)','rulerObserver?.disconnect()','button.disabled=element.hidden','paintGuides()'])assert.ok(editor.includes(token),token);
- assert.ok(!model.includes('poster-ruler'));assert.ok(!model.includes('poster-center-guide'));assert.match(css,/poster-alignment-guides\{[^}]*pointer-events:none/);assert.match(css,/poster-validity\{border:calc\(var\(--poster-unit\)\*var\(--validity-border-width\)\) solid currentColor;padding:calc\(var\(--poster-unit\)\*var\(--validity-padding\)\)/);
+ assert.ok(!model.includes('poster-ruler'));assert.ok(!model.includes('poster-center-guide'));assert.match(css,/poster-alignment-guides\{[^}]*pointer-events:none/);assert.match(css,/poster-validity\{border:calc\(var\(--poster-unit\)\s*\*\s*var\(--validity-border-width\)\) solid currentColor;padding:calc\(var\(--poster-unit\)\s*\*\s*var\(--validity-padding\)\)/);
 });

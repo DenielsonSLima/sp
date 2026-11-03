@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {defaultTemplates} from '../interno/cadastros/modelos-cartaz/model.js';
+import {defaultTemplates} from './fixtures/legacy-catalogs/modelos-cartaz/model.js';
 import {planCampaignPdfs,createPdfBytes,generateCampaignPdfs,renderPosterJpeg,PDF_DPI,MAX_CANVAS_PIXELS} from '../interno/promocoes/pdf.js';
 const item=(size=1,quantity=1,printLayout='individual')=>({id:'a',name:'Arroz branco 1 kg',cents:499,unit:'kg',quantity,printLayout,templateSnapshot:defaultTemplates()[size]});
 const campaign=items=>({name:'Promoção da semana',start:'2026-10-20',end:'2026-10-27',items});
@@ -64,7 +64,7 @@ test('browser raster export loads chosen fonts, caps pixels, returns real PDF bl
 
 test('campaign displayName preserves Enter and snapshot export survives an empty gallery',async()=>{
  const {wrapPosterText}=await import('../interno/promocoes/pdf.js');
- const {templates}=await import('../interno/cadastros/modelos-cartaz/model.js');
+ const {templates}=await import('./fixtures/legacy-catalogs/modelos-cartaz/model.js');
  const saved=[...templates],input=item();input.displayName='Arroz\n\nPremium 1 kg';
  try{templates.splice(0);const g=planCampaignPdfs(campaign([input]))[0];assert.equal(g.pages[0][0].offer.displayName,input.displayName);assert.equal(g.widthMm,148);}finally{templates.splice(0,templates.length,...saved);}
  const ctx={measureText:t=>({width:t.length*10})};
@@ -123,7 +123,7 @@ test('optional raster previews reuse exact embedded JPEGs and physical slots, cl
 });
 
 test('visible validity has an inset physical border and padded text; hidden validity has neither',async()=>{
- const {validityFrame}=await import('../interno/cadastros/modelos-cartaz/model.js');
+ const {validityFrame}=await import('./fixtures/legacy-catalogs/modelos-cartaz/model.js');
  const original=globalThis.document,strokes=[],clips=[],draws=[];
  const ctx={letterSpacing:'0px',fillRect(){},strokeRect(...rect){strokes.push({rect,width:this.lineWidth,color:this.strokeStyle})},save(){},beginPath(){},rect(...rect){clips.push(rect)},clip(){},restore(){},measureText:t=>({width:t.length*10}),fillText(...args){draws.push(args)}};
  globalThis.document={createElement(){return{getContext:()=>ctx,toBlob:cb=>cb(new Blob([jpeg.bytes],{type:'image/jpeg'}))}}};

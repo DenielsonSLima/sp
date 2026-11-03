@@ -1,0 +1,90 @@
+.sidebar-toggle,
+.sidebar-monogram {
+  display: none;
+}
+
+@media (min-width: 761px) {
+  .sidebar-toggle {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    padding: 8px;
+    border: 1px solid #f1dcd6;
+    border-radius: 10px;
+    background: #fff0ec;
+    color: #9e1827;
+    cursor: pointer;
+  }
+
+  .sidebar-toggle:hover {
+    background: #ffe3dc;
+  }
+
+  .sidebar-toggle:focus-visible {
+    outline: 3px solid #9e1827;
+    outline-offset: 3px;
+  }
+
+  .sidebar-toggle[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
+
+  .workspace.sidebar-collapsed {
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+
+  .workspace.sidebar-collapsed .sidebar {
+    width: 76px;
+    padding: 24px 10px 20px;
+  }
+
+  .workspace.sidebar-collapsed .sidebar > .brand-logo,
+  .workspace.sidebar-collapsed .nav-children,
+  .workspace.sidebar-collapsed .nav-chevron {
+    display: none;
+  }
+
+  .workspace.sidebar-collapsed .sidebar-monogram {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 20px;
+    flex-shrink: 0;
+    border: 1px solid #ffffff45;
+    border-radius: 12px;
+    color: #ffe04a;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  /* Retain navigation and section names for assistive technology. */
+  .workspace.sidebar-collapsed :is(.nav-item > span, .nav-caption, .nav-section-title, .logout > span) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .workspace.sidebar-collapsed .nav-item {
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px;
+    margin: 3px 0;
+  }
+
+  .workspace.sidebar-collapsed .sidebar-bottom {
+    padding: 16px 0 0;
+  }
+
+  .workspace.sidebar-collapsed .logout {
+    justify-content: center;
+    padding: 14px 0 0;
+  }
+}

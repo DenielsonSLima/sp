@@ -1,8 +1,25 @@
-export const layerAssets=[
- {id:'fundo-vermelho-dourado',label:'Vermelho e dourado',kind:'background',width:1122,height:1402},
- {id:'fundo-laranja',label:'Laranja com movimento',kind:'background',width:1122,height:1402},
- {id:'fundo-azul',label:'Azul royal',kind:'background',width:1122,height:1402},
- {id:'raio-dourado',label:'Raio dourado 3D',kind:'sticker',width:1254,height:1254},
- {id:'balao-coracao',label:'Balão com coração 3D',kind:'sticker',width:1254,height:1254},
- {id:'selo-vermelho-dourado',label:'Selo vermelho e dourado',kind:'sticker',width:1254,height:1254}
-].map(asset=>({...asset,src:`./assets/encartes/camadas/${asset.id}.png`}));
+import { listRecords } from '../../shared/data/api.js';
+import { clearOnContextChange } from '../cadastros/remote.js';
+export const layerAssets = [];
+export async function loadLayerAssets() {
+  const rows = await listRecords('flyer_assets');
+  if (
+    rows.some(
+      (row) =>
+        typeof row.id !== 'string' ||
+        typeof row.label !== 'string' ||
+        !/^\.\/assets\/encartes\/camadas\/[a-z0-9-]+\.png$/.test(row.src) ||
+        !Number.isFinite(row.width) ||
+        !Number.isFinite(row.height) ||
+        row.width <= 0 ||
+        row.height <= 0 ||
+        !['background', 'sticker'].includes(row.kind),
+    )
+  )
+    throw Error('O banco retornou recursos gráficos incompletos.');
+  layerAssets.splice(0, layerAssets.length, ...rows);
+  return layerAssets;
+}
+clearOnContextChange('flyer_assets', () => {
+  layerAssets.length = 0;
+});

@@ -1,10 +1,11 @@
+import {readDomainSource,readModuleSource} from './helpers/domain-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile,mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {defaultTemplates} from '../interno/cadastros/modelos-cartaz/model.js';
+import {defaultTemplates} from './fixtures/legacy-catalogs/modelos-cartaz/model.js';
 import {planPriceTablePdfs,generatePriceTablePdfs} from '../interno/tabela-precos/pdf.js';
 const entry=(change={})=>({name:'Arroz branco',unit:'kg',cents:499,start:'2026-10-20',end:'2026-10-27',templateSnapshot:defaultTemplates()[1],quantity:1,printLayout:'two-a4',...change});
 
@@ -45,7 +46,7 @@ test('export uses shared rendering, per-offer text and PDF previews with no auto
   assert.equal(results.length,1);assert.equal(results[0].pages,2);assert.equal(results[0].previewPages.length,2);
   const pdf=await results[0].blob.text();assert.match(pdf,/%PDF-1.4/);assert.match(pdf,/\/MediaBox \[0 0 841\.88976 595\.27559\]/);
   assert.ok(draws.some(t=>t.includes('20/10/2026')));assert.ok(draws.some(t=>t.includes('01/11/2026')));assert.equal(draws.filter(t=>t.startsWith('Válido')).length,2);
-  const source=await readFile(new URL('../interno/tabela-precos/pdf.js',import.meta.url),'utf8');assert.match(source,/openPdfDialog\(host/);assert.doesNotMatch(source,/\.click\(|\.print\(|createObjectURL/);
+  const source=await readModuleSource('interno/tabela-precos/pdf.js');assert.match(source,/openPdfDialog\(host/);assert.doesNotMatch(source,/\.click\(|\.print\(|createObjectURL/);
  }finally{globalThis.document=oldDocument;globalThis.createImageBitmap=oldBitmap;}
 });
 test('real Canvas batch exports parse and rasterize with separate model files and consolidated dates',{skip:!process.env.CANVAS_MODULE_PATH},async()=>{

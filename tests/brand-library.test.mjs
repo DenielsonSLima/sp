@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validateAsset,snapshotAsset,filterAssets,inspectPng,assetFromFile,MAX_FILE_BYTES} from '../interno/cadastros/biblioteca-marca/state.js';
-import {createAssetStore,listAssets} from '../interno/cadastros/biblioteca-marca/storage.js';
+import {validateAsset,snapshotAsset,filterAssets,inspectPng,assetFromFile,MAX_FILE_BYTES} from './fixtures/legacy-catalogs/biblioteca-marca/state.js';
+import {createAssetStore,listAssets} from './fixtures/legacy-catalogs/biblioteca-marca/storage.js';
 const png='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jmxkAAAAASUVORK5CYII=';
 const asset=(id='logo-1')=>({id,name:' Logo principal ',category:'Logos',dataURL:png,width:1,height:1});
 function memoryRun(){const data=new Map();return async(mode,operation)=>operation({getAll:()=>[...data.values()].map(x=>({...x})),add:value=>{if(data.has(value.id))throw new Error('ConstraintError');data.set(value.id,{...value});},put:value=>data.set(value.id,{...value}),delete:id=>data.delete(id)});}

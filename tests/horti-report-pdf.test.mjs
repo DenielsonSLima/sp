@@ -4,7 +4,7 @@ import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {reportMoney,reportDecimal,reportWeight,normalizeReportOrder,generateOrderReportPdfs} from '../interno/hortifruti/report-pdf.js';
+import {reportMoney,reportDecimal,reportWeight,normalizeReportOrder,generateOrderReportPdfs} from './fixtures/legacy-operations/hortifruti-report-pdf.js';
 const item=()=>({productId:'p',name:'Tomate italiano',unitSymbol:'KG',unitCount:4,quantityMicros:12500000,unitMicros:3333333,totalCents:4167});
 const order=()=>({id:'compra-1',date:'2026-10-20',partner:{name:'Horta São José'},status:'pending',notes:'Entregar pela manhã.\nConferir as caixas.',items:[item()]});
 test('report exact monetary precision, nullable costs and local calendar date',()=>{

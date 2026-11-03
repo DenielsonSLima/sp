@@ -1,0 +1,236 @@
+.poster-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 18px 0;
+}
+.poster-toolbar p,
+.poster-note {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted, #697080);
+}
+.poster-gallery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.poster-gallery-status {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #386248;
+}
+.poster-gallery-status:empty {
+  display: none;
+}
+.poster-template-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.poster-template-card {
+  min-width: 0;
+  overflow: hidden;
+}
+.poster-template {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  background: white;
+  border: 0;
+  border-radius: 14px;
+  min-width: 0;
+  text-align: left;
+  color: var(--ink);
+  transition:
+    border-color 0.16s,
+    box-shadow 0.16s,
+    transform 0.16s;
+}
+.poster-template-card:hover {
+  border-color: #d3a4a8;
+  box-shadow: 0 8px 24px #1820350b;
+}
+.poster-template:hover {
+  background: #fffdfd;
+}
+.poster-template-title {
+  display: block;
+}
+.poster-template-title strong {
+  display: block;
+  font-size: 16px;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+.poster-template-title > span {
+  font-size: 11px;
+  color: #6b7280;
+}
+.poster-mini-preview {
+  min-height: 250px;
+  background: #edf0f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 18px 0;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.poster-mini-paper {
+  position: relative;
+  display: block;
+  width: min(100%, var(--mini-width));
+  aspect-ratio: var(--paper-ratio);
+  flex: none;
+  box-shadow: 0 1px 5px #0002;
+  background: white;
+}
+.poster-mini-content {
+  position: absolute;
+  inset: var(--inset-y) var(--inset-x);
+  container-type: inline-size;
+}
+.poster-mini-content .price-poster {
+  --poster-unit: 1cqw;
+}
+.poster-template-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+  color: #747982;
+}
+.poster-template-footer b {
+  font-size: 11px;
+  color: var(--red);
+  white-space: nowrap;
+}
+/* The same positioned markup is used by cards, the editor, previews and print. */
+.price-poster {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: var(--poster-paper);
+  color: var(--poster-ink);
+  font-family: var(--poster-font), sans-serif;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.poster-element {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: var(--element-justify);
+  font-family: var(--element-font), sans-serif;
+  font-size: calc(var(--poster-unit) * var(--element-size) * var(--poster-scale));
+  letter-spacing: calc(var(--element-letter-spacing) * 1em);
+  line-height: var(--element-line-height);
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.price-poster h2 {
+  color: inherit;
+  font-family: var(--element-font), sans-serif;
+  font-size: calc(var(--poster-unit) * var(--element-size) * var(--poster-scale) * var(--name-scale));
+  font-weight: 900;
+  line-height: var(--element-line-height);
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.poster-kicker {
+  font-weight: 900;
+  line-height: var(--element-line-height);
+  overflow-wrap: anywhere;
+}
+.poster-price {
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.035em;
+  max-width: 100%;
+  line-height: var(--element-line-height);
+  font-size: calc(1em * var(--amount-scale));
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.poster-integer {
+  font-size: 1em;
+  line-height: var(--element-line-height);
+  font-weight: 900;
+}
+.poster-currency {
+  align-self: flex-end;
+  font-weight: 700;
+  font-size: 0.14em;
+  margin-bottom: 0.45em;
+}
+.poster-price-side {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 0.025em;
+  min-width: 0.7em;
+}
+.poster-cents {
+  font-size: 0.5em;
+  line-height: calc(1.05 * var(--element-line-height));
+  text-align: center;
+  padding-bottom: 0.08em;
+  border-bottom: 0.035em solid currentColor;
+}
+.poster-unit {
+  font-size: 0.19em;
+  line-height: calc(1.2 * var(--element-line-height));
+  font-weight: 700;
+  text-align: center;
+  padding-top: 0.18em;
+}
+.poster-validity {
+  border: calc(var(--poster-unit) * var(--validity-border-width)) solid currentColor;
+  padding: calc(var(--poster-unit) * var(--validity-padding));
+  font-weight: 700;
+  line-height: var(--element-line-height);
+  overflow-wrap: anywhere;
+}
+.poster-kicker,
+.poster-product,
+.poster-validity {
+  white-space: pre-wrap;
+}
+.poster-price,
+.poster-integer,
+.poster-currency,
+.poster-cents,
+.poster-unit {
+  letter-spacing: calc(var(--element-letter-spacing) * 1em);
+}
+.poster-sheet {
+  width: var(--paper-width);
+  height: var(--paper-height);
+  padding: 5mm;
+  background: white;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  margin: 0 auto 24px;
+  box-shadow: 0 3px 18px #0002;
+  flex: none;
+}
+.poster-print-root {
+  display: none;
+}

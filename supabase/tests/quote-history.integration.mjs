@@ -1,0 +1,90 @@
+import { PGlite } from '@electric-sql/pglite';
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const db = new PGlite();
+const owner = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+const other = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+const rpc = async (name, args) => (await db.query(`select public.${name}(${args.map((_, i) => '$' + (i + 1)).join(',')}) as result`, args)).rows[0].result;
+try {
+  await db.exec(`create role anon; create role authenticated; create schema auth;
+    create table auth.users(id uuid primary key,email text);
+    create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+    grant usage on schema auth to authenticated,anon; grant execute on function auth.uid() to authenticated,anon;
+    create publication supabase_realtime;
+    create schema storage;create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text,metadata jsonb);
+    alter table storage.objects enable row level security;grant usage on schema storage to authenticated,anon;
+    grant select,insert,update,delete on storage.objects to authenticated;`);
+  for (const file of ['schema.sql','catalog-schema.sql','migrations/20261031031813_optimize_product_media_rpc.sql',
+    'migrations/20261031032723_product_photo_storage.sql','migrations/20261031043008_product_server_pagination.sql',
+    'migrations/20261031050550_quote_header_creation.sql',
+    'migrations/20261102013854_quote_supplier_discounts.sql','migrations/20261102031736_quote_offer_history.sql'])
+    await db.exec(readFileSync(new URL('../' + file, import.meta.url), 'utf8'));
+  await db.query('insert into auth.users values($1,$2),($3,$4)',[owner,'history@example.com',other,'foreign@example.com']);
+  const company=(await db.query("select sp_private.bootstrap_company('history@example.com','Loja') id")).rows[0].id;
+  const foreign=(await db.query("select sp_private.bootstrap_company('foreign@example.com','Outra') id")).rows[0].id;
+  await db.query("select set_config('request.jwt.claim.sub',$1,false)",[owner]);
+  await db.exec('set role authenticated');
+  const save=(resource,doc)=>rpc('sp_save',[company,resource,doc,null]);
+  await save('product_categories',{id:'food',name:'Alimentos'});
+  for(const id of ['p1','p2','p3']) await save('products',{id,name:id,category:'Alimentos',unit:'UN',photos:[]});
+  for(const id of ['a','b','c']) await save('partners',{id,name:id,type:'Fornecedor'});
+  const act=(q,action,payload)=>rpc('sp_command',[company,'quotes',action,q.id,payload,q._version]);
+  const create=async(date,prices)=>{
+    let q=await rpc('sp_command',[company,'quotes','create',null,{title:'Cotação '+date,date},null]);
+    for(const id of ['a','b','c']) q=await act(q,'addQuoteProvider',{provider:{id}});
+    for(const id of ['p1','p2','p3']) q=await act(q,'addQuoteItem',{product:{id},quantity:'2'});
+    for(const [product,provider,value] of prices) q=await act(q,'setOffer',{itemId:q.items.find(i=>i.productId===product).id,providerId:provider,value});
+    return q;
+  };
+  const older=await create('2026-10-01',[['p1','a','10'],['p2','b','30']]);
+  const prior=await create('2026-10-15',[['p1','a','12'],['p1','b','14']]);
+  const missing=await create('2026-10-20',[]);
+  await create('2026-12-01',[['p1','a','99']]);
+  let current=await create('2026-11-02',[['p1','a','15'],['p1','b','13'],['p2','b','30']]);
+  const [i1,i2,i3]=current.items.map(i=>i.id);
+  let history=current.computed.priceHistory;
+  assert.equal(history[i1].a.previousCents,1200);
+  assert.equal(history[i1].a.quoteId,prior.id);
+  assert.equal(history[i1].a.quotedOn,'2026-10-15');
+  assert.equal(history[i1].a.trend,'up');
+  assert.equal(history[i1].b.trend,'down');
+  assert.equal(history[i2].b.trend,'equal');
+  assert.equal(history[i2].b.quoteId,older.id,'skip newer quotations without an offer');
+  assert.equal(history[i3],undefined);
+  assert.equal(history[i1].c,undefined,'supplier identities never mix');
+  assert.equal(current.awards[i1],undefined,'history does not choose a winner');
+  assert.equal((await rpc('sp_get',[company,'quotes',current.id])).computed.priceHistory[i1].a.previousCents,1200);
+  current=await act(current,'setOffer',{itemId:i1,providerId:'a',value:'11'});
+  assert.equal(current.computed.priceHistory[i1].a.trend,'down','mutation response recomputes trend');
+  current=await act(current,'setOffer',{itemId:i1,providerId:'a',value:''});
+  assert.equal(current.computed.priceHistory[i1].a.trend,'none');
+  const stored=(await db.query('select data from public.quotes where company_id=$1 and id=$2',[company,current.id])).rows[0].data;
+  assert.equal(stored.computed.priceHistory,undefined,'derived history is never persisted');
+  await db.exec('reset role');
+  // A prior item in a different unit cannot be compared even if its product ID is the same.
+  await db.query("update public.quotes set data=jsonb_set(data,'{items,0,unit}','\"KG\"') where company_id=$1 and id=$2",[company,prior.id]);
+  await db.exec('set role authenticated');
+  history=(await rpc('sp_get',[company,'quotes',current.id])).computed.priceHistory;
+  assert.equal(history[i1].a.previousCents,1000);
+  assert.equal(history[i1].b,undefined);
+  const sameDay=await create('2026-11-02',[['p1','a','8']]);
+  assert.equal((await rpc('sp_get',[company,'quotes',current.id])).computed.priceHistory[i1].a.previousCents,1000,'later same-day quote excluded');
+  const sameItem=sameDay.items[0].id;
+  assert.equal(sameDay.computed.priceHistory[sameItem].a.previousCents,1000,'empty current offer is not a historical price');
+  const next=await create('2026-11-03',[['p1','a','8']]);
+  assert.equal(next.computed.priceHistory[next.items[0].id].a.quoteId,sameDay.id);
+  const hash=(await db.query('select md5(data::text) hash from public.quotes where company_id=$1 and id=$2',[company,older.id])).rows[0].hash;
+  await rpc('sp_get',[company,'quotes',next.id]);
+  assert.equal((await db.query('select md5(data::text) hash from public.quotes where company_id=$1 and id=$2',[company,older.id])).rows[0].hash,hash);
+  await assert.rejects(()=>rpc('sp_get',[foreign,'quotes',current.id]),/não autorizado/);
+  await assert.rejects(()=>act(current,'chooseProvider',{itemId:i1,providerId:'a'}),/preço/);
+  await db.exec('reset role');
+  await db.query("update public.memberships set active=false where company_id=$1 and user_id=$2",[company,owner]);
+  await db.exec('set role authenticated');
+  await assert.rejects(()=>rpc('sp_get',[company,'quotes',current.id]),/não autorizado/);
+  await db.exec('reset role; set role anon');
+  await assert.rejects(()=>rpc('sp_get',[company,'quotes',current.id]),/permission denied/);
+  await db.exec('reset role');
+  assert.equal((await db.query("select relrowsecurity enabled from pg_class where oid='public.quotes'::regclass")).rows[0].enabled,true);
+  console.log('PASS: latest earlier product/supplier/unit prices, directions, missing prices, same-day order, future/current exclusion, no automatic winner, live mutation results, immutable history, RLS and permissions.');
+} catch(error) { console.error(error.message, error.where || '', error.stack?.split('\n').slice(0,3).join('\n')); process.exitCode=1; } finally { await db.close(); }

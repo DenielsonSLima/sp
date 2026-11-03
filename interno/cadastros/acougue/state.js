@@ -1,19 +1,48 @@
-const models=[];const receipts=[];const currentByCategory=new Map();let sequence=1;
-const clone=v=>JSON.parse(JSON.stringify(v));const key=v=>String(v||'').trim().toLocaleLowerCase('pt-BR');
-export function decimal(value,label,max,places=2){const s=String(value??'').trim();if(!new RegExp(`^\\d+(?:[,.]\\d{1,${places}})?$`).test(s))throw Error(`${label}: informe um número válido com até ${places} casas decimais.`);const n=Number(s.replace(',','.'));if(!Number.isFinite(n)||n<0||n>max)throw Error(`${label}: valor fora do limite permitido.`);return Math.round(n*10**places);}
-export const listModels=()=>models.map(m=>({...clone(m),current:currentByCategory.get(key(m.category))===m.id}));
-export const listReceipts=()=>clone(receipts);
-export const categories=()=>[...new Set(['Boi','Porco',...models.map(m=>m.category)])];
-export const currentModel=category=>listModels().find(m=>m.id===currentByCategory.get(key(category))&&m.active)||null;
-export const percent=bps=>(bps/100).toLocaleString('pt-BR',{maximumFractionDigits:2});
-export const kg=grams=>(grams/1000).toLocaleString('pt-BR',{minimumFractionDigits:3,maximumFractionDigits:3});
-export function saveModel(input){const original=input.sourceId?models.find(m=>m.id===input.sourceId):null;if(input.sourceId&&!original)throw Error('Modelo original não encontrado.');const name=String(input.name||'').trim();const rawCategory=String(input.category||'').trim();const category=categories().find(c=>key(c)===key(rawCategory))||rawCategory;if(!name||name.length>80)throw Error('Informe o nome do modelo, com até 80 caracteres.');if(!category||category.length>40)throw Error('Informe a categoria, com até 40 caracteres.');if(original&&key(original.category)!==key(category))throw Error('Uma nova versão deve manter a categoria original.');if(!Array.isArray(input.parts))throw Error('Lista de partes inválida.');if(input.parts.length>100)throw Error('Use até 100 partes por modelo.');const names=new Set();const parts=input.parts.map((part,i)=>{const name=String(part.name||'').trim();if(!name||name.length>80)throw Error(`Informe o nome da parte ${i+1}, com até 80 caracteres.`);if(names.has(key(name)))throw Error('Há partes com nomes repetidos.');names.add(key(name));if(!['KG','UN'].includes(part.unit))throw Error('Selecione kg ou unidade para cada parte.');const percentBps=decimal(part.percent,'Porcentagem',100);if(!percentBps)throw Error('A porcentagem de cada parte precisa ser maior que zero.');return {id:`part-${sequence++}`,name,unit:part.unit,percentBps,active:part.active!==false};});const totalBps=parts.filter(p=>p.active).reduce((s,p)=>s+p.percentBps,0);if(totalBps>10000)throw Error('A soma das partes não pode ultrapassar 100%.');const familyId=original?.familyId||`family-${sequence++}`;const version=1+Math.max(0,...models.filter(m=>m.familyId===familyId).map(m=>m.version));const model={id:`model-${sequence++}`,familyId,version,name,category,parts,totalBps,active:true,createdAt:new Date().toISOString()};models.unshift(model);return clone(model);}
-export function setCurrent(id){const model=models.find(m=>m.id===id);if(!model||!model.active)throw Error('Escolha um modelo ativo.');if(!model.parts.some(p=>p.active))throw Error('Adicione ao menos uma parte antes de definir o modelo atual.');currentByCategory.set(key(model.category),id);return currentModel(model.category);}
-export function toggleModel(id,{confirmCurrent=false}={}){const model=models.find(m=>m.id===id);if(!model)throw Error('Modelo não encontrado.');const current=currentByCategory.get(key(model.category))===id;if(model.active&&current&&!confirmCurrent)throw Error('Confirme a inativação do modelo atual. A categoria ficará sem modelo atual.');if(current)currentByCategory.delete(key(model.category));model.active=!model.active;return clone(model);}
-export const localDate=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
-export function validReceiptDate(value){if(!/^\d{4}-\d{2}-\d{2}$/.test(value)||value<'1900-01-01')return false;const parsed=new Date(`${value}T12:00:00Z`);return Number.isFinite(parsed.getTime())&&parsed.toISOString().slice(0,10)===value;}
-export function lotWeights(input){const raw=String(input.animalCount??1);if(!/^\d+$/.test(raw)||!Number.isSafeInteger(Number(raw))||Number(raw)<1||Number(raw)>1000)throw Error('Informe uma quantidade inteira de animais entre 1 e 1.000.');const animalCount=Number(raw),weightMode=input.weightMode??'total';if(!['total','individual'].includes(weightMode))throw Error('Selecione a forma de informar o peso.');let animals=[],weightGrams=0;if(weightMode==='individual'){if(!Array.isArray(input.animals)||input.animals.length!==animalCount)throw Error('A quantidade de animais deve corresponder às linhas de peso por animal.');animals=input.animals.map((animal,i)=>{const grams=decimal(animal.weight,`Peso do animal ${i+1}`,100000,3);if(!grams)throw Error(`Informe um peso maior que zero para o animal ${i+1}.`);const identification=String(animal.identification||'').trim();if(identification.length>80)throw Error('Use até 80 caracteres na identificação de cada animal.');return {identification,weightGrams:grams};});weightGrams=animals.reduce((sum,a)=>sum+a.weightGrams,0);if(weightGrams>100000000)throw Error('O peso total do lote não pode ultrapassar 100.000 kg.');}else{weightGrams=decimal(input.weight,'Peso total do lote',100000,3);if(!weightGrams)throw Error('Informe um peso total do lote maior que zero.');}return {animalCount,weightMode,animals,weightGrams};}
-export function estimateReceipt(input){const receivedDate=input.receivedDate??localDate();if(!validReceiptDate(receivedDate))throw Error('Informe uma data de recebimento válida.');const model=currentModel(input.category);if(!model)throw Error('Defina um modelo atual e ativo para esta categoria no cadastro.');const lot=lotWeights(input);const {weightGrams}=lot;const allocations=[...model.parts.filter(p=>p.active).map(p=>({part:p,bps:p.percentBps})),{part:null,bps:10000-model.totalBps}].map((a,index)=>({...a,index,grams:Math.floor(weightGrams*a.bps/10000),remainder:weightGrams*a.bps%10000}));let left=weightGrams-allocations.reduce((s,a)=>s+a.grams,0);for(const a of [...allocations].sort((a,b)=>b.remainder-a.remainder||a.index-b.index)){if(left<=0)break;a.grams++;left--;}
-const rows=allocations.filter(a=>a.part).map(a=>({...clone(a.part),estimatedGrams:a.grams,quantity:null}));for(const row of rows.filter(r=>r.unit==='UN')){const raw=input.quantities?.[row.id];if(raw!==undefined&&raw!==''){const text=String(raw);if(!/^\d+$/.test(text)||!Number.isSafeInteger(Number(text))||Number(text)>1000000)throw Error(`Informe uma quantidade inteira válida para ${row.name}.`);row.quantity=Number(text);}}
-return {...lot,receivedDate,category:model.category,modelId:model.id,modelName:model.name,modelVersion:model.version,weightGrams,totalBps:model.totalBps,rows,unallocatedGrams:allocations.at(-1).grams,reference:String(input.reference||'').trim().slice(0,80)};}
-export function saveReceipt(input){const snapshot={...estimateReceipt(input),id:`receipt-${sequence++}`,createdAt:new Date().toISOString()};receipts.unshift(clone(snapshot));return clone(snapshot);}
+import { butcherCatalogService } from "./services.js";
+import { models, receipts, loadButcherModels, loadButcherReceipts } from "./queries.js";
+export { loadButcherModels, loadButcherReceipts } from "./queries.js";
+const clone = (value) => structuredClone(value);
+const key = (value) =>
+  String(value || "")
+    .trim()
+    .toLocaleLowerCase("pt-BR");
+export const listModels = () => clone(models);
+export const listReceipts = () => clone(receipts);
+export const categories = () => [...new Set(models.map((model) => model.category))];
+export const currentModel = (category) =>
+  clone(models.find((model) => key(model.category) === key(category) && model.current && model.active) || null);
+export const percent = (bps) => (bps / 100).toLocaleString("pt-BR", { maximumFractionDigits: 2 });
+export const kg = (grams) =>
+  (grams / 1000).toLocaleString("pt-BR", { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+export async function saveModel(input) {
+  const saved = await butcherCatalogService.saveModel(input);
+  await loadButcherModels();
+  return saved;
+}
+export async function setCurrent(id, expectedVersion) {
+  const saved = await butcherCatalogService.setCurrent(id, expectedVersion ?? models.find((row) => row.id === id)?._version);
+  await loadButcherModels();
+  return saved;
+}
+export async function toggleModel(id, { confirmCurrent = false, expectedVersion } = {}) {
+  const saved = await butcherCatalogService.toggle(id, confirmCurrent, expectedVersion ?? models.find((row) => row.id === id)?._version);
+  await loadButcherModels();
+  return saved;
+}
+export const localDate = (date = new Date()) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+export function validReceiptDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value < "1900-01-01") return false;
+  const parsed = new Date(`${value}T12:00:00Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+export const estimateReceipt = (input) => butcherCatalogService.estimate(input);
+export async function saveReceipt(input) {
+  const saved = await butcherCatalogService.createReceipt(input);
+  const index = receipts.findIndex((row) => row.id === saved.id);
+  if (index >= 0) receipts[index] = saved;
+  else receipts.push(saved);
+  return saved;
+}
+export const loadReceipt = (id) => butcherCatalogService.receipt(id);
+export const loadReceiptPage = (filters) => butcherCatalogService.receiptPage(filters);

@@ -1,0 +1,20 @@
+.paged-list-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+  color: var(--muted, #687280);
+  font-size: 13px;
+}
+
+.paged-list-pagination [data-page-label] {
+  padding: 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.paged-list-pagination[hidden],
+.paged-list-pagination [hidden] {
+  display: none !important;
+}

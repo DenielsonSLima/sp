@@ -1,1 +1,59 @@
-.logout-confirmation{border:1px solid #ebe6e7;border-radius:18px;padding:0;width:calc(100vw - 36px);max-width:410px;max-height:calc(100dvh - 40px);color:var(--ink);background:white;box-shadow:0 24px 90px #21070c30;overflow:auto}.logout-confirmation::backdrop{background:#1c142372;backdrop-filter:blur(3px)}.logout-confirmation-content{padding:30px}.logout-confirmation-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#fff0f1;color:var(--red);font-size:26px;margin-bottom:22px}.logout-confirmation h2{font-size:23px;letter-spacing:-.6px;line-height:1.25;margin:0 0 12px}.logout-confirmation p{font-size:13px;color:var(--muted);line-height:1.75;margin:0}.logout-confirmation-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:27px}.logout-confirmation-actions .button{min-height:48px}@media(max-width:600px){.logout-confirmation-content{padding:25px}.logout-confirmation h2{font-size:22px}}
+.logout-confirmation {
+  border: 1px solid #ebe6e7;
+  border-radius: 18px;
+  padding: 0;
+  width: calc(100vw - 36px);
+  max-width: 410px;
+  max-height: calc(100dvh - 40px);
+  color: var(--ink);
+  background: white;
+  box-shadow: 0 24px 90px #21070c30;
+  overflow: auto;
+}
+.logout-confirmation::backdrop {
+  background: #1c142372;
+  backdrop-filter: blur(3px);
+}
+.logout-confirmation-content {
+  padding: 30px;
+}
+.logout-confirmation-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #fff0f1;
+  color: var(--red);
+  font-size: 26px;
+  margin-bottom: 22px;
+}
+.logout-confirmation h2 {
+  font-size: 23px;
+  letter-spacing: -0.6px;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+.logout-confirmation p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0;
+}
+.logout-confirmation-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 27px;
+}
+.logout-confirmation-actions .button {
+  min-height: 48px;
+}
+@media (max-width: 600px) {
+  .logout-confirmation-content {
+    padding: 25px;
+  }
+  .logout-confirmation h2 {
+    font-size: 22px;
+  }
+}

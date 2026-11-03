@@ -1,0 +1,445 @@
+@media (max-width: 760px) {
+  .sidebar {
+    visibility: hidden;
+  }
+  .sidebar.open {
+    visibility: visible;
+  }
+  .drawer-close {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    right: 9px;
+    top: 8px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: white;
+    font-size: 26px;
+    color: #777;
+  }
+  .sidebar > .brand-logo {
+    margin-top: 22px;
+  }
+  .nav-backdrop:not([hidden]) {
+    display: block;
+    position: fixed;
+    inset: 72px 0 0;
+    background: #17212c66;
+    border: 0;
+    z-index: 15;
+  }
+  .sidebar {
+    z-index: 16;
+  }
+  .topbar {
+    z-index: 20;
+  }
+}
+
+/* Supermercado do Povo: calm workspace framed by the store identity. */
+.workspace {
+  grid-template-columns: 256px minmax(0, 1fr);
+  background: #f7f6f3;
+}
+
+.sidebar {
+  width: 256px;
+  padding: 28px 18px 20px;
+  background:
+    radial-gradient(ellipse at 12% 0%, #d52b32 0, transparent 46%),
+    linear-gradient(165deg, #a6111d 0%, #890e19 55%, #630d17 100%);
+  border-right: 0;
+  color: #fff;
+  box-shadow: 5px 0 24px #4a10100a;
+}
+
+.sidebar > .brand-logo {
+  width: 195px;
+  height: 90px;
+  margin: 0 auto 12px;
+  border-radius: 13px;
+  box-shadow: 0 5px 20px #400a2026;
+  outline: 1px solid #ffffff40;
+}
+
+.sidebar-brandline {
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 1.35px;
+  font-weight: 800;
+  color: #ffdf59;
+  text-align: center;
+  margin-bottom: 30px;
+  flex-shrink: 0;
+}
+
+.nav-caption {
+  font-size: 9px;
+  letter-spacing: 1.8px;
+  color: #f5c9cc;
+  padding: 0 15px;
+  margin-bottom: 12px;
+}
+
+.sidebar .nav-item {
+  position: relative;
+  min-height: 47px;
+  padding: 12px 14px;
+  gap: 12px;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: #fff2f2;
+  font-size: 12px;
+  font-weight: 600;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    box-shadow 0.15s;
+}
+
+.sidebar .nav-item svg {
+  opacity: 0.9;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sidebar .nav-item:hover {
+  background: #ffffff18;
+  color: white;
+}
+
+.sidebar .nav-item.active {
+  background: #ffe04a;
+  color: #531019;
+  box-shadow: 0 4px 12px #4d061e22;
+  font-weight: 800;
+}
+
+.sidebar .nav-item.active svg {
+  opacity: 1;
+}
+
+.sidebar .nav-children {
+  padding: 3px 0 7px 24px;
+}
+
+.sidebar .nav-child {
+  border-left: 1px solid #ffffff45;
+  color: #fbe6e8;
+  padding: 12px 14px;
+  margin-left: 10px;
+  font-size: 11px;
+  min-height: 44px;
+  border-radius: 0 7px 7px 0;
+}
+
+.sidebar .nav-child:hover {
+  color: white;
+  background: #ffffff14;
+}
+
+.sidebar .nav-child.active {
+  color: #ffe66e;
+  background: #ffffff0e;
+  border-left: 3px solid #ffe04a;
+  font-weight: 800;
+  padding-left: 12px;
+}
+
+.sidebar-bottom {
+  padding: 20px 5px 0;
+  margin-top: auto;
+}
+
+.sidebar .logout {
+  border-top: 1px solid #ffffff26;
+  color: #fbe6e8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 17px 10px 0;
+  margin-top: 12px;
+  min-height: 50px;
+  border-radius: 0;
+}
+
+.sidebar .logout:hover {
+  color: #ffe04a;
+}
+
+.sidebar :is(a, button):focus-visible {
+  outline: 3px solid #fff4aa;
+  outline-offset: 3px;
+}
+
+.sidebar .nav-item.active:focus-visible {
+  outline-color: white;
+}
+
+.topbar {
+  height: 88px;
+  background: #fffdf9;
+  border-bottom: 1px solid #e9e2da;
+  padding: 0 34px;
+  box-shadow: 0 4px 18px #45201705;
+  backdrop-filter: blur(14px);
+}
+
+.topbar:before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, #b71927 0%, #b71927 68%, #ffdc3e 68%, #ffdc3e 100%);
+}
+
+.breadcrumb {
+  gap: 13px;
+  min-width: 0;
+  color: #8b7373;
+  font-size: 11px;
+}
+
+.breadcrumb-brand {
+  font-weight: 600;
+  color: #86676a;
+}
+
+.breadcrumb b {
+  color: #ccb9b6;
+}
+
+.breadcrumb strong {
+  color: #551621;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.account {
+  padding-left: 22px;
+  border-left: 1px solid #eee5df;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.account strong {
+  font-size: 11px;
+  color: #4f2328;
+  font-weight: 800;
+}
+
+.account > div > span {
+  font-size: 9px;
+  letter-spacing: 0.15px;
+  color: #806c70;
+  margin-top: 4px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #a91927;
+  color: #ffe257;
+  box-shadow: 0 3px 9px #961c2320;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.workspace-footer {
+  border-top-color: #e9e2da;
+  color: #826e70;
+  background: #faf8f4;
+  font-size: 10px;
+  letter-spacing: 0.25px;
+}
+
+.menu-toggle {
+  border-radius: 10px;
+  background: #fff0ec;
+  color: #9e1827;
+  border: 1px solid #f1dcd6;
+  flex-shrink: 0;
+}
+
+.drawer-close {
+  background: #ffffff15;
+  color: white;
+  border-radius: 9px;
+}
+
+@media (max-width: 1050px) and (min-width: 761px) {
+  .workspace {
+    grid-template-columns: 226px minmax(0, 1fr);
+  }
+  .sidebar {
+    width: 226px;
+    padding: 24px 14px;
+  }
+  .topbar {
+    padding: 0 25px;
+  }
+  .account > div {
+    display: none;
+  }
+  .account {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .sidebar-brandline {
+    font-size: 7px;
+    letter-spacing: 1.1px;
+  }
+}
+
+@media (max-width: 760px) {
+  .workspace {
+    display: block;
+  }
+  .sidebar {
+    width: 282px;
+    top: 72px;
+    padding: 26px 18px 20px;
+    box-shadow: 10px 0 35px #37030b33;
+  }
+  .sidebar > .brand-logo {
+    margin-top: 25px;
+    margin-bottom: 12px;
+  }
+  .sidebar-brandline {
+    margin-bottom: 25px;
+  }
+  .sidebar .nav-item {
+    min-height: 48px;
+    font-size: 13px;
+  }
+  .sidebar .nav-child {
+    min-height: 46px;
+    font-size: 12px;
+  }
+  .topbar {
+    height: 72px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+  .topbar:before {
+    height: 3px;
+  }
+  .breadcrumb {
+    gap: 10px;
+  }
+  .breadcrumb strong {
+    font-size: 12px;
+  }
+  .account {
+    border: 0;
+    padding: 0;
+  }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 11px;
+  }
+  .drawer-close {
+    top: 8px;
+    right: 10px;
+  }
+  .nav-backdrop:not([hidden]) {
+    background: #27131b88;
+    backdrop-filter: blur(3px);
+  }
+  .workspace-footer {
+    font-size: 9px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 761px) {
+  .sidebar {
+    padding-top: 18px;
+  }
+  .sidebar > .brand-logo {
+    margin-bottom: 8px;
+  }
+  .sidebar-brandline {
+    margin-bottom: 18px;
+  }
+  .sidebar .nav-item {
+    min-height: 44px;
+    margin: 3px 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .sidebar-bottom {
+    padding-top: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar .nav-item {
+    transition: none;
+  }
+}
+
+/* Original layered artwork is a background, never a control or overlay. */
+.sidebar {
+  background-color: #890e19;
+  background-image: url('../../assets/sidebar-brand-art.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.sidebar > .brand-logo img {
+  transform: scale(0.9);
+  transform-origin: 50% 130px;
+}
+
+.sidebar > .brand-logo {
+  margin-bottom: 25px;
+}
+
+/* Keep related modules together without introducing extra collapsed menus. */
+.sidebar .nav-section {
+  margin-top: 6.75px;
+  padding-top: 6px;
+  border-top: 1px solid #ffffff26;
+}
+
+.sidebar .nav-section-title {
+  margin: 0 0 2.25px;
+  padding: 0 14px;
+  color: #f5c9cc;
+  font-size: 9px;
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+/* Slightly denser module rhythm; preserve readable labels and touch targets. */
+.sidebar .nav-item {
+  min-height: 36px;
+  padding-top: 7.29px;
+  padding-bottom: 7.29px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.sidebar .nav-child {
+  padding-top: 7.29px;
+  padding-bottom: 7.29px;
+  min-height: 36px;
+}
+
+@media (max-height: 760px) and (min-width: 761px) {
+  .sidebar .nav-item {
+    padding-top: 6.075px;
+    padding-bottom: 6.075px;
+    margin-top: 1.5px;
+    margin-bottom: 1.5px;
+  }
+}

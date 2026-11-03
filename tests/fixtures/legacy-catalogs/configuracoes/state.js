@@ -1,0 +1,21 @@
+import {isRemoteMode,listRecords,saveRecord,clearOnContextChange} from '../remote.js';
+export const settings={company:{name:'Supermercado do Povo',legalName:'',document:'',email:'',phone:'',address:''},users:[{id:'demo-user',name:'Usuário',email:'usuario@example.com',profile:'Operador',active:true}],profiles:[{name:'Administrador',modules:['inicio','cadastros','cotacao','hortifruti','encartes','promocoes','configuracoes']},{name:'Operador',modules:['inicio','cadastros','hortifruti']}],watermark:{text:'Supermercado do Povo',opacity:15,size:34,rotation:-25,type:'text',image:''},header:{title:'Supermercado do Povo',subtitle:'Onde o povo faz economia',showLogo:true,showContact:true,alignment:'left'}};
+export function saveCompany(input){if(isRemoteMode())return saveRecord('company_settings',{...settings.company,...input,id:'default'},{expectedVersion:input._version??settings.company._version}).then(saved=>{Object.assign(settings.company,saved);return saved;});for(const key of Object.keys(settings.company))settings.company[key]=String(input[key]||'').trim();if(!settings.company.name)settings.company.name='Supermercado do Povo';}
+export function addUser(input){if(isRemoteMode())return saveRecord('user_access',input).then(saved=>{settings.users.push(saved);return saved;});const name=String(input.name||'').trim(),email=String(input.email||'').trim();if(!name||!email)throw new Error('Preencha o nome e o e-mail.');if(!settings.profiles.some(p=>p.name===input.profile))throw new Error('Selecione um perfil válido.');settings.users.push({id:globalThis.crypto.randomUUID(),name,email,profile:input.profile,active:true});}
+export function addProfile(name){if(isRemoteMode())return saveRecord('profiles',{name,modules:['inicio']}).then(saved=>{settings.profiles.push(saved);return saved;});name=String(name||'').trim();if(!name)throw new Error('Informe o nome do perfil.');if(settings.profiles.some(p=>p.name.toLocaleLowerCase('pt-BR')===name.toLocaleLowerCase('pt-BR')))throw new Error('Já existe um perfil com esse nome.');settings.profiles.push({name,modules:['inicio']});}
+export function saveWatermark(input){if(isRemoteMode())return saveRecord('watermarks',{...settings.watermark,...input,id:'default'},{expectedVersion:input._version??settings.watermark._version}).then(saved=>{Object.assign(settings.watermark,saved);return saved;});settings.watermark.text=String(input.text||'').slice(0,60);for(const [key,min,max] of [['opacity',5,50],['size',18,56],['rotation',-45,45]])settings.watermark[key]=Math.max(min,Math.min(max,Number(input[key])||min));settings.watermark.type=input.type==='image'?'image':'text';}
+
+export async function loadSettings(){
+ if(!isRemoteMode())return settings;
+ const [companies,users,profiles,watermarks,headers]=await Promise.all(['company_settings','user_access','profiles','watermarks','headers'].map(resource=>listRecords(resource)));
+ settings.company={name:'',legalName:'',document:'',email:'',phone:'',address:'',...companies[0]};
+ settings.users=users;settings.profiles=profiles;
+ settings.watermark={text:'',opacity:15,size:34,rotation:-25,type:'text',image:'',...watermarks[0]};
+ settings.header={title:'',subtitle:'',showLogo:true,showContact:true,alignment:'left',...headers[0]};
+ return settings;
+}
+export async function updateUser(user,changes){const saved=await saveRecord('user_access',{...user,...changes},{expectedVersion:user._version});const i=settings.users.findIndex(row=>row.id===saved.id);if(i>=0)settings.users[i]=saved;return saved;}
+export async function updateProfile(profile,changes){const saved=await saveRecord('profiles',{...profile,...changes},{expectedVersion:profile._version});const i=settings.profiles.findIndex(row=>row.id===saved.id);if(i>=0)settings.profiles[i]=saved;return saved;}
+export async function saveHeader(input){const saved=await saveRecord('headers',{...settings.header,...input,id:'default'},{expectedVersion:input._version??settings.header._version});Object.assign(settings.header,saved);return saved;}
+
+for(const resource of ['company_settings','profiles','user_access','watermarks','headers'])clearOnContextChange(resource,()=>{settings.company={name:'',legalName:'',document:'',email:'',phone:'',address:''};settings.users=[];settings.profiles=[];settings.watermark={};settings.header={};});

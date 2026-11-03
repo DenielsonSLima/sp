@@ -1,0 +1,13 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {renderDetail} from '../interno/cotacao/detail.js';import {quotes} from '../interno/cotacao/state.js';import {repository} from '../shared/repository.js';
+test('a newly saved empty quote renders its item list and all tabs without loading the catalog',async t=>{
+ let catalogCalls=0;const original=repository.listProductMetadata;repository.listProductMetadata=()=>{catalogCalls++;throw Error('Catalog must be lazy');};t.after(()=>{repository.listProductMetadata=original;quotes.splice(0);});
+ quotes.push({id:'header-only',title:'Reposição',date:'2026-10-31',notes:'Observação <segura>',status:'open',items:[],providers:[],awards:{},offers:{},computed:{selectedTotal:0,totals:[],awardedByProvider:[],comparisons:{}}});
+ const addButton={addEventListener(){}},review={},body={innerHTML:'',querySelector:selector=>selector==='.quote-add-product-toggle'?addButton:selector==='.quote-review-products'?review:null,querySelectorAll:()=>[]};
+ const tabs=['summary','prices','providers','result'].map(tab=>({dataset:{tab},focus(){}}));
+ const root={isConnected:true,innerHTML:'',querySelector:selector=>selector==='.quote-detail-body'?body:null,querySelectorAll:selector=>selector==='[data-tab]'?tabs:[]};
+ await renderDetail(root,'header-only');assert.equal(catalogCalls,0);assert.match(root.innerHTML,/Reposição/);assert.match(root.innerHTML,/Observação &lt;segura&gt;/);
+ for(const name of ['Resumo','Produtos','Fornecedores','Comparativo final'])assert.ok(root.innerHTML.includes('>'+name+'</button>'));
+ assert.match(body.innerHTML,/Produtos e quantidades/);assert.match(body.innerHTML,/Nenhum produto adicionado/);assert.doesNotMatch(body.innerHTML,/quote-detail-summary/);assert.doesNotMatch(root.innerHTML,/quote-detail-summary|data-add-quote-product|data-add-quote-provider/);
+ tabs[1].onclick();assert.match(body.innerHTML,/data-add-quote-product/);assert.equal((body.innerHTML.match(/data-add-quote-product/g)||[]).length,1);assert.doesNotMatch(body.innerHTML,/quote-detail-summary|data-add-quote-provider/);assert.doesNotMatch(body.innerHTML,/quote-price-matrix/);tabs[2].onclick();assert.match(body.innerHTML,/Nenhum fornecedor vinculado/);assert.equal((body.innerHTML.match(/data-add-quote-provider/g)||[]).length,1);assert.doesNotMatch(body.innerHTML,/quote-detail-summary|data-add-quote-product/);tabs[3].onclick();assert.match(body.innerHTML,/Adicione produtos e fornecedores antes de finalizar/);assert.doesNotMatch(body.innerHTML,/finish-quote/);assert.doesNotMatch(body.innerHTML,/quote-detail-summary|data-add-quote-product|data-add-quote-provider/);assert.equal(catalogCalls,0);
+});

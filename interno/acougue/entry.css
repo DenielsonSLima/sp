@@ -1,0 +1,179 @@
+.butcher-header-wide {
+  grid-column: 1 / -1;
+}
+.butcher-create-dialog label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 0;
+}
+.butcher-create-dialog input,
+.butcher-create-dialog textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dce0e5;
+  border-radius: 8px;
+  padding: 12px;
+  font: inherit;
+  box-sizing: border-box;
+}
+.butcher-create-dialog textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.butcher-create-dialog .butcher-actions {
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+.butcher-back-link {
+  color: var(--red, #c6212f);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.butcher-purchase-header,
+.butcher-purchase-snapshot,
+.butcher-section-snapshot {
+  padding: 22px;
+  margin-bottom: 22px;
+}
+.butcher-purchase-header {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.butcher-purchase-header > button {
+  flex-shrink: 0;
+}
+.butcher-purchase-data {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+}
+.butcher-purchase-data > div {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+}
+.butcher-purchase-data span {
+  font-size: 12px;
+  color: #6c7480;
+}
+.butcher-purchase-data strong {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.butcher-purchase-data p {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.butcher-section-entry[hidden],
+.butcher-section-entry .butcher-help[hidden] {
+  display: none;
+}
+.butcher-section-entry {
+  margin-top: 24px;
+}
+.butcher-section-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 110px 1.3fr auto;
+  align-items: end;
+  gap: 16px;
+  border-top: 1px solid #e4e7eb;
+  padding: 18px 0;
+}
+.butcher-section-row > strong {
+  font-size: 13px;
+  align-self: center;
+}
+.butcher-section-row label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  min-width: 0;
+}
+.butcher-section-row input {
+  height: 44px;
+  min-width: 0;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dce0e5;
+  border-radius: 8px;
+  font: inherit;
+  box-sizing: border-box;
+}
+.butcher-section-table-wrap {
+  overflow-x: auto;
+}
+.butcher-section-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+.butcher-section-table th,
+.butcher-section-table td {
+  border-bottom: 1px solid #e4e7eb;
+  padding: 13px 12px;
+  white-space: nowrap;
+}
+.butcher-section-table th {
+  color: #6c7480;
+  font-size: 11px;
+}
+@media (max-width: 1200px) {
+  .butcher-purchase-data {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .butcher-section-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .butcher-section-row > strong {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 700px) {
+  .butcher-purchase-header {
+    flex-direction: column;
+  }
+  .butcher-purchase-header,
+  .butcher-purchase-snapshot,
+  .butcher-section-snapshot {
+    padding: 18px;
+  }
+  .butcher-section-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .butcher-section-row label:has([data-section-weight]) {
+    grid-column: 1 / -1;
+  }
+  .butcher-section-row input {
+    font-size: 16px;
+  }
+  .butcher-section-entry .butcher-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .butcher-section-entry .butcher-actions {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 400px) {
+  .butcher-purchase-data,
+  .butcher-section-row {
+    grid-template-columns: 1fr;
+  }
+}

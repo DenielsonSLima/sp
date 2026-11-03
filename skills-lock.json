@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "senior-backend": {
+      "source": "alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-backend/SKILL.md",
+      "computedHash": "398feec5e97a856c7123a6201a283c2d6d362350ae13f03633ed57a6cef6aed1"
+    },
+    "senior-frontend": {
+      "source": "alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-frontend/SKILL.md",
+      "computedHash": "8cb5dc5611dba9683d88f38221b97ad093f91c0ce4b98b4c57e4d38c6aab4c2f"
+    },
+    "senior-fullstack": {
+      "source": "alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-fullstack/SKILL.md",
+      "computedHash": "630cf3bcb446962a1be4e0691742f7997c9856788a7c06b2654822dbb373e5bc"
+    }
+  }
+}

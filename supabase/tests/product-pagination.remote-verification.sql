@@ -1,0 +1,7 @@
+begin;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','05f7c1f7-f2cc-4b12-b56e-89cddb221847',true);
+select set_config('request.jwt.claim.role','authenticated',true);
+with page as(select public.sp_product_page('89d1d8c9-b03d-46aa-a743-deac900f93b3') payload),taxonomy as(select public.sp_list('89d1d8c9-b03d-46aa-a743-deac900f93b3','product_categories') payload)
+select jsonb_build_object('project','enhoierfwuwtzulznjxa','page_bytes',octet_length(page.payload::text),'page_items',jsonb_array_length(page.payload->'items'),'total',page.payload->'total','pages',page.payload->'pages','metadata_only',not exists(select 1 from jsonb_array_elements(page.payload->'items') p where p ?| array['photos','photoAssets','image','photo']),'categories',(select count(*) from jsonb_array_elements(taxonomy.payload) c where nullif(c->>'parentId','') is null),'subcategories',(select count(*) from jsonb_array_elements(taxonomy.payload) c where nullif(c->>'parentId','') is not null),'unclassified_products',(select count(*) from public.products where company_id='89d1d8c9-b03d-46aa-a743-deac900f93b3' and coalesce(data->>'subcategoryId','')=''),'classifications',(select jsonb_agg(x) from(select data->>'category' category,data->>'subcategory' subcategory,count(*) products from public.products where company_id='89d1d8c9-b03d-46aa-a743-deac900f93b3' group by 1,2 order by 1,2)x)) verification from page,taxonomy;
+rollback;

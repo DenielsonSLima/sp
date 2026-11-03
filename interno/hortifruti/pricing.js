@@ -1,19 +1,248 @@
-import {templates} from '../cadastros/modelos-cartaz/model.js';
-import {attachCurrencyInput,parseBRLCents,formatBRLCents} from '../../shared/components/currency-input/index.js';
-import {hortifrutiRepository as store} from './state.js';
-import {previewPosters} from './printing.js';
-import {esc} from './common.js';
-import {formatDecimal} from './model.js';
-const pricingDrafts=new Map();
-export const removePricingDraftProduct=(id,productId)=>{const draft=pricingDrafts.get(id);if(draft)delete draft.lines[productId];};
-export function getPricingDraft(record){if(!pricingDrafts.has(record.id))pricingDrafts.set(record.id,{start:record.posterPeriod?.start||'',end:record.posterPeriod?.end||'',periodError:'',lines:{}});return pricingDrafts.get(record.id);}
-export const pricingDraftPatch=(raw,patch={})=>({salePriceCents:parseBRLCents(raw.sale),posterQuantity:Number(raw.quantity),printLayout:raw.layout,...(Object.hasOwn(raw,'pendingTemplate')?{templateSnapshot:structuredClone(raw.pendingTemplate)}:{}),...patch});
-export const hasPricingDraftErrors=id=>{const d=pricingDrafts.get(id);return !!d&&(!!d.periodError||Object.values(d.lines).some(line=>line.error));};
-export function renderPricing(root,record){const locked=false;const draft=getPricingDraft(record);draft.selected??=new Set();draft.batch??={modelId:'',quantity:'',layout:''};for(const id of draft.selected)if(!record.items.some(item=>item.productId===id))draft.selected.delete(id);root.innerHTML=`<div class="hf-toolbar"><div><h2>Precificação</h2><p>Defina preços de venda, escolha os modelos e imprima os cartazes.</p></div><button class="button primary" type="button" data-pdf>Prévia dos cartazes em PDF</button></div><p class="hf-help">Salvamento automático. Os preços de venda e os modelos ficam separados dos custos da compra.</p><section class="card hf-pricing-period"><h3>Validade dos cartazes (opcional)</h3><p class="hf-help">Deixe as duas datas em branco para imprimir sem validade.</p><div class="hf-fields"><label>Data inicial (opcional)<input type="date" data-start value="${esc(draft.start)}" ${locked?'disabled':''}></label><label>Data final (opcional)<input type="date" data-end value="${esc(draft.end)}" ${locked?'disabled':''}></label></div><p class="hf-period-error hf-error" role="alert">${esc(draft.periodError)}</p><button class="button secondary" type="button" data-discard-period ${draft.periodError?'':'hidden'}>Descartar validade inválida</button></section><section class="hf-batch-bar" aria-label="Aplicar configuração de cartazes em lote"><div class="hf-batch-selection"><label><input type="checkbox" data-select-all> Selecionar todos</label><span data-selected-count aria-live="polite"></span></div><div class="hf-batch-fields"><label>Modelo / tamanho<select data-batch-model><option value="">Não alterar</option>${templates.map(t=>`<option value="${esc(t.id)}" ${draft.batch.modelId===t.id?'selected':''}>${esc(t.name)} · ${t.widthMm} × ${t.heightMm} mm</option>`).join('')}</select></label><label>Qtd. de cartazes por produto<input type="number" min="1" max="100" step="1" data-batch-quantity value="${esc(draft.batch.quantity)}" placeholder="Não alterar"></label><label>Organização da folha<select data-batch-layout><option value="">Não alterar</option><option value="individual" ${draft.batch.layout==='individual'?'selected':''}>Individual</option><option value="two-a4" ${draft.batch.layout==='two-a4'?'selected':''}>2 por A4</option></select></label><button class="button secondary" type="button" data-batch-apply>Aplicar aos selecionados</button></div><p class="hf-help">Campos em branco não alteram a configuração. Preços e custos permanecem iguais.</p><p class="hf-batch-error hf-error" role="alert"></p></section><div class="hf-pricing-list"></div><p class="hf-error" role="alert"></p><p class="hf-autosave" role="status" aria-live="polite"></p>`;
- const status=text=>root.querySelector('.hf-autosave').textContent=text,error=text=>root.querySelector('.hf-error').textContent=text;
- const periodError=message=>{draft.periodError=message;root.querySelector('.hf-period-error').textContent=message;root.querySelector('[data-discard-period]').hidden=!message;};const savePeriod=()=>{draft.start=root.querySelector('[data-start]').value;draft.end=root.querySelector('[data-end]').value;try{store.setPrintPeriod(record.id,{start:draft.start,end:draft.end});periodError('');status('Validade salva.');}catch(e){periodError(e.message);}};root.querySelector('[data-discard-period]').onclick=()=>{const saved=store.get(record.id).posterPeriod||{};draft.start=saved.start||'';draft.end=saved.end||'';periodError('');root.querySelector('[data-start]').value=draft.start;root.querySelector('[data-end]').value=draft.end;};root.querySelectorAll('[type=date]').forEach(el=>el.onchange=savePeriod);
- const list=root.querySelector('.hf-pricing-list');if(!record.items.length)list.innerHTML='<section class="card hf-empty"><h3>Nenhum produto selecionado</h3><p>Adicione os produtos na primeira aba.</p></section>';
- record.items.forEach(item=>{let pricing=item.pricing||{salePriceCents:null,templateSnapshot:null,posterQuantity:1,printLayout:'individual'};draft.lines[item.productId]??={sale:pricing.salePriceCents===null?'':formatBRLCents(pricing.salePriceCents),quantity:String(pricing.posterQuantity),layout:pricing.printLayout,templateId:pricing.templateSnapshot?.id||'',error:''};const raw=draft.lines[item.productId];const row=document.createElement('section');row.className='card hf-pricing-row';const saved=pricing.templateSnapshot;const shown=raw.pendingTemplate||saved;const modelOptions=shown?[shown,...templates.filter(t=>t.id!==shown.id)]:templates;row.innerHTML=`<div class="hf-pricing-title"><label class="hf-price-select"><input type="checkbox" data-select-product="${esc(item.productId)}" ${draft.selected.has(item.productId)?'checked':''} aria-label="Selecionar ${esc(item.name)}"></label><div><h3>${esc(item.name)}</h3><p class="hf-help">Custo/kg: ${item.unitMicros?formatDecimal(item.unitMicros)+' reais':'a informar'}</p></div></div><fieldset ${locked?'disabled':''}><legend class="visually-hidden">Precificação de ${esc(item.name)}</legend><div class="hf-pricing-fields"><label>Preço de venda por kg (R$)<input data-sale value="${esc(raw.sale)}" placeholder="A definir"></label><label>Modelo de cartaz<select data-template><option value="">Selecione o modelo</option>${modelOptions.map(t=>`<option value="${esc(t.id)}" ${raw.templateId===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></label><label>Quantidade de cartazes<input data-quantity type="number" min="1" max="100" step="1" value="${esc(raw.quantity)}"></label><label>Organização da folha<select data-layout><option value="individual" ${raw.layout==='individual'?'selected':''}>Individual · tamanho do modelo</option><option value="two-a4" ${raw.layout==='two-a4'?'selected':''}>2 cartazes por folha A4</option></select></label></div><button class="button secondary" type="button" data-refresh-model ${saved?'':'disabled'}>Atualizar modelo salvo</button></fieldset><p class="hf-line-error" role="alert">${esc(raw.error)}</p><button class="button secondary" type="button" data-discard-price ${raw.error?'':'hidden'}>Descartar alteração inválida</button>`;list.append(row);const apply=patch=>{try{const updated=store.setPricing(record.id,item.productId,pricingDraftPatch(raw,patch));pricing=updated.items.find(i=>i.productId===item.productId).pricing;delete raw.pendingTemplate;raw.error='';row.querySelector('.hf-line-error').textContent='';row.querySelector('[data-discard-price]').hidden=true;row.querySelector('[data-refresh-model]').disabled=!pricing.templateSnapshot;const chosen=[...row.querySelector('[data-template]').options].find(option=>option.value===pricing.templateSnapshot?.id);if(chosen)chosen.textContent=pricing.templateSnapshot.name;status(`Precificação de ${item.name} salva.`);}catch(e){raw.error=e.message;row.querySelector('.hf-line-error').textContent=e.message;row.querySelector('[data-discard-price]').hidden=false;status('Há um campo a corrigir antes de imprimir.');}};
- row.querySelector('[data-discard-price]').onclick=()=>{delete draft.lines[item.productId];renderPricing(root,store.get(record.id));};const price=row.querySelector('[data-sale]');attachCurrencyInput(price);price.addEventListener('input',()=>{raw.sale=price.value;apply({});});row.querySelector('[data-template]').onchange=event=>{raw.templateId=event.target.value;raw.pendingTemplate=structuredClone(templates.find(t=>t.id===event.target.value)||null);apply({});};row.querySelector('[data-quantity]').oninput=event=>{raw.quantity=event.target.value;apply({posterQuantity:Number(event.target.value)});};row.querySelector('[data-layout]').onchange=event=>{raw.layout=event.target.value;apply({printLayout:event.target.value});};row.querySelector('[data-refresh-model]').onclick=()=>{const model=templates.find(t=>t.id===pricing.templateSnapshot?.id);if(!model){row.querySelector('.hf-line-error').textContent='Este modelo não está mais cadastrado.';return;}raw.pendingTemplate=structuredClone(model);apply({});};});
- const updateSelection=()=>{const count=draft.selected.size;root.querySelector('[data-selected-count]').textContent=`${count} selecionado(s)`;const all=root.querySelector('[data-select-all]');all.checked=record.items.length>0&&count===record.items.length;all.indeterminate=count>0&&count<record.items.length;root.querySelector('[data-batch-apply]').disabled=count===0;};root.querySelectorAll('[data-select-product]').forEach(el=>el.onchange=()=>{el.checked?draft.selected.add(el.dataset.selectProduct):draft.selected.delete(el.dataset.selectProduct);updateSelection();});root.querySelector('[data-select-all]').onchange=event=>{draft.selected=new Set(event.target.checked?record.items.map(item=>item.productId):[]);root.querySelectorAll('[data-select-product]').forEach(el=>el.checked=event.target.checked);updateSelection();};for(const [selector,key] of [['[data-batch-model]','modelId'],['[data-batch-quantity]','quantity'],['[data-batch-layout]','layout']]){const input=root.querySelector(selector);input.addEventListener(input.tagName==='SELECT'?'change':'input',()=>draft.batch[key]=input.value);}root.querySelector('[data-batch-apply]').onclick=()=>{try{const ids=[...draft.selected];if(ids.some(id=>draft.lines[id]?.error))throw new Error('Corrija ou descarte os campos inválidos dos produtos selecionados antes de aplicar em lote.');const patch={};if(draft.batch.modelId){const model=templates.find(t=>t.id===draft.batch.modelId);if(!model)throw new Error('Modelo não encontrado.');patch.templateSnapshot=model;}if(draft.batch.quantity!=='')patch.posterQuantity=Number(draft.batch.quantity);if(draft.batch.layout)patch.printLayout=draft.batch.layout;const updated=store.setPricingBatch(record.id,ids,patch);for(const id of ids)delete draft.lines[id];renderPricing(root,updated);root.querySelector('.hf-autosave').textContent=`Configuração aplicada a ${ids.length} produto(s).`;root.querySelector('[data-batch-apply]').focus({preventScroll:true});}catch(e){root.querySelector('.hf-batch-error').textContent=e.message;}};updateSelection();
- root.querySelector('[data-pdf]').onclick=async event=>{const button=event.currentTarget;try{if(hasPricingDraftErrors(record.id)||[...root.querySelectorAll('.hf-line-error')].some(el=>el.textContent)||!root.querySelector('[data-start]').checkValidity()||!root.querySelector('[data-end]').checkValidity())throw new Error('Corrija os campos indicados antes de imprimir.');const savedPeriod=store.get(record.id).posterPeriod||{};if(root.querySelector('[data-start]').value!==(savedPeriod.start||'')||root.querySelector('[data-end]').value!==(savedPeriod.end||''))throw new Error('Corrija a validade dos cartazes antes de imprimir.');button.disabled=true;error('');await previewPosters(root,store.get(record.id),button);}catch(e){if(root.isConnected)error(e.message);}finally{if(button.isConnected)button.disabled=false;}};}
+import { clearOnContextChange } from '../cadastros/remote.js';
+import { templates } from '../cadastros/modelos-cartaz/model.js';
+import { attachCurrencyInput, formatBRLCents } from '../../shared/components/currency-input/index.js';
+import { hortifrutiRepository as store } from './state.js';
+import { previewPosters } from './printing.js';
+import { esc } from './common.js';
+import { formatDecimal } from './model.js';
+import { schedulePricingSave, flushPricingLine, flushPricingSaves, cancelPricingLine } from './pricing-autosave.js';
+export { flushPricingSaves } from './pricing-autosave.js';
+const pricingDrafts = new Map();
+export const removePricingDraftProduct = (id, productId) => {
+  cancelPricingLine(id, productId);
+  const draft = pricingDrafts.get(id);
+  if (draft) delete draft.lines[productId];
+};
+export function getPricingDraft(record) {
+  if (!pricingDrafts.has(record.id))
+    pricingDrafts.set(record.id, {
+      start: record.posterPeriod?.start || '',
+      end: record.posterPeriod?.end || '',
+      periodError: '',
+      lines: {},
+    });
+  return pricingDrafts.get(record.id);
+}
+export const pricingDraftPatch = (raw, patch = {}) => ({
+  salePriceRaw: raw.sale,
+  posterQuantity: raw.quantity,
+  printLayout: raw.layout,
+  ...(Object.hasOwn(raw, 'pendingTemplate') ? { templateSnapshot: structuredClone(raw.pendingTemplate) } : {}),
+  ...patch,
+});
+export const hasPricingDraftErrors = (id) => {
+  const d = pricingDrafts.get(id);
+  return !!d && (!!d.periodError || Object.values(d.lines).some((line) => line.error));
+};
+export function renderPricing(root, record) {
+  const locked = false;
+  const draft = getPricingDraft(record);
+  draft.selected ??= new Set();
+  draft.batch ??= { modelId: '', quantity: '', layout: '' };
+  for (const id of draft.selected) if (!record.items.some((item) => item.productId === id)) draft.selected.delete(id);
+  root.innerHTML = `<div class="hf-toolbar"><div><h2>Precificação</h2><p>Defina preços de venda, escolha os modelos e imprima os cartazes.</p></div><button class="button primary" type="button" data-pdf>Prévia dos cartazes em PDF</button></div><p class="hf-help">Salvamento automático. Os preços de venda e os modelos ficam separados dos custos da compra.</p><section class="card hf-pricing-period"><h3>Validade dos cartazes (opcional)</h3><p class="hf-help">Deixe as duas datas em branco para imprimir sem validade.</p><div class="hf-fields"><label>Data inicial (opcional)<input type="date" data-start value="${esc(draft.start)}" ${locked ? 'disabled' : ''}></label><label>Data final (opcional)<input type="date" data-end value="${esc(draft.end)}" ${locked ? 'disabled' : ''}></label></div><p class="hf-period-error hf-error" role="alert">${esc(draft.periodError)}</p><button class="button secondary" type="button" data-discard-period ${draft.periodError ? '' : 'hidden'}>Descartar validade inválida</button></section><section class="hf-batch-bar" aria-label="Aplicar configuração de cartazes em lote"><div class="hf-batch-selection"><label><input type="checkbox" data-select-all> Selecionar todos</label><span data-selected-count aria-live="polite"></span></div><div class="hf-batch-fields"><label>Modelo / tamanho<select data-batch-model><option value="">Não alterar</option>${templates.map((t) => `<option value="${esc(t.id)}" ${draft.batch.modelId === t.id ? 'selected' : ''}>${esc(t.name)} · ${t.widthMm} × ${t.heightMm} mm</option>`).join('')}</select></label><label>Qtd. de cartazes por produto<input type="number" min="1" max="100" step="1" data-batch-quantity value="${esc(draft.batch.quantity)}" placeholder="Não alterar"></label><label>Organização da folha<select data-batch-layout><option value="">Não alterar</option><option value="individual" ${draft.batch.layout === 'individual' ? 'selected' : ''}>Individual</option><option value="two-a4" ${draft.batch.layout === 'two-a4' ? 'selected' : ''}>2 por A4</option></select></label><button class="button secondary" type="button" data-batch-apply>Aplicar aos selecionados</button></div><p class="hf-help">Campos em branco não alteram a configuração. Preços e custos permanecem iguais.</p><p class="hf-batch-error hf-error" role="alert"></p></section><div class="hf-pricing-list"></div><p class="hf-error" role="alert"></p><p class="hf-autosave" role="status" aria-live="polite"></p>`;
+  const status = (text) => (root.querySelector('.hf-autosave').textContent = text),
+    error = (text) => (root.querySelector('.hf-error').textContent = text);
+  const periodError = (message) => {
+    draft.periodError = message;
+    root.querySelector('.hf-period-error').textContent = message;
+    root.querySelector('[data-discard-period]').hidden = !message;
+  };
+  const savePeriod = async () => {
+    draft.start = root.querySelector('[data-start]').value;
+    draft.end = root.querySelector('[data-end]').value;
+    try {
+      await store.setPrintPeriod(record.id, { start: draft.start, end: draft.end });
+      periodError('');
+      status('Validade salva.');
+    } catch (e) {
+      periodError(e.message);
+    }
+  };
+  root.querySelector('[data-discard-period]').onclick = () => {
+    const saved = store.get(record.id).posterPeriod || {};
+    draft.start = saved.start || '';
+    draft.end = saved.end || '';
+    periodError('');
+    root.querySelector('[data-start]').value = draft.start;
+    root.querySelector('[data-end]').value = draft.end;
+  };
+  root.querySelectorAll('[type=date]').forEach((el) => (el.onchange = savePeriod));
+  const list = root.querySelector('.hf-pricing-list');
+  if (!record.items.length)
+    list.innerHTML =
+      '<section class="card hf-empty"><h3>Nenhum produto selecionado</h3><p>Adicione os produtos na primeira aba.</p></section>';
+  record.items.forEach((item) => {
+    let pricing = item.pricing || {
+      salePriceCents: null,
+      templateSnapshot: null,
+      posterQuantity: 1,
+      printLayout: 'individual',
+    };
+    draft.lines[item.productId] ??= {
+      sale: pricing.salePriceCents === null ? '' : formatBRLCents(pricing.salePriceCents),
+      quantity: String(pricing.posterQuantity),
+      layout: pricing.printLayout,
+      templateId: pricing.templateSnapshot?.id || '',
+      error: '',
+    };
+    const raw = draft.lines[item.productId];
+    const row = document.createElement('section');
+    row.className = 'card hf-pricing-row';
+    const saved = pricing.templateSnapshot;
+    const shown = raw.pendingTemplate || saved;
+    const modelOptions = shown ? [shown, ...templates.filter((t) => t.id !== shown.id)] : templates;
+    row.innerHTML = `<div class="hf-pricing-title"><label class="hf-price-select"><input type="checkbox" data-select-product="${esc(item.productId)}" ${draft.selected.has(item.productId) ? 'checked' : ''} aria-label="Selecionar ${esc(item.name)}"></label><div><h3>${esc(item.name)}</h3><p class="hf-help">Custo/kg: ${item.unitMicros ? formatDecimal(item.unitMicros) + ' reais' : 'a informar'}</p></div></div><fieldset ${locked ? 'disabled' : ''}><legend class="visually-hidden">Precificação de ${esc(item.name)}</legend><div class="hf-pricing-fields"><label>Preço de venda por kg (R$)<input data-sale value="${esc(raw.sale)}" placeholder="A definir"></label><label>Modelo de cartaz<select data-template><option value="">Selecione o modelo</option>${modelOptions.map((t) => `<option value="${esc(t.id)}" ${raw.templateId === t.id ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select></label><label>Quantidade de cartazes<input data-quantity type="number" min="1" max="100" step="1" value="${esc(raw.quantity)}"></label><label>Organização da folha<select data-layout><option value="individual" ${raw.layout === 'individual' ? 'selected' : ''}>Individual · tamanho do modelo</option><option value="two-a4" ${raw.layout === 'two-a4' ? 'selected' : ''}>2 cartazes por folha A4</option></select></label></div><button class="button secondary" type="button" data-refresh-model ${saved ? '' : 'disabled'}>Atualizar modelo salvo</button></fieldset><p class="hf-line-error" role="alert">${esc(raw.error)}</p><button class="button secondary" type="button" data-discard-price ${raw.error ? '' : 'hidden'}>Descartar alteração inválida</button>`;
+    list.append(row);
+    const apply = (patch = {}, immediate = true) => {
+      status('Alterações pendentes…');
+      schedulePricingSave(record.id, item.productId, pricingDraftPatch(raw, patch), (failure, updated) => {
+        if (failure) {
+          raw.error = failure.message;
+          if (row.isConnected) {
+            row.querySelector('.hf-line-error').textContent = failure.message;
+            row.querySelector('[data-discard-price]').hidden = false;
+            status('Há um campo a corrigir antes de imprimir.');
+          }
+          return;
+        }
+        const savedItem = updated.items.find((i) => i.productId === item.productId);
+        if (!savedItem || draft.lines[item.productId] !== raw) return;
+        pricing = savedItem.pricing;
+        delete raw.pendingTemplate;
+        raw.error = '';
+        if (!row.isConnected) return;
+        row.querySelector('.hf-line-error').textContent = '';
+        row.querySelector('[data-discard-price]').hidden = true;
+        row.querySelector('[data-refresh-model]').disabled = !pricing.templateSnapshot;
+        const chosen = [...row.querySelector('[data-template]').options].find(
+          (option) => option.value === pricing.templateSnapshot?.id,
+        );
+        if (chosen) chosen.textContent = pricing.templateSnapshot.name;
+        status(`Precificação de ${item.name} salva.`);
+      });
+      if (immediate) return flushPricingLine(record.id, item.productId);
+    };
+    row.querySelector('[data-discard-price]').onclick = () => {
+      cancelPricingLine(record.id, item.productId);
+      delete draft.lines[item.productId];
+      renderPricing(root, store.get(record.id));
+    };
+    const price = row.querySelector('[data-sale]');
+    attachCurrencyInput(price);
+    price.addEventListener('input', () => {
+      raw.sale = price.value;
+      apply({}, false);
+    });
+    price.onblur = () => flushPricingLine(record.id, item.productId);
+    price.onkeydown = (event) => {
+      if (event.key === 'Enter') { event.preventDefault(); flushPricingLine(record.id, item.productId); }
+    };
+    row.querySelector('[data-template]').onchange = (event) => {
+      raw.templateId = event.target.value;
+      raw.pendingTemplate = structuredClone(templates.find((t) => t.id === event.target.value) || null);
+      apply({});
+    };
+    row.querySelector('[data-quantity]').oninput = (event) => {
+      raw.quantity = event.target.value;
+      apply({ posterQuantity: event.target.value }, false);
+    };
+    row.querySelector('[data-quantity]').onblur = () => flushPricingLine(record.id, item.productId);
+    row.querySelector('[data-layout]').onchange = (event) => {
+      raw.layout = event.target.value;
+      apply({ printLayout: event.target.value });
+    };
+    row.querySelector('[data-refresh-model]').onclick = () => {
+      const model = templates.find((t) => t.id === pricing.templateSnapshot?.id);
+      if (!model) {
+        row.querySelector('.hf-line-error').textContent = 'Este modelo não está mais cadastrado.';
+        return;
+      }
+      raw.pendingTemplate = structuredClone(model);
+      apply({});
+    };
+  });
+  const updateSelection = () => {
+    const count = draft.selected.size;
+    root.querySelector('[data-selected-count]').textContent = `${count} selecionado(s)`;
+    const all = root.querySelector('[data-select-all]');
+    all.checked = record.items.length > 0 && count === record.items.length;
+    all.indeterminate = count > 0 && count < record.items.length;
+    root.querySelector('[data-batch-apply]').disabled = count === 0;
+  };
+  root.querySelectorAll('[data-select-product]').forEach(
+    (el) =>
+      (el.onchange = () => {
+        el.checked ? draft.selected.add(el.dataset.selectProduct) : draft.selected.delete(el.dataset.selectProduct);
+        updateSelection();
+      }),
+  );
+  root.querySelector('[data-select-all]').onchange = (event) => {
+    draft.selected = new Set(event.target.checked ? record.items.map((item) => item.productId) : []);
+    root.querySelectorAll('[data-select-product]').forEach((el) => (el.checked = event.target.checked));
+    updateSelection();
+  };
+  for (const [selector, key] of [
+    ['[data-batch-model]', 'modelId'],
+    ['[data-batch-quantity]', 'quantity'],
+    ['[data-batch-layout]', 'layout'],
+  ]) {
+    const input = root.querySelector(selector);
+    input.addEventListener(input.tagName === 'SELECT' ? 'change' : 'input', () => (draft.batch[key] = input.value));
+  }
+  root.querySelector('[data-batch-apply]').onclick = async () => {
+    try {
+      await flushPricingSaves(record.id);
+      const ids = [...draft.selected];
+      if (ids.some((id) => draft.lines[id]?.error))
+        throw new Error('Corrija ou descarte os campos inválidos dos produtos selecionados antes de aplicar em lote.');
+      const patch = {};
+      if (draft.batch.modelId) {
+        const model = templates.find((t) => t.id === draft.batch.modelId);
+        if (!model) throw new Error('Modelo não encontrado.');
+        patch.templateSnapshot = model;
+      }
+      if (draft.batch.quantity !== '') patch.posterQuantity = draft.batch.quantity;
+      if (draft.batch.layout) patch.printLayout = draft.batch.layout;
+      const updated = await store.setPricingBatch(record.id, ids, patch);
+      for (const id of ids) delete draft.lines[id];
+      renderPricing(root, updated);
+      root.querySelector('.hf-autosave').textContent = `Configuração aplicada a ${ids.length} produto(s).`;
+      root.querySelector('[data-batch-apply]').focus({ preventScroll: true });
+    } catch (e) {
+      root.querySelector('.hf-batch-error').textContent = e.message;
+    }
+  };
+  updateSelection();
+  root.querySelector('[data-pdf]').onclick = async (event) => {
+    const button = event.currentTarget;
+    try {
+      button.disabled = true;
+      await flushPricingSaves(record.id);
+      if (
+        hasPricingDraftErrors(record.id) ||
+        [...root.querySelectorAll('.hf-line-error')].some((el) => el.textContent) ||
+        !root.querySelector('[data-start]').checkValidity() ||
+        !root.querySelector('[data-end]').checkValidity()
+      )
+        throw new Error('Corrija os campos indicados antes de imprimir.');
+      const savedPeriod = store.get(record.id).posterPeriod || {};
+      if (
+        root.querySelector('[data-start]').value !== (savedPeriod.start || '') ||
+        root.querySelector('[data-end]').value !== (savedPeriod.end || '')
+      )
+        throw new Error('Corrija a validade dos cartazes antes de imprimir.');
+      button.disabled = true;
+      error('');
+      await previewPosters(root, store.get(record.id), button);
+    } catch (e) {
+      if (root.isConnected) error(e.message);
+    } finally {
+      if (button.isConnected) button.disabled = false;
+    }
+  };
+}
+
+clearOnContextChange('hortifruti_receipts', () => {
+  pricingDrafts.clear();
+});

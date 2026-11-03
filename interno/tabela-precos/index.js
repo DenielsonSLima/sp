@@ -1,35 +1,199 @@
-import {heading,escapeHtml as esc} from '../../shared/ui.js';
-import {repository} from '../../shared/repository.js';
-import {attachCurrencyInput,formatBRLCents} from '../../shared/components/currency-input/index.js';
-import {templates,loadTemplates,dimensionLabel} from '../cadastros/modelos-cartaz/model.js';
-import {priceTableStore as store} from './state.js';
-let products=[],tab='draft',archived=false,query='',selection=new Set(),rawDrafts=new Map(),newRaw={};
-const money=cents=>Number.isSafeInteger(cents)?`R$ ${formatBRLCents(cents)}`:'Preço pendente';
-const date=value=>value?value.slice(0,10).split('-').reverse().join('/'):'—';
-const chrome=()=>`<link rel="stylesheet" href="./interno/tabela-precos/styles.css">${heading('AÇÕES DA LOJA','Tab. de Preços','Prepare cartazes, organize a fila interna e gere PDFs por modelo.')}`;
-export async function render(root){root.innerHTML=`${chrome()}<p role="status">Carregando tabela de preços…</p>`;try{products=await repository.listProducts();if(!root.isConnected)return;const loaded=loadTemplates();store.archiveExpired();const id=decodeURIComponent(location.hash.split('/')[1]||'');if(id)editor(root,id);else list(root);if(loaded.warning)status(root,loaded.warning);}catch(error){if(!root.isConnected)return;root.innerHTML=`${chrome()}<div class="card tp-empty" role="alert">${esc(error.message)}<p><button class="button secondary tp-retry" type="button">Tentar novamente</button></p></div>`;root.querySelector('.tp-retry').onclick=()=>render(root);}}
-const status=(root,text)=>{const node=root.querySelector('.tp-status');if(node)node.textContent=text;};
-function list(root,message=''){
- history.replaceState(null,'','#tabela-precos');const all=store.list(),rows=all.filter(e=>e.status===tab&&Boolean(e.archivedAt)===archived&&(!query||`${e.name} ${e.productSnapshot?.code||''}`.toLocaleLowerCase('pt-BR').includes(query.toLocaleLowerCase('pt-BR'))));selection=new Set([...selection].filter(id=>rows.some(e=>e.id===id)));
- root.innerHTML=`${chrome()}<section class="tp-module"><div class="tp-toolbar"><div class="tp-tabs module-tabs" role="tablist" aria-label="Etapas da tabela">${[['draft','Rascunho'],['sent','Enviado'],['finalized','Finalizado']].map(([key,label])=>`<button type="button" role="tab" data-tab="${key}" tabindex="${tab===key?0:-1}" aria-selected="${tab===key}">${label}<span>${all.filter(e=>e.status===key&&!e.archivedAt).length}</span></button>`).join('')}</div><button type="button" class="button primary tp-new">+ Nova tabela</button></div><div class="card tp-controls"><label>Buscar produto<input class="tp-search" type="search" value="${esc(query)}" placeholder="Nome ou código do produto"></label>${tab==='finalized'?`<label>Histórico<select class="tp-history"><option value="recent" ${!archived?'selected':''}>Finalizados</option><option value="archived" ${archived?'selected':''}>Arquivo recuperável</option></select></label>`:''}</div><p class="tp-help">${tab==='draft'?'Salve quantos rascunhos precisar. Enviar coloca os itens na fila interna de impressão.':tab==='sent'?'Selecione os itens para gerar PDFs agrupados por modelo. Depois da impressão, confirme a finalização.':'Os finalizados ficam no histórico por 90 dias; depois vão para o arquivo recuperável. Itens restaurados permanecem no histórico.'}</p><p class="tp-status" role="status" aria-live="polite">${esc(message)}</p>${rows.length?`<div class="tp-toolbar tp-batch">${tab!=='finalized'?`<label class="tp-checkbox"><input class="tp-select-all" type="checkbox" ${selection.size===rows.length?'checked':''}>Selecionar todos (${rows.length})</label><div class="tp-actions">${tab==='draft'?'<button class="button primary tp-send" type="button">Enviar selecionados</button>':'<button class="button primary tp-pdf" type="button">PDF</button><button class="button secondary tp-finalize" type="button">Finalizar impressos</button>'}<span class="tp-selected">${selection.size} selecionado(s)</span></div>`:`<span>${rows.length} item(ns)</span>`}</div><div class="tp-grid">${rows.map(e=>`<article class="card tp-row">${tab!=='finalized'?`<label class="tp-checkbox tp-row-check"><input type="checkbox" data-check="${esc(e.id)}" ${selection.has(e.id)?'checked':''}><span class="tp-sr">Selecionar ${esc(e.name||'rascunho sem produto')}</span></label>`:''}<div class="tp-row-main"><h2>${esc(e.name||'Produto não selecionado')}</h2><strong class="tp-price">${esc(money(e.cents))}</strong>${rawDrafts.has(e.id)?'<p class="tp-pending">Alterações não salvas. Abra para recuperar os campos antes de enviar.</p>':''}<p>${esc(e.templateSnapshot?.name||'Modelo pendente')} · ${esc(e.quantity)} cópia(s)</p><p>${e.start||e.end?`${date(e.start)} a ${date(e.end)}`:'Sem período de validade'}</p>${e.status==='finalized'?`<small>Finalizado em ${date(e.finalizedAt)}</small>`:''}</div><div class="tp-row-actions"><button class="button secondary" type="button" data-open="${esc(e.id)}">${tab==='draft'?'Editar':'Ver detalhes'}</button>${archived?`<button class="button secondary" type="button" data-restore="${esc(e.id)}">Restaurar</button>`:''}</div></article>`).join('')}</div>`:`<div class="card tp-empty"><h2>${query?'Nenhum produto encontrado.':archived?'O arquivo está vazio.':tab==='draft'?'Sua próxima tabela começa aqui.':tab==='sent'?'A fila de impressão está vazia.':'Nenhum item finalizado ainda.'}</h2><p>${tab==='draft'?'Escolha um produto, informe o preço e prepare seu cartaz.':'Os itens desta etapa aparecerão aqui.'}</p></div>`}<div class="tp-pdf-host"></div></section>`;
- root.querySelector('.tp-new').onclick=()=>editor(root);root.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;archived=false;selection.clear();list(root);root.querySelector(`[data-tab="${tab}"]`).focus();});root.querySelector('.tp-tabs').onkeydown=event=>{const tabs=['draft','sent','finalized'],index=tabs.indexOf(tab);let next;if(event.key==='ArrowRight')next=(index+1)%3;else if(event.key==='ArrowLeft')next=(index+2)%3;else if(event.key==='Home')next=0;else if(event.key==='End')next=2;else return;event.preventDefault();root.querySelector(`[data-tab="${tabs[next]}"]`).click();};
- const search=root.querySelector('.tp-search');search.oninput=()=>{const caret=search.selectionStart;query=search.value;list(root);const next=root.querySelector('.tp-search');next.focus();next.setSelectionRange(caret,caret);};root.querySelector('.tp-history')?.addEventListener('change',e=>{archived=e.target.value==='archived';list(root);});
- const updateSelection=()=>{root.querySelector('.tp-selected').textContent=`${selection.size} selecionado(s)`;const box=root.querySelector('.tp-select-all');box.checked=selection.size===rows.length;box.indeterminate=selection.size>0&&selection.size<rows.length;};
- root.querySelectorAll('[data-check]').forEach(input=>input.onchange=()=>{input.checked?selection.add(input.dataset.check):selection.delete(input.dataset.check);updateSelection();});root.querySelector('.tp-select-all')?.addEventListener('change',e=>{selection=new Set(e.target.checked?rows.map(r=>r.id):[]);root.querySelectorAll('[data-check]').forEach(i=>i.checked=e.target.checked);updateSelection();});
- root.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>editor(root,b.dataset.open));root.querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{try{store.restore(b.dataset.restore);list(root,'Item restaurado no histórico.');}catch(e){status(root,e.message);}});
- root.querySelector('.tp-send')?.addEventListener('click',()=>{try{if([...selection].some(id=>rawDrafts.has(id)))throw Error('Há alterações não salvas em um item selecionado. Abra o rascunho e salve antes de enviar.');store.send([...selection]);tab='sent';selection.clear();list(root,'Itens enviados para a fila interna.');}catch(e){status(root,e.message);}});
- root.querySelector('.tp-finalize')?.addEventListener('click',()=>{if(!selection.size)return status(root,'Selecione os itens impressos.');const keys=[...selection],trigger=root.querySelector('.tp-finalize'),dialog=document.createElement('dialog');dialog.className='tp-confirm';dialog.setAttribute('aria-labelledby','tp-confirm-title');dialog.innerHTML=`<h2 id="tp-confirm-title">Confirmar impressão</h2><p>Os ${keys.length} item(ns) selecionado(s) já foram impressos? Os registros finalizados não poderão ser editados.</p><div class="tp-actions"><button class="button secondary" type="button" data-cancel>Cancelar</button><button class="button primary" type="button" data-confirm>Sim, finalizar impressos</button></div>`;root.append(dialog);dialog.addEventListener('close',()=>{dialog.remove();trigger?.focus();});dialog.querySelector('[data-cancel]').onclick=()=>dialog.close();dialog.querySelector('[data-confirm]').onclick=()=>{try{store.finalize(keys);dialog.close();selection.clear();list(root,'Impressão confirmada. Itens disponíveis em Finalizado.');}catch(e){dialog.close();status(root,e.message);}};dialog.showModal();dialog.querySelector('[data-cancel]').focus();});
- root.querySelector('.tp-pdf')?.addEventListener('click',async event=>{const button=event.currentTarget;if(!selection.size)return status(root,'Selecione os itens que deseja imprimir.');button.disabled=true;try{const records=[...selection].map(id=>store.get(id)),host=root.querySelector('.tp-pdf-host');const {openPriceTablePdfDialog}=await import('./pdf.js');if(host?.isConnected&&root.contains(host))await openPriceTablePdfDialog(host,records,button);}catch(e){status(root,e.message);}finally{button.disabled=false;}});
+import { createDraftAutosave } from "./hooks/use-draft-autosave.js";
+import { getDataContext } from "./services.js";
+import { clearPriceTableDraftsOnContextChange } from "./realtime.js";
+import { loadPriceTableEditor, loadPriceTableDetail } from "./queries.js";
+import { renderPriceTableList } from "./views/list.js";
+let stopRealtime;
+import { heading, escapeHtml as esc } from "../../shared/ui.js";
+import { attachCurrencyInput } from "../../shared/components/currency-input/index.js";
+import { templates, dimensionLabel } from "../cadastros/modelos-cartaz/model.js";
+import { priceTableStore as store } from "./state.js";
+let products = [],
+  rawDrafts = new Map(),
+  newRaw = {},
+  viewVersion = 0;
+const listState = { tab: "draft", archived: false, query: "", page: 1 };
+const chrome = () =>
+  `<link rel="stylesheet" href="./interno/tabela-precos/styles.css">${heading("OFERTAS E DIVULGAÇÃO", "Tabela de preços")}`;
+export async function render(root) {
+  const id = decodeURIComponent(location.hash.split("/")[1] || "");
+  if (id) await editor(root, id);
+  else list(root);
 }
-function editor(root,id){
- const entry=id?store.get(id):null,readonly=entry&&entry.status!=='draft',raw=readonly?entry:(id?rawDrafts.get(id):newRaw)||entry||{};
- const value={productId:'',priceRaw:'',start:'',end:'',templateId:'',quantity:'1',printLayout:'individual',...entry,...raw};
- history.replaceState(null,'',`#tabela-precos${id?`/${encodeURIComponent(id)}`:''}`);
- const options=readonly&&entry.productSnapshot?[entry.productSnapshot]:products.some(p=>p.id===entry?.productId)||!entry?.productSnapshot?products:[entry.productSnapshot,...products];
- const models=readonly&&entry.templateSnapshot?[entry.templateSnapshot]:templates.some(t=>t.id===entry?.templateId)||!entry?.templateSnapshot?templates:[entry.templateSnapshot,...templates];
- root.innerHTML=`${chrome()}<section class="tp-module"><div class="tp-toolbar"><button class="button secondary tp-back" type="button">← Voltar</button><h2>${readonly?'Detalhes do cartaz':id?'Editar rascunho':'Nova tabela de preços'}</h2></div><form class="card tp-form"><fieldset ${readonly?'disabled':''}><label class="tp-full">Produto do catálogo<select name="productId"><option value="">Selecione um produto</option>${options.map(p=>`<option value="${esc(p.id)}" ${p.id===value.productId?'selected':''}>${esc(p.name)}${p.code?` · ${esc(p.code)}`:''}</option>`).join('')}</select></label><label class="tp-full">Nome do produto<input name="productName" readonly value="${esc(value.productSnapshot?.name||options.find(p=>p.id===value.productId)?.name||'')}" placeholder="Preenchido ao selecionar o produto"></label><label>Preço de venda (R$)<input name="priceRaw" inputmode="decimal" value="${esc(value.priceRaw)}" placeholder="0,00"></label><label>Quantidade de cartazes<input name="quantity" type="text" inputmode="numeric" value="${esc(value.quantity)}"></label><label>Data inicial (opcional)<input name="start" type="date" value="${esc(value.start)}"></label><label>Data final (opcional)<input name="end" type="date" value="${esc(value.end)}"></label><p class="tp-full tp-help">Deixe as duas datas vazias para imprimir sem validade.</p><label class="tp-full">Modelo de impressão<select name="templateId"><option value="">Selecione um modelo</option>${models.map(t=>`<option value="${esc(t.id)}" ${t.id===value.templateId?'selected':''}>${esc(t.name)} · ${esc(dimensionLabel(t))}</option>`).join('')}</select></label><label class="tp-full">Formato<select name="printLayout"><option value="individual" ${value.printLayout==='individual'?'selected':''}>Folha individual do modelo</option><option value="two-a4" ${value.printLayout==='two-a4'?'selected':''}>2 por A4 paisagem</option></select></label></fieldset>${!products.length&&!readonly?'<p>Cadastre produtos em <a href="#cadastros/produtos">Cadastros → Produtos</a>.</p>':''}${!templates.length&&!readonly?'<p>Cadastre um <a href="#cadastros/modelos-cartaz">modelo de cartaz</a> para enviar.</p>':''}<p class="tp-status" role="status" aria-live="polite"></p><div class="tp-actions">${readonly?(entry.status==='sent'?'<button type="button" class="button secondary tp-reopen">Voltar ao rascunho</button>':'<p>Registro finalizado. Os dados e o modelo usados na impressão foram preservados.</p>'):'<button type="submit" class="button secondary" value="save">Salvar rascunho</button><button type="submit" class="button primary" value="send">Salvar e enviar</button>'}</div></form></section>`;
- const form=root.querySelector('form');const capture=()=>{const data=Object.fromEntries(new FormData(form));if(id)rawDrafts.set(id,data);else newRaw=data;return data;};
- root.querySelector('.tp-back').onclick=()=>{if(!readonly){const data=capture();try{const saved=store.saveDraft(id,data,products,templates);if(id)rawDrafts.delete(id);else newRaw={};id=saved.id;}catch(e){status(root,e.message);return;}}list(root);};
- if(!readonly){attachCurrencyInput(form.elements.priceRaw);const autosave=()=>{const data=capture();try{const saved=store.saveDraft(id,data,products,templates);if(!id){newRaw={};id=saved.id;history.replaceState(null,'',`#tabela-precos/${encodeURIComponent(id)}`);}rawDrafts.delete(id);status(root,'Rascunho salvo automaticamente neste navegador.');}catch(e){status(root,e.message);}};form.oninput=autosave;form.onchange=autosave;form.elements.productId.onchange=()=>{form.elements.productName.value=options.find(p=>p.id===form.elements.productId.value)?.name||'';capture();};form.onsubmit=event=>{event.preventDefault();try{const saved=store.saveDraft(id,capture(),products,templates);if(id)rawDrafts.delete(id);else newRaw={};id=saved.id;if(event.submitter?.value==='send'){store.send([id]);tab='sent';selection.clear();list(root,'Item enviado para a fila interna.');}else{editor(root,id);status(root,'Rascunho salvo neste navegador.');}}catch(e){if(id)history.replaceState(null,'',`#tabela-precos/${encodeURIComponent(id)}`);status(root,e.message);}};}else form.onsubmit=e=>e.preventDefault();
- root.querySelector('.tp-reopen')?.addEventListener('click',()=>{try{store.reopen(id);tab='draft';editor(root,id);}catch(e){status(root,e.message);}});
+const status = (root, text) => {
+  const node = root.querySelector(".tp-status");
+  if (node) node.textContent = text;
+};
+function list(root, message = "") {
+  viewVersion++;
+  stopRealtime?.();
+  history.replaceState(null, "", "#tabela-precos");
+  stopRealtime = renderPriceTableList(root, { state: listState, chrome, rawDrafts, message,
+    onOpen: (id) => editor(root, id), onCreate: () => editor(root) });
 }
+async function editor(root, id) {
+  const token = ++viewVersion,
+    openingRoute = location.hash,
+    scope = getDataContext();
+  stopRealtime?.();
+  let entry, readonly;
+  root.innerHTML = `${chrome()}<p role="status">Carregando editor…</p>`;
+  {
+    try {
+      entry = id ? await loadPriceTableDetail(id) : null;
+      if (id && !entry) throw Error("Tabela não encontrada. Atualize a lista.");
+      readonly = entry && entry.status !== "draft";
+      if (!readonly) products = await loadPriceTableEditor();
+    } catch (error) {
+      if (!root.isConnected || token !== viewVersion || openingRoute !== location.hash) return;
+      root.innerHTML = `${chrome()}<p role="alert">${esc(error.message)}</p><button class="button secondary tp-back" type="button">← Voltar</button>`;
+      root.querySelector(".tp-back").onclick = () => list(root);
+      return;
+    }
+    if (
+      !root.isConnected ||
+      token !== viewVersion ||
+      openingRoute !== location.hash ||
+      scope?.companyId !== getDataContext()?.companyId ||
+      scope?.user?.id !== getDataContext()?.user?.id
+    )
+      return;
+  }
+  const raw = readonly ? entry : (id ? rawDrafts.get(id) : newRaw) || entry || {};
+  const value = {
+    productId: "",
+    priceRaw: "",
+    start: "",
+    end: "",
+    templateId: "",
+    quantity: "1",
+    printLayout: "individual",
+    ...entry,
+    ...raw,
+  };
+  history.replaceState(null, "", `#tabela-precos${id ? `/${encodeURIComponent(id)}` : ""}`);
+  const options =
+    readonly && entry.productSnapshot
+      ? [entry.productSnapshot]
+      : products.some((p) => p.id === entry?.productId) || !entry?.productSnapshot
+        ? products
+        : [entry.productSnapshot, ...products];
+  const models =
+    readonly && entry.templateSnapshot
+      ? [entry.templateSnapshot]
+      : templates.some((t) => t.id === entry?.templateId) || !entry?.templateSnapshot
+        ? templates
+        : [entry.templateSnapshot, ...templates];
+  root.innerHTML = `${chrome()}<section class="tp-module"><div class="tp-toolbar"><button class="button secondary tp-back" type="button">← Voltar</button><h2>${readonly ? "Detalhes do cartaz" : id ? "Editar rascunho" : "Nova tabela de preços"}</h2></div><form class="card tp-form"><fieldset ${readonly ? "disabled" : ""}><label class="tp-full">Produto do catálogo<select name="productId"><option value="">Selecione um produto</option>${options.map((p) => `<option value="${esc(p.id)}" ${p.id === value.productId ? "selected" : ""}>${esc(p.name)}${p.code ? ` · ${esc(p.code)}` : ""}</option>`).join("")}</select></label><label class="tp-full">Nome do produto<input name="productName" readonly value="${esc(value.productSnapshot?.name || options.find((p) => p.id === value.productId)?.name || "")}" placeholder="Preenchido ao selecionar o produto"></label><label>Preço de venda (R$)<input name="priceRaw" inputmode="decimal" value="${esc(value.priceRaw)}" placeholder="0,00"></label><label>Quantidade de cartazes<input name="quantity" type="text" inputmode="numeric" value="${esc(value.quantity)}"></label><label>Data inicial (opcional)<input name="start" type="date" value="${esc(value.start)}"></label><label>Data final (opcional)<input name="end" type="date" value="${esc(value.end)}"></label><p class="tp-full tp-help">Deixe as duas datas vazias para imprimir sem validade.</p><label class="tp-full">Modelo de impressão<select name="templateId"><option value="">Selecione um modelo</option>${models.map((t) => `<option value="${esc(t.id)}" ${t.id === value.templateId ? "selected" : ""}>${esc(t.name)} · ${esc(dimensionLabel(t))}</option>`).join("")}</select></label><label class="tp-full">Formato<select name="printLayout"><option value="individual" ${value.printLayout === "individual" ? "selected" : ""}>Folha individual do modelo</option><option value="two-a4" ${value.printLayout === "two-a4" ? "selected" : ""}>2 por A4 paisagem</option></select></label></fieldset>${!products.length && !readonly ? '<p>Cadastre produtos em <a href="#cadastros/produtos">Cadastros → Produtos</a>.</p>' : ""}${!templates.length && !readonly ? '<p>Cadastre um <a href="#cadastros/modelos-cartaz">modelo de cartaz</a> para enviar.</p>' : ""}<p class="tp-status" role="status" aria-live="polite"></p><div class="tp-actions">${readonly ? (entry.status === "sent" ? '<button type="button" class="button secondary tp-reopen">Voltar ao rascunho</button>' : "<p>Registro finalizado. Os dados e o modelo usados na impressão foram preservados.</p>") : '<button type="submit" class="button secondary" value="save">Salvar rascunho</button><button type="submit" class="button primary" value="send">Salvar e enviar</button>'}</div></form></section>`;
+  const form = root.querySelector("form");
+  const companyId = getDataContext()?.companyId,
+    userId = getDataContext()?.user?.id;
+  let pendingDraft = null,
+    draining = null;
+  const persistDraft = (data) => {
+    pendingDraft = structuredClone(data);
+    if (!draining) {
+      draining = (async () => {
+        let saved;
+        while (pendingDraft) {
+          if (companyId !== getDataContext()?.companyId || userId !== getDataContext()?.user?.id)
+            throw Error("A empresa ativa mudou. Abra o rascunho novamente.");
+          const current = pendingDraft;
+          pendingDraft = null;
+          saved = await store.saveDraft(id, current, products, templates);
+          if (!id) {
+            id = saved.id;
+            if (form.isConnected && token === viewVersion) newRaw = {};
+            if (form.isConnected && token === viewVersion)
+              history.replaceState(null, "", `#tabela-precos/${encodeURIComponent(id)}`);
+          }
+        }
+        return saved;
+      })().finally(() => {
+        draining = null;
+      });
+    }
+    return draining;
+  };
+  const capture = () => {
+    const data = Object.fromEntries(new FormData(form));
+    if (id) rawDrafts.set(id, data);
+    else newRaw = data;
+    return data;
+  };
+  const draftSaver = createDraftAutosave(persistDraft, {
+    onSaved: () => {
+      if (form.isConnected && token === viewVersion) {
+        rawDrafts.delete(id);
+        status(root, "Rascunho salvo automaticamente.");
+      }
+    },
+    onError: (error) => {
+      if (form.isConnected && token === viewVersion) status(root, error.message);
+    },
+  });
+  root.querySelector(".tp-back").onclick = async () => {
+    if (!readonly) {
+      const data = capture();
+      try {
+        draftSaver.schedule(data);
+        const saved = await draftSaver.flush();
+        if (id) rawDrafts.delete(id);
+        else newRaw = {};
+        id = saved.id;
+      } catch (e) {
+        status(root, e.message);
+        return;
+      }
+    }
+    list(root);
+  };
+  if (!readonly) {
+    attachCurrencyInput(form.elements.priceRaw);
+    const autosave = () => draftSaver.schedule(capture());
+    form.oninput = autosave;
+    form.onchange = autosave;
+    form.elements.productId.onchange = () => {
+      form.elements.productName.value = options.find((p) => p.id === form.elements.productId.value)?.name || "";
+      capture();
+    };
+    form.onsubmit = async (event) => {
+      event.preventDefault();
+      try {
+        draftSaver.schedule(capture());
+        const saved = await draftSaver.flush();
+        if (id) rawDrafts.delete(id);
+        else newRaw = {};
+        id = saved.id;
+        if (event.submitter?.value === "send") {
+          await store.send([id]);
+          listState.tab = "sent";
+          list(root, "Item enviado para a fila interna.");
+        } else {
+          editor(root, id);
+          status(root, "Rascunho salvo.");
+        }
+      } catch (e) {
+        if (id) history.replaceState(null, "", `#tabela-precos/${encodeURIComponent(id)}`);
+        status(root, e.message);
+      }
+    };
+  } else form.onsubmit = (e) => e.preventDefault();
+  root.querySelector(".tp-reopen")?.addEventListener("click", async () => {
+    try {
+      await store.reopen(id);
+      listState.tab = "draft";
+      editor(root, id);
+    } catch (e) {
+      status(root, e.message);
+    }
+  });
+}
+
+clearPriceTableDraftsOnContextChange(() => {
+  viewVersion++;
+  products = [];
+  stopRealtime?.();
+  rawDrafts.clear();
+  newRaw = {};
+});

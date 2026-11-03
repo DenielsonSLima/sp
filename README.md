@@ -1,36 +1,76 @@
 # Supermercado do Povo
 
-Protótipo modular em português, independente de outros projetos.
+Sistema de gestão em português com frontend HTML/CSS/JavaScript modular, Supabase Auth e PostgreSQL. A fonte de dados da aplicação é o projeto Supabase `enhoierfwuwtzulznjxa`.
 
-## Executar
+## Executar localmente
 
-Com Node.js e Python 3 disponíveis:
+Requisitos: Node.js 22 ou superior e npm.
 
-- `npm test`: testes do adaptador de dados e escape de conteúdo.
-- `npm run build`: prepara o site estático em `dist/`.
-- `npm start`: serve a pasta do projeto em http://localhost:4173.
+```sh
+npm ci
+npm start
+```
 
-O acesso "Entrar na demonstração" não autentica. Não use dados pessoais, senhas nem informações reais. Os produtos são fictícios e as inclusões ficam apenas em memória, perdidas ao recarregar. O botão de saída encerra a navegação de demonstração, sem prometer autenticação.
+Abra http://127.0.0.1:4173 e entre com a conta autorizada no Supabase Auth. A conta administrativa inicial está vinculada a `denielsonlima201099@gmail.com`. A senha pertence ao Auth e não fica no repositório.
 
-## Estrutura
+`npm start` gera `dist/` e inicia o servidor local na porta 4173, restrito a este computador. Para encerrar, use `Ctrl+C`. Após alterar o código, gere novamente ou reinicie o comando.
 
-- `login/`: interface e lógica de entrada demonstrativa.
-- `interno/shell.js` e `shell.css`: navegação e estrutura da área interna.
-- `interno/inicio/`: painel inicial.
-- `interno/cadastros/`: grupo expansível no menu, sem tela própria. `parceiros/`, `produtos/` e `unidades/` têm arquivos e rotas independentes. Parceiros e produtos têm busca combinada com categoria e cards em grade 4/2/1. Produtos aceitam fotos locais (JPEG/PNG/WebP até 3 MB) em memória. Unidades têm cadastro/edição central e são consumidas pelos produtos, sem conversões automáticas.
-- `interno/cotacao/`: filtros combinados (busca, categoria dos produtos e período), abas Em andamento/Finalizados, cards, criação em etapas, preços, escolhas manuais por produto, total comparável somente para propostas completas e finalização local. Sem frete/descontos/quantidades parciais ou geração de pedidos. Fluxo adaptado da interface Agrisul inspecionada: https://github.com/DenielsonSLima/Agrisul/tree/main/modules/cotacao. Não reutiliza dados, credenciais ou integrações do sistema original.
-- `interno/hortifruti/`: fluxo preliminar de compra da feira, pesagem/preço e conferência de custo. Nenhuma fórmula definida sem confirmar unidades e regras.
-- `interno/acougue/`: módulo inicial reservado, sem regras comerciais presumidas.
-- `interno/encartes/`: estado inicial e ilustração de layout, sem geração/exportação/publicação.
-- `interno/promocoes/`: estado inicial de promoções, sem alteração de preços nem regras comerciais presumidas.
-- `interno/modules.js`: registro central e resolução segura das rotas e grupo de cadastros.
-- `interno/configuracoes/`: cards e rotas próprias de Empresa, Usuários, Perfis, Marca d’água e Cabeçalho. Cada submódulo tem pasta própria com interface, estilo e lógica. Formulários usam somente memória; perfis não aplicam segurança, usuários não criam contas, marca d’água e cabeçalho são apenas prévias sem exportação. Imagem de marca d’água é lida localmente, sem upload.
-- `shared/repository.js`: contrato assíncrono e adaptador em memória. Futuro adaptador Supabase deve respeitar o contrato, implementar autenticação/autorização/RLS e validar regras antes de dados reais.
-- `assets/`: logomarca original fornecida, sem alteração do arquivo.
-- `tests/`: testes unitários e roteiro de QA no navegador.
+Para desenvolver, use `npm run dev`: os arquivos são recompilados ao mudar. Atualize a página depois de salvar sua edição no sistema. O servidor usa compressão, ETag e cache para arquivos com hash; o build carrega cada módulo sob demanda.
 
-Sem dependências de execução, chamadas de banco, chaves, APIs externas ou rastreadores. Publicação privada usa o controle de acesso do provedor; a interface de login continua demonstrativa.
+## Comandos
 
-## Próximas definições
+| Comando | Finalidade |
+| --- | --- |
+| `npm start` | Gera e serve o site local. |
+| `npm run dev` | Serve na porta 4173 e recompila alterações automaticamente. |
+| `npm test` | Testes unitários, contratos e adaptadores. |
+| `npm run test:db` | Testa a fundação e a migração do catálogo em PostgreSQL/PGlite isolado. |
+| `npm run check:runtime` | Confere que a aplicação não importa fixtures, dados de exemplo ou persistência local de registros. |
+| `npm run check:architecture` | Confere o limite de 500 linhas por arquivo da aplicação. |
+| `npm run build` | Gera arquivos estáticos e bibliotecas em `dist/`. |
 
-Confirmar unidades de compra do Hortifruti e método de custo antes de implementar entrada/cálculo. Validar regras comerciais adicionais da Cotação (frete, desconto, quantidades parciais) antes de implementá-las. Integrar banco de dados e autenticação somente na etapa posterior.
+Os roteiros `tests/*.browser.mjs` e `tests/browser.cjs` são verificações anteriores que exigem ferramentas e adaptação para o login real. Eles não integram `npm test`. Treze testes Canvas opcionais podem aparecer como ignorados.
+
+## Arquitetura de dados
+
+- `shared/data/config.js`: URL e chave publicável do Supabase. Não contém chave administrativa.
+- `shared/data/client.js` e `auth.js`: cliente Supabase e sessão Auth.
+- `shared/data/api.js`: acesso RPC, cache TanStack Query Core, invalidação Realtime e isolamento entre empresas/sessões.
+- `shared/data/queries/`, `media/` e `realtime.js`: implementação interna de consultas, mídias e assinatura única por empresa, exposta pela API compartilhada.
+- Cada pasta de domínio em `interno/` mantém `services.js`, `queries.js` e `realtime.js`; telas complexas separam `hooks/`, views, editores e estilos.
+- `interno/cadastros/remote.js`: carregamento dos catálogos e assinaturas por tela.
+- `interno/operational-store.js`: snapshots canônicos e comandos operacionais com controle de versão.
+- `supabase/migrations/`: migrações versionadas do banco.
+- `supabase/tests/`: verificação local e teste remoto transacional, sem dados de teste persistidos.
+
+O frontend envia os campos digitados e as ações. Validações definitivas, permissões, transições e cálculos comerciais acontecem no PostgreSQL por RPC. A interface mantém geometria do editor, formatação e estado temporário dos formulários. Os adaptadores locais antigos existem somente em `tests/fixtures/` e não integram a aplicação. A aplicação usa sempre Supabase RPC e não recorre a dados demonstrativos quando o banco falha.
+
+O Realtime transmite sinais de alteração em `resource_changes`; o cliente invalida o recurso no TanStack Query e relê os dados por RPC. A exclusão de um registro também gera sinal. Vínculos de usuário têm assinatura própria para revalidar alterações de acesso.
+
+## Organização
+
+| Caminho | Conteúdo |
+| --- | --- |
+| `index.html`, `login/` | Entrada e autenticação. |
+| `interno/` | Painel e módulos de gestão. |
+| `shared/` | Componentes, estilos e infraestrutura compartilhada. |
+| `assets/` | Imagens, catálogos e biblioteca gráfica local. |
+| `tests/` | Testes do frontend e dos contratos. |
+| `supabase/` | Configuração, esquema, migrações e testes do banco. |
+| `docs/` | Mapa do projeto e documentação do banco. |
+| `.agents/skills/` | Skills de engenharia, frontend, backend, varejo e PostgreSQL. |
+| `.openai/hosting.json` | Identificação do projeto original no Sites. |
+| `dist/` | Site gerado, ignorado pelo Git. |
+| `artifacts/originais/` | ZIP original e arquivos preexistentes, preservados e ignorados. |
+
+Veja [a estrutura](docs/ESTRUTURA.md), [o contrato do banco](docs/BANCO.md) e [as skills instaladas](docs/SKILLS.md).
+
+## Acesso e manutenção
+
+As tabelas são isoladas por empresa e têm RLS. Usuários sem vínculo ativo não recebem acesso. Gravações diretas nas tabelas são bloqueadas; as RPCs validam a empresa, o perfil e a versão esperada do registro.
+
+Para liberar uma pessoa, sua conta deve existir no Supabase Auth. Depois, um administrador vincula o e-mail a um perfil na tela de Usuários. O cadastro de uma conta Auth, por si só, não concede acesso à empresa.
+
+Os 50 produtos originais e os metadados de categorias, modelos e elementos gráficos foram migrados ao banco com histórico versionado. Dados salvos apenas no navegador do protótipo publicado não são importados automaticamente. O projeto local já usa o banco remoto; as alterações de código desta integração ainda não foram publicadas no site original do ChatGPT.
+
+O catálogo agora tem 83 produtos: os 50 originais e 33 novos itens pesquisados. As 99 imagens novas são PNGs transparentes gerados por IA, com três vistas por produto, armazenados no bucket privado `product-photos`. O frontend resolve URLs assinadas sem persistir links temporários. Manifesto, pesquisa, prompts e verificações estão descritos em [docs/CATALOGO-IMAGENS.md](docs/CATALOGO-IMAGENS.md). As fotos legadas em JSONB continuam compatíveis. Atribuições dos recursos anteriores estão em `assets/ATTRIBUTION.md` e `assets/vendor/`.

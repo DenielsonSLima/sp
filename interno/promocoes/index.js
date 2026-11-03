@@ -1,31 +1,153 @@
-import {heading,escapeHtml as esc} from '../../shared/ui.js';
-import {repository} from '../../shared/repository.js';
-import {attachCurrencyInput,currencyDecimal,formatBRLCents} from '../../shared/components/currency-input/index.js';
-import {units} from '../cadastros/unidades/state.js';
-import {templates,dimensionLabel,posterMarkup,paperStyle} from '../cadastros/modelos-cartaz/model.js';
-import {campaignStore,campaignPage,campaignStatus,localToday} from './state.js';
-const filters={query:'',start:'',end:'',tab:'active',page:1};
-let createDraft={name:'',start:localToday(),end:localToday(),notes:''};
-let products=[],urls=[],exportVersion=0;
-const rawDrafts=new Map();
-const draftsFor=id=>{if(!rawDrafts.has(id))rawDrafts.set(id,{metadata:null,product:{},prices:{},names:{},print:{}});return rawDrafts.get(id);};
-const money=cents=>(cents/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const date=v=>v.split('-').reverse().join('/');
-const optionTemplate=t=>`<option value="${esc(t.id)}">${esc(t.name)} · ${dimensionLabel(t)}</option>`;
-const chrome=(actions='')=>{const title=heading('AÇÕES DA LOJA','Promoções','Organize campanhas, produtos e arquivos de impressão por formato.');return `<link rel="stylesheet" href="./interno/cadastros/modelos-cartaz/styles.css"><link rel="stylesheet" href="./interno/promocoes/styles.css">${actions?`<div class="page-heading-actions">${title}${actions}</div>`:title}`;};
-const release=()=>{exportVersion++;urls.forEach(url=>URL.revokeObjectURL(url));urls=[];};
-export async function render(root){products=await repository.listProducts();if(!root.isConnected)return;const campaignId=location.hash.split('/')[1];if(campaignId&&campaignStore.list().some(c=>c.id===campaignId))renderDetail(root,campaignId);else renderList(root);}
-function renderList(root){history.replaceState(null,'','#promocoes');release();root.innerHTML=`${chrome('<button class="button primary campaign-new" type="button">Criar campanha</button>')}<div class="campaign-tabs module-tabs" role="tablist" aria-label="Situação das campanhas"><button role="tab" data-tab="active" aria-selected="${filters.tab==='active'}" type="button">Ativos</button><button role="tab" data-tab="finished" aria-selected="${filters.tab==='finished'}" type="button">Finalizados</button></div><section class="card campaign-filters"><label>Buscar campanha<input class="campaign-query" type="search" value="${esc(filters.query)}" placeholder="Nome ou anotações..."></label><label>Período inicial<input class="campaign-start" type="date" value="${filters.start}"></label><label>Período final<input class="campaign-end" type="date" value="${filters.end}"></label><button class="button secondary campaign-clear" type="button">Limpar filtros</button></section><p class="campaign-status" role="status" aria-live="polite">${esc(campaignStore.warning)}</p><p class="campaign-count"></p><section class="campaign-grid" aria-label="Campanhas encontradas"></section><nav class="campaign-pagination" aria-label="Páginas de campanhas"><button class="button secondary campaign-prev" type="button">Anterior</button><span></span><button class="button secondary campaign-next" type="button">Próxima</button></nav>`;
-const list=()=>{try{const result=campaignPage(campaignStore.list(),filters);filters.page=result.page;root.querySelector('.campaign-count').textContent=`${result.total} campanha(s) · página ${result.page} de ${result.pages}`;root.querySelector('.campaign-grid').innerHTML=result.items.length?result.items.map(c=>`<article class="card campaign-card"><span class="campaign-badge">${campaignStatus(c)==='finished'?'Finalizada':c.start>localToday()?'Agendada':'Ativa'}</span><h2>${esc(c.name)}</h2><p>${date(c.start)} a ${date(c.end)}</p><strong>${c.items.length} produto(s)</strong><p class="campaign-card-notes">${esc(c.notes||'Sem anotações')}</p><button type="button" class="button secondary campaign-open" data-id="${c.id}">Abrir campanha →</button></article>`).join(''):'<div class="card campaign-empty"><h2>Nenhuma campanha encontrada.</h2><p>Crie uma campanha ou ajuste os filtros.</p></div>';root.querySelectorAll('.campaign-open').forEach(b=>b.onclick=()=>renderDetail(root,b.dataset.id));root.querySelector('.campaign-prev').disabled=result.page<=1;root.querySelector('.campaign-next').disabled=result.page>=result.pages;root.querySelector('.campaign-pagination span').textContent=`${result.page} / ${result.pages}`;}catch(error){root.querySelector('.campaign-status').textContent=error.message;root.querySelector('.campaign-grid').innerHTML='';root.querySelector('.campaign-count').textContent='Ajuste o período para consultar.';root.querySelector('.campaign-prev').disabled=true;root.querySelector('.campaign-next').disabled=true;}};
-const filter=()=>{filters.query=root.querySelector('.campaign-query').value;filters.start=root.querySelector('.campaign-start').value;filters.end=root.querySelector('.campaign-end').value;filters.page=1;root.querySelector('.campaign-status').textContent=campaignStore.warning;list();};root.querySelector('.campaign-query').oninput=filter;root.querySelector('.campaign-start').onchange=filter;root.querySelector('.campaign-end').onchange=filter;root.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{filters.tab=b.dataset.tab;filters.page=1;renderList(root);root.querySelector(`[data-tab="${filters.tab}"]`).focus();});root.querySelector('.campaign-clear').onclick=()=>{Object.assign(filters,{query:'',start:'',end:'',page:1});renderList(root);root.querySelector('.campaign-query').focus();};root.querySelector('.campaign-prev').onclick=()=>{filters.page--;list();};root.querySelector('.campaign-next').onclick=()=>{filters.page++;list();};root.querySelector('.campaign-new').onclick=()=>renderCreate(root);list();}
-function renderCreate(root){release();root.innerHTML=`${chrome()}<nav class="campaign-breadcrumb"><button class="campaign-back" type="button">Promoções</button><span>/ Nova campanha</span></nav><form class="card campaign-create"><h2>Criar campanha</h2><div class="campaign-fields"><label class="full">Nome da campanha<input name="name" required maxlength="100" value="${esc(createDraft.name)}" placeholder="Ex.: Ofertas da semana"></label><label>Data inicial<input name="start" type="date" required value="${createDraft.start}"></label><label>Data final<input name="end" type="date" required value="${createDraft.end}"></label><label class="full">Anotações<textarea name="notes" maxlength="4000" rows="4" placeholder="Informações para organizar a campanha">${esc(createDraft.notes)}</textarea></label></div><div class="campaign-actions"><button class="button primary" type="submit">Criar e adicionar produtos</button><button class="button secondary campaign-cancel" type="button">Voltar</button></div><p class="campaign-status" role="status"></p></form>`;const form=root.querySelector('form');form.oninput=()=>{createDraft=Object.fromEntries(new FormData(form));};root.querySelector('.campaign-back').onclick=root.querySelector('.campaign-cancel').onclick=()=>renderList(root);form.onsubmit=e=>{e.preventDefault();try{const campaign=campaignStore.create(Object.fromEntries(new FormData(form)));createDraft={name:'',start:localToday(),end:localToday(),notes:''};renderDetail(root,campaign.id);}catch(error){root.querySelector('.campaign-status').textContent=error.message;}};form.elements.name.focus();}
-function renderDetail(root,campaignId,tab='products'){history.replaceState(null,'',`#promocoes/${campaignId}`);release();let campaign=campaignStore.get(campaignId);const raw=draftsFor(campaignId);root.innerHTML=`${chrome()}<nav class="campaign-breadcrumb"><button class="campaign-back" type="button">Promoções</button><span>/</span><strong>${esc(campaign.name)}</strong></nav><div class="campaign-toolbar"><div><h2 class="campaign-title">${esc(campaign.name)}</h2><p class="campaign-period">${date(campaign.start)} a ${date(campaign.end)}</p></div><button class="button secondary campaign-back-button" type="button">← Voltar</button></div><details class="card campaign-metadata"><summary>Dados e anotações da campanha</summary><form class="campaign-fields"><label class="full">Nome<input name="name" maxlength="100" required value="${esc(campaign.name)}"></label><label>Data inicial<input name="start" type="date" required value="${campaign.start}"></label><label>Data final<input name="end" type="date" required value="${campaign.end}"></label><label class="full">Anotações<textarea name="notes" maxlength="4000" rows="3">${esc(campaign.notes)}</textarea></label></form></details><div class="campaign-tabs module-tabs" role="tablist" aria-label="Etapas da campanha"><button data-detail-tab="products" type="button" role="tab" aria-selected="${tab==='products'}">Produtos</button><button data-detail-tab="print" type="button" role="tab" aria-selected="${tab==='print'}">Impressão de cards</button></div><p class="campaign-status" role="status" aria-live="polite"></p><div class="campaign-detail-body"></div>`;
-const status=text=>root.querySelector('.campaign-status').textContent=text;const back=()=>renderList(root);root.querySelector('.campaign-back').onclick=back;root.querySelector('.campaign-back-button').onclick=back;root.querySelectorAll('[data-detail-tab]').forEach(b=>b.onclick=()=>renderDetail(root,campaignId,b.dataset.detailTab));const metadata=root.querySelector('.campaign-metadata form');if(raw.metadata)for(const [key,value] of Object.entries(raw.metadata))if(metadata.elements[key])metadata.elements[key].value=value;metadata.oninput=()=>{raw.metadata=Object.fromEntries(new FormData(metadata));release();root.querySelector('.campaign-generated')?.replaceChildren();};metadata.onsubmit=e=>e.preventDefault();metadata.onchange=()=>{try{campaign=campaignStore.update(campaignId,Object.fromEntries(new FormData(metadata)));raw.metadata=null;root.querySelector('.campaign-title').textContent=campaign.name;root.querySelector('.campaign-breadcrumb strong').textContent=campaign.name;root.querySelector('.campaign-period').textContent=`${date(campaign.start)} a ${date(campaign.end)}`;release();root.querySelector('.campaign-generated')?.replaceChildren();status('Alterações salvas.');}catch(error){status(error.message);}};
-const body=root.querySelector('.campaign-detail-body');if(tab==='products'){body.innerHTML=`<form class="card campaign-product-form"><h2>Adicionar produto</h2><div class="campaign-product-fields"><label>Produto<select name="productId" required><option value="">Selecione um produto</option>${products.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('')}</select></label><label>Preço da oferta (R$)<input name="price" inputmode="decimal" placeholder="0,00" required></label><label>Unidade<select name="unit"><option value="unid">unid</option><option value="kg">kg</option></select></label><button class="button primary" type="submit" ${products.length&&templates.length?'':'disabled'}>Adicionar produto</button></div>${!products.length?'<p>Cadastre produtos em <a href="#cadastros/produtos">Cadastros → Produtos</a>.</p>':''}${!templates.length?'<p>Crie um modelo em <a href="#cadastros/modelos-cartaz">Cadastros → Modelos de cartaz</a> para adicionar produtos. Os cartazes já salvos continuam disponíveis.</p>':''}</form><section class="campaign-product-list"></section>`;const form=body.querySelector('form');for(const [key,value] of Object.entries(raw.product))if(form.elements[key])form.elements[key].value=value;attachCurrencyInput(form.elements.price);form.oninput=form.onchange=()=>{raw.product=Object.fromEntries(new FormData(form));};form.elements.productId.onchange=()=>{const product=products.find(p=>p.id===form.elements.productId.value);form.elements.unit.value=units.find(u=>u.id===product?.unit)?.symbol.toUpperCase()==='KG'?'kg':'unid';form.elements.unit.dispatchEvent(new Event('change',{bubbles:true}));};const list=()=>{campaign=campaignStore.get(campaignId);body.querySelector('.campaign-product-list').innerHTML=campaign.items.length?campaign.items.map(i=>`<article class="card campaign-product-row"><div><strong>${esc(i.name)}</strong><p>${money(i.cents)} / ${i.unit}</p></div><label>Preço (R$)<input class="edit-product-price" data-id="${i.id}" inputmode="decimal" value="${esc(raw.prices[i.id]??formatBRLCents(i.cents))}"></label><label class="campaign-display-name">Nome no cartaz<textarea class="edit-product-name" data-id="${i.id}" rows="3" maxlength="300" placeholder="${esc(i.name)}">${esc(raw.names[i.id]??i.displayName??'')}</textarea><small>Enter cria uma nova linha. Deixe vazio para usar o nome original.</small></label><button class="button secondary remove-campaign-item" data-id="${i.id}" type="button" aria-label="Remover ${esc(i.name)}">Remover</button></article>`).join(''):'<div class="card campaign-empty"><h2>Adicione os produtos desta campanha.</h2><p>Depois, escolha os modelos e as quantidades na aba Impressão de cards.</p></div>';body.querySelectorAll('.remove-campaign-item').forEach(b=>b.onclick=()=>{try{campaignStore.removeItem(campaignId,b.dataset.id);delete raw.prices[b.dataset.id];delete raw.names[b.dataset.id];delete raw.print[b.dataset.id];list();status('Produto removido e campanha salva.');}catch(e){status(e.message);}});body.querySelectorAll('.edit-product-name').forEach(input=>{input.oninput=()=>{raw.names[input.dataset.id]=input.value;release();try{campaignStore.updateItem(campaignId,input.dataset.id,{displayName:input.value});delete raw.names[input.dataset.id];status('Nome no cartaz salvo.');}catch(e){status(e.message);}};input.onchange=input.oninput;});body.querySelectorAll('.edit-product-price').forEach(input=>{attachCurrencyInput(input);input.oninput=()=>{raw.prices[input.dataset.id]=input.value;};input.onchange=()=>{raw.prices[input.dataset.id]=input.value;try{if(!input.checkValidity())throw Error(input.validationMessage);const saved=campaignStore.updateItem(campaignId,input.dataset.id,{price:currencyDecimal(input.value)}),item=saved.items.find(i=>i.id===input.dataset.id);delete raw.prices[input.dataset.id];input.value=formatBRLCents(item.cents);input.closest('.campaign-product-row').querySelector('p').textContent=`${money(item.cents)} / ${item.unit}`;status('Preço salvo.');}catch(e){status(e.message);}};});};form.onsubmit=e=>{e.preventDefault();try{const values=Object.fromEntries(new FormData(form));campaignStore.addItem(campaignId,{...values,price:currencyDecimal(values.price)},products);form.elements.price.value='';raw.product=Object.fromEntries(new FormData(form));list();status('Produto adicionado. Campanha salva.');}catch(error){status(error.message);}};list();}else renderPrint(body,root,campaignId,status);if(raw.metadata||Object.keys(raw.names).length||Object.keys(raw.prices).length||Object.keys(raw.print).length)status('Há alterações não salvas preservadas nos campos. Revise e corrija antes de exportar.');}
-function renderPrint(body,root,campaignId,status){const campaign=campaignStore.get(campaignId),raw=draftsFor(campaignId);body.innerHTML=`<div class="campaign-toolbar"><div><h2>Impressão de cards</h2><p>Escolha modelo, quantidade e papel. Cada formato gera um arquivo PDF separado.</p></div><a href="#cadastros/modelos-cartaz" class="button secondary">Modelos de cartaz →</a></div><section class="campaign-print-items">${campaign.items.map(savedItem=>{const item={...savedItem,...(raw.print[savedItem.id]||{})};const options=templates.some(t=>t.id===item.templateId)?templates:[item.templateSnapshot,...templates];return `<article class="card campaign-print-row" data-item="${item.id}"><div class="campaign-print-name"><strong>${esc(item.name)}</strong><span>${money(item.cents)} / ${item.unit}</span></div><label>Modelo<select data-setting="templateId">${options.map(t=>optionTemplate(t).replace('<option ',`<option ${t.id===item.templateId?'selected':''} `)).join('')}</select></label><label>Quantidade<input data-setting="quantity" inputmode="numeric" value="${esc(item.quantity)}" aria-label="Quantidade de ${esc(item.name)}"></label><label>Formato de impressão<select data-setting="printLayout"><option value="individual" ${item.printLayout==='individual'?'selected':''}>Folha individual do modelo</option><option value="two-a4" ${item.printLayout==='two-a4'?'selected':''}>2 por A4 paisagem · cartazes retrato</option></select></label><div class="campaign-print-buttons"><button type="button" class="button secondary view-campaign-poster">Ver cartaz</button><button type="button" class="button secondary refresh-campaign-model">Atualizar modelo</button></div><p class="campaign-row-save" role="status">${dimensionLabel(item.templateSnapshot)} · modelo salvo no item</p></article>`;}).join('')||'<div class="card campaign-empty"><h2>Nenhum produto para imprimir.</h2><p>Adicione produtos na aba Produtos.</p></div>'}</section><div class="campaign-export-controls"><button class="button secondary preview-campaign-pdfs" type="button" ${campaign.items.length?'':'disabled'}>Conferir formatos</button><button class="button primary export-campaign-pdfs" type="button" ${campaign.items.length?'':'disabled'}>PDF</button></div><p class="campaign-print-help">Uma folha por cartaz no formato individual. Em 2 por A4, dois cartazes em retrato ficam lado a lado na folha A4 paisagem, sem girar ou esticar a arte. Use escala 100% e o papel indicado em cada arquivo.</p><div class="campaign-generated"></div><dialog class="campaign-poster-dialog" aria-labelledby="campaign-poster-title"><div class="campaign-toolbar"><h2 id="campaign-poster-title">Prévia do cartaz</h2><button type="button" class="button secondary close-poster-preview">Fechar</button></div><div class="campaign-poster-content"></div></dialog>`;
-body.querySelectorAll('.campaign-print-row').forEach(row=>{row.querySelectorAll('[data-setting]').forEach(input=>{input.oninput=()=>{raw.print[row.dataset.item]??={};raw.print[row.dataset.item][input.dataset.setting]=input.value;release();body.querySelector('.campaign-generated').replaceChildren();};input.onchange=()=>{raw.print[row.dataset.item]??={};raw.print[row.dataset.item][input.dataset.setting]=input.value;try{const next=campaignStore.updateItem(campaignId,row.dataset.item,{[input.dataset.setting]:input.value});const updated=next.items.find(i=>i.id===row.dataset.item);input.value=String(updated[input.dataset.setting]);delete raw.print[row.dataset.item][input.dataset.setting];if(!Object.keys(raw.print[row.dataset.item]).length)delete raw.print[row.dataset.item];row.querySelector('.campaign-row-save').textContent=`Salvo · ${dimensionLabel(updated.templateSnapshot)}`;release();body.querySelector('.campaign-generated').replaceChildren();status('Configuração salva automaticamente.');}catch(e){row.querySelector('.campaign-row-save').textContent=e.message;status('Alteração não salva. Corrija o campo para continuar.');}};});row.querySelector('.refresh-campaign-model').onclick=()=>{try{const selected=row.querySelector('[data-setting=templateId]').value;campaignStore.updateItem(campaignId,row.dataset.item,{templateId:selected});release();body.querySelector('.campaign-generated').replaceChildren();row.querySelector('.campaign-row-save').textContent='Versão atual do modelo aplicada e salva.';}catch(e){row.querySelector('.campaign-row-save').textContent=e.message;}};row.querySelector('.view-campaign-poster').onclick=()=>{const latest=campaignStore.get(campaignId),item=latest.items.find(i=>i.id===row.dataset.item),t=item.templateSnapshot;body.querySelector('.campaign-poster-content').innerHTML=`<div class="poster-mini-paper campaign-full-preview" style="${paperStyle(t)};--mini-width:360px"><div class="poster-mini-content">${posterMarkup({...item,start:latest.start,end:latest.end},t)}</div></div>`;body.querySelector('dialog').showModal();body.querySelector('.close-poster-preview').focus();};});body.querySelector('.close-poster-preview').onclick=()=>body.querySelector('dialog').close();
-const checkUnsaved=()=>{if(Object.keys(raw.names).length)throw Error('Há nomes de cartazes não salvos. Volte à aba Produtos e corrija os campos antes de exportar.');if(Object.keys(raw.prices).length)throw Error('Há preços de produtos não salvos. Volte à aba Produtos e corrija os campos antes de exportar.');const saved=campaignStore.get(campaignId),meta=Object.fromEntries(new FormData(root.querySelector('.campaign-metadata form')));for(const key of ['name','start','end','notes'])if(meta[key].trim()!==saved[key])throw Error('Há dados da campanha não salvos. Corrija o nome e o período antes de exportar.');for(const row of body.querySelectorAll('.campaign-print-row')){const item=campaignStore.get(campaignId).items.find(i=>i.id===row.dataset.item);for(const control of row.querySelectorAll('[data-setting]'))if(String(item[control.dataset.setting])!==control.value)throw Error('Há uma configuração não salva. Corrija os campos antes de exportar.');}};
-body.querySelector('.preview-campaign-pdfs').onclick=async()=>{try{checkUnsaved();const token=exportVersion;const {planCampaignPdfs}=await import('./pdf.js');if(!body.isConnected||token!==exportVersion)return;const plan=planCampaignPdfs(campaignStore.get(campaignId));showPlan(body,plan);status('Formatos conferidos. Cada grupo será exportado em um PDF.');}catch(e){if(body.isConnected)status(e.message);}};
-body.querySelector('.export-campaign-pdfs').onclick=async()=>{const button=body.querySelector('.export-campaign-pdfs');try{checkUnsaved();button.disabled=true;const token=exportVersion;const {openCampaignPdfDialog}=await import('./pdf-dialog.js');if(!body.isConnected||token!==exportVersion)return;await openCampaignPdfDialog(body,campaignStore.get(campaignId),button);}catch(e){if(body.isConnected)status(e.message);}finally{if(button.isConnected)button.disabled=false;}};}
+import { renderProducts } from "./views/products.js";
+import { renderPrint } from "./views/print.js";
+import { clearCampaignDraftsOnContextChange } from "./realtime.js";
+import { loadCampaignEditor, loadCampaignDetail } from "./queries.js";
+import { renderCampaignList } from "./views/list.js";
+import { getDataContext } from "./services.js";
+let stopRealtime, productSaver;
+import { heading, escapeHtml as esc } from "../../shared/ui.js";
+import { campaignStore, localToday } from "./state.js";
+const filters = { query: "", start: "", end: "", tab: "active", page: 1 };
+let createDraft = { name: "", start: localToday(), end: localToday(), notes: "" };
+let products = [],
+  urls = [],
+  exportVersion = 0,
+  viewVersion = 0;
+const rawDrafts = new Map();
+const draftsFor = (id) => {
+  if (!rawDrafts.has(id)) rawDrafts.set(id, { metadata: null, product: {}, prices: {}, names: {}, print: {} });
+  return rawDrafts.get(id);
+};
+const date = (v) => v.split("-").reverse().join("/");
+const chrome = (actions = "") => {
+  const title = heading("OFERTAS E DIVULGAÇÃO", "Promoções");
+  return `<link rel="stylesheet" href="./interno/cadastros/modelos-cartaz/styles.css"><link rel="stylesheet" href="./interno/promocoes/styles.css">${actions ? `<div class="page-heading-actions">${title}${actions}</div>` : title}`;
+};
+const release = () => {
+  exportVersion++;
+  urls.forEach((url) => URL.revokeObjectURL(url));
+  urls = [];
+};
+export async function render(root) {
+  const campaignId = location.hash.split("/")[1];
+  if (campaignId) await renderDetail(root, campaignId);
+  else renderList(root);
+}
+function renderList(root) {
+  viewVersion++;
+  stopRealtime?.();
+  history.replaceState(null, "", "#promocoes");
+  release();
+  stopRealtime = renderCampaignList(root, {
+    filters, chrome,
+    onOpen: (id) => renderDetail(root, id),
+    onCreate: () => renderCreate(root),
+  });
+}
+function renderCreate(root) {
+  viewVersion++;
+  stopRealtime?.();
+  release();
+  root.innerHTML = `${chrome()}<nav class="campaign-breadcrumb"><button class="campaign-back" type="button">Promoções</button><span>/ Nova campanha</span></nav><form class="card campaign-create"><h2>Criar campanha</h2><div class="campaign-fields"><label class="full">Nome da campanha<input name="name" required maxlength="100" value="${esc(createDraft.name)}" placeholder="Ex.: Ofertas da semana"></label><label>Data inicial<input name="start" type="date" required value="${createDraft.start}"></label><label>Data final<input name="end" type="date" required value="${createDraft.end}"></label><label class="full">Anotações<textarea name="notes" maxlength="4000" rows="4" placeholder="Informações para organizar a campanha">${esc(createDraft.notes)}</textarea></label></div><div class="campaign-actions"><button class="button primary" type="submit">Criar e adicionar produtos</button><button class="button secondary campaign-cancel" type="button">Voltar</button></div><p class="campaign-status" role="status"></p></form>`;
+  const form = root.querySelector("form");
+  form.oninput = () => {
+    createDraft = Object.fromEntries(new FormData(form));
+  };
+  root.querySelector(".campaign-back").onclick = root.querySelector(".campaign-cancel").onclick = () =>
+    renderList(root);
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const campaign = await campaignStore.create(Object.fromEntries(new FormData(form)));
+      createDraft = { name: "", start: localToday(), end: localToday(), notes: "" };
+      renderDetail(root, campaign.id);
+    } catch (error) {
+      root.querySelector(".campaign-status").textContent = error.message;
+    }
+  };
+  form.elements.name.focus();
+}
+async function renderDetail(root, campaignId, tab = "products") {
+  const token = ++viewVersion,
+    scope = getDataContext();
+  stopRealtime?.();
+  history.replaceState(null, "", `#promocoes/${campaignId}`);
+  root.innerHTML = `${chrome()}<p role="status">Carregando campanha…</p>`;
+  try {
+    const [loadedProducts, campaign] = await Promise.all([loadCampaignEditor(), loadCampaignDetail(campaignId)]);
+    if (!campaign) throw Error("Campanha não encontrada. Atualize a lista.");
+    products = loadedProducts;
+  } catch (error) {
+    if (!root.isConnected || token !== viewVersion || location.hash !== `#promocoes/${campaignId}`) return;
+    root.innerHTML = `${chrome()}<p class="campaign-status" role="alert">${esc(error.message)}</p><button class="button secondary campaign-back" type="button">← Voltar</button>`;
+    root.querySelector(".campaign-back").onclick = () => renderList(root);
+    return;
+  }
+  if (
+    !root.isConnected ||
+    token !== viewVersion ||
+    location.hash !== `#promocoes/${campaignId}` ||
+    scope?.companyId !== getDataContext()?.companyId ||
+    scope?.user?.id !== getDataContext()?.user?.id
+  )
+    return;
+  history.replaceState(null, "", `#promocoes/${campaignId}`);
+  release();
+  let campaign = campaignStore.get(campaignId);
+  const raw = draftsFor(campaignId);
+  root.innerHTML = `${chrome()}<nav class="campaign-breadcrumb"><button class="campaign-back" type="button">Promoções</button><span>/</span><strong>${esc(campaign.name)}</strong></nav><div class="campaign-toolbar"><div><h2 class="campaign-title">${esc(campaign.name)}</h2><p class="campaign-period">${date(campaign.start)} a ${date(campaign.end)}</p></div><button class="button secondary campaign-back-button" type="button">← Voltar</button></div><details class="card campaign-metadata"><summary>Dados e anotações da campanha</summary><form class="campaign-fields"><label class="full">Nome<input name="name" maxlength="100" required value="${esc(campaign.name)}"></label><label>Data inicial<input name="start" type="date" required value="${campaign.start}"></label><label>Data final<input name="end" type="date" required value="${campaign.end}"></label><label class="full">Anotações<textarea name="notes" maxlength="4000" rows="3">${esc(campaign.notes)}</textarea></label></form></details><div class="campaign-tabs module-tabs" role="tablist" aria-label="Etapas da campanha"><button data-detail-tab="products" type="button" role="tab" aria-selected="${tab === "products"}">Produtos</button><button data-detail-tab="print" type="button" role="tab" aria-selected="${tab === "print"}">Impressão de cards</button></div><p class="campaign-status" role="status" aria-live="polite"></p><div class="campaign-detail-body"></div>`;
+  const status = (text) => { if (root.isConnected && token === viewVersion) root.querySelector(".campaign-status").textContent = text; };
+  const leave = async (next) => {
+    try {
+      await productSaver?.flush();
+      productSaver?.dispose();
+      productSaver = null;
+      next();
+    } catch (error) { status(error.message); }
+  };
+  const back = () => leave(() => renderList(root));
+  root.querySelector(".campaign-back").onclick = back;
+  root.querySelector(".campaign-back-button").onclick = back;
+  root
+    .querySelectorAll("[data-detail-tab]")
+    .forEach((b) => (b.onclick = () => leave(() => renderDetail(root, campaignId, b.dataset.detailTab))));
+  const metadata = root.querySelector(".campaign-metadata form");
+  if (raw.metadata)
+    for (const [key, value] of Object.entries(raw.metadata))
+      if (metadata.elements[key]) metadata.elements[key].value = value;
+  metadata.oninput = () => {
+    raw.metadata = Object.fromEntries(new FormData(metadata));
+    release();
+    root.querySelector(".campaign-generated")?.replaceChildren();
+  };
+  metadata.onsubmit = (e) => e.preventDefault();
+  metadata.onchange = async () => {
+    try {
+      campaign = await campaignStore.update(campaignId, Object.fromEntries(new FormData(metadata)));
+      raw.metadata = null;
+      root.querySelector(".campaign-title").textContent = campaign.name;
+      root.querySelector(".campaign-breadcrumb strong").textContent = campaign.name;
+      root.querySelector(".campaign-period").textContent = `${date(campaign.start)} a ${date(campaign.end)}`;
+      release();
+      root.querySelector(".campaign-generated")?.replaceChildren();
+      status("Alterações salvas.");
+    } catch (error) {
+      status(error.message);
+    }
+  };
+  const body = root.querySelector(".campaign-detail-body");
+  if (tab === "products") productSaver = renderProducts(body, campaignId, status, { products, raw, release });
+  else renderPrint(body, root, campaignId, status, { draftsFor, release, getExportVersion: () => exportVersion });
+  if (raw.metadata || Object.keys(raw.names).length || Object.keys(raw.prices).length || Object.keys(raw.print).length)
+    status("Há alterações não salvas preservadas nos campos. Revise e corrija antes de exportar.");
+}
 
-function showPlan(body,plan){body.querySelector('.campaign-generated').innerHTML=`<h3>Arquivos por formato</h3>${plan.map(group=>`<article class="card campaign-format-card"><strong>${esc(group.formatLabel)}</strong><p>${group.pages.length} folha(s) · ${group.count} cartaz(es) · ${group.widthMm} × ${group.heightMm} mm</p><div class="campaign-format-paper" style="--format-ratio:${group.widthMm}/${group.heightMm}">${group.pages[0].map(p=>`<div class="campaign-format-slot" style="left:${p.xMm/group.widthMm*100}%;top:${p.yMm/group.heightMm*100}%;width:${p.widthMm/group.widthMm*100}%;height:${p.heightMm/group.heightMm*100}%;${paperStyle(p.offer.templateSnapshot)}"><div class="poster-mini-content">${posterMarkup(p.offer,p.offer.templateSnapshot)}</div></div>`).join('')}</div><p class="campaign-format-caption">Prévia da primeira folha deste arquivo. O PDF contém todas as ${group.pages.length} folha(s).</p></article>`).join('')}`;}
+clearCampaignDraftsOnContextChange(() => {
+  viewVersion++;
+  products = [];
+  stopRealtime?.();
+  productSaver?.dispose();
+  productSaver = null;
+  rawDrafts.clear();
+  createDraft = { name: "", start: localToday(), end: localToday(), notes: "" };
+});

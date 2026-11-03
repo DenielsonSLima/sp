@@ -1,4 +1,28 @@
-import {validReceiptDate} from '../cadastros/acougue/state.js';
-export const PAGE_SIZE=12;
-const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR');
-export function receiptPage(records,{query='',start='',end='',page=1}={}){if((start&&!validReceiptDate(start))||(end&&!validReceiptDate(end)))throw Error('Informe datas válidas para filtrar o período.');if(start&&end&&start>end)throw Error('A data inicial deve ser igual ou anterior à data final.');const search=normalize(query).trim();const filtered=records.filter(r=>(!search||normalize(`${r.reference} ${r.category} ${r.modelName} ${r.id}`).includes(search))&&(!start||r.receivedDate>=start)&&(!end||r.receivedDate<=end));const pages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));const current=Math.min(pages,Math.max(1,Number.isFinite(Number(page))?Math.floor(Number(page)):1));return {items:filtered.slice((current-1)*PAGE_SIZE,current*PAGE_SIZE),total:filtered.length,page:current,pages,pageSize:PAGE_SIZE};}
+import { validReceiptDate } from '../cadastros/acougue/state.js';
+export const PAGE_SIZE = 12;
+const normalize = (v) =>
+  String(v || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('pt-BR');
+export function receiptPage(records, { query = '', start = '', end = '', page = 1 } = {}) {
+  if ((start && !validReceiptDate(start)) || (end && !validReceiptDate(end)))
+    throw Error('Informe datas válidas para filtrar o período.');
+  if (start && end && start > end) throw Error('A data inicial deve ser igual ou anterior à data final.');
+  const search = normalize(query).trim();
+  const filtered = records.filter(
+    (r) =>
+      (!search || normalize(`${r.reference} ${r.category} ${r.modelName} ${r.id}`).includes(search)) &&
+      (!start || r.receivedDate >= start) &&
+      (!end || r.receivedDate <= end),
+  );
+  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const current = Math.min(pages, Math.max(1, Number.isFinite(Number(page)) ? Math.floor(Number(page)) : 1));
+  return {
+    items: filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE),
+    total: filtered.length,
+    page: current,
+    pages,
+    pageSize: PAGE_SIZE,
+  };
+}

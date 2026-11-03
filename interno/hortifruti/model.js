@@ -1,11 +1,54 @@
-export const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
-export const validDate=v=>/^\d{4}-\d{2}-\d{2}$/.test(v)&&!Number.isNaN(Date.parse(v+'T12:00:00Z'))&&new Date(v+'T12:00:00Z').toISOString().slice(0,10)===v;
-export const money=cents=>cents==null?'A conferir':new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(cents/100);
-const round=(a,b)=>(a+b/2n)/b;
-export function decimal(value,places,label){const s=String(value??'').trim().replace(',','.');if(!s)return null;if(!new RegExp(`^\\d+(?:\\.\\d{1,${places}})?$`).test(s))throw new Error(`${label}: use um número positivo com até ${places} casas decimais.`);const [whole,fraction='']=s.split('.');const scaled=BigInt(whole)*10n**BigInt(places)+BigInt(fraction.padEnd(places,'0'));if(scaled<=0n||scaled>1000000n*10n**BigInt(places))throw new Error(`${label}: informe um valor maior que zero e até 1.000.000.`);return Number(scaled);}
-export function formatDecimal(value,places=6){if(value==null)return '';return (value/10**places).toFixed(places).replace(/\.?0+$/,'').replace('.',',');}
-export function parseUnitCount(value){const text=String(value??'').trim();if(!text)return null;if(!/^\d+$/.test(text)||Number(text)<=0||Number(text)>1000000)throw new Error('Informe uma contagem de unidades inteira entre 1 e 1.000.000.');return Number(text);}
-export function calculateLine({quantity='',unitCost='',total='',basis='total',weighMode='total',boxes=[],previousWeight='',unitCount=''}){if(!['unit','total'].includes(basis))throw new Error('Campo de cálculo inválido.');if(!['total','boxes'].includes(weighMode))throw new Error('Modo de pesagem inválido.');if(!Array.isArray(boxes))throw new Error('Caixas inválidas.');const inactiveValue=(value,label)=>{try{return decimal(value,6,label);}catch{return null;}};const boxWeights=boxes.map(value=>weighMode==='boxes'?decimal(value,6,'Peso líquido da caixa (kg)'):inactiveValue(value,'Peso líquido da caixa (kg)'));const previousWeightMicros=weighMode==='boxes'?decimal(previousWeight,6,'Peso anterior acumulado (kg)'):inactiveValue(previousWeight,'Peso anterior acumulado (kg)');const boxesIncomplete=weighMode==='boxes'&&(!boxWeights.length&&!previousWeightMicros||boxWeights.some(v=>v==null));const quantityMicros=weighMode==='boxes'?(boxWeights.reduce((sum,v)=>sum+(v||0),previousWeightMicros||0)||null):decimal(quantity,6,'Quantidade');if(quantityMicros>1000000000000)throw new Error('Quantidade total acima do limite.');let unitMicros=null,totalCents=null;if(basis==='total'){totalCents=decimal(total,2,'Total do item');if(quantityMicros&&totalCents)unitMicros=Number(round(BigInt(totalCents)*10000000000n,BigInt(quantityMicros)));}else{unitMicros=decimal(unitCost,6,'Custo unitário');if(quantityMicros&&unitMicros)totalCents=Number(round(BigInt(quantityMicros)*BigInt(unitMicros),10000000000n));}if(totalCents!=null&&(!Number.isSafeInteger(totalCents)||totalCents<=0))throw new Error('O total do item deve ser de pelo menos R$ 0,01.');if(unitMicros!=null&&!Number.isSafeInteger(unitMicros))throw new Error('Custo unitário acima do limite.');return {unitCount:parseUnitCount(unitCount),quantityMicros,unitMicros,totalCents,basis,weighMode,boxes:boxWeights,boxesIncomplete,previousWeightMicros,...(weighMode==='total'?{inactiveBoxesRaw:[...boxes],inactivePreviousWeightRaw:String(previousWeight)}:{})};}
-export const lineInput=item=>({productId:item.productId,unit:item.unit,unitCount:item.unitCount==null?'':String(item.unitCount),quantity:formatDecimal(item.quantityMicros),unitCost:formatDecimal(item.unitMicros),total:formatDecimal(item.totalCents,2),basis:item.basis,weighMode:item.weighMode||'total',boxes:item.weighMode==='total'&&item.inactiveBoxesRaw?item.inactiveBoxesRaw.slice():(item.boxes||[]).map(v=>formatDecimal(v)),previousWeight:item.weighMode==='total'&&item.inactivePreviousWeightRaw!==undefined?item.inactivePreviousWeightRaw:formatDecimal(item.previousWeightMicros)});
-export const summary=record=>({total:record.items.some(item=>item.totalCents!=null)?record.items.reduce((sum,item)=>sum+(item.totalCents||0),0):null,incomplete:record.items.filter(item=>!item.quantityMicros||!item.totalCents||!item.unitMicros||item.boxesIncomplete).length});
-export const assertComplete=record=>{if(!record.items.length||summary(record).incomplete)throw new Error('Informe quantidade e custo válidos de todos os produtos antes de confirmar a pesagem.');};
+export const today = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+export const validDate = (v) =>
+  /^\d{4}-\d{2}-\d{2}$/.test(v) &&
+  !Number.isNaN(Date.parse(v + 'T12:00:00Z')) &&
+  new Date(v + 'T12:00:00Z').toISOString().slice(0, 10) === v;
+export const money = (cents) =>
+  cents == null
+    ? 'A conferir'
+    : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
+export function formatDecimal(value, places = 6) {
+  if (value == null) return '';
+  return (value / 10 ** places)
+    .toFixed(places)
+    .replace(/\.?0+$/, '')
+    .replace('.', ',');
+}
+export function decimal(value, places, label) {
+  const s = String(value ?? '')
+    .trim()
+    .replace(',', '.');
+  if (!s) return null;
+  if (!new RegExp(`^\\d+(?:\\.\\d{1,${places}})?$`).test(s))
+    throw new Error(`${label}: use um número positivo com até ${places} casas decimais.`);
+  const [whole, fraction = ''] = s.split('.');
+  const scaled = BigInt(whole) * 10n ** BigInt(places) + BigInt(fraction.padEnd(places, '0'));
+  if (scaled <= 0n || scaled > 1000000n * 10n ** BigInt(places))
+    throw new Error(`${label}: informe um valor maior que zero e até 1.000.000.`);
+  return Number(scaled);
+}
+export const lineInput = (item) => ({
+  productId: item.productId,
+  unit: item.unit,
+  unitCount: item.unitCount == null ? '' : String(item.unitCount),
+  quantity: formatDecimal(item.quantityMicros),
+  unitCost: formatDecimal(item.unitMicros),
+  total: formatDecimal(item.totalCents, 2),
+  basis: item.basis,
+  weighMode: item.weighMode || 'total',
+  boxes:
+    item.weighMode === 'total' && item.inactiveBoxesRaw
+      ? item.inactiveBoxesRaw.slice()
+      : (item.boxes || []).map((v) => formatDecimal(v)),
+  previousWeight:
+    item.weighMode === 'total' && item.inactivePreviousWeightRaw !== undefined
+      ? item.inactivePreviousWeightRaw
+      : formatDecimal(item.previousWeightMicros),
+});
+export const summary = (record) => {
+  if (!record?.computed?.summary) throw Error('O banco não retornou o resumo desta compra. Recarregue o registro.');
+  return record.computed.summary;
+};

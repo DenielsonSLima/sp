@@ -2,20 +2,23 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {openQuoteProductDialog} from '../interno/cotacao/product-dialog.js';
 import {providerPresentation,quoteProductPhoto} from '../interno/cotacao/presentation.js';
-import {createQuote,addQuoteItem} from '../interno/cotacao/state.js';
+import {createQuote,addQuoteItem} from './fixtures/legacy-operations/quotation-state.js';
 
 const products=[{id:'p1',name:'Arroz',category:'Mercearia',unit:'UN'}, {id:'p2',name:'Café <especial>',code:'CF-2',category:'Mercearia',unit:'UN',photo:'data:image/png;base64,aGVsbG8='}];
-function setup(t,draft={open:false,product:'',quantity:'1'}){
+function setup(t,draft={open:false,products:[],quantity:'1'}){
  const priorDocument=globalThis.document,priorWindow=globalThis.window;
- const search={value:draft.query||'',focus(){this.focused=true;}},quantity={value:draft.quantity};
- const picker={innerHTML:''},error={textContent:''},close={},cancel={},trigger={isConnected:true,focus(){this.focused=true;}};
- const form=new EventTarget();form.elements={quantity};
- let dialog,selected=draft.product,created=0;
- const host={querySelector(){return dialog&&!dialog.removed?dialog:null;},append(node){dialog=node;}};
+ const search={value:draft.query||'',focus(){this.focused=true;}},quantity={value:draft.quantity},category={value:''},subcategory={value:''};
+ const picker={innerHTML:''},error={textContent:''},close={},cancel={},submit={},all={},count={},allLabel={},more={},trigger={isConnected:true,focus(){this.focused=true;}};
+ let markup,checkboxes=[];
+ const checks=()=>{if(markup!==picker.innerHTML){markup=picker.innerHTML;checkboxes=[...markup.matchAll(/<input type="checkbox" name="product" value="([^"]+)" ([^>]*)>/g)].map(m=>({value:m[1],checked:m[2].includes('checked')}));}return checkboxes;};
+ const form=new EventTarget();form.elements={quantity,category,subcategory};form.setAttribute=()=>{};form.querySelectorAll=()=>[search,quantity,category,subcategory,close,cancel,submit,all,more,...checks()];
+ let dialog,created=0;
+ const host={isConnected:true,querySelector(){return dialog&&!dialog.removed?dialog:null;},append(node){dialog=node;}};
  class FakeDialog extends EventTarget{
   open=false;removed=false;attributes={};
   setAttribute(name,value){this.attributes[name]=value;}
-  querySelector(selector){return ({form,'[data-search]':search,'.quote-product-picker':picker,'.quote-error':error,'[data-close]':close,'[data-cancel]':cancel})[selector]||(selector==='[name=product]:checked'&&selected?{value:selected}:null);}
+  querySelector(selector){return ({form,'[data-search]':search,'.quote-product-picker':picker,'.quote-error':error,'[data-close]':close,'[data-cancel]':cancel,'[type=submit]':submit,'[data-select-all]':all,'[data-selection-count]':count,'[data-select-all-label]':allLabel,'[data-more]':more})[selector]||null;}
+  querySelectorAll(selector){return selector==='[name=product]'?checks():[];}
   showModal(){this.open=true;}
   close(){this.open=false;this.dispatchEvent(new Event('close'));}
   remove(){this.removed=true;}
@@ -24,7 +27,7 @@ function setup(t,draft={open:false,product:'',quantity:'1'}){
  globalThis.document={body:{style:{overflow:'auto'}},createElement(){created++;return new FakeDialog();}};
  globalThis.window=new EventTarget();
  t.after(()=>{globalThis.document=priorDocument;globalThis.window=priorWindow;});
- return {host,draft,trigger,search,quantity,picker,error,close,cancel,form,get dialog(){return dialog;},get created(){return created;},select(value){selected=value;}};
+ return {host,draft,trigger,search,quantity,category,subcategory,picker,error,close,cancel,form,all,count,submit,more,get dialog(){return dialog;},get created(){return created;},select(value,checked=true){const input=checks().find(row=>row.value===value);assert(input);input.checked=checked;input.onchange();}};
 }
 
 test('picker opens a native modal, excludes existing products and searches without losing the selection',t=>{
@@ -33,21 +36,33 @@ test('picker opens a native modal, excludes existing products and searches witho
  assert.equal(env.dialog.attributes['aria-labelledby'],'quote-product-dialog-title');
  assert(!env.picker.innerHTML.includes('value="p1"'));assert(env.picker.innerHTML.includes('value="p2"'));
  assert(env.picker.innerHTML.includes('Café &lt;especial&gt;'));assert(env.picker.innerHTML.includes('<img'));
- env.search.value='inexistente';env.search.oninput();assert.match(env.picker.innerHTML,/Nenhum produto encontrado/);
- env.select('p2');env.search.oninput();assert(env.picker.innerHTML.includes('value="p2"'));
+ env.select('p2');env.search.value='inexistente';env.search.oninput();assert.match(env.picker.innerHTML,/Nenhum produto encontrado/);
+ assert.deepEqual(env.draft.products,['p2']);assert.match(env.count.textContent,/1 produto/);
  openQuoteProductDialog({...env,products,items:[],onSubmit(){}});assert.equal(env.created,1);
  env.cancel.onclick();assert.equal(document.body.style.overflow,'auto');assert(env.trigger.focused);assert.equal(env.draft.open,false);
 });
 
-test('invalid quantities keep the modal, photo selection and raw quantity; a valid submit adds exactly once',t=>{
+test('invalid quantities keep the modal, photo selection and raw quantity; a valid submit adds exactly once',async t=>{
  const env=setup(t),q=createQuote({title:'Compra',date:'2026-10-20',items:[{productId:'p1',name:'Arroz',quantity:2,unit:'UN'}],providers:[{id:'f1',name:'Fornecedor'}]});
  const reasons=[];
  openQuoteProductDialog({...env,products,items:q.items,onSubmit:(product,quantity)=>addQuoteItem(q,product,quantity),onClose:reason=>reasons.push(reason)});
- env.select('p2');env.quantity.value='inválido';env.form.onsubmit(new Event('submit',{cancelable:true}));
+ env.select('p2');env.quantity.value='inválido';await env.form.onsubmit(new Event('submit',{cancelable:true}));
  assert(env.dialog.open);assert.equal(q.items.length,1);assert.equal(env.draft.quantity,'inválido');assert(env.error.textContent);
- env.quantity.value='3,5';env.form.onsubmit(new Event('submit',{cancelable:true}));
+ env.quantity.value='3,5';await env.form.onsubmit(new Event('submit',{cancelable:true}));
  assert.equal(q.items.length,2);assert.equal(q.items[1].quantity,3.5);assert(env.dialog.removed);assert.deepEqual(reasons,['saved']);
  assert.equal(env.draft.product,'');assert.equal(env.draft.quantity,'1');assert.equal(document.body.style.overflow,'auto');
+});
+
+test('remote save keeps the modal pending, ignores duplicate submits and retains fields on rejection',async t=>{
+ const env=setup(t),reasons=[];let rejectSave,calls=0;
+ const pending=new Promise((resolve,reject)=>{rejectSave=reject;});
+ openQuoteProductDialog({...env,products,items:[],onSubmit:()=>{calls++;return pending;},onClose:reason=>reasons.push(reason)});
+ env.select('p2');env.quantity.value='4';
+ const saving=env.form.onsubmit(new Event('submit',{cancelable:true}));
+ await env.form.onsubmit(new Event('submit',{cancelable:true}));
+ assert.equal(calls,1);assert(env.dialog.open);assert.deepEqual(reasons,[]);
+ rejectSave(Error('A cotação foi alterada em outra aba.'));await saving;
+ assert(env.dialog.open);assert.equal(env.quantity.value,'4');assert.match(env.error.textContent,/outra aba/);assert.deepEqual(reasons,[]);
 });
 
 test('Escape cancels without submitting and navigation preserves raw product drafts while releasing the modal',t=>{
@@ -56,7 +71,7 @@ test('Escape cancels without submitting and navigation preserves raw product dra
  openQuoteProductDialog(options);const escape=new Event('cancel',{cancelable:true});env.dialog.dispatchEvent(escape);
  assert(escape.defaultPrevented);assert.equal(submissions,0);assert.equal(env.draft.open,false);
  openQuoteProductDialog(options);env.select('p2');env.quantity.value='2,';window.dispatchEvent(new Event('hashchange'));
- assert.equal(env.draft.product,'p2');assert.equal(env.draft.quantity,'2,');assert(env.draft.open);assert(env.dialog.removed);
+ assert.deepEqual(env.draft.products,['p2']);assert.equal(env.draft.quantity,'2,');assert(env.draft.open);assert(env.dialog.removed);
  assert.deepEqual(reasons,['cancel','navigation']);assert.equal(document.body.style.overflow,'auto');
 });
 
@@ -79,4 +94,19 @@ test('product thumbnails use the main catalog photo, escape names and reject rem
  assert(!quoteProductPhoto({name:'Sem foto',photo:'javascript:alert(1)'}).includes('<img'));
  assert(!quoteProductPhoto({name:'Sem foto',photo:'https://example.com/photo.jpg'}).includes('<img'));
  assert.match(quoteProductPhoto(null,'Produto removido'),/Sem foto de Produto removido/);
+});
+
+test('multiple products survive filters and only the remaining selection is retried after a partial failure',async t=>{
+ const env=setup(t);const rows=[...products,{id:'p3',name:'Banana',category:'Hortifruti',subcategory:'Frutas',unit:'KG'}];let fail=true;const calls=[];
+ openQuoteProductDialog({...env,products:rows,items:[],onSubmit:async product=>{calls.push(product.id);if(product.id==='p2'&&fail)throw Error('Falha temporária');}});
+ env.select('p1');env.select('p2');env.category.value='Hortifruti';env.category.onchange();assert.match(env.picker.innerHTML,/Banana/);assert.doesNotMatch(env.picker.innerHTML,/Arroz/);assert.match(env.count.textContent,/2 produto/);
+ env.select('p3');await env.form.onsubmit(new Event('submit',{cancelable:true}));assert.deepEqual(calls,['p1','p2']);assert.match(env.error.textContent,/1 produto.*já adicionado/);assert.deepEqual(env.draft.products,['p2','p3']);assert(env.dialog.open);
+ fail=false;await env.form.onsubmit(new Event('submit',{cancelable:true}));assert.deepEqual(calls,['p1','p2','p2','p3']);assert(env.dialog.removed);
+});
+test('select all includes filtered products beyond the first 20 and subcategory resets on category change',async t=>{
+ const env=setup(t),rows=Array.from({length:25},(_,i)=>({id:`p${i}`,name:`Arroz ${i}`,categoryId:'foods',category:'Mercearia',subcategoryId:'rice',subcategory:'Arroz',unit:'UN'}));const calls=[];
+ openQuoteProductDialog({...env,products:rows,items:[],onSubmit:product=>calls.push(product.id)});assert.equal(env.more.hidden,false);
+ env.category.value='foods';env.category.onchange();env.subcategory.value='rice';env.subcategory.onchange();env.all.checked=true;env.all.onchange();assert.equal(env.draft.products.length,25);
+ env.category.value='other';env.category.onchange();assert.equal(env.subcategory.value,'');assert.equal(env.draft.products.length,25);
+ await env.form.onsubmit(new Event('submit',{cancelable:true}));assert.equal(calls.length,25);
 });
