@@ -28,6 +28,7 @@
 @import '../interno/promocoes/styles.css';
 @import '../interno/tabela-precos/styles.css';
 @import '../interno/encartes/styles.css';
+@import '../interno/encartes/workspace/styles.css';
 @import '../interno/configuracoes/styles.css';
 @import '../interno/configuracoes/empresa/styles.css';
 @import '../interno/configuracoes/usuarios/styles.css';

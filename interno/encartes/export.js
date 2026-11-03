@@ -70,14 +70,15 @@ export async function embedDesignAssets(design) {
 
 export function downloadBlob(blob, filename = 'encarte.png') {
   if (!(blob instanceof Blob) || !blob.size) throw new Error('O arquivo de exportação está vazio.');
-  const extension = blob.type.split(';')[0].trim() === 'application/json' ? '.json' : '.png';
+  const mime = blob.type.split(';')[0].trim();
+  const extension = mime === 'application/json' ? '.json' : mime === 'application/pdf' ? '.pdf' : '.png';
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download =
     String(filename)
       .replace(/[\\/:*?"<>|\u0000-\u001f]/g, '-')
-      .replace(/\.(?:png|json)$/i, '') + extension;
+      .replace(/\.(?:png|json|pdf)$/i, '') + extension;
   anchor.style.display = 'none';
   document.body.append(anchor);
   try {

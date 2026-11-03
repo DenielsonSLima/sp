@@ -38,7 +38,7 @@ export function createFlyerRepository({
   const summaries = (rows) =>
     rows.map((record) =>
       Object.fromEntries(
-        ['id', 'title', 'status', 'width', 'height', 'createdAt', 'updatedAt', 'expiresAt', '_version']
+        ['id', 'title', 'status', 'width', 'height', 'createdAt', 'updatedAt', 'expiresAt', '_version', 'publication']
           .filter((key) => record[key] !== undefined)
           .map((key) => [key, record[key]]),
       ),

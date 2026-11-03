@@ -1,0 +1,86 @@
+.fw-workspace { color: #2b2225; }
+.fw-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 26px; }
+.fw-heading h1 { margin-bottom: 8px; }
+.fw-heading p { margin: 0; color: #83828c; }
+.fw-tabs { margin-bottom: 8px; }
+.fw-feedback { min-height: 22px; margin: 12px 0 20px; font-size: 14px; color: #437652; }
+.fw-feedback.error { color: #bd1427; }
+.fw-layout { display: grid; grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); gap: 26px; align-items: start; }
+.fw-setup { padding: 24px; min-width: 0; }
+.fw-form { display: grid; gap: 20px; }
+.fw-form > label { display: grid; gap: 8px; font-size: 14px; font-weight: 700; }
+.fw-form select { width: 100%; min-width: 0; }
+.fw-campaign-info { display: grid; gap: 6px; padding: 14px; border-radius: 12px; background: #fff8db; color: #6a5318; font-size: 12px; }
+.fw-campaign-info strong { font-size: 16px; }
+.fw-themes { border: 0; padding: 0; margin: 0; display: grid; gap: 9px; min-width: 0; }
+.fw-themes legend { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+.fw-themes button { display: flex; align-items: center; gap: 12px; padding: 12px; text-align: left; border: 1px solid #e4e1e2; border-radius: 12px; background: #fff; font-size: 13px; font-weight: 600; color: #403439; }
+.fw-themes button[aria-pressed=true] { border-color: #bd1427; box-shadow: 0 0 0 1px #bd1427; background: #fff8f7; }
+.fw-themes button span { width: 24px; height: 24px; border: 5px solid; border-radius: 50%; flex-shrink: 0; }
+.fw-generate { width: 100%; }
+.fw-products { margin-top: 26px; border-top: 1px solid #ebe7e7; padding-top: 20px; }
+.fw-products summary { cursor: pointer; font-weight: 700; font-size: 14px; }
+.fw-products summary > span { color: #9b8f92; margin-left: 8px; }
+.fw-products > div { margin-top: 8px; max-height: 500px; overflow-y: auto; }
+.fw-product { display: flex; gap: 10px; align-items: center; padding: 14px 0; border-bottom: 1px solid #f0eded; }
+.fw-product img { width: 58px; height: 72px; object-fit: contain; flex-shrink: 0; }
+.fw-product > div { min-width: 0; flex: 1; display: grid; gap: 6px; }
+.fw-product strong { font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.fw-product > div > span { font-size: 12px; color: #a11e2d; font-weight: 700; }
+.fw-photo-label { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.fw-photo-label select { padding: 5px 8px; font-size: 11px; min-height: 30px; width: 100px; }
+.fw-missing-photo { width: 58px; color: #aaa; font-size: 10px; }
+.fw-preview { min-width: 0; border: 1px solid #e7e3e3; border-radius: 20px; background: #fff; overflow: hidden; }
+.fw-empty { padding: 44px 30px; text-align: center; min-height: 650px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.fw-empty-icon { font-size: 44px; color: #bd1427; }
+.fw-empty h2 { font-size: 25px; margin: 12px 0; }
+.fw-empty p { color: #8e8790; font-size: 14px; line-height: 1.7; max-width: 360px; }
+.fw-sample-grid { width: 220px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 24px 18px; background: #fff6de; border-top: 32px solid #bd1427; border-radius: 12px; margin-top: 24px; transform: rotate(-4deg); }
+.fw-sample-grid i { height: 60px; background: #fff; border-radius: 6px; border-bottom: 10px solid #ffe54f; }
+.fw-preview-heading { padding: 20px 24px; border-bottom: 1px solid #ebe7e7; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.fw-preview-heading h2 { font-size: 18px; margin: 0 0 6px; overflow-wrap: anywhere; }
+.fw-preview-heading p { font-size: 12px; margin: 0; color: #8e8790; }
+.fw-export-actions { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+.fw-export-actions .button, .fw-page-controls .button { font-size: 12px; padding: 10px 14px; min-height: 40px; }
+.fw-canvas-wrap { background: #eeeaea; padding: 28px; min-height: 420px; display: flex; justify-content: center; align-items: center; }
+.fw-canvas { max-width: 100%; width: auto; height: auto; max-height: 800px; box-shadow: 0 8px 28px #30252c24; object-fit: contain; }
+.fw-page-controls { padding: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.fw-page-controls > span { font-size: 12px; color: #877983; }
+.fw-notice { margin: 0; padding: 12px 24px; color: #7f601b; background: #fff7dd; font-size: 12px; line-height: 1.6; }
+.fw-saved-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+.fw-saved-card { padding: 24px; display: grid; gap: 12px; }
+.fw-saved-card h2 { font-size: 18px; margin: 0; overflow-wrap: anywhere; }
+.fw-saved-card p { margin: 0; }
+.fw-saved-icon { font-size: 42px; color: #bd1427; }
+.fw-muted { color: #92858c; font-size: 13px; line-height: 1.6; }
+.fw-saved-empty { padding: 40px; text-align: center; }
+.fw-saved-empty h2 { font-size: 22px; }
+.fw-saved-empty p { color: #92858c; }
+.fw-editor-host [hidden] { display: none !important; }
+@media (max-width: 1200px) {
+  .fw-layout { grid-template-columns: minmax(260px, 300px) minmax(0, 1fr); gap: 18px; }
+  .fw-preview-heading { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 900px) {
+  .fw-layout { grid-template-columns: minmax(0, 1fr); }
+  .fw-heading { flex-wrap: wrap; }
+  .fw-setup { padding: 20px; }
+  .fw-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fw-form > label:first-child, .fw-campaign-info, .fw-themes, .fw-generate { grid-column: 1 / -1; }
+  .fw-themes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fw-themes button { flex-direction: column; text-align: center; padding: 10px 5px; font-size: 11px; }
+  .fw-empty { min-height: 380px; }
+  .fw-products > div { max-height: 260px; }
+}
+@media (max-width: 480px) {
+  .fw-form { grid-template-columns: minmax(0, 1fr); }
+  .fw-heading h1 { font-size: 30px; }
+  .fw-heading .button { width: 100%; text-align: center; }
+  .fw-canvas-wrap { padding: 12px; min-height: 250px; }
+  .fw-preview-heading { padding: 16px; }
+  .fw-export-actions { width: 100%; }
+  .fw-export-actions .button { flex: 1; }
+  .fw-page-controls { gap: 6px; }
+  .fw-empty { padding: 25px 18px; }
+  .fw-saved-grid { grid-template-columns: minmax(0, 1fr); }
+}

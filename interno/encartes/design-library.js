@@ -2,6 +2,7 @@ import { escapeHtml } from '../../shared/ui.js';
 import { getDataContext } from '../../shared/data/api.js';
 import { listDesignSummaries, getDesign, deleteDesign } from './storage.js';
 import { renderDesign } from './renderer.js';
+import { publicationFromId } from './publication.js';
 
 // A mutation and its Realtime signal share one refresh; a stale list cannot
 // reinsert a card that was successfully deleted in the meantime.
@@ -76,7 +77,7 @@ export function renderDesignLibrary(
     onDeleted,
     onError = () => {},
     beforeDelete = async () => {},
-    list = listDesignSummaries,
+    list = async () => (await listDesignSummaries()).filter(row => !row.publication && !publicationFromId(row.id)),
     read = getDesign,
     remove = deleteDesign,
   } = {},

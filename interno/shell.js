@@ -2,7 +2,7 @@ import { confirmLogout } from '../shared/components/logout-confirmation/index.js
 import { logo, escapeHtml } from '../shared/ui.js';
 import { getDataContext, subscribeConnection } from '../shared/data/api.js';
 import { icon } from '../shared/icons.js';
-import { modules, navigationSections, resolveRoute, resolveCadastro } from './modules.js';
+import { modules, navigationSections, resolveRoute, resolveCadastro, isModuleAllowed } from './modules.js';
 import { createRouteNavigation } from './route-navigation.js';
 const routeNavigation = createRouteNavigation();
 let cadastrosOpen = false;
@@ -53,7 +53,7 @@ const renderNavigation = (key, child) =>
     .map((section) => {
       const allowed = getDataContext()?.company?.modules;
       const links = section.items
-        .filter((slug) => !allowed || allowed.includes(slug))
+        .filter((slug) => isModuleAllowed(slug, allowed))
         .map((slug) => renderNavigationItem(slug, key, child))
         .join('');
       if (!links) return '';
@@ -68,7 +68,7 @@ export async function renderShell(root, onExit) {
   if (key === 'cadastros') cadastrosOpen = true;
   const activeModule = key === 'cadastros' ? modules.cadastros.children[child] : modules[key];
   const context = getDataContext();
-  const route = { href: location.hash, activeModule, allowed: !context?.company?.modules || context.company.modules.includes(key) };
+  const route = { href: location.hash, activeModule, allowed: isModuleAllowed(key, context?.company?.modules) };
   const identity = JSON.stringify([context?.companyId, context?.user?.id, context?.company, context?.user?.email]);
   if (mountedShell?.root === root && mountedShell.identity === identity && root.querySelector('.workspace')) {
     mountedShell.closeDrawer();

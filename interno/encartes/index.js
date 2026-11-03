@@ -1,4 +1,2 @@
-import { renderEditor } from './editor.js';
-export async function render(root) {
-  await renderEditor(root);
-}
+import { renderWorkspace } from './workspace/index.js';
+export const render = renderWorkspace;

@@ -86,7 +86,7 @@ try {
   const routes = [
     ['cotacao', 'Cotação'], ['hortifruti', 'Hortifruti'], ['acougue', 'Açougue'], ['devolucoes', 'Devoluções'],
     ['calendario', 'Calendário'], ['promocoes', 'Promoções'], ['tabela-precos', 'Tabela de preços'],
-    ['encartes', 'Encartes'], ['configuracoes', 'Configurações'],
+    ['galeria', 'Galeria de imagens'], ['encartes', 'Encartes'], ['configuracoes', 'Configurações'],
     ['cadastros/parceiros', 'Parceiros'], ['cadastros/produtos', 'Produtos'], ['cadastros/categorias', 'Categorias'],
     ['cadastros/unidades', 'Unidades de medida'], ['cadastros/acougue', 'Açougue'],
     ['cadastros/modelos-cartaz', 'Modelos de cartaz'], ['cadastros/biblioteca-marca', 'Biblioteca'],

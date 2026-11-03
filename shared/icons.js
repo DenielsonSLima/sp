@@ -9,6 +9,7 @@ const paths = {
   perfis: 'm12 3 8 4v5c0 5-8 9-8 9s-8-4-8-9V7ZM8 12l3 3 5-6',
   marca: 'M12 3C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-12Z',
   encartes: 'M5 3h14v18H5zM8 7h8M8 11h3v4H8zM14 11h2M14 15h2M8 18h8',
+  galeria: 'M3 4h18v16H3zM3 16l5-6 5 5 3-3 5 6M15 8h.01',
   promocoes: 'M3 3h8l10 10-8 8L3 11ZM7 7h.01M10 16l6-6',
   inicio: 'M3 10 12 3l9 7M5 9v12h5v-7h4v7h5V9',
   cadastros: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z',

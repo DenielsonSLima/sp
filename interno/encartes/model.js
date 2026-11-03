@@ -114,6 +114,22 @@ export function createProductElement(product = {}, design) {
 export function duplicateElement(element) {
   return { ...clone(element), id: newId(), x: element.x + 20, y: element.y + 20, locked: false };
 }
+// Provenance of a rendered campaign page, not a source of business prices or access rights.
+export function validatePublication(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value) || value.kind !== 'campaign')
+    throw new Error('Origem do encarte inválida.');
+  const result = { kind: 'campaign' };
+  for (const key of ['groupId', 'campaignId', 'templateId', 'themeId', 'formatId']) {
+    if (typeof value[key] !== 'string' || !/^[a-zA-Z0-9_-]{1,100}$/.test(value[key]))
+      throw new Error('Identificador da origem do encarte inválido.');
+    result[key] = value[key];
+  }
+  if (!Number.isSafeInteger(value.campaignVersion) || value.campaignVersion < 1 ||
+      !Number.isSafeInteger(value.pageCount) || value.pageCount < 1 || value.pageCount > 1000 ||
+      !Number.isSafeInteger(value.pageIndex) || value.pageIndex < 0 || value.pageIndex >= value.pageCount)
+    throw new Error('Página ou revisão da origem do encarte inválida.');
+  return { ...result, campaignVersion: value.campaignVersion, pageIndex: value.pageIndex, pageCount: value.pageCount };
+}
 export function validateDesign(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Arquivo de arte inválido.');
   const width = number(value.width, 1080, 'Largura'),
@@ -215,6 +231,7 @@ export function validateDesign(value) {
     updatedAt: date(value.updatedAt),
     elements,
   };
+  if (value.publication != null) result.publication = validatePublication(value.publication);
   if (value.guides) {
     const axis = (key, extent) =>
       [

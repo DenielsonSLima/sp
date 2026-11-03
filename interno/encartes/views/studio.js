@@ -5,7 +5,7 @@ import { ZOOM_OPTIONS } from '../editor/zoom.js';
 const zoomControl = (S, position) =>
   `<div class="flyer-zoom"><label>Zoom<select class="flyer-zoom-select" aria-label="Zoom da arte — ${position}">${ZOOM_OPTIONS.map(([value, label]) => `<option value="${value}" ${S.zoom === value ? 'selected' : ''}>${label}</option>`).join('')}<option data-zoom-current value="custom" hidden></option></select></label></div>`;
 export const libraryMarkup = (S) =>
-  `<div class="flyer-heading"><div class="page-heading"><span class="eyebrow">OFERTAS E DIVULGAÇÃO</span><h1>Encartes</h1></div><div class="flyer-library-actions"><button type="button" class="button primary flyer-new">＋ Nova arte</button></div></div><div class="flyer-tabs module-tabs" role="group" aria-label="Biblioteca de artes">${[
+  `<div class="flyer-heading"><div class="page-heading"><span class="eyebrow">OFERTAS E DIVULGAÇÃO</span><h1>Galeria de imagens</h1></div><div class="flyer-library-actions"><button type="button" class="button primary flyer-new">＋ Nova arte</button></div></div><div class="flyer-tabs module-tabs" role="group" aria-label="Biblioteca de artes">${[
     ['gallery', 'Galeria'],
     ['create', 'Editor'],
     ['created', 'Criados'],

@@ -19,7 +19,7 @@ export function openDesign(design) {
   editorState.saveMessage = 'Arte salva';
 }
 export function commitDesign(design) {
-  const next = validateDesign({ ...design, status: 'draft', updatedAt: new Date().toISOString() });
+  const next = validateDesign({ ...design, status: design.publication ? design.status : 'draft', updatedAt: new Date().toISOString() });
   editorState.design = editorState.history.commit(next);
   return editorState.design;
 }

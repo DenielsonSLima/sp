@@ -33,6 +33,7 @@ export async function render(root) {
           `<article class="card profile-card"><div class="section-top"><h2>${escapeHtml(p.name)}</h2></div><p class="settings-helper">Módulos selecionados para este perfil</p><div class="settings-stack">${Object.entries(
             modules,
           )
+            .filter(([, module]) => !module.permission)
             .map(
               ([key, module]) =>
                 `<label class="settings-check"><input type="checkbox" data-profile="${i}" data-module="${key}" ${p.modules.includes(key) ? "checked" : ""}>${module.label}</label>`,
