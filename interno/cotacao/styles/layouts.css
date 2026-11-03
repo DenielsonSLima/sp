@@ -115,7 +115,8 @@
 .quote-result-row > div,
 .quote-total-card,
 .quote-item-title > div,
-.page-heading h1 {
+.quote-detail-page .page-heading h1,
+.quote-list-heading .page-heading h1 {
   min-width: 0;
   overflow-wrap: anywhere;
 }

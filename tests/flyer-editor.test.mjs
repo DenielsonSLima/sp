@@ -38,9 +38,11 @@ test('editor exposes library tabs, real exports and guarded persistence', async 
     'createCanvasInteraction',
     'await runtime.saveQueue.catch',
     'item.placeholder=false',
-    'interno/encartes/styles.css',
   ])
     assert(compact.includes(text.replace(/\s+/g, '')), text);
+  const appCss = await readFile(new URL('../shared/app.css', import.meta.url), 'utf8');
+  assert.match(appCss, /@import\s+['"]\.\.\/interno\/encartes\/styles\.css['"]/);
+  assert.doesNotMatch(src, /<link\b[^>]*rel=["']stylesheet["']/);
   assert(!src.includes('fetch('));
   assert(!src.includes('Modelos'));
   assert(!src.includes('renderTemplateGallery'));

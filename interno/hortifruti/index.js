@@ -13,7 +13,7 @@ export async function render(root) {
   ]);
   if (!root.isConnected) return;
   const title = heading('OPERAÇÃO', 'Hortifruti');
-  root.innerHTML = `<link rel="stylesheet" href="./interno/hortifruti/styles.css"><section class="hortifruti">${key ? title : `<div class="page-heading-actions">${title}<a class="button primary" href="${base}/nova">+ Nova compra</a></div>`}<div class="hf-content"></div></section>`;
+  root.innerHTML = `<section class="hortifruti">${key ? title : `<div class="page-heading-actions">${title}<a class="button primary" href="${base}/nova">+ Nova compra</a></div>`}<div class="hf-content"></div></section>`;
   const content = root.querySelector('.hf-content');
   if (key) return renderDetail(content, key);
   renderList(content);

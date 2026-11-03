@@ -4,8 +4,6 @@ import { units, unitLabel } from "../unidades/queries.js";
 import { productCategories, productSubcategories } from "../categorias/queries.js";
 import { isPhotoSource } from "./photo.js";
 export const categoryNames = () => productCategories.map((row) => row.name);
-export const css =
-  '<link rel="stylesheet" href="./interno/cadastros/catalog.css"><link rel="stylesheet" href="./interno/cadastros/produtos/styles.css">';
 export const options = (values, selected) =>
   values
     .map((v) => `<option value="${esc(v.value)}" ${(Array.isArray(selected) ? selected.includes(v.value) : v.value === selected) ? "selected" : ""}>${esc(v.label)}</option>`)

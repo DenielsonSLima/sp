@@ -28,6 +28,7 @@ export function createRealtimeTransport({
     for (const fn of connectionListeners) fn({ ...connection });
   }
   async function stopRealtime() {
+    const stoppedGeneration = getGeneration();
     for (const timer of timers.values()) clearTimeout(timer);
     timers.clear();
     const previous = channel;
@@ -35,18 +36,21 @@ export function createRealtimeTransport({
     try {
       if (previous) await supabase().removeChannel(previous);
     } finally {
-      setConnection('disconnected');
+      if (getGeneration() === stoppedGeneration && channel === null) setConnection('disconnected');
     }
   }
 
   function start(context) {
     const currentGeneration = getGeneration();
-    channel = supabase().channel(`store:${context.companyId}:${context.user?.id ?? 'member'}`);
+    let revalidateOnSubscribe = false;
+    const currentChannel = supabase().channel(`store:${context.companyId}:${context.user?.id ?? 'member'}`);
+    channel = currentChannel;
+    const isCurrent = () => getGeneration() === currentGeneration && channel === currentChannel;
     channel.on(
       'postgres_changes',
       { event: '*', schema: 'public', table: 'resource_changes', filter: `company_id=eq.${context.companyId}` },
       (payload) => {
-        if (getGeneration() !== currentGeneration) return;
+        if (!isCurrent()) return;
         const resource = payload.new?.resource;
         if (resourceSet.has(resource) && !handlesMutation(resource, payload.new?.mutation_id)) scheduleInvalidation(resource);
       },
@@ -56,14 +60,14 @@ export function createRealtimeTransport({
         'postgres_changes',
         { event: '*', schema: 'public', table: 'memberships', filter: `user_id=eq.${context.user.id}` },
         () => {
-          if (getGeneration() !== currentGeneration) return;
+          if (!isCurrent()) return;
           scheduleInvalidation('user_access');
           void onAccessChanged();
         },
       );
     setConnection('connecting');
     channel.subscribe((status) => {
-      if (getGeneration() !== currentGeneration) return;
+      if (!isCurrent()) return;
       setConnection(
         status === 'SUBSCRIBED'
           ? 'connected'
@@ -71,7 +75,15 @@ export function createRealtimeTransport({
             ? 'reconnecting'
             : 'connecting',
       );
-      if (status === 'SUBSCRIBED') for (const resource of resourceNames()) scheduleInvalidation(resource);
+      if (status === 'SUBSCRIBED') {
+        for (const resource of resourceNames()) scheduleInvalidation(resource);
+        // A temporary access-check failure must be retried after connectivity
+        // returns, without tearing down the last validated screen meanwhile.
+        if (revalidateOnSubscribe) void onAccessChanged();
+        revalidateOnSubscribe = true;
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') {
+        revalidateOnSubscribe = true;
+      }
     });
   }
   const subscribeConnection = (callback) => {

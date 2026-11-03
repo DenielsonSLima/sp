@@ -6,3 +6,31 @@
 @import '../interno/shell.css';
 @import './components/logout-confirmation/styles.css';
 @import './components/custom-select/styles.css';
+@import './components/pdf-viewer/styles.css';
+
+/* Module styles stay in the document across navigation and tab redraws.
+   The build resolves every import into this single render-blocking stylesheet. */
+@import '../interno/cadastros/catalog.css';
+@import '../interno/cadastros/parceiros/styles.css';
+@import '../interno/cadastros/produtos/styles.css';
+@import '../interno/cadastros/categorias/styles.css';
+@import '../interno/cadastros/unidades/styles.css';
+@import '../interno/cadastros/acougue/styles.css';
+@import '../interno/cadastros/modelos-cartaz/styles.css';
+@import '../interno/cadastros/biblioteca-marca/styles.css';
+@import '../interno/inicio/styles.css';
+@import '../interno/cotacao/styles.css';
+@import '../interno/hortifruti/styles.css';
+@import '../interno/acougue/styles.css';
+@import '../interno/acougue/entry.css';
+@import '../interno/devolucoes-fornecedores/styles.css';
+@import '../interno/calendario/styles.css';
+@import '../interno/promocoes/styles.css';
+@import '../interno/tabela-precos/styles.css';
+@import '../interno/encartes/styles.css';
+@import '../interno/configuracoes/styles.css';
+@import '../interno/configuracoes/empresa/styles.css';
+@import '../interno/configuracoes/usuarios/styles.css';
+@import '../interno/configuracoes/perfis/styles.css';
+@import '../interno/configuracoes/marca-dagua/styles.css';
+@import '../interno/configuracoes/cabecalho/styles.css';

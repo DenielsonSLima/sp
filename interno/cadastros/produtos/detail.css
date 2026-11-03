@@ -247,8 +247,8 @@
   }
   .product-detail-form input,
   .product-detail-form select,
-  .catalog-filters input,
-  .catalog-filters select {
+  .product-filters input,
+  .product-filters select {
     font-size: 16px;
   }
   .product-data .catalog-form-actions > * {

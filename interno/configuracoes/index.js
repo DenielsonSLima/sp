@@ -14,7 +14,7 @@ export async function render(root) {
     if (root.isConnected) await module.render(root);
     return;
   }
-  root.innerHTML = `<link rel="stylesheet" href="./interno/configuracoes/styles.css">${heading("ADMINISTRAÇÃO", "Configurações")}<section class="settings-grid" aria-label="Submódulos de configurações">${Object.entries(
+  root.innerHTML = `${heading("ADMINISTRAÇÃO", "Configurações")}<section class="settings-grid" aria-label="Submódulos de configurações">${Object.entries(
     submodules,
   )
     .map(

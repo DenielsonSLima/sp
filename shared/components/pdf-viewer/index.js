@@ -3,13 +3,6 @@ import { escapeHtml as esc } from '../../ui.js';
 /** Owns every URL and async result for one PDF viewing session. */
 export async function openPdfDialog(host, { title, generate }, trigger) {
   if (typeof generate !== 'function') throw Error('Gerador de PDF inválido.');
-  if (!document.querySelector('[data-pdf-viewer-style]')) {
-    const style = document.createElement('link');
-    style.rel = 'stylesheet';
-    style.href = './shared/components/pdf-viewer/styles.css';
-    style.dataset.pdfViewerStyle = '';
-    document.head.append(style);
-  }
   const dialog = document.createElement('dialog');
   dialog.className = 'campaign-pdf-dialog';
   dialog.setAttribute('aria-labelledby', 'campaign-pdf-title');

@@ -16,7 +16,7 @@ export async function render(root) {
   }
   root.innerHTML = frame(
     "usuarios",
-    `<form class="card settings-form user-form"><h2>Adicionar usuário</h2><div class="settings-fields">${field("Nome", "name")}${field("E-mail", "email", "", "email", "usuario@example.com")}<label>Perfil<select name="profile">${settings.profiles.map((p) => `<option>${escapeHtml(p.name)}</option>`).join("")}</select></label></div><div class="settings-actions">${saveButton}</div></form><section class="card settings-form"><h2>Equipe</h2><p class="mobile-table-hint">Deslize a lista para ver todas as colunas.</p><div class="settings-table-wrap" tabindex="0" role="region" aria-label="Lista de usuários"><table class="settings-table"><thead><tr><th>NOME</th><th>E-MAIL</th><th>PERFIL</th><th>STATUS</th><th>AÇÃO</th></tr></thead><tbody></tbody></table></div></section>`,
+    `<form class="card settings-form user-form"><h2>Adicionar usuário</h2><div class="settings-fields">${field("Nome", "name")}${field("E-mail", "email", "", "email", "usuario@example.com")}<label>Perfil<select name="profile">${settings.profiles.map((p) => `<option>${escapeHtml(p.name)}</option>`).join("")}</select></label></div><div class="settings-actions">${saveButton}</div></form><section class="card settings-form user-team"><h2>Equipe</h2><p class="mobile-table-hint">Deslize a lista para ver todas as colunas.</p><div class="settings-table-wrap" tabindex="0" role="region" aria-label="Lista de usuários"><table class="settings-table"><thead><tr><th>NOME</th><th>E-MAIL</th><th>PERFIL</th><th>STATUS</th><th>AÇÃO</th></tr></thead><tbody></tbody></table></div></section>`,
   );
   const form = root.querySelector("form");
   const formModal = root.querySelector("form"),

@@ -3,7 +3,7 @@ import { useLiveList } from './hooks/use-live-list.js';
 import { usePagedList } from '../hooks/use-paged-list.js';
 import { loadQuotePage } from './queries.js';
 import { clearOnContextChange } from '../cadastros/remote.js';
-import { styles, notice, heading, escapeHtml, icon, dateLabel } from './common.js';
+import { notice, heading, escapeHtml, icon, dateLabel } from './common.js';
 let stopRealtime, stopPage;
 const filters = { status: 'open', query: '', category: '', start: '', end: '', page: 1 };
 clearOnContextChange('quotes', () => {
@@ -14,7 +14,7 @@ clearOnContextChange('quotes', () => {
 export async function renderList(root) {
   stopRealtime?.();
   stopPage?.();
-  root.innerHTML = styles +
+  root.innerHTML =
     `<div class="quote-list-heading">${heading('OPERAÇÃO', 'Cotação')}<a class="button primary" href="#cotacao/nova">${icon('plus')} Nova cotação</a></div>` + notice +
     `<div class="quote-status-tabs module-tabs" role="group" aria-label="Situação da cotação"><button type="button" data-status="open" aria-pressed="${filters.status === 'open'}">Em andamento <span></span></button><button type="button" data-status="finished" aria-pressed="${filters.status === 'finished'}">Finalizados <span></span></button></div><section class="card quote-filters" aria-label="Filtros de cotação"><label>Busca<input type="search" name="query" placeholder="Cotação, produto ou fornecedor..." value="${escapeHtml(filters.query)}"></label><label>Categoria de produto<select name="category"><option value="">Todas</option></select></label><label>Data inicial<input name="start" type="date" value="${filters.start}"></label><label>Data final<input name="end" type="date" value="${filters.end}"></label><button class="button secondary clear-quotes" type="button">Limpar filtros</button></section><p class="quote-error" role="alert"></p><p class="catalog-count" role="status" aria-live="polite"></p><section class="catalog-grid quote-grid" aria-label="Cotações encontradas"></section>`;
   root.querySelector('a[href="#cotacao/nova"]').onclick = (event) => {

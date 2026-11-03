@@ -26,7 +26,7 @@ export async function render(root) {
     ["acougue", "Açougue"],
     ["encartes", "Encartes"],
   ];
-  root.innerHTML = `<link rel="stylesheet" href="./interno/inicio/styles.css">
+  root.innerHTML = `
     <div class="dashboard-heading"><div class="page-heading"><span class="eyebrow">VISÃO GERAL</span><h1>Início</h1></div><time datetime="${localToday()}">${esc(new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" }))}</time></div>
     <section class="daily-banner" aria-labelledby="daily-title"><div class="daily-banner-heading"><h2 id="daily-title">Resumo do dia</h2><a href="#calendario">Abrir calendário ${icon("arrow")}</a></div>
       <div class="daily-metrics">${metrics.map(([key, href, label, helper]) => `<a class="daily-metric" href="#${href}" aria-label="${esc(label)}: ${summary[key] === null ? "indisponível" : summary[key]}"><span class="daily-metric-top">${icon(href)}${icon("arrow")}</span><strong>${summary[key] === null ? "—" : String(summary[key]).padStart(2, "0")}</strong><span class="daily-metric-label">${label}</span><small>${helper}</small></a>`).join("")}</div>

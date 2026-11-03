@@ -14,7 +14,7 @@ let products = [],
   viewVersion = 0;
 const listState = { tab: "draft", archived: false, query: "", page: 1 };
 const chrome = () =>
-  `<link rel="stylesheet" href="./interno/tabela-precos/styles.css">${heading("OFERTAS E DIVULGAÇÃO", "Tabela de preços")}`;
+  `${heading("OFERTAS E DIVULGAÇÃO", "Tabela de preços")}`;
 export async function render(root) {
   const id = decodeURIComponent(location.hash.split("/")[1] || "");
   if (id) await editor(root, id);

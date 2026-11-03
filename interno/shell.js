@@ -3,7 +3,8 @@ import { logo, escapeHtml } from '../shared/ui.js';
 import { getDataContext, subscribeConnection } from '../shared/data/api.js';
 import { icon } from '../shared/icons.js';
 import { modules, navigationSections, resolveRoute, resolveCadastro } from './modules.js';
-let renderId = 0;
+import { createRouteNavigation } from './route-navigation.js';
+const routeNavigation = createRouteNavigation();
 let cadastrosOpen = false;
 let sidebarCollapsed = false;
 let controller;
@@ -11,38 +12,12 @@ let unsubscribeConnection;
 let mountedShell = null;
 
 export function disposeShell() {
-  ++renderId;
+  routeNavigation.reset();
   controller?.abort();
   unsubscribeConnection?.();
   unsubscribeConnection = null;
   mountedShell = null;
   document.body.style.overflow = '';
-}
-
-async function openRoute(root, id, key, activeModule, context) {
-  // Disconnect the previous view so its observers/listeners dispose, while the
-  // navigation, account and connection indicator keep their DOM identity.
-  const previous = root.querySelector('#content');
-  const content = document.createElement('main');
-  content.id = 'content';
-  content.tabIndex = -1;
-  content.setAttribute('aria-label', 'Conteúdo do módulo');
-  content.innerHTML = '<p role="status">Carregando módulo…</p>';
-  previous.replaceWith(content);
-  try {
-    if (context?.company?.modules && !context.company.modules.includes(key))
-      throw Error('Seu perfil não tem acesso a este módulo. Selecione uma opção disponível no menu.');
-    const mod = await activeModule.load();
-    if (id !== renderId) return;
-    await mod.render(content);
-    if (id === renderId && !root.querySelector('dialog[open]')) {
-      content.focus({ preventScroll: true });
-      window.scrollTo(0, 0);
-    }
-  } catch (error) {
-    if (id === renderId) content.textContent = error.message || 'Não foi possível abrir este módulo. Recarregue a página.';
-    console.error(error);
-  }
 }
 
 function updateNavigation(root, key, child, label) {
@@ -88,18 +63,19 @@ const renderNavigation = (key, child) =>
     })
     .join('');
 export async function renderShell(root, onExit) {
-  const id = ++renderId;
   const key = resolveRoute(location.hash);
   const child = resolveCadastro(location.hash);
   if (key === 'cadastros') cadastrosOpen = true;
   const activeModule = key === 'cadastros' ? modules.cadastros.children[child] : modules[key];
   const context = getDataContext();
+  const route = { href: location.hash, activeModule, allowed: !context?.company?.modules || context.company.modules.includes(key) };
   const identity = JSON.stringify([context?.companyId, context?.user?.id, context?.company, context?.user?.email]);
   if (mountedShell?.root === root && mountedShell.identity === identity && root.querySelector('.workspace')) {
     mountedShell.closeDrawer();
     updateNavigation(root, key, child, activeModule.label);
-    return openRoute(root, id, key, activeModule, context);
+    return routeNavigation.open(root, route);
   }
+  routeNavigation.reset();
   unsubscribeConnection?.();
   controller?.abort();
   controller = new AbortController();
@@ -229,5 +205,5 @@ export async function renderShell(root, onExit) {
   );
   mobile.addEventListener('change', () => setDrawer(false, false), { signal: controller.signal });
   mountedShell = { root, identity, closeDrawer: () => setDrawer(false, false) };
-  await openRoute(root, id, key, activeModule, context);
+  await routeNavigation.open(root, route);
 }

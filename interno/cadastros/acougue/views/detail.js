@@ -4,7 +4,7 @@ import { heading } from '../../../../shared/ui.js';
 import { listModels, loadButcherModels, setCurrent, toggleModel, saveModel, percent } from '../state.js';
 import { loadModelProducts } from '../queries.js';
 import { watchModelEditor } from '../realtime.js';
-import { chrome, esc, modelHref, partInput, modelSpeciesLabel } from '../presentation.js';
+import { esc, modelHref, partInput, modelSpeciesLabel } from '../presentation.js';
 import { useModelEditor } from '../hooks/use-model-editor.js';
 import { bindProductDialog } from './product-dialog.js';
 import { bindModelNameDialog } from './name-dialog.js';
@@ -13,8 +13,7 @@ export async function renderDetail(root, model) {
   let products = await loadModelProducts();
   if (!root.isConnected) return;
   const editor = useModelEditor(model), legacy = model.schemaVersion !== 2;
-  root.innerHTML = `${chrome()}
-    <nav class="butcher-breadcrumb" aria-label="Caminho de navegação"><a href="${modelHref()}">Açougue</a><span aria-hidden="true">/</span><span>${esc(model.name)}</span></nav>
+  root.innerHTML = `    <nav class="butcher-breadcrumb" aria-label="Caminho de navegação"><a href="${modelHref()}">Açougue</a><span aria-hidden="true">/</span><span>${esc(model.name)}</span></nav>
     <div class="page-heading-actions">${heading('COMPOSIÇÃO POR ANIMAL', model.name)}<div class="butcher-actions">${legacy ? '' : '<button class="button primary select-products" type="button">Selecionar produtos</button><button class="button secondary edit-model" type="button">Editar</button>'}<a class="button secondary" href="${modelHref()}">← Voltar para modelos</a></div></div>
     <section class="card butcher-model-overview"><div><span>Espécie animal</span><strong>${esc(modelSpeciesLabel(model))}</strong></div><div><span>Base do modelo</span><strong>1 animal</strong></div><div><span>Rendimento salvo em KG</span><strong class="saved-yield">${percent(model.totalBps)}%</strong></div></section>
     <p class="butcher-help">Percentuais calculados sobre o peso recebido para desossa, sem conversão de peso vivo. Produtos em UND usam quantidade por animal e não entram na soma dos percentuais. Registre somente as partes que acompanham esse recebimento.</p>

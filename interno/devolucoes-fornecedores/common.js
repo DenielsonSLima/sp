@@ -6,5 +6,5 @@ export const badge = (status) =>
   `<span class="return-status ${status === 'Parcial' ? 'partial' : status === 'Resolvida' ? 'resolved' : ''}">${status}</span>`;
 export const frame = (isList = false) => {
   const title = heading('OPERAÇÃO', 'Devoluções');
-  return `<link rel="stylesheet" href="./interno/devolucoes-fornecedores/styles.css"><section class="returns">${isList ? `<div class="page-heading-actions">${title}<a class="button primary" href="${base}/nova">+ Nova devolução</a></div>` : title}<div class="return-content"></div></section>`;
+  return `<section class="returns">${isList ? `<div class="page-heading-actions">${title}<a class="button primary" href="${base}/nova">+ Nova devolução</a></div>` : title}<div class="return-content"></div></section>`;
 };

@@ -12,7 +12,7 @@ export const dateText = (value) => value.split('-').reverse().join('/');
 export const money = (cents) => cents == null ? 'Não informado' : (Number(cents) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 export const chrome = (actions = '') => {
   const title = heading('OPERAÇÃO', 'Açougue');
-  return `<link rel="stylesheet" href="./interno/cadastros/acougue/styles.css"><link rel="stylesheet" href="./interno/acougue/styles.css"><link rel="stylesheet" href="./interno/acougue/entry.css">${actions ? `<div class="page-heading-actions">${title}${actions}</div>` : title}`;
+  return `${actions ? `<div class="page-heading-actions">${title}${actions}</div>` : title}`;
 };
 const modeLabel = (mode) => ({ individual: 'Peso por animal', parts: 'Dianteiros e traseiros', total: 'Peso total do lote' })[mode] || 'Peso total do lote';
 function purchaseMarkup(receipt) {

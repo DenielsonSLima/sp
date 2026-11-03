@@ -24,16 +24,16 @@
   margin: auto;
   object-fit: contain;
 }
-.settings-stack output {
+.watermark-form .settings-stack output {
   font-size: 10px;
   color: #939aa4;
   font-weight: 400;
 }
-.settings-stack input[type="file"] {
+.watermark-form .settings-stack input[type="file"] {
   font-size: 10px;
   max-width: 100%;
   padding: 10px;
 }
-.settings-stack input[name="text"] {
+.watermark-form .settings-stack input[name="text"] {
   width: 100%;
 }

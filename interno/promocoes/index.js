@@ -21,7 +21,7 @@ const draftsFor = (id) => {
 const date = (v) => v.split("-").reverse().join("/");
 const chrome = (actions = "") => {
   const title = heading("OFERTAS E DIVULGAÇÃO", "Promoções");
-  return `<link rel="stylesheet" href="./interno/cadastros/modelos-cartaz/styles.css"><link rel="stylesheet" href="./interno/promocoes/styles.css">${actions ? `<div class="page-heading-actions">${title}${actions}</div>` : title}`;
+  return `${actions ? `<div class="page-heading-actions">${title}${actions}</div>` : title}`;
 };
 const release = () => {
   exportVersion++;

@@ -2,10 +2,9 @@ import { heading } from '../../../../shared/ui.js';
 import { bindFormDialog } from '../../../../shared/form-dialog.js';
 import { listModels, saveModel, percent } from '../state.js';
 import { watchButcherModels } from '../realtime.js';
-import { chrome, esc, species, modelHref, modelSpeciesLabel } from '../presentation.js';
+import { esc, species, modelHref, modelSpeciesLabel } from '../presentation.js';
 export function renderList(root) {
-  root.innerHTML = `${chrome()}
-    <div class="page-heading-actions">${heading('CADASTROS', 'Açougue')}
+  root.innerHTML = `    <div class="page-heading-actions">${heading('CADASTROS', 'Açougue')}
       <div class="butcher-actions"><a class="button secondary" href="#acougue">Abrir recebimentos →</a>
       <button class="button primary new-model" type="button">Adicionar modelo</button></div></div>
     <p class="butcher-help">Modelos de composição por espécie animal. Cadastre o modelo e depois selecione os produtos de um animal.</p>

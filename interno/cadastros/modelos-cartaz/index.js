@@ -10,7 +10,7 @@ export async function render(root) {
     resourceError(root, error);
     return;
   }
-  root.innerHTML = `<link rel="stylesheet" href="./interno/cadastros/modelos-cartaz/styles.css"><div class="page-heading-actions">${heading("CADASTROS", "Modelos de cartaz")}<div class="poster-gallery-actions"><a class="button secondary" href="#promocoes">Abrir Promoções →</a><button class="button primary" type="button" data-create-template>+ Criar novo</button></div></div><p class="poster-gallery-status" role="status" aria-live="polite">${esc(storageWarning)}</p><section class="poster-template-grid" aria-label="Modelos disponíveis"></section><p class="poster-note">Na impressão, selecione o papel do modelo, escala 100%, sem cabeçalhos e rodapés, e habilite gráficos de fundo.</p>`;
+  root.innerHTML = `<div class="page-heading-actions">${heading("CADASTROS", "Modelos de cartaz")}<div class="poster-gallery-actions"><a class="button secondary" href="#promocoes">Abrir Promoções →</a><button class="button primary" type="button" data-create-template>+ Criar novo</button></div></div><p class="poster-gallery-status" role="status" aria-live="polite">${esc(storageWarning)}</p><section class="poster-template-grid" aria-label="Modelos disponíveis"></section><p class="poster-note">Na impressão, selecione o papel do modelo, escala 100%, sem cabeçalhos e rodapés, e habilite gráficos de fundo.</p>`;
   const gallery = root.querySelector(".poster-template-grid"),
     status = root.querySelector(".poster-gallery-status");
   function deleted(template) {

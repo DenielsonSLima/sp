@@ -41,7 +41,7 @@ export async function render(root) {
   let campaigns = await loadCalendarPage(state.month);
   if (!root.isConnected || opening !== openingVersion || route !== location.hash ||
     scope?.companyId !== getDataContext()?.companyId || scope?.user?.id !== getDataContext()?.user?.id) return;
-  root.innerHTML = `<link rel="stylesheet" href="./interno/calendario/styles.css"><section class="calendar-module">
+  root.innerHTML = `<section class="calendar-module">
     ${heading("OFERTAS E DIVULGAÇÃO", "Calendário")}
     <div class="calendar-toolbar"><div class="calendar-period-nav"><button class="button secondary calendar-arrow" type="button" data-action="previous" aria-label="Mês anterior">‹</button><h2 class="calendar-period" aria-live="polite"></h2><button class="button secondary calendar-arrow" type="button" data-action="next" aria-label="Próximo mês">›</button><button class="button secondary" type="button" data-action="today">Hoje</button></div><button class="button primary" type="button" data-action="new">${icon("plus")} Novo registro</button></div>
     <section class="card calendar-filters" aria-label="Filtros do calendário"><label class="calendar-search">Buscar no calendário<input name="calendar-query" type="search" maxlength="200" placeholder="Título, campanha ou detalhes…" value="${esc(state.query)}"></label><label>Tipo de registro<select name="calendar-type">${option("", "Todos os tipos", state.type)}${Object.entries(

@@ -8,7 +8,7 @@ export const submodules = {
   cabecalho: { title: "Cabeçalho", description: "Defina a apresentação dos documentos.", icon: "encartes" },
 };
 export const frame = (key, body) =>
-  `<link rel="stylesheet" href="./interno/configuracoes/styles.css"><link rel="stylesheet" href="./interno/configuracoes/${key}/styles.css"><a class="settings-back" href="#configuracoes">← Todas as configurações</a>${heading("CONFIGURAÇÕES", submodules[key].title)}${body}<p class="settings-feedback" role="status" aria-live="polite"></p>`;
+  `<a class="settings-back" href="#configuracoes">← Todas as configurações</a>${heading("CONFIGURAÇÕES", submodules[key].title)}${body}<p class="settings-feedback" role="status" aria-live="polite"></p>`;
 export const field = (label, name, value = "", type = "text", placeholder = "") =>
   `<label>${label}<input name="${name}" type="${type}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" maxlength="160"></label>`;
 export const feedback = (root, text) => (root.querySelector(".settings-feedback").textContent = text);

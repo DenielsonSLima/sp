@@ -5,14 +5,14 @@ import { icon } from "../../../shared/icons.js";
 import { units, unitLabel } from "../unidades/queries.js";
 import { productHref, changeProductList } from "./navigation.js";
 import { productCategories, productSubcategories, loadProductCategories } from "../categorias/queries.js";
-import { css, options, photoMarkup, categoryNames } from "./view.js";
+import { options, photoMarkup, categoryNames } from "./view.js";
 import { filterValues } from "../../../shared/filters.js";
 import { sortedOptions, subcategoryOptions, selectedValues, allOption } from "./list-filters.js";
 export async function renderList(root, initialFilters) {
   let filters = initialFilters;
   const categoryOptions = () => sortedOptions(categoryNames().map((name) => ({ value: name, label: name })));
   const subOptions = () => subcategoryOptions(productCategories, productSubcategories, filters.category);
-  root.innerHTML = `${css}<div class="page-heading-actions">${heading("CADASTROS", "Produtos")}<a class="button primary product-new" href="${esc(productHref("novo", filters))}">${icon("plus")} Novo produto</a></div><section class="card catalog-filters product-filters" aria-label="Filtros de produtos"><label>Buscar produto<input type="search" class="search" maxlength="100" value="${esc(filters.query)}" placeholder="Nome ou código do produto..."></label><label>Categoria<select class="category-filter" multiple data-empty-clears="true" data-searchable="true">${allOption("Todas as categorias", filters.category)}${options(
+  root.innerHTML = `<div class="page-heading-actions">${heading("CADASTROS", "Produtos")}<a class="button primary product-new" href="${esc(productHref("novo", filters))}">${icon("plus")} Novo produto</a></div><section class="card catalog-filters product-filters" aria-label="Filtros de produtos"><label>Buscar produto<input type="search" class="search" maxlength="100" value="${esc(filters.query)}" placeholder="Nome ou código do produto..."></label><label>Categoria<select class="category-filter" multiple data-empty-clears="true" data-searchable="true">${allOption("Todas as categorias", filters.category)}${options(
     categoryOptions(),
     filters.category,
   )}</select></label><label>Subcategoria<select class="subcategory-filter" multiple data-empty-clears="true" data-searchable="true">${allOption("Todas as subcategorias", filters.subcategory)}${options(subOptions(), filters.subcategory)}</select></label><button class="button secondary catalog-clear" type="button">Limpar filtros</button></section><div class="product-list-toolbar"><p class="catalog-count" aria-live="polite">Carregando produtos do banco…</p><div class="product-view-toggle module-tabs" role="group" aria-label="Visualização dos produtos"><button type="button" data-view="cards" aria-pressed="${filters.view === "cards"}">Cards</button><button type="button" data-view="table" aria-pressed="${filters.view === "table"}">Tabela</button></div></div><section class="product-results" aria-label="Produtos encontrados"></section><nav class="product-pagination" aria-label="Paginação dos produtos"></nav><p class="catalog-status" role="status"></p>`;

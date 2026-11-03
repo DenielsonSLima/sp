@@ -12,7 +12,6 @@ export const modelHref = (id = '') => `#cadastros/acougue${id ? '/' + encodeURIC
 export const modelIdFromHash = (hash) => {
   try { return decodeURIComponent(hash.split('/')[2] || ''); } catch { return ''; }
 };
-export const chrome = () => '<link rel="stylesheet" href="./interno/cadastros/acougue/styles.css">';
 export const partInput = (part) => ({
   ...part,
   percent: part.percent ?? (part.percentBps == null ? '' : String(part.percentBps / 100).replace('.', ',')),

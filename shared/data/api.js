@@ -10,6 +10,7 @@ import { createSnapshotMedia } from './media/snapshots.js';
 import { createProductQueries } from './queries/products.js';
 import { createRecordQueries } from './queries/records.js';
 import { createBrandPreviewQueries } from './queries/brand-previews.js';
+import { isTransientAccessError } from './access-errors.js';
 export { resources } from './resources.js';
 export { PRODUCT_SIGNED_URL_SECONDS, PRODUCT_MEDIA_CACHE_MS } from './media/products.js';
 
@@ -53,11 +54,12 @@ export function createDataApi({
     if (mutationId) request = request.setHeader('x-sp-mutation-id', mutationId);
     if (signal && request.abortSignal) request = request.abortSignal(signal);
     try {
-      const { data, error } = await request;
+      const { data, error, status } = await request;
       if (error) {
         const e = Error(error.message || 'Não foi possível concluir a operação no banco.');
         e.code = error.code;
         e.details = error.details;
+        e.status = status;
         throw e;
       }
       if (mutationId) echo.finish(mutationId, true);
@@ -213,24 +215,34 @@ export function createDataApi({
     return request.promise;
   }
   function refreshAccess() {
-    if (accessRefresh) return accessRefresh;
+    if (accessRefresh?.generation === generation) return accessRefresh.promise;
     const company = context?.companyId;
     if (!company) return Promise.resolve();
     const previous = JSON.stringify(context);
-    accessRefresh = loadContext(company)
-      .then(() => {
+    const request = { generation };
+    request.promise = loadContext(company)
+      .then((validated) => {
+        if (JSON.stringify(validated) !== JSON.stringify(context)) return;
         if (previous !== JSON.stringify(context) && typeof window !== 'undefined')
           window.dispatchEvent(new Event('sp:access-changed'));
       })
       .catch(async (error) => {
+        // A failed check from a former session must never clear the new one.
+        if (request.generation !== generation) return;
+        if (isTransientAccessError(error)) {
+          console.error('Não foi possível revalidar o acesso agora; a sessão atual foi preservada.', error);
+          return;
+        }
         await setContext(null);
-        if (typeof window !== 'undefined') window.dispatchEvent(new Event('sp:access-changed'));
+        if (generation === request.generation + 1 && typeof window !== 'undefined')
+          window.dispatchEvent(new Event('sp:access-changed'));
         console.error('O acesso à empresa precisa ser revalidado.', error);
       })
       .finally(() => {
-        accessRefresh = null;
+        if (accessRefresh === request) accessRefresh = null;
       });
-    return accessRefresh;
+    accessRefresh = request;
+    return request.promise;
   }
   function subscribeResource(resource, callback) {
     checkResource(resource);
