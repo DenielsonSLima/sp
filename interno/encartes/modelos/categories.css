@@ -1,0 +1,133 @@
+.fm-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 390px));
+  gap: 24px;
+}
+.fm-category-card {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e0e2db;
+  border-radius: 16px;
+  background: #fff;
+  color: #263a2d;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: 0 6px 20px #1b382308;
+  transition: transform .2s, box-shadow .2s;
+}
+.fm-category-card:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px #1b38231a;
+}
+.fm-category-card:focus-visible {
+  outline: 3px solid #bd922e;
+  outline-offset: 4px;
+}
+.fm-category-cover {
+  position: relative;
+  display: block;
+  height: 230px;
+  overflow: hidden;
+  background: #e6eae3;
+}
+.fm-category-card[data-fm-category="natal"] .fm-category-cover { background: #284d3b; }
+.fm-category-card[data-fm-category="povo"] .fm-category-cover { background: #9c1727; }
+.fm-category-card[data-fm-category="fim-de-ano"] .fm-category-cover { background: #4c2441; }
+.fm-category-card[data-fm-category="verao"] .fm-category-cover { background: #16758a; }
+.fm-category-card[data-fm-category="hortifruti"] .fm-category-cover { background: #356d3e; }
+.fm-category-cover::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 0;
+  background: linear-gradient(transparent, #10271db3);
+}
+.fm-category-samples {
+  display: grid;
+  grid-template-columns: repeat(var(--samples), minmax(0, 1fr));
+  gap: 12px;
+  height: 100%;
+  padding: 18px 20px 0;
+}
+.fm-category-sample {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  min-width: 0;
+}
+.fm-category-sample canvas {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 256px;
+  opacity: 0;
+  box-shadow: 0 8px 20px #0004;
+}
+.fm-category-sample canvas.is-ready { opacity: 1; }
+.fm-category-sample .fm-preview-status {
+  top: 70px;
+  color: #fff;
+  font-size: 11px;
+}
+.fm-category-badge {
+  position: absolute;
+  z-index: 1;
+  bottom: 18px;
+  left: 22px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  background: #f2d880;
+  color: #17392e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+.fm-category-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+.fm-category-meta {
+  color: #737b71;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+.fm-category-info > strong { font: 30px Georgia, serif; }
+.fm-category-description { min-height: 39px; color: #737b75; font-size: 12px; line-height: 1.6; }
+.fm-category-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 18px;
+  margin-top: 9px;
+  border-top: 1px solid #eaede5;
+  color: #737b75;
+  font-size: 11px;
+}
+.fm-category-footer > span:last-child { color: #264c35; font-weight: 700; }
+.fm-category-navigation { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.fm-category-navigation h2 { margin: 0; color: #737b75; font-size: 14px; font-weight: 400; }
+.fm-results-count { margin: 0 0 18px; color: #737b75; font-size: 12px; }
+@media (min-width: 1200px) {
+  .fm-category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fm-category-info { padding: 20px; }
+  .fm-category-info > strong { font-size: 26px; }
+  .fm-category-samples { gap: 6px; padding-inline: 10px; }
+}
+@media (max-width: 420px) {
+  .fm-category-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .fm-category-info { padding: 20px; }
+  .fm-category-cover { height: 210px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fm-category-card { transition: none; }
+  .fm-category-card:hover:not(:disabled) { transform: none; }
+}

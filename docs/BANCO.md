@@ -22,6 +22,8 @@ A identificação `user_access` da API representa `memberships` e as contas exis
 
 ## Contrato RPC
 
+Aplicado e conferido no projeto autorizado em 03/11/2026: agrupamento de Tabela de Preços por promoção, com cabeçalho, inclusão/remoção de produtos em lote e exclusão de rascunhos versionada. Migração `20261104012757_price_table_promotions.sql`. Teste autenticado com rollback, RLS, grants, Realtime e preservação do rascunho real e das versões/metadados dos 207 produtos confirmados. Contratos e evidências: [TABELA-PRECOS.md](TABELA-PRECOS.md).
+
 | Função | Parâmetros | Retorno |
 | --- | --- | --- |
 | `sp_context` | nenhum | Usuário e empresas autorizadas, com perfil/módulos. |

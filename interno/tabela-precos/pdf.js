@@ -32,6 +32,10 @@ const stable = (value) =>
  * then pack across validity dates without replacing each offer's own dates. */
 export function planPriceTablePdfs(entries) {
   if (!Array.isArray(entries) || !entries.length) throw Error("Selecione produtos enviados para gerar o PDF.");
+  entries = entries.flatMap((entry) => entry?.kind === "promotion"
+    ? (entry.items ?? []).map((item) => ({ ...item, start: entry.start, end: entry.end }))
+    : [entry]);
+  if (!entries.length) throw Error("Adicione produtos à promoção antes de gerar o PDF.");
   let copies = 0;
   for (const entry of entries) {
     if (!entry || !Number.isInteger(entry.quantity) || entry.quantity < 1 || entry.quantity > MAX_COPIES)

@@ -1,7 +1,8 @@
 // Transport optimization only: the canonical document still contains every image.
 // References are resolved by the RPC against the same document and revision.
 export function isUncertainFlyerSave(error) {
-  return !error?.code && /AbortError|TimeoutError|FetchError|Failed to fetch|fetch failed|Load failed|NetworkError/i.test(error?.message ?? '');
+  return !error?.code && /AbortError|TimeoutError|FetchError|Failed to fetch|fetch failed|Load failed|NetworkError/i
+    .test(`${error?.name ?? ''}: ${error?.message ?? ''}`);
 }
 
 const equal = (left, right) => {

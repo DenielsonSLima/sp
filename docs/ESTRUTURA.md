@@ -37,6 +37,8 @@ Telas complexas têm hooks de ciclo de vida e views por fluxo. Produtos separa l
 
 Em Encartes, `gallery/` organiza coleções e filtros, `editor/` reúne inserção, propriedades, autosave e interação/renderização do canvas, e `views/studio.js` apresenta o espaço de trabalho. `design-library.js` reconcilia cards por ID e versão e limita prévias simultâneas. As camadas permanecem no painel direito; configurações do documento ficam no botão superior. `styles/` separa os estilos sem alterar a ordem da cascata.
 
+O módulo Encartes reúne Criar encarte, Encartes salvos, Modelos prontos e Meus modelos. `navigation.js` apresenta as quatro abas; `workspace/` coordena criação e publicações e `modelos/` mantém a biblioteca por categorias e a edição das bases. Os links usam `#encartes?aba=modelos`, `aba=meus-modelos` ou `aba=salvos`; a rota antiga `#modelos` abre a biblioteca dentro de Encartes, sem item separado no menu lateral.
+
 `editor/rulers.js` desenha réguas em pixels do documento; `guides.js` cuida de guias arrastáveis e centros; `alignment.js` calcula encaixe e centralização. `viewport-controls.js` reúne esses comandos e `fullscreen.js` expande o estúdio preservando canvas, foco, menus e diálogos. Guias personalizadas são metadados geométricos salvos na arte e redimensionados com ela; as sobreposições não integram o PNG.
 
 O autosave usa `editor/save-queue.js`: gravações são seriais e snapshots ainda não iniciados da mesma arte/sessão são substituídos pelo mais recente; todos os chamadores aguardam a gravação substituta. Desfazer/refazer copia contêineres simples e reaproveita strings imutáveis das imagens, sem serializar todo o base64 a cada movimento. `sp_flyer_save` devolve somente confirmação/versionamento/datas; o cliente combina essa confirmação com o snapshot enviado, conservando o contrato do repositório.
@@ -67,6 +69,8 @@ O fluxo é: view/hook → queries ou serviço do domínio → API compartilhada 
 - Demais arquivos em `assets/`: logomarca, foto e arte da navegação.
 
 ## Manutenção e validação
+
+Tabela de Preços cria uma promoção pelo modal `views/promotion-dialog.js` e apresenta cabeçalho/produtos em `views/promotion-detail.js`. `promotion-picker.js` lista o catálogo em linhas com miniaturas e seleção múltipla persistente entre páginas; `promotion-item-dialog.js` configura o cartaz. `legacy-editor.js` conserva a edição dos registros individuais anteriores. Serviços, queries, versões e Realtime continuam no domínio. Contrato e situação de aplicação: [TABELA-PRECOS.md](TABELA-PRECOS.md).
 
 Execute `npm test` e `npm run build` a partir da raiz. O build copia `index.html`, `assets/`, `login/`, `interno/` e `shared/` para `dist/` e empacota as dependências de navegador em `dist/vendor/`; documentação, testes, histórico e arquivos de apoio ficam fora do site gerado.
 

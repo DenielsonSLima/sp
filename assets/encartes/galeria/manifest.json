@@ -5,7 +5,9 @@
   "coverage": {
     "catalogProducts": 196,
     "coveredProducts": 196,
-    "scenes": 118
+    "scenes": 125,
+    "catalogVerificationDate": "2026-11-02",
+    "note": "Cobertura anterior preservada; este lote adiciona sete cenas vinculadas a produtos já presentes na galeria. Oito cenas adicionais no manifesto combos-20261103.json aguardam vínculo de produto."
   },
   "scenes": [
     {
@@ -3269,6 +3271,188 @@
       "thumbnailSha256": "2306d0e38b880cd81a290a44582ddd955c3fa4d6b1d2e4a04cc14e1b836c6739",
       "nativeWidth": 941,
       "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-001",
+      "title": "Garoto para presentear",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 459606,
+      "sha256": "86931fb3fcbb851fcd942520fbed19fbac7a20f14741a21132a543aeaf6331a8",
+      "thumbnailBytes": 56720,
+      "thumbnailSha256": "89d9b34a758e6f6d72fa80beab05892624b7ea05675eeb84ba98e9e1997a5ccc",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-002",
+      "title": "Especialidades na noite de Natal",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 466438,
+      "sha256": "398bace006bbc6348b6c14bc2f61cf3e9acc5b0fb871a9ae39d92e6ba78625fb",
+      "thumbnailBytes": 62214,
+      "thumbnailSha256": "1d7d97460d0324455372b097cde25f877f17a5f224c3267484b79fd4599823bf",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-003",
+      "title": "Lacta em um presente especial",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 491776,
+      "sha256": "5a245fa3db9f52a448a493ae45f8af570d8c952f04a61313c81b134889e47d57",
+      "thumbnailBytes": 64276,
+      "thumbnailSha256": "8c8e5a00bbd08c274512d2bd7b47f2f16ababa1ce06ff2db6f6f7c59623019da",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-004",
+      "title": "Dupla de chocolates para receber",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 559442,
+      "sha256": "1f954c4863ad648ebc96aba711d74ae494f06764e7c2b9c7412d6017e371c51e",
+      "thumbnailBytes": 70992,
+      "thumbnailSha256": "5728a8ea42d4eefd604e3c6957173c1a36b9e90911fc16d480b07894c0df4e46",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-005",
+      "title": "Garoto e Lacta na troca de presentes",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-005.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-005-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 521044,
+      "sha256": "394880d5c75bcd49ec14190ee082f85b1ceb5aca1bb829c88e95b3611f447833",
+      "thumbnailBytes": 67158,
+      "thumbnailSha256": "d084af7c34cd9afa4ea4eb3cc510f691424b28dc466617aec403b84baad2db71",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-006",
+      "title": "Nestlé e Lacta depois da ceia",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-006.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-006-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 596588,
+      "sha256": "483a47b95459dc81197f66e7cce4cf00574e9cef123ddbaa3469db5ae3f34bff",
+      "thumbnailBytes": 74964,
+      "thumbnailSha256": "896331e60b2b339af9155012de330b9acb8addb5349dd27af10e0756748bd85b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
+    },
+    {
+      "id": "natal26-combos-007",
+      "title": "Três caixas para celebrar em família",
+      "theme": "natal",
+      "collection": "doces",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-007.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-007-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "source": "generated",
+      "bytes": 574072,
+      "sha256": "d9b2f4d9ec189791cce792a875ac25fd3635df9a90f1a9db175f63214a6e32f3",
+      "thumbnailBytes": 73912,
+      "thumbnailSha256": "da9d835440e2aac799c933e670b40ce57b75ddca5fedc6adbcb41ec0bc8ad62b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672
     }
-  ]
+  ],
+  "updatedAt": "2026-11-03"
 }

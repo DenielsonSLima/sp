@@ -1,0 +1,1462 @@
+{
+  "createdAt": "2026-11-03",
+  "generator": "built-in image_gen",
+  "format": "Stories 1080x1920 / thumbnails 360x640",
+  "counts": {
+    "scenes": 15,
+    "bySkuCount": {
+      "1": 8,
+      "2": 5,
+      "3": 1,
+      "4": 1
+    },
+    "integratedLocal": 7,
+    "pendingProductBinding": 8
+  },
+  "remoteCatalogCheck": "Connector returned permission error. No database changes.",
+  "scenes": [
+    {
+      "id": "natal26-combos-001",
+      "title": "Garoto para presentear",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "garoto"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        }
+      ],
+      "occasion": "Garoto para presentear",
+      "sceneBrief": "Uma caixa fechada deitada em diagonal em aparador de madeira clara, laço verde solto ao lado e saco kraft vazio atrás. Sala de família brasileira caprichada; árvore decorada vermelha e verde, sofá de linho creme, iluminação de janela. Caixa grande protagonista na metade inferior.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS GAROTO GAROTICES 250 G. Composição: Uma caixa fechada deitada em diagonal em aparador de madeira clara, laço verde solto ao lado e saco kraft vazio atrás. Sala de família brasileira caprichada; árvore decorada vermelha e verde, sofá de linho creme, iluminação de janela. Caixa grande protagonista na metade inferior.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-001.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-001-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 459606,
+      "sha256": "86931fb3fcbb851fcd942520fbed19fbac7a20f14741a21132a543aeaf6331a8",
+      "thumbnailBytes": 56720,
+      "thumbnailSha256": "89d9b34a758e6f6d72fa80beab05892624b7ea05675eeb84ba98e9e1997a5ccc",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-ea6adf1ed8f0f50be3d01742"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-001.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "garoto",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.panvel.com/panvel/caixa-de-bombom-garoto-garotices-250g/p-92740",
+          "note": "Garotices 250g. Existem outras gramaturas; foi preservada a versão 250g da galeria. Packshot público da pesquisa anterior, reconferido visualmente."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+          "sha256": "c6b29220d1087ece11e4b562e7a27bf65125654a055e63ceba6c2e60c2adc1b3"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-e442ae25-8b2a-4963-ba76-51a7584e7941.png"
+    },
+    {
+      "id": "natal26-combos-002",
+      "title": "Especialidades na noite de Natal",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "nestle"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        }
+      ],
+      "occasion": "Especialidades na noite de Natal",
+      "sceneBrief": "Uma caixa fechada em mesa de sobremesas de madeira escura bem cuidada, visto em três quartos de cima, pequena travessa branca vazia e guardanapo verde. Fundo de sala de jantar natalina com guirlanda, velas apagadas e pequenas luzes.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G. Composição: Uma caixa fechada em mesa de sobremesas de madeira escura bem cuidada, visto em três quartos de cima, pequena travessa branca vazia e guardanapo verde. Fundo de sala de jantar natalina com guirlanda, velas apagadas e pequenas luzes.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-002.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-002-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 466438,
+      "sha256": "398bace006bbc6348b6c14bc2f61cf3e9acc5b0fb871a9ae39d92e6ba78625fb",
+      "thumbnailBytes": 62214,
+      "thumbnailSha256": "1d7d97460d0324455372b097cde25f877f17a5f224c3267484b79fd4599823bf",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-9f251e21eff5af32398810c2"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-002.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "nestle",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.paodeacucar.com/produto/1642942/caixa-de-bombom-sortido-nestle-especialidades-220g",
+          "note": "Especialidades 220g, caixa vermelha com KitKat, Alpino, Prestígio, Charge e Chokito impressos."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+          "sha256": "7da31c19928d5562d6253514a0f03e47ec3b914b0b3418e51b6b3a5a33239fc6"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-55c1f722-74ad-4041-8221-b1cf5ce85f2d.png"
+    },
+    {
+      "id": "natal26-combos-003",
+      "title": "Lacta em um presente especial",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "lacta"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "occasion": "Lacta em um presente especial",
+      "sceneBrief": "Uma caixa fechada em banco aparador de madeira natural, tecido creme e fita vermelha de cetim solta, uma caixa de presente kraft fechada atrás sem rótulo. Árvore de Natal com estrelas brancas em profundidade e janela lateral.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G. Composição: Uma caixa fechada em banco aparador de madeira natural, tecido creme e fita vermelha de cetim solta, uma caixa de presente kraft fechada atrás sem rótulo. Árvore de Natal com estrelas brancas em profundidade e janela lateral.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-003.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-003-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 491776,
+      "sha256": "5a245fa3db9f52a448a493ae45f8af570d8c952f04a61313c81b134889e47d57",
+      "thumbnailBytes": 64276,
+      "thumbnailSha256": "8c8e5a00bbd08c274512d2bd7b47f2f16ababa1ce06ff2db6f6f7c59623019da",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-529e8aa061904a9a49cf481d"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-003.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "lacta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.lacta.com.br/lacta/produtos/box-brand-mix-lacta/",
+          "note": "Favoritos 250,6g. Página tem título secundário abreviado 250g; preservado 250,6g e a caixa azul documentada."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png",
+          "sha256": "2aaae1e7d0a3e30937855df534e4b749a3cff02ae6681eae33e7a088a412aedb"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-d01f914c-f342-4841-a353-23921f044049.png"
+    },
+    {
+      "id": "natal26-combos-004",
+      "title": "Dupla de chocolates para receber",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 2,
+      "physicalPackageCount": 2,
+      "productKeys": [
+        "garoto",
+        "nestle"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        }
+      ],
+      "occasion": "Dupla de chocolates para receber",
+      "sceneBrief": "Duas caixas fechadas, amarela Garoto à esquerda e vermelha Nestlé à direita sobre mesa redonda com trilho verde e duas pequenas louças brancas vazias. Composição de encontro em família; árvore e cadeiras ao fundo. Faces superiores inteiras visíveis e sem sobreposição.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS GAROTO GAROTICES 250 G; CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G. Composição: Duas caixas fechadas, amarela Garoto à esquerda e vermelha Nestlé à direita sobre mesa redonda com trilho verde e duas pequenas louças brancas vazias. Composição de encontro em família; árvore e cadeiras ao fundo. Faces superiores inteiras visíveis e sem sobreposição.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-004.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-004-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 559442,
+      "sha256": "1f954c4863ad648ebc96aba711d74ae494f06764e7c2b9c7412d6017e371c51e",
+      "thumbnailBytes": 70992,
+      "thumbnailSha256": "5728a8ea42d4eefd604e3c6957173c1a36b9e90911fc16d480b07894c0df4e46",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-ea6adf1ed8f0f50be3d01742",
+        "reviewed-product-9f251e21eff5af32398810c2"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-004.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "garoto",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.panvel.com/panvel/caixa-de-bombom-garoto-garotices-250g/p-92740",
+          "note": "Garotices 250g. Existem outras gramaturas; foi preservada a versão 250g da galeria. Packshot público da pesquisa anterior, reconferido visualmente."
+        },
+        {
+          "product": "nestle",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.paodeacucar.com/produto/1642942/caixa-de-bombom-sortido-nestle-especialidades-220g",
+          "note": "Especialidades 220g, caixa vermelha com KitKat, Alpino, Prestígio, Charge e Chokito impressos."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+          "sha256": "c6b29220d1087ece11e4b562e7a27bf65125654a055e63ceba6c2e60c2adc1b3"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+          "sha256": "7da31c19928d5562d6253514a0f03e47ec3b914b0b3418e51b6b3a5a33239fc6"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-61772c8b-b51a-4b4a-9d4a-dc98a7e3d3c2.png"
+    },
+    {
+      "id": "natal26-combos-005",
+      "title": "Garoto e Lacta na troca de presentes",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 2,
+      "physicalPackageCount": 2,
+      "productKeys": [
+        "garoto",
+        "lacta"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "occasion": "Garoto e Lacta na troca de presentes",
+      "sceneBrief": "Duas caixas fechadas lado a lado em diagonal sobre uma bancada de embrulhar presentes, papel kraft, tesoura fechada e fitas ao lado, embalagem amarela à frente esquerda e azul à direita. Guirlanda de Natal no fundo e cesto de presentes atrás. Não cobrir marcas com laços.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS GAROTO GAROTICES 250 G; CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G. Composição: Duas caixas fechadas lado a lado em diagonal sobre uma bancada de embrulhar presentes, papel kraft, tesoura fechada e fitas ao lado, embalagem amarela à frente esquerda e azul à direita. Guirlanda de Natal no fundo e cesto de presentes atrás. Não cobrir marcas com laços.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-005.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-005-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 521044,
+      "sha256": "394880d5c75bcd49ec14190ee082f85b1ceb5aca1bb829c88e95b3611f447833",
+      "thumbnailBytes": 67158,
+      "thumbnailSha256": "d084af7c34cd9afa4ea4eb3cc510f691424b28dc466617aec403b84baad2db71",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-ea6adf1ed8f0f50be3d01742",
+        "reviewed-product-529e8aa061904a9a49cf481d"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-005.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "garoto",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.panvel.com/panvel/caixa-de-bombom-garoto-garotices-250g/p-92740",
+          "note": "Garotices 250g. Existem outras gramaturas; foi preservada a versão 250g da galeria. Packshot público da pesquisa anterior, reconferido visualmente."
+        },
+        {
+          "product": "lacta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.lacta.com.br/lacta/produtos/box-brand-mix-lacta/",
+          "note": "Favoritos 250,6g. Página tem título secundário abreviado 250g; preservado 250,6g e a caixa azul documentada."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+          "sha256": "c6b29220d1087ece11e4b562e7a27bf65125654a055e63ceba6c2e60c2adc1b3"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png",
+          "sha256": "2aaae1e7d0a3e30937855df534e4b749a3cff02ae6681eae33e7a088a412aedb"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-f0f6217c-862f-4b2c-9574-3045371017ee.png"
+    },
+    {
+      "id": "natal26-combos-006",
+      "title": "Nestlé e Lacta depois da ceia",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 2,
+      "physicalPackageCount": 2,
+      "productKeys": [
+        "nestle",
+        "lacta"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "occasion": "Nestlé e Lacta depois da ceia",
+      "sceneBrief": "Duas caixas fechadas em buffet de sala de jantar junto a pratos de sobremesa brancos empilhados. Vermelha à esquerda, azul à direita, etiquetas voltadas à câmera; bandeja discreta, toalha creme e árvore natalina ao fundo. Cena doméstica acolhedora.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G; CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G. Composição: Duas caixas fechadas em buffet de sala de jantar junto a pratos de sobremesa brancos empilhados. Vermelha à esquerda, azul à direita, etiquetas voltadas à câmera; bandeja discreta, toalha creme e árvore natalina ao fundo. Cena doméstica acolhedora.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-006.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-006-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 596588,
+      "sha256": "483a47b95459dc81197f66e7cce4cf00574e9cef123ddbaa3469db5ae3f34bff",
+      "thumbnailBytes": 74964,
+      "thumbnailSha256": "896331e60b2b339af9155012de330b9acb8addb5349dd27af10e0756748bd85b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-9f251e21eff5af32398810c2",
+        "reviewed-product-529e8aa061904a9a49cf481d"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-006.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "nestle",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.paodeacucar.com/produto/1642942/caixa-de-bombom-sortido-nestle-especialidades-220g",
+          "note": "Especialidades 220g, caixa vermelha com KitKat, Alpino, Prestígio, Charge e Chokito impressos."
+        },
+        {
+          "product": "lacta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.lacta.com.br/lacta/produtos/box-brand-mix-lacta/",
+          "note": "Favoritos 250,6g. Página tem título secundário abreviado 250g; preservado 250,6g e a caixa azul documentada."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+          "sha256": "7da31c19928d5562d6253514a0f03e47ec3b914b0b3418e51b6b3a5a33239fc6"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png",
+          "sha256": "2aaae1e7d0a3e30937855df534e4b749a3cff02ae6681eae33e7a088a412aedb"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-ae37656f-497a-4d5d-927e-90f51916ad19.png"
+    },
+    {
+      "id": "natal26-combos-007",
+      "title": "Três caixas para celebrar em família",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 3,
+      "physicalPackageCount": 3,
+      "productKeys": [
+        "garoto",
+        "nestle",
+        "lacta"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        }
+      ],
+      "occasion": "Três caixas para celebrar em família",
+      "sceneBrief": "Três caixas fechadas em arranjo triangular sobre mesa ampla de madeira, Garoto à frente esquerda, Nestlé à frente direita e Lacta mais atrás sobre apoio baixo que não aparece. Todas as faces superiores visíveis, uma caixa de cada. Fundo de sala com árvore, presentes e pequenas luzes; perspectiva ligeiramente elevada.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS GAROTO GAROTICES 250 G; CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G; CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G. Composição: Três caixas fechadas em arranjo triangular sobre mesa ampla de madeira, Garoto à frente esquerda, Nestlé à frente direita e Lacta mais atrás sobre apoio baixo que não aparece. Todas as faces superiores visíveis, uma caixa de cada. Fundo de sala com árvore, presentes e pequenas luzes; perspectiva ligeiramente elevada.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-007.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-007-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 574072,
+      "sha256": "d9b2f4d9ec189791cce792a875ac25fd3635df9a90f1a9db175f63214a6e32f3",
+      "thumbnailBytes": 73912,
+      "thumbnailSha256": "da9d835440e2aac799c933e670b40ce57b75ddca5fedc6adbcb41ec0bc8ad62b",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-ea6adf1ed8f0f50be3d01742",
+        "reviewed-product-9f251e21eff5af32398810c2",
+        "reviewed-product-529e8aa061904a9a49cf481d"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-007.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "integrated-local",
+      "sources": [
+        {
+          "product": "garoto",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.panvel.com/panvel/caixa-de-bombom-garoto-garotices-250g/p-92740",
+          "note": "Garotices 250g. Existem outras gramaturas; foi preservada a versão 250g da galeria. Packshot público da pesquisa anterior, reconferido visualmente."
+        },
+        {
+          "product": "nestle",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.paodeacucar.com/produto/1642942/caixa-de-bombom-sortido-nestle-especialidades-220g",
+          "note": "Especialidades 220g, caixa vermelha com KitKat, Alpino, Prestígio, Charge e Chokito impressos."
+        },
+        {
+          "product": "lacta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.lacta.com.br/lacta/produtos/box-brand-mix-lacta/",
+          "note": "Favoritos 250,6g. Página tem título secundário abreviado 250g; preservado 250,6g e a caixa azul documentada."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+          "sha256": "c6b29220d1087ece11e4b562e7a27bf65125654a055e63ceba6c2e60c2adc1b3"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+          "sha256": "7da31c19928d5562d6253514a0f03e47ec3b914b0b3418e51b6b3a5a33239fc6"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png",
+          "sha256": "2aaae1e7d0a3e30937855df534e4b749a3cff02ae6681eae33e7a088a412aedb"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": []
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-d2468e85-6048-4cb6-9cc9-9cbdac7c03ad.png"
+    },
+    {
+      "id": "natal26-combos-008",
+      "title": "Chocolate e frutas na mesa natalina",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 2,
+      "physicalPackageCount": 2,
+      "productKeys": [
+        "nestle",
+        "frutas"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": null,
+          "name": "FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G"
+        }
+      ],
+      "occasion": "Chocolate e frutas na mesa natalina",
+      "sceneBrief": "Caixa Nestlé fechada à esquerda e pequeno pote de frutas cristalizadas de 150g à direita, escala física correta: pote muito menor que caixa. Mesa de sobremesas natalina com bolo caseiro de frutas em prato branco atrás, bolo servido como ambientação, sem outras embalagens. Tecido verde, guirlanda e luzes.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G; FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G. Composição: Caixa Nestlé fechada à esquerda e pequeno pote de frutas cristalizadas de 150g à direita, escala física correta: pote muito menor que caixa. Mesa de sobremesas natalina com bolo caseiro de frutas em prato branco atrás, bolo servido como ambientação, sem outras embalagens. Tecido verde, guirlanda e luzes. O pote de frutas é baixo, redondo e transparente, rótulo circular NA TAMPA, conforme a referência; apoiar naturalmente deitado com tampa visível pela perspectiva de cima, sem transformá-lo em lata alta ou pacote.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-008.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-008-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 677154,
+      "sha256": "d3456c70f9a5458e479b36eac6788fa6640bdb702fe3238425f98c5cb3679f8b",
+      "thumbnailBytes": 77092,
+      "thumbnailSha256": "42af8772ab8686de94a5a7e7c8b4e2fa9e5fe0754e9ba8f9ac0f18bed78bdc47",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-9f251e21eff5af32398810c2"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-008.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "nestle",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.paodeacucar.com/produto/1642942/caixa-de-bombom-sortido-nestle-especialidades-220g",
+          "note": "Especialidades 220g, caixa vermelha com KitKat, Alpino, Prestígio, Charge e Chokito impressos."
+        },
+        {
+          "product": "frutas",
+          "checkedAt": "2026-11-03",
+          "url": "https://loja.lavioletera.com.br/produto/fruta-cristalizada-cubinho-la-violetera-pote-150g",
+          "note": "Pote circular transparente 150g, não o pacote. Packshot original do fabricante. Cubinhos verdes, vermelhos e laranja. O catálogo 2026 distingue pacote e pote."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+          "sha256": "7da31c19928d5562d6253514a0f03e47ec3b914b0b3418e51b6b3a5a33239fc6"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp",
+          "sha256": "1d0ea78d697b490a38e9f41ac28121edc672e580d1fa353a77d04f6d9c804288"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-74a8bb90-f919-47ca-92ab-d709f288c514.png"
+    },
+    {
+      "id": "natal26-combos-009",
+      "title": "Frutas cristalizadas no preparo do bolo",
+      "theme": "natal",
+      "collection": "cozinha",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "frutas"
+      ],
+      "products": [
+        {
+          "key": null,
+          "name": "FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G"
+        }
+      ],
+      "occasion": "Frutas cristalizadas no preparo do bolo",
+      "sceneBrief": "Um pote comercial de frutas cristalizadas de 150g em bancada limpa de confeitaria caseira clara. Pequena tigela branca com cubinhos verdes, vermelhos e laranja e fatia de bolo caseiro de frutas como ambientação, espátula de madeira, pano creme. Guirlanda e árvore pequena ao fundo, cozinha natalina caprichada.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G. Composição: Um pote comercial de frutas cristalizadas de 150g em bancada limpa de confeitaria caseira clara. Pequena tigela branca com cubinhos verdes, vermelhos e laranja e fatia de bolo caseiro de frutas como ambientação, espátula de madeira, pano creme. Guirlanda e árvore pequena ao fundo, cozinha natalina caprichada. O pote de frutas é baixo, redondo e transparente, rótulo circular NA TAMPA, conforme a referência; apoiar naturalmente deitado com tampa visível pela perspectiva de cima, sem transformá-lo em lata alta ou pacote.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-combos-009.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-combos-009-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 531848,
+      "sha256": "dbcde36caa76c15124e0eeb60ba728e4b892669d34dcbf52190bf7b90cd4831f",
+      "thumbnailBytes": 64206,
+      "thumbnailSha256": "9ce9de17a8ce31aeb67083f3f4f8740eca392ddfe1ade0b889bfc07d4f22a0f8",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-009.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "frutas",
+          "checkedAt": "2026-11-03",
+          "url": "https://loja.lavioletera.com.br/produto/fruta-cristalizada-cubinho-la-violetera-pote-150g",
+          "note": "Pote circular transparente 150g, não o pacote. Packshot original do fabricante. Cubinhos verdes, vermelhos e laranja. O catálogo 2026 distingue pacote e pote."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp",
+          "sha256": "1d0ea78d697b490a38e9f41ac28121edc672e580d1fa353a77d04f6d9c804288"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-cdd2c735-30da-4977-a0f0-a2370c99eb76.png"
+    },
+    {
+      "id": "natal26-combos-010",
+      "title": "Sobremesa de Natal com frutas",
+      "theme": "natal",
+      "collection": "cozinha",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "frutas"
+      ],
+      "products": [
+        {
+          "key": null,
+          "name": "FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G"
+        }
+      ],
+      "occasion": "Sobremesa de Natal com frutas",
+      "sceneBrief": "Um pote comercial de 150g de frutas cristalizadas à frente, próximo a prato branco com pequeno bolo de frutas fatiado e dobras de linho verde. Mesa de madeira junto à janela de cozinha, cordão de luzes e ramos natalinos no parapeito, sem outros produtos comerciais. Câmera de perto.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G. Composição: Um pote comercial de 150g de frutas cristalizadas à frente, próximo a prato branco com pequeno bolo de frutas fatiado e dobras de linho verde. Mesa de madeira junto à janela de cozinha, cordão de luzes e ramos natalinos no parapeito, sem outros produtos comerciais. Câmera de perto. O pote de frutas é baixo, redondo e transparente, rótulo circular NA TAMPA, conforme a referência; apoiar naturalmente deitado com tampa visível pela perspectiva de cima, sem transformá-lo em lata alta ou pacote.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/cozinha/natal26-combos-010.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/cozinha/natal26-combos-010-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 613422,
+      "sha256": "1d7b9cabdac499fc5e87c816611205e444a417aba0f4829ef3c243e143a1b461",
+      "thumbnailBytes": 74912,
+      "thumbnailSha256": "3c9de6dfb1a8b93332d6045565a2658e7f3d12a26a2ba4717afb2d688fa4cece",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-010.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "frutas",
+          "checkedAt": "2026-11-03",
+          "url": "https://loja.lavioletera.com.br/produto/fruta-cristalizada-cubinho-la-violetera-pote-150g",
+          "note": "Pote circular transparente 150g, não o pacote. Packshot original do fabricante. Cubinhos verdes, vermelhos e laranja. O catálogo 2026 distingue pacote e pote."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp",
+          "sha256": "1d0ea78d697b490a38e9f41ac28121edc672e580d1fa353a77d04f6d9c804288"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-a286d57a-ed7a-41e2-aa8e-313b9296f5ae.png"
+    },
+    {
+      "id": "natal26-combos-011",
+      "title": "Quarteto doce para o fim de ano",
+      "theme": "natal",
+      "collection": "doces",
+      "skuCount": 4,
+      "physicalPackageCount": 4,
+      "productKeys": [
+        "garoto",
+        "nestle",
+        "lacta",
+        "frutas"
+      ],
+      "products": [
+        {
+          "key": "reviewed-product-ea6adf1ed8f0f50be3d01742",
+          "name": "CAIXA DE BOMBONS GAROTO SORTIDOS 250 G"
+        },
+        {
+          "key": "reviewed-product-9f251e21eff5af32398810c2",
+          "name": "CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G"
+        },
+        {
+          "key": "reviewed-product-529e8aa061904a9a49cf481d",
+          "name": "CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G"
+        },
+        {
+          "key": null,
+          "name": "FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G"
+        }
+      ],
+      "occasion": "Quarteto doce para o fim de ano",
+      "sceneBrief": "Exatamente quatro produtos: três caixas fechadas de chocolate amarelo Garoto, vermelho Nestlé, azul Lacta e pequeno pote de frutas cristalizadas 150g. Buffet doméstico amplo em duas profundidades, caixas sem esconder as faces e pote pequeno à frente direita. Natal visível com guirlanda e árvore ao fundo; perspectiva elevada para ler as três caixas.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: CAIXA DE BOMBONS GAROTO GAROTICES 250 G; CAIXA DE BOMBONS NESTLÉ ESPECIALIDADES 220 G; CAIXA DE BOMBONS LACTA FAVORITOS 250,6 G; FRUTAS CRISTALIZADAS EM CUBOS LA VIOLETERA POTE 150 G. Composição: Exatamente quatro produtos: três caixas fechadas de chocolate amarelo Garoto, vermelho Nestlé, azul Lacta e pequeno pote de frutas cristalizadas 150g. Buffet doméstico amplo em duas profundidades, caixas sem esconder as faces e pote pequeno à frente direita. Natal visível com guirlanda e árvore ao fundo; perspectiva elevada para ler as três caixas. O pote de frutas é baixo, redondo e transparente, rótulo circular NA TAMPA, conforme a referência; apoiar naturalmente deitado com tampa visível pela perspectiva de cima, sem transformá-lo em lata alta ou pacote.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/doces/natal26-combos-011.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/doces/natal26-combos-011-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 654472,
+      "sha256": "dc1360c382dff4ebea95d860590821eb58dad18e8d9f46444f5da0c34752496c",
+      "thumbnailBytes": 82474,
+      "thumbnailSha256": "3bbcaca9b29ed429156a24a22db3f6dd6a65f4e57f54637f49c573fcd2646e05",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [
+        "reviewed-product-ea6adf1ed8f0f50be3d01742",
+        "reviewed-product-9f251e21eff5af32398810c2",
+        "reviewed-product-529e8aa061904a9a49cf481d"
+      ],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-011.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "garoto",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.panvel.com/panvel/caixa-de-bombom-garoto-garotices-250g/p-92740",
+          "note": "Garotices 250g. Existem outras gramaturas; foi preservada a versão 250g da galeria. Packshot público da pesquisa anterior, reconferido visualmente."
+        },
+        {
+          "product": "nestle",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.paodeacucar.com/produto/1642942/caixa-de-bombom-sortido-nestle-especialidades-220g",
+          "note": "Especialidades 220g, caixa vermelha com KitKat, Alpino, Prestígio, Charge e Chokito impressos."
+        },
+        {
+          "product": "lacta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.lacta.com.br/lacta/produtos/box-brand-mix-lacta/",
+          "note": "Favoritos 250,6g. Página tem título secundário abreviado 250g; preservado 250,6g e a caixa azul documentada."
+        },
+        {
+          "product": "frutas",
+          "checkedAt": "2026-11-03",
+          "url": "https://loja.lavioletera.com.br/produto/fruta-cristalizada-cubinho-la-violetera-pote-150g",
+          "note": "Pote circular transparente 150g, não o pacote. Packshot original do fabricante. Cubinhos verdes, vermelhos e laranja. O catálogo 2026 distingue pacote e pote."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/garoto-sortidos.jpg",
+          "sha256": "c6b29220d1087ece11e4b562e7a27bf65125654a055e63ceba6c2e60c2adc1b3"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/references/nestle-especialidades220.jpg",
+          "sha256": "7da31c19928d5562d6253514a0f03e47ec3b914b0b3418e51b6b3a5a33239fc6"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-biblioteca-20261102/new-products/bombons/references/lacta-favoritos.png",
+          "sha256": "2aaae1e7d0a3e30937855df534e4b749a3cff02ae6681eae33e7a088a412aedb"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/frutas.webp",
+          "sha256": "1d0ea78d697b490a38e9f41ac28121edc672e580d1fa353a77d04f6d9c804288"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-0fcf73f8-06eb-4f22-a918-b14edec04e84.png"
+    },
+    {
+      "id": "natal26-combos-012",
+      "title": "Fiesta na preparação da ceia",
+      "theme": "natal",
+      "collection": "ceia",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "fiesta"
+      ],
+      "products": [
+        {
+          "key": null,
+          "name": "AVE FIESTA SEARA TEMPERADA CONGELADA"
+        }
+      ],
+      "occasion": "Fiesta na preparação da ceia",
+      "sceneBrief": "Uma ave Fiesta Seara totalmente lacrada na embalagem, em bandeja de inox limpa sobre ilha de cozinha. Assadeira cerâmica vazia e pano verde ao lado, sem alimento pronto. Guirlanda na porta, ramo natalino e luzes ao fundo. Embalagem intacta protagonista, alça ou fecho superior correto.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/fiesta.webp"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: AVE FIESTA SEARA TEMPERADA CONGELADA. Composição: Uma ave Fiesta Seara totalmente lacrada na embalagem, em bandeja de inox limpa sobre ilha de cozinha. Assadeira cerâmica vazia e pano verde ao lado, sem alimento pronto. Guirlanda na porta, ramo natalino e luzes ao fundo. Embalagem intacta protagonista, alça ou fecho superior correto. A fotografia impressa do alimento assado na embalagem deve permanecer impressão da embalagem lacrada. O produto promovido é embalado. Não transformar o Peru em peito desossado nem Fiesta em peru.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-combos-012.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-combos-012-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 452644,
+      "sha256": "64ebeaeee3c1a557b8d82cff83ccb8427f2a6192bc2c29278c210deb030b1015",
+      "thumbnailBytes": 60082,
+      "thumbnailSha256": "5b65397818f048b458d98217ae826f2b0724b48b9cb54201b1e8f927d1425f3d",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-012.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "fiesta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.prezunic.com.br/ave-fiesta-temperada-seara-1139240/p",
+          "note": "Packshot de varejo, embalagem vermelha/amarela e fecho Seara. Ave inteira, não peru; peso variável, sem fixar kg na arte."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/fiesta.webp",
+          "sha256": "e28df4224e8a9d785ff949631cccb6bd2839769f4c228422b97b326408aedf96"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-aafb532c-4012-4296-8795-6bb0de057116.png"
+    },
+    {
+      "id": "natal26-combos-013",
+      "title": "Peru Sadia para a ceia em família",
+      "theme": "natal",
+      "collection": "ceia",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "peru"
+      ],
+      "products": [
+        {
+          "key": null,
+          "name": "PERU SADIA TEMPERADO CONGELADO"
+        }
+      ],
+      "occasion": "Peru Sadia para a ceia em família",
+      "sceneBrief": "Um peru Sadia lacrado na embalagem em bandeja limpa sobre bancada de preparo de cozinha familiar caprichada. Assadeira branca vazia, pano vermelho dobrado e utensílio de madeira ao lado; árvore natalina no ambiente adjacente e guirlanda ao fundo. Sem alimento pronto na bancada, forma da ave inteira.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/peru.webp"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: PERU SADIA TEMPERADO CONGELADO. Composição: Um peru Sadia lacrado na embalagem em bandeja limpa sobre bancada de preparo de cozinha familiar caprichada. Assadeira branca vazia, pano vermelho dobrado e utensílio de madeira ao lado; árvore natalina no ambiente adjacente e guirlanda ao fundo. Sem alimento pronto na bancada, forma da ave inteira. A fotografia impressa do alimento assado na embalagem deve permanecer impressão da embalagem lacrada. O produto promovido é embalado. Não transformar o Peru em peito desossado nem Fiesta em peru.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-combos-013.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-combos-013-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 398522,
+      "sha256": "626462e6fdf45a0a996f346f95c62e6e0026effdadc428af0ebb7cbc0b9d91b7",
+      "thumbnailBytes": 54930,
+      "thumbnailSha256": "f21ed494a813b42bdbc764646f5debe06525aaf4884627548e7b398167b60c09",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-013.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "peru",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.sadia.com.br/produtos/comemorativos/aves/peru-temperado-congelado/",
+          "note": "Fabricante confirma Peru Temperado Congelado, EAN 7893000029927. Referência pequena, 304x304; não comprova microtexto. Selo O Nº1 DO NATAL corrigido conforme fonte."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/peru.webp",
+          "sha256": "9c84a00ae9ac769d4c845c6f898b1eb3e9d8ed801126a52ddf6586fdeff13941"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": "Correção via image_gen do selo circular para O Nº1 DO NATAL.",
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "originalGeneratedPath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-79987a67-6491-49db-a764-999ca236b1e3.png",
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-128aad78-f236-4e77-9ea5-fa19547cb51f.png",
+      "revisionPrompt": "Use case: precise-object-edit. Corrigir somente o pequeno selo circular amarelo na embalagem do peru Sadia da imagem 1: seu texto deve ser \"O Nº1 DO NATAL\", conforme o fabricante. Remover os dizeres sem sentido do selo. Preservar absolutamente a fotografia inteira: mesma embalagem, forma, logotipos, peru impresso, luz, sombras, cores, bandeja, enquadramento vertical, guirlanda, árvore e todos os demais detalhes. Não criar chamadas ou textos fora da embalagem.",
+      "revisionReferences": [
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/generated/natal26-combos-013.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/peru.webp"
+      ]
+    },
+    {
+      "id": "natal26-combos-014",
+      "title": "Tender no Natal em casa",
+      "theme": "natal",
+      "collection": "ceia",
+      "skuCount": 1,
+      "physicalPackageCount": 1,
+      "productKeys": [
+        "tender"
+      ],
+      "products": [
+        {
+          "key": null,
+          "name": "TENDER BOLINHA SEARA"
+        }
+      ],
+      "occasion": "Tender no Natal em casa",
+      "sceneBrief": "Um tender Seara lacrado na embalagem em pé sobre bandeja limpa de bancada de cozinha de madeira bem cuidada, tábua de servir vazia ao lado, pano creme, janela com guirlanda e pequenas luzes. Pacote pequeno proporcional ao tender bolinha, natal evidente e convidativo.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/tender.jpg"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: TENDER BOLINHA SEARA. Composição: Um tender Seara lacrado na embalagem em pé sobre bandeja limpa de bancada de cozinha de madeira bem cuidada, tábua de servir vazia ao lado, pano creme, janela com guirlanda e pequenas luzes. Pacote pequeno proporcional ao tender bolinha, natal evidente e convidativo. A fotografia impressa do alimento assado na embalagem deve permanecer impressão da embalagem lacrada. O produto promovido é embalado. Não transformar o Peru em peito desossado nem Fiesta em peru.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-combos-014.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-combos-014-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 353804,
+      "sha256": "3e01b089ba9dc8baf4a96b258b600a893a60e2ad2d21e0222d737a6fd9c42ad0",
+      "thumbnailBytes": 51348,
+      "thumbnailSha256": "0efc7ca0f331ece32a6d13f03937b5c0b062304e36a25ebd332faa7d82eb5fb9",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-014.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "tender",
+          "checkedAt": "2026-11-03",
+          "url": "https://mercado.carrefour.com.br/produto/tender-bolinha-seara-900g-4773624",
+          "note": "Packshot público compartilhado por variantes de peso, filename menciona 1,3kg e página 900g. Usado somente para desenho da embalagem, sem afirmar gramatura comercial. 37g é tara da embalagem; corrigida ambiguidade na cena solo."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/tender.jpg",
+          "sha256": "b2ebe57444b8242663a6f3ddbbb9b1b26a56e9885b57e21a24a8d9eb6e61f2c5"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": "Correção via image_gen: 37g identificado apenas como peso da embalagem.",
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "originalGeneratedPath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-dc71f240-4bed-4c26-b715-2ce6e3578e07.png",
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-bfdd161e-d30b-4d2a-996b-32a04c82aa38.png",
+      "revisionPrompt": "Use case: precise-object-edit. Na imagem 1 corrigir SOMENTE o pequeno texto do canto inferior esquerdo da embalagem Tender Seara: remover a expressão \"PESO LÍQUIDO\" que está imediatamente acima de 37 g. Manter \"37 g PESO DA EMBALAGEM\", pois 37 g é a tara da embalagem e não o peso do tender. Não adicionar outro peso de produto. Preservar o restante da embalagem e toda a fotografia exatamente: o pacote lacrado, alça, logotipos, alimento impresso, cores, luz, sombras, bandeja, madeira, guirlanda e enquadramento vertical.",
+      "revisionReferences": [
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/generated/natal26-combos-014.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/tender.jpg"
+      ]
+    },
+    {
+      "id": "natal26-combos-015",
+      "title": "Fiesta e tender para reunir a família",
+      "theme": "natal",
+      "collection": "ceia",
+      "skuCount": 2,
+      "physicalPackageCount": 2,
+      "productKeys": [
+        "fiesta",
+        "tender"
+      ],
+      "products": [
+        {
+          "key": null,
+          "name": "AVE FIESTA SEARA TEMPERADA CONGELADA"
+        },
+        {
+          "key": null,
+          "name": "TENDER BOLINHA SEARA"
+        }
+      ],
+      "occasion": "Fiesta e tender para reunir a família",
+      "sceneBrief": "Uma embalagem lacrada de Fiesta Seara grande à esquerda e uma embalagem de tender Seara menor à direita, em bandejas de inox distintas na ilha de cozinha de preparo. Assadeiras vazias ao fundo, decoração natalina fora do contato com produtos, guirlanda, árvore e luz natural. Dois produtos apenas, sem aves assadas ou alimentos prontos.",
+      "references": [
+        "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/fiesta.webp",
+        "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/tender.jpg"
+      ],
+      "prompt": "Use case: product-mockup. Criar UMA fotografia publicitária natural vertical 9:16 para Stories do Supermercado do Povo, ideal 1080x1920. A imagem 1 é SOMENTE referência de estilo natalino: não reproduzir o café ou seus produtos. As imagens seguintes são referências ORIGINAIS de identidade dos produtos, na ordem do elenco. Preservar desenho, logotipos, variante, peso e formato de cada embalagem. Produtos grandes e totalmente no quadro com sombras de contato reais, materiais naturais e escala física plausível. Luz natural lateral modelada, brancos fiéis, cores vivas e naturais sem dominante amarela global, calor localizado nas pequenas luzes natalinas. Ambiente brasileiro familiar bonito e acessível, superfícies conservadas, texturas reais, profundidade fotográfica. Sem preço, chamada, título, logomarca da loja, selo adicionado ou marca-dágua. Texto apenas nas embalagens. Não adicionar outros produtos comerciais nem sabores. Evitar render 3D, HDR, plástico artificial, luxo ostensivo e parede austera vazia. Elenco exato: AVE FIESTA SEARA TEMPERADA CONGELADA; TENDER BOLINHA SEARA. Composição: Uma embalagem lacrada de Fiesta Seara grande à esquerda e uma embalagem de tender Seara menor à direita, em bandejas de inox distintas na ilha de cozinha de preparo. Assadeiras vazias ao fundo, decoração natalina fora do contato com produtos, guirlanda, árvore e luz natural. Dois produtos apenas, sem aves assadas ou alimentos prontos. A fotografia impressa do alimento assado na embalagem deve permanecer impressão da embalagem lacrada. O produto promovido é embalado. Não transformar o Peru em peito desossado nem Fiesta em peru.",
+      "status": "approved-visual",
+      "src": "./assets/encartes/galeria/natal/ceia/natal26-combos-015.webp",
+      "thumbnail": "./assets/encartes/galeria/natal/ceia/natal26-combos-015-thumb.webp",
+      "width": 1080,
+      "height": 1920,
+      "source": "generated",
+      "bytes": 409714,
+      "sha256": "d41ecfd9caa3474eddd9d765dc8e385ba7b645a15e08442c8195e07c9d3591dd",
+      "thumbnailBytes": 58534,
+      "thumbnailSha256": "15048f1cf8c2da2641cd697972ef7f087537acc09ae98350b6c8a14de787f50c",
+      "nativeWidth": 941,
+      "nativeHeight": 1672,
+      "productIds": [],
+      "generatedPath": "artifacts/natal-combos-20261103/generated/natal26-combos-015.png",
+      "generator": "built-in image_gen",
+      "galleryStatus": "pending-product-binding",
+      "sources": [
+        {
+          "product": "fiesta",
+          "checkedAt": "2026-11-03",
+          "url": "https://www.prezunic.com.br/ave-fiesta-temperada-seara-1139240/p",
+          "note": "Packshot de varejo, embalagem vermelha/amarela e fecho Seara. Ave inteira, não peru; peso variável, sem fixar kg na arte."
+        },
+        {
+          "product": "tender",
+          "checkedAt": "2026-11-03",
+          "url": "https://mercado.carrefour.com.br/produto/tender-bolinha-seara-900g-4773624",
+          "note": "Packshot público compartilhado por variantes de peso, filename menciona 1,3kg e página 900g. Usado somente para desenho da embalagem, sem afirmar gramatura comercial. 37g é tara da embalagem; corrigida ambiguidade na cena solo."
+        }
+      ],
+      "referenceHashes": [
+        {
+          "path": "/Users/denielson/.codex/skills/povo-natal-fotografia/references/padrao-natal.png",
+          "sha256": "0a49a2243f1933b9b39bb397b8a0458964e65a9bd563b67e6927e0186bec373f"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/fiesta.webp",
+          "sha256": "e28df4224e8a9d785ff949631cccb6bd2839769f4c228422b97b326408aedf96"
+        },
+        {
+          "path": "/Users/denielson/Desktop/Supermercado do PoVO/artifacts/natal-combos-20261103/references/tender.jpg",
+          "sha256": "b2ebe57444b8242663a6f3ddbbb9b1b26a56e9885b57e21a24a8d9eb6e61f2c5"
+        }
+      ],
+      "review": {
+        "colorAndLife": "Cores naturais, brancos reconhecíveis, iluminação modelada e decoração natalina evidente.",
+        "identity": "Marca, linha, formato e peso principal comparados às referências. Microtexto/QR/códigos gerados não validados como funcionais.",
+        "composition": "Elenco conferido, 1–4 SKUs, sem outras embalagens comerciais. Produtos lacrados de ceia em superfícies de preparo, separados de alimentos prontos.",
+        "correction": null,
+        "limitations": [
+          "Consulta remota do catálogo recusada pelo conector; vínculos existentes reutilizados sem alegar validação remota nova."
+        ]
+      },
+      "export": {
+        "mode": "resize-to-fill",
+        "nativeSize": [
+          941,
+          1672
+        ],
+        "fullSize": [
+          1080,
+          1920
+        ],
+        "thumbnailSize": [
+          360,
+          640
+        ],
+        "note": "Exportado do tamanho nativo com reamostragem LANCZOS; não é geração nativa em 1080x1920."
+      },
+      "generatedSourcePath": "/Users/denielson/.codex/generated_images/01a1a431-2f42-78e0-831e-4b65f9491ab5/exec-9225b7f2-2d6f-4118-a976-a05db0471d2b.png"
+    }
+  ]
+}

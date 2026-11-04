@@ -19,6 +19,14 @@ export function renderPriceTableList(root, { state, chrome, rawDrafts, message, 
     box.checked = rows.length > 0 && selection.size === rows.length;
     box.indeterminate = selection.size > 0 && selection.size < rows.length;
     q(".tp-selected").textContent = `${selection.size} selecionado(s)`;
+    grid.querySelectorAll("[data-check]").forEach((input) => {
+      const selected = selection.has(input.dataset.check), row = input.closest(".tp-row");
+      row.classList.toggle("is-selected", selected);
+      row.querySelector(".tp-selection-state").textContent = selected ? "Selecionado" : "Não selecionado";
+    });
+    root.querySelectorAll(".tp-send, .tp-pdf, .tp-finalize").forEach((button) => {
+      button.disabled = busy || !selection.size;
+    });
   }
   function updateControls() {
     root.querySelectorAll("[data-tab]").forEach((button) => {
@@ -62,6 +70,7 @@ export function renderPriceTableList(root, { state, chrome, rawDrafts, message, 
     if (busy || !current()) return;
     if (!keys.length) return status("Selecione os itens desejados.");
     busy = true;
+    updateSelection();
     try {
       if (action === "send" && keys.some((id) => rawDrafts.has(id)))
         throw Error("Há alterações não salvas em um item selecionado. Abra o rascunho e salve antes de enviar.");
@@ -74,7 +83,42 @@ export function renderPriceTableList(root, { state, chrome, rawDrafts, message, 
       await refresh();
       status(success);
     } catch (error) { status(error.message); }
-    finally { busy = false; }
+    finally { busy = false; if (current()) updateSelection(); }
+  }
+  function confirmDelete(id) {
+    if (busy) return;
+    const row = rows.find((row) => row.id === id);
+    if (!row) return;
+    const dialog = document.createElement("dialog");
+    dialog.className = "tp-confirm";
+    dialog.setAttribute("aria-label", "Excluir rascunho");
+    dialog.innerHTML = '<h2>Excluir rascunho?</h2><p>O rascunho e seus produtos serão removidos. Esta ação não pode ser desfeita.</p><p class="tp-delete-status" role="alert"></p><div class="tp-actions"><button class="button secondary" type="button" data-cancel>Cancelar</button><button class="button primary" type="button" data-confirm>Excluir rascunho</button></div>';
+    root.append(dialog);
+    dialog.addEventListener("cancel", (event) => { if (busy) event.preventDefault(); });
+    dialog.onclose = () => { dialog.remove(); q(".tp-new")?.focus(); };
+    dialog.querySelector("[data-cancel]").onclick = () => dialog.close();
+    dialog.querySelector("[data-confirm]").onclick = async () => {
+      if (busy || !current()) return;
+      busy = true;
+      dialog.querySelectorAll("button").forEach((button) => { button.disabled = true; });
+      try {
+        await store.deletePromotion(id);
+        if (!current()) return;
+        rawDrafts.delete(id);
+        selection.delete(id);
+        dialog.close();
+        await refresh();
+        status("Rascunho excluído.");
+      } catch (error) {
+        if (dialog.isConnected) dialog.querySelector(".tp-delete-status").textContent = error.message;
+      } finally {
+        busy = false;
+        if (dialog.isConnected) dialog.querySelectorAll("button").forEach((button) => { button.disabled = false; });
+        if (current()) updateSelection();
+      }
+    };
+    dialog.showModal();
+    dialog.querySelector("[data-cancel]").focus();
   }
   function confirmFinalize() {
     const keys = [...selection];
@@ -129,6 +173,7 @@ export function renderPriceTableList(root, { state, chrome, rawDrafts, message, 
   grid.onclick = (event) => {
     const button = event.target.closest("button");
     if (button?.dataset.open) onOpen(button.dataset.open);
+    if (button?.dataset.delete) confirmDelete(button.dataset.delete);
     if (button?.dataset.restore) void mutate("restore", [button.dataset.restore], "Item restaurado no histórico.");
   };
   q(".tp-batch").onchange = (event) => {

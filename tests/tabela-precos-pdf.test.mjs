@@ -24,6 +24,27 @@ test('mixed and blank validity dates consolidate while retaining per-offer valid
  assert.deepEqual(offers.map(o=>o.templateSnapshot.layout.validity.hidden),[false,false,true,true]);assert.equal(offers[2],offers[3]);
  assert.equal(JSON.stringify(entries),before);entries[0].templateSnapshot.headline='MUDOU';assert.equal(offers[0].templateSnapshot.headline,'OFERTA');
 });
+test('promotion PDFs include every product with header validity and preserve independent legacy entries',()=>{
+ const promotion={id:'promotion',kind:'promotion',name:'Semana da economia',start:'2026-11-03',end:'2026-11-09',notes:'Enquanto durar o estoque',items:[
+  entry({id:'rice',name:'Arroz',quantity:2,start:'2026-01-01',end:'2026-01-02'}),
+  entry({id:'coffee',name:'Café',quantity:1}),
+ ]};
+ const legacy=entry({id:'legacy',name:'Feijão',start:'',end:''});
+ const before=structuredClone([promotion,legacy]);
+ const groups=planPriceTablePdfs([promotion,legacy]),offers=groups.flatMap(group=>group.pages.flat().map(slot=>slot.offer));
+ assert.equal(groups.length,1);assert.equal(groups[0].count,4);
+ assert.deepEqual(offers.map(offer=>offer.name),['Arroz','Arroz','Café','Feijão']);
+ assert.deepEqual(offers.map(offer=>offer.start),['2026-11-03','2026-11-03','2026-11-03','']);
+ assert.deepEqual(offers.map(offer=>offer.end),['2026-11-09','2026-11-09','2026-11-09','']);
+ assert.deepEqual([promotion,legacy],before);
+ promotion.items[0].templateSnapshot.headline='Outra oferta';
+ assert.equal(offers[0].templateSnapshot.headline,'OFERTA');
+});
+test('promotion PDF caps apply across products and reject an empty promotion',()=>{
+ const promotion=items=>({kind:'promotion',name:'Ofertas',start:'2026-11-03',end:'2026-11-09',items});
+ assert.throws(()=>planPriceTablePdfs([promotion([entry({quantity:251}),entry({quantity:250})])]),/500 cartazes/);
+ assert.throws(()=>planPriceTablePdfs([promotion([])]));
+});
 test('global copies and page caps include every model and layout',()=>{
  assert.throws(()=>planPriceTablePdfs([entry({quantity:251}),entry({quantity:250})]),/500 cartazes/);
  const different=entry({quantity:200});different.templateSnapshot.id='other';

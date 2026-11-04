@@ -3,6 +3,7 @@ import { escapeHtml } from '../../shared/ui.js';
 import { getDataContext } from '../../shared/data/api.js';
 import { listAssets, listCategories, getAsset } from '../cadastros/biblioteca-marca/storage.js';
 import { clearOnContextChange, watchResource } from '../cadastros/remote.js';
+import { createBrandInsertion } from './editor/brand-insertion.js';
 
 const state = { query: '', category: '', all: false, scope: '' };
 const renders = new WeakMap();
@@ -39,6 +40,7 @@ export async function renderBrandPanel(root, { onInsert, isActive = () => true, 
   const cleanup = () => {
     if (!active) return;
     active = false;
+    insertion.cancel();
     paintVersion++;
     previewCleanup?.();
     stopAssets?.();
@@ -46,6 +48,24 @@ export async function renderBrandPanel(root, { onInsert, isActive = () => true, 
     stopContext?.();
     observer?.disconnect();
   };
+  const insertion = createBrandInsertion({
+    read: getAsset,
+    onInsert,
+    isCurrent: current,
+    onState: ({ state: phase, asset, error }) => {
+      const loading = phase === 'loading';
+      root.querySelectorAll('[data-asset]').forEach((button) => {
+        button.disabled = loading;
+        const selected = loading && button.dataset.asset === asset.id;
+        button.setAttribute('aria-busy', String(selected));
+        button.querySelector('span').textContent = selected ? 'Adicionando…' : button.dataset.name;
+      });
+      const notice = root.querySelector('.flyer-brand-count');
+      notice.classList.toggle('error', phase === 'error');
+      notice.textContent = loading ? `Carregando ${asset.name}…`
+        : phase === 'success' ? `${asset.name} adicionado à arte.` : error.message;
+    },
+  });
   token.cleanup = cleanup;
   stopContext = clearOnContextChange('brand_assets', () => {
     cleanup();
@@ -73,6 +93,7 @@ export async function renderBrandPanel(root, { onInsert, isActive = () => true, 
         .toLowerCase();
     const paint = () => {
       if (!current()) return;
+      insertion.cancel();
       previewCleanup?.();
       previewCleanup = null;
       const view = ++paintVersion;
@@ -116,7 +137,7 @@ export async function renderBrandPanel(root, { onInsert, isActive = () => true, 
           ? rows
               .map(
                 (asset) =>
-                  `<button type="button" class="flyer-brand-choice" data-asset="${escapeHtml(asset.id)}"><img data-brand-preview="${escapeHtml(asset.id)}" alt="" loading="lazy"><span>${escapeHtml(asset.name)}</span></button>`,
+                  `<button type="button" class="flyer-brand-choice" data-asset="${escapeHtml(asset.id)}" data-name="${escapeHtml(asset.name)}"><img data-brand-preview="${escapeHtml(asset.id)}" alt="" loading="lazy"><span>${escapeHtml(asset.name)}</span></button>`,
               )
               .join('')
           : '<p class="flyer-help">Nenhum PNG nesta pasta ou busca. Adicione elementos na Biblioteca.</p>';
@@ -132,15 +153,7 @@ export async function renderBrandPanel(root, { onInsert, isActive = () => true, 
           (button.onclick = async () => {
             const asset = assets.find((asset) => asset.id === button.dataset.asset);
             if (!asset || !current()) return;
-            button.disabled = true;
-            try {
-              const full = await getAsset(asset.id, asset._version);
-              if (current() && view === paintVersion) await onInsert(structuredClone(full));
-            } catch (error) {
-              if (current()) root.querySelector('.flyer-brand-count').textContent = error.message;
-            } finally {
-              if (button.isConnected) button.disabled = false;
-            }
+            await insertion.insert(asset);
           }),
       );
     };

@@ -11,6 +11,7 @@ import { createProductQueries } from './queries/products.js';
 import { createRecordQueries } from './queries/records.js';
 import { createBrandPreviewQueries } from './queries/brand-previews.js';
 import { isTransientAccessError } from './access-errors.js';
+import { runRpcRequest } from './request-deadline.js';
 export { resources } from './resources.js';
 export { PRODUCT_SIGNED_URL_SECONDS, PRODUCT_MEDIA_CACHE_MS } from './media/products.js';
 
@@ -52,9 +53,8 @@ export function createDataApi({
     const resource = mutationResources[name] ?? (['sp_save', 'sp_delete', 'sp_command'].includes(name) ? params.p_resource : null);
     const mutationId = resource && request.setHeader ? echo.begin(resource) : null;
     if (mutationId) request = request.setHeader('x-sp-mutation-id', mutationId);
-    if (signal && request.abortSignal) request = request.abortSignal(signal);
     try {
-      const { data, error, status } = await request;
+      const { data, error, status } = await runRpcRequest(request, { name, signal });
       if (error) {
         const e = Error(error.message || 'Não foi possível concluir a operação no banco.');
         e.code = error.code;

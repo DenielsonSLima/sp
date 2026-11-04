@@ -6,3 +6,5 @@ export const runPriceTable = (action, id, payload = {}) => records.run(action, i
 
 export { getDataContext } from "../../shared/data/api.js";
 export { listProductMetadata as readPriceTableProducts } from "../../shared/data/api.js";
+export { listProductPage as readPriceTableProductPage,
+  loadProductPreviews as readPriceTableProductPreviews } from "../../shared/data/api.js";

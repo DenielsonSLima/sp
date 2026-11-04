@@ -8,6 +8,7 @@ import { positions7 } from './positions/alimentos-2.js';
 import { positions8 } from './positions/alimentos-3.js';
 import { positions9 } from './positions/alimentos-4.js';
 import { positions10 } from './positions/alimentos-5.js';
+import { comboPositions } from './positions/combos.js';
 
 export const sceneOfferPositions = {
   ...positions1,
@@ -20,4 +21,5 @@ export const sceneOfferPositions = {
   ...positions8,
   ...positions9,
   ...positions10,
+  ...comboPositions,
 };

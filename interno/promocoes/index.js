@@ -114,7 +114,7 @@ async function renderDetail(root, campaignId, tab = "products") {
     chooseModel.type = 'button';
     chooseModel.className = 'button primary campaign-choose-model';
     chooseModel.textContent = 'Criar encarte · Escolher modelo';
-    chooseModel.onclick = () => leave(() => { location.hash = '#modelos?promocao=' + encodeURIComponent(campaignId); });
+    chooseModel.onclick = () => leave(() => { location.hash = '#encartes?aba=modelos&promocao=' + encodeURIComponent(campaignId); });
     root.querySelector('.campaign-toolbar').append(chooseModel);
   }
   root

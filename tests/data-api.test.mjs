@@ -14,6 +14,35 @@ function fixture(handler){
 }
 const context=id=>({companyId:id,user:{id:'user'},companies:[{id,name:'Empresa',role:'admin'}]});
 
+test('a stalled PNG read times out through the API and an explicit retry can load it', async t => {
+ t.mock.timers.enable({apis:['setTimeout']});
+ let reads=0;
+ const {api}=fixture(()=>++reads===1?new Promise(()=>{}):{data:{id:'seal',dataURL:'pixels',_version:4}});
+ await api.setContext(context('a'));
+ const first=api.getRecord('brand_assets','seal');
+ const rejected=assert.rejects(first,{name:'TimeoutError'});
+ await new Promise(resolve=>setImmediate(resolve));
+ t.mock.timers.tick(20_000);
+ await rejected;
+ assert.equal((await api.getRecord('brand_assets','seal')).dataURL,'pixels');
+ assert.equal(reads,2);
+ await api.setContext(null);
+});
+
+test('a stalled save is reconciled once and never replayed automatically', async t => {
+ t.mock.timers.enable({apis:['setTimeout']});
+ const {api,calls}=fixture(name=>name==='sp_flyer_save'?new Promise(()=>{}):{data:null});
+ await api.setContext(context('a'));
+ const saving=api.saveFlyerSnapshot({id:'art',elements:[]},{expectedVersion:4});
+ const rejected=assert.rejects(saving,{name:'TimeoutError'});
+ await new Promise(resolve=>setImmediate(resolve));
+ t.mock.timers.tick(120_000);
+ await rejected;
+ assert.deepEqual(calls.map(call=>call.name),['sp_flyer_save','sp_get']);
+ assert.equal(api.queryClient.getQueryData(['sp','a','flyers','detail','art']),undefined);
+ await api.setContext(null);
+});
+
 test('brand folders read compact metadata and retrieve a full PNG only by an individual RPC',async()=>{
  const {api,calls}=fixture(async(name,args)=>({data:name==='sp_brand_asset_metadata'?[{id:'logo',name:'Logo',category:'Logos',width:100,height:40,_version:1}]:{id:args.p_id,name:'Logo',dataURL:'data:image/png;base64,AAAA',_version:1},error:null}));
  await api.setContext(context('a'));

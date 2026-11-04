@@ -110,9 +110,10 @@ export async function renderEditor(root, { initialDesign, onBack, mode, backLabe
     try {
       const next = clone(S.design);
       fn(next);
-      update(next, options);
+      return update(next, options);
     } catch (error) {
       message(error.message, true);
+      return false;
     }
   };
   const refreshToolbar = () => {
@@ -212,8 +213,11 @@ export async function renderEditor(root, { initialDesign, onBack, mode, backLabe
             y: (S.design.height - asset.height * scale) / 2,
             locked: false,
           };
+          const previousSelection = S.selection;
           S.selection = element.id;
-          mutate((d) => d.elements.push(element));
+          const inserted = mutate((d) => d.elements.push(element));
+          if (!inserted) S.selection = previousSelection;
+          return inserted;
         },
       });
     }

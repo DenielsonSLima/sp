@@ -155,6 +155,7 @@
   }
 }
 
+.fm-filters,
 .scene-filters {
   display: grid;
   grid-template-columns: minmax(180px, 1.5fr) minmax(150px, 1fr) minmax(150px, 1fr) max-content;
@@ -165,6 +166,7 @@
   margin: 18px 0;
 }
 
+.fm-filters label,
 .scene-filters label {
   display: grid;
   gap: 8px;
@@ -173,6 +175,8 @@
   min-width: 0;
 }
 
+.fm-filters input,
+.fm-filters select,
 .scene-filters input,
 .scene-filters select {
   width: 100%;
@@ -180,6 +184,7 @@
   min-height: 44px;
 }
 
+.fm-filters .button,
 .scene-filters .button {
   min-height: 44px;
 }
@@ -191,10 +196,13 @@
 }
 
 @media (max-width: 600px) {
+  .fm-filters,
   .scene-filters {
     padding: 16px;
     gap: 12px;
   }
+  .fm-filters input,
+  .fm-filters select,
   .scene-filters input,
   .scene-filters select {
     font-size: 16px;

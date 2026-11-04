@@ -10,6 +10,7 @@ import {
   isFlyerModel, modelSlotCount, validateFlyerModel,
 } from './model.js';
 import { modelLibraryMarkup, modelCreationMarkup } from './view.js';
+import { bindFlyerNavigation } from '../navigation.js';
 
 async function readBackgroundImage(file) {
   if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type))
@@ -43,11 +44,11 @@ function withBackground(design, src, automaticHeading) {
   return validateFlyerModel(design);
 }
 
-export async function renderModels(root, { campaignId } = {}) {
+export async function renderModels(root, { campaignId, tab = 'ready' } = {}) {
   const initialContext = getDataContext();
   const scope = JSON.stringify([initialContext?.companyId, initialContext?.user?.id]);
   const promotion = campaignId || new URLSearchParams(location.hash.split('?')[1] || '').get('promocao');
-  const state = { tab: 'ready', query: '', presets: FLYER_MODEL_PRESETS, models: [], busy: false, message: '', error: false };
+  const state = { tab, campaignId: promotion, category: '', filterCategory: '', query: '', presets: FLYER_MODEL_PRESETS, models: [], busy: false, message: '', error: false };
   const presetDesigns = new Map(FLYER_MODEL_PRESETS.map(preset => [preset.id, createBlankFlyerModel({ presetId: preset.id })]));
   let active = true, editing = false, revision = 0, previewObserver, dialog;
   const current = () => active && root.isConnected && scope === JSON.stringify([getDataContext()?.companyId, getDataContext()?.user?.id]);
@@ -64,7 +65,8 @@ export async function renderModels(root, { campaignId } = {}) {
   }
   async function preview(canvas, version) {
     const key = canvas.dataset.fmPreview, ready = key.startsWith('preset:');
-    const card = canvas.closest('.fm-card'), label = card.querySelector('.fm-preview-status');
+    const card = canvas.closest('.fm-category-sample, .fm-card'), label = card.querySelector('.fm-preview-status');
+    const slots = card.querySelector('.fm-card-slots');
     try {
       const row = state.models.find(model => model.id === key);
       const design = ready ? presetDesigns.get(key.slice(7)) : await getDesign(key, { preview: true, expectedVersion: row?._version });
@@ -78,12 +80,12 @@ export async function renderModels(root, { campaignId } = {}) {
       if (!current() || version !== revision || !canvas.isConnected) return;
       canvas.classList.add('is-ready');
       label.hidden = true;
-      card.querySelector('.fm-card-slots').textContent = `${modelSlotCount(design)} produtos por página`;
+      if (slots) slots.textContent = `${modelSlotCount(design)} produtos por página`;
     } catch (error) {
       if (current() && version === revision && label.isConnected) {
         label.textContent = 'Prévia indisponível';
         label.title = error.message;
-        card.querySelector('.fm-card-slots').textContent = 'Abra o modelo para conferir';
+        if (slots) slots.textContent = 'Abra o modelo para conferir';
       }
     }
   }
@@ -150,7 +152,7 @@ export async function renderModels(root, { campaignId } = {}) {
       await renderEditor(root.firstElementChild, { initialDesign: design, mode: 'template', onBack: async () => {
         if (!current()) return;
         editing = false;
-        state.tab = 'mine'; state.query = '';
+        state.tab = 'mine'; state.query = ''; state.category = ''; state.filterCategory = '';
         await refresh();
         feedback('Modelo salvo. Você já pode usá-lo em uma promoção.');
         paint();
@@ -233,11 +235,41 @@ export async function renderModels(root, { campaignId } = {}) {
     await openEditor(saved);
   }
   function bind() {
-    root.querySelectorAll('[data-fm-tab]').forEach(button => { button.onclick = () => {
+    bindFlyerNavigation(root);
+    root.querySelectorAll('[data-fm-tab]').forEach(button => { button.onclick = event => {
+      event.preventDefault();
       if (state.busy) return;
-      state.tab = button.dataset.fmTab; state.query = ''; paint();
+      state.tab = button.dataset.fmTab; state.query = ''; state.category = ''; state.filterCategory = ''; paint();
     }; });
-    root.querySelector('.fm-search input').oninput = event => { state.query = event.target.value; paint(); };
+    root.querySelectorAll('[data-fm-category]').forEach(button => { button.onclick = () => {
+      if (state.busy) return;
+      state.category = button.dataset.fmCategory;
+      paint();
+      root.querySelector('[data-fm-back]')?.focus({ preventScroll: true });
+    }; });
+    const back = root.querySelector('[data-fm-back]');
+    if (back) back.onclick = () => {
+      if (state.busy) return;
+      const previous = state.category;
+      state.category = '';
+      paint();
+      const card = [...root.querySelectorAll('[data-fm-category]')].find(button => button.dataset.fmCategory === previous);
+      (card || root.querySelector('.fm-search input'))?.focus({ preventScroll: true });
+    };
+    root.querySelector('.fm-search input').oninput = event => {
+      if (state.busy) return;
+      state.query = event.target.value; paint();
+    };
+    const categoryFilter = root.querySelector('.fm-filter-category');
+    if (categoryFilter) categoryFilter.onchange = () => {
+      if (state.busy) return;
+      state.filterCategory = categoryFilter.value; state.category = ''; paint();
+    };
+    root.querySelector('[data-fm-clear]').onclick = () => {
+      if (state.busy) return;
+      state.query = ''; state.filterCategory = ''; paint();
+      root.querySelector('.fm-search input').focus({ preventScroll: true });
+    };
     root.querySelectorAll('[data-fm-action="create"]').forEach(button => { button.onclick = createDialog; });
     root.querySelector('[data-fm-action="import"]').onclick = () => root.querySelector('.fm-import-file').click();
     root.querySelector('.fm-import-file').onchange = event => {

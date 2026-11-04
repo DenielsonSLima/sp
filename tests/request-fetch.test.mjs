@@ -31,5 +31,8 @@ test('caller cancellation is preserved separately from a timeout', async () => {
 test('editor explains an interrupted save without claiming data was saved or lost', () => {
   assert.match(saveErrorMessage(Error('AbortError: Fetch is aborted')), /não foi possível confirmar/);
   assert.match(saveErrorMessage(Error('TimeoutError: exceeded')), /não recarregue/);
+  const localized = new Error('O envio da arte excedeu o tempo de espera.');
+  localized.name = 'TimeoutError';
+  assert.match(saveErrorMessage(localized), /não foi possível confirmar/);
   assert.equal(saveErrorMessage({ code: '40001', message: 'Conflito' }), 'Conflito');
 });

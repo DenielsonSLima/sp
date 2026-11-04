@@ -9,5 +9,15 @@ const remotePriceTables = {
   reopen: (id) => runPriceTable("reopen", id, {}),
   archiveExpired: () => runPriceTable("archiveExpired", null, {}),
   restore: (id) => runPriceTable("restore", id, {}),
+  createPromotion: (input) => runPriceTable("createPromotion", null, input),
+  updatePromotion: (id, input) => runPriceTable("updatePromotion", id, input),
+  addProducts: (id, productIds) => runPriceTable("addProducts", id, { productIds }),
+  updateProduct: (id, itemId, input) => runPriceTable("updateProduct", id, { itemId, input }),
+  removeProducts: (id, itemIds) => runPriceTable("removeProducts", id, { itemIds }),
+  deletePromotion: async (id) => {
+    const result = await runPriceTable("deletePromotion", id, {});
+    remote.remove(id);
+    return result;
+  },
 };
 export const priceTableStore = remotePriceTables;

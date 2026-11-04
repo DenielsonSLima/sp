@@ -166,3 +166,23 @@ Implementada reordenação pelo nome/miniatura, com indicação de inserção, r
 O seletor e o cabeçalho de novos recebimentos exibem o nome salvo do modelo, com o rótulo Modelo de composição. A categoria permanece como identificador do contrato RPC. A apresentação usa o modelo atual, ou o único modelo ativo quando ainda em elaboração; vários rascunhos sem atual não recebem seleção implícita. O modal acompanha alterações de `butcher_models` por assinatura do domínio sem apagar os campos da compra. Snapshots de recebimentos anteriores não foram alterados.
 
 `npm test`: 610 aprovados, 13 opcionais ignorados e zero falhas; build e `git diff --check` aprovados. Teste unitário cobre renomeação, categoria estável, rascunho único e ambiguidade. Chrome isolado confirmou o nome salvo e a renomeação no seletor personalizado real, com o valor interno da categoria preservado e sem gravação remota. Consulta somente leitura no projeto autorizado confirmou que o modelo existente estava ativo, ainda sem definição como atual; nenhuma migração foi necessária.
+
+## Inserção de selos no editor — 03/11/2026
+
+O limite de espera das RPCs agora cobre a aquisição da sessão, a requisição e a leitura da resposta. Leituras têm limite de 20 segundos; o envio de arte mantém 120 segundos e a reconciliação de resultado incerto antes de permitir nova tentativa. A detecção de timeout considera o nome do erro, inclusive quando sua mensagem está em português.
+
+A biblioteca apresenta carregamento, sucesso ou falha, permite apenas uma inserção pendente e libera os botões ao falhar. Trocar de pasta ou sessão cancela a inserção visual; respostas antigas não adicionam camadas. Falhas na validação da arte não são apresentadas como inserção concluída.
+
+Verificação local: `npm test` com 693 aprovados, 13 opcionais ignorados e zero falhas; `npm run build` e `git diff --check` aprovados. Testes cobrem espera por sessão que não resolve, cancelamento, timeout, repetição explícita, concorrência de cliques, imagens inválidas e reconciliação sem repetir a gravação automaticamente.
+
+No Safari, em aba isolada com o editor real e transporte simulado, o PNG “Natal da Economia” sem resposta exibiu carregamento, falhou após o limite e liberou o botão. Uma nova tentativa inseriu o selo no canvas e nas camadas; o autosave confirmou “Arte salva”. Liberar a resposta antiga manteve uma camada, uma gravação simulada e zero erros JavaScript. A aba de teste foi fechada ao terminar.
+
+Evidência remota limitada ao projeto `enhoierfwuwtzulznjxa`: o endpoint Auth respondeu HTTP 401 sem credenciais em aproximadamente 0,14 s, confirmando alcance do serviço naquele instante. Consultas de diagnóstico e logs pelo conector foram recusadas por falta de permissão. A gravação autenticada no banco real e a causa de eventuais falhas de rede não foram comprovadas por este teste. Não houve migração SQL nem gravação remota nesta correção.
+
+## Conferência para publicação — 04/11/2026
+
+Revisadas em conjunto as alterações pendentes: inserção de selos e limites de espera, navegação e categorias dos modelos de encarte, cenas natalinas e recursos do mascote, Tabela de Preços por promoção e preservação do editor legado. `npm test`: 706 testes, 693 aprovados, 13 opcionais ignorados, zero falhas; `npm run test:db` e `npm run build` concluídos com sucesso. Arquitetura: 419 arquivos, máximo de 499 linhas; runtime: 339 módulos. Conferência dos arquivos de publicação sem correspondências para os padrões de segredos verificados.
+
+Consulta remota somente de leitura, pela CLI oficial Go 2.108.0 em pasta temporária e no projeto `enhoierfwuwtzulznjxa`, confirmou: migração `20261104012757` aplicada, função `price_promotion_command` existente, RLS ativa em `price_tables` e publicação de `resource_changes` no Realtime. O SHA-256 da migração local é `0940b173c44c31a801adb7f4c2d2e809634fa4e01b3fcee29edf19930310aff7`, igual ao registro da aplicação anterior. Não foi necessário reaplicar SQL.
+
+Destino conferido: repositório `DenielsonSLima/sp`, branch `main`, projeto Vercel `sp` (`prj_0hvuoQ0t62tXTTKTOjBAMxLhUmea`) da equipe `team_yZ8faNekNGwsQ6TgW3yB39Lc`, domínio `sp-flame-gamma.vercel.app`. O deploy anterior estava READY e correspondia ao commit `401eeb9809c27428d2a1278f118bd295c135e892`. As cenas 008–015 continuam como arquivos entregues com vínculo de produto pendente, conforme `GALERIA-NATAL-COMBOS.md`; a atualização não inventa esses vínculos.

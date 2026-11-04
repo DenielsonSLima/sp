@@ -1,3 +1,5 @@
+@import './categories.css';
+
 .fm-library {
   max-width: 1680px;
   margin-inline: auto;
@@ -12,35 +14,10 @@
 .fm-heading h1 { margin-bottom: 8px; }
 .fm-heading p { margin: 0; color: #7b8490; }
 .fm-heading-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.fm-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  border-bottom: 1px solid #e1e3e8;
-}
-.fm-tabs { margin: 0; border: 0; }
-.fm-tabs button { display: flex; align-items: center; gap: 9px; }
-.fm-tabs button span {
-  display: inline-grid;
-  min-width: 24px;
-  height: 24px;
-  place-items: center;
-  border-radius: 7px;
-  background: #eceef2;
-  font-size: 12px;
-}
-.fm-search { width: min(320px, 100%); margin-bottom: 10px; }
-.fm-search input { width: 100%; min-width: 0; }
-.fm-search .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
+.fm-filters { grid-template-columns: minmax(180px, 1.5fr) minmax(150px, 1fr) max-content; }
+.fm-filters-mine { grid-template-columns: minmax(180px, 1fr) max-content; }
 .fm-feedback { min-height: 22px; margin: 18px 0; color: #6b7280; }
+.fm-feedback:empty { display: none; }
 .fm-feedback.error { color: #a51927; }
 .fm-grid {
   display: grid;
@@ -148,17 +125,16 @@
 .fm-dialog-feedback { color: #a51927; margin: 0; }
 .fm-create-form footer { display: flex; justify-content: flex-end; gap: 12px; }
 .fm-editor-host { min-width: 0; }
-@media (min-width: 1600px) {
+@media (min-width: 1200px) {
   .fm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 800px) {
   .fm-heading { align-items: flex-start; flex-direction: column; }
-  .fm-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
-  .fm-search { width: 100%; }
-  .fm-tabs { width: 100%; }
-  .fm-tabs button { flex: 1; justify-content: center; padding-inline: 8px; }
+  .fm-filters { grid-template-columns: minmax(0, 1fr) max-content; }
+  .fm-filters .fm-search { grid-column: 1 / -1; }
 }
 @media (max-width: 420px) {
+  .fm-filters { grid-template-columns: minmax(0, 1fr); }
   .fm-heading-actions { width: 100%; }
   .fm-heading-actions .button { flex: 1; padding: 12px 9px; font-size: 12px; }
   .fm-grid { gap: 18px; }

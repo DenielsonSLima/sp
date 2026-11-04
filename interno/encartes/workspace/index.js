@@ -12,11 +12,12 @@ import { campaignChoices, readCampaignWithPhotos, selectedPhotos } from './data.
 import { workspaceMarkup } from './view.js';
 import { readWorkspaceSelection, modelChoices, readWorkspaceModel, modelPublicationOptions } from './models.js';
 import { isFlyerModel } from '../modelos/model.js';
+import { bindFlyerNavigation } from '../navigation.js';
 
-export async function renderWorkspace(root) {
+export async function renderWorkspace(root, { tab = 'create' } = {}) {
   const context = getDataContext(), scope = JSON.stringify([context?.companyId, context?.user?.id]);
   const selection = readWorkspaceSelection(location.hash);
-  const state = { tab: 'create', campaigns: [], campaign: null, products: new Map(), photoChoices: new Map(),
+  const state = { tab, campaigns: [], campaign: null, products: new Map(), photoChoices: new Map(),
     models: [], modelKey: selection.modelId || 'preset:povo', model: null,
     options: { templateId: 'grid-8', themeId: 'povo', formatId: 'story' }, pages: [], pageIndex: 0,
     groups: [], saved: false, busy: false, message: '', error: false, sourceChanged: false, optionsChanged: false };
@@ -200,11 +201,15 @@ export async function renderWorkspace(root) {
     }
   }
   function bind() {
-    root.querySelectorAll('[data-fw-tab]').forEach(button => { button.onclick = () => run(async () => {
+    bindFlyerNavigation(root);
+    root.querySelectorAll('[data-fw-tab]').forEach(button => { button.onclick = event => {
+      event.preventDefault();
+      return run(async () => {
       state.tab = button.dataset.fwTab;
       if (state.tab === 'saved') await refreshGroups();
       feedback('');
-    }); });
+      });
+    }; });
     const select = root.querySelector('#fw-campaign');
     if (select) select.onchange = () => run(() => selectCampaign(select.value));
     const changed = () => { state.optionsChanged = state.pages.length > 0; feedback(''); };
@@ -263,5 +268,6 @@ export async function renderWorkspace(root) {
     ensure();
     if (selection.campaignId) await selectCampaign(selection.campaignId);
     else feedback('');
+    if (state.tab === 'saved') await refreshGroups();
   });
 }

@@ -24,7 +24,7 @@ export async function render(root) {
   const actions = root.querySelector('.flyer-library-actions');
   if (actions) {
     const link = document.createElement('a');
-    link.href = '#modelos';
+    link.href = '#encartes?aba=modelos';
     link.className = 'button secondary';
     link.textContent = 'Modelos de encarte';
     actions.append(link);

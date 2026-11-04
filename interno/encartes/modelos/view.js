@@ -1,14 +1,18 @@
 import { escapeHtml as esc } from '../../../shared/ui.js';
 import { FLYER_FORMATS, FLYER_TEMPLATES } from '../generator/options.js';
+import { modelCategories, modelCategoriesMarkup } from './categories.js';
+import { flyerTabsMarkup } from '../navigation.js';
 
 const optionMarkup = (rows, selected) => rows.map(row =>
   `<option value="${esc(row.id)}" ${row.id === selected ? 'selected' : ''}>${esc(row.name)}</option>`,
 ).join('');
 
 export function modelCardsMarkup(state) {
-  const rows = state.tab === 'mine' ? state.models : state.presets;
+  const groups = modelCategories(state.presets, state.query, state.filterCategory);
+  const category = groups.find(group => group.id === state.category);
+  const rows = state.tab === 'mine' ? state.models : category?.models || [];
   const search = state.query.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  const filtered = rows.filter(row => `${row.title || row.name} ${row.description || ''}`
+  const filtered = state.tab === 'ready' ? rows : rows.filter(row => `${row.title || row.name} ${row.description || ''}`
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().includes(search));
   if (!filtered.length) return `<div class="card fm-empty"><span aria-hidden="true">▤</span>
     <h2>${state.query ? 'Nenhum modelo encontrado.' : 'Seus modelos ficam aqui.'}</h2>
@@ -36,18 +40,34 @@ export function modelCardsMarkup(state) {
 }
 
 export function modelLibraryMarkup(state) {
+  const groups = modelCategories(state.presets, state.query, state.filterCategory);
+  const browsingCategories = state.tab === 'ready' && !state.category;
+  const category = modelCategories(state.presets).find(group => group.id === state.category);
+  const count = groups.reduce((total, group) => total + group.models.length, 0);
   return `<section class="fm-library">
-    <header class="page-heading fm-heading"><div><span class="eyebrow">OFERTAS E DIVULGAÇÃO</span><h1>Modelos</h1>
-      <p>Encartes em branco para dar a sua cara a cada promoção.</p></div>
+    <header class="page-heading fm-heading"><div><span class="eyebrow">OFERTAS E DIVULGAÇÃO</span><h1>Encartes</h1>
+      <p>Escolha uma categoria e encontre o modelo para a sua promoção.</p></div>
       <div class="fm-heading-actions"><button class="button secondary" type="button" data-fm-action="import" ${state.busy ? 'disabled' : ''}>Importar modelo</button>
       <button class="button primary" type="button" data-fm-action="create" ${state.busy ? 'disabled' : ''}>+ Criar modelo</button></div>
     </header>
-    <div class="fm-toolbar"><div class="module-tabs fm-tabs" role="tablist" aria-label="Biblioteca de modelos">
-      <button type="button" role="tab" data-fm-tab="ready" aria-selected="${state.tab === 'ready'}" ${state.busy ? 'disabled' : ''}>Modelos prontos</button>
-      <button type="button" role="tab" data-fm-tab="mine" aria-selected="${state.tab === 'mine'}" ${state.busy ? 'disabled' : ''}>Meus modelos <span>${state.models.length}</span></button>
-    </div><label class="fm-search"><span class="sr-only">Buscar modelo</span><input type="search" aria-label="Buscar modelo" placeholder="Buscar modelo…" value="${esc(state.query)}" maxlength="100" ${state.busy ? 'disabled' : ''}></label></div>
+    ${flyerTabsMarkup(state.tab, { busy: state.busy, modelCount: state.models.length, campaignId: state.campaignId })}
+    <section class="card fm-filters ${state.tab === 'mine' ? 'fm-filters-mine' : ''}" aria-label="Filtros dos modelos">
+      <label class="fm-search">Buscar<input type="search" aria-label="Buscar modelo" placeholder="${state.tab === 'ready' ? 'Categoria, modelo ou descrição…' : 'Nome do modelo…'}" value="${esc(state.query)}" maxlength="100" ${state.busy ? 'disabled' : ''}></label>
+      ${state.tab === 'ready' ? `<label>Categoria do modelo<select class="fm-filter-category" ${state.busy ? 'disabled' : ''}>
+        <option value="">Todas as categorias</option>${modelCategories(state.presets).map(group => `<option value="${esc(group.id)}" ${state.filterCategory === group.id ? 'selected' : ''}>${esc(group.name)}</option>`).join('')}
+      </select></label>` : ''}
+      <button type="button" class="button secondary" data-fm-clear ${state.busy ? 'disabled' : ''}>Limpar filtros</button>
+    </section>
     <p class="fm-feedback ${state.error ? 'error' : ''}" role="status" aria-live="polite">${esc(state.message)}</p>
-    <div class="fm-grid">${modelCardsMarkup(state)}</div>
+    ${state.tab === 'ready' && state.category ? `<div class="fm-category-navigation">
+      <button class="button secondary" type="button" data-fm-back ${state.busy ? 'disabled' : ''}>← Categorias</button>
+      <h2>Modelos / ${esc(category?.name || '')}</h2></div>` : ''}
+    ${state.tab === 'ready' ? `<p class="fm-results-count" role="status" aria-live="polite">${browsingCategories
+      ? `${groups.length} ${groups.length === 1 ? 'categoria encontrada' : 'categorias encontradas'} · ${count} ${count === 1 ? 'modelo disponível' : 'modelos disponíveis'}`
+      : `${groups.find(group => group.id === state.category)?.models.length || 0} modelos encontrados`}</p>` : ''}
+    <div class="${browsingCategories ? 'fm-category-grid' : 'fm-grid'}">${browsingCategories
+      ? groups.length ? modelCategoriesMarkup(groups, state.busy) : '<div class="card fm-empty"><h2>Nenhuma categoria encontrada.</h2><p>Tente buscar por outro nome de categoria ou modelo.</p></div>'
+      : modelCardsMarkup(state)}</div>
     <input class="fm-import-file" type="file" accept=".json,application/json,image/png,image/jpeg,image/webp" hidden>
   </section>`;
 }
